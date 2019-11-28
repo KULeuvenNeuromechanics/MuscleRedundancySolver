@@ -2,10 +2,10 @@
 % All muscle-tendon characteristics are fully described in the publication
 % and its online supplement
 
-function [err, FT] = ForceEquilibrium_lMtildeState(a,lMtilde,vMtilde,lMT,params,Fvparam,Fpparam,Faparam,Atendon,shift)
+function [err, FT] = ForceEquilibrium_lMtildeState_lMoFree(a,lMtilde,vMtilde,lMT,lMo_scaling,params,Fvparam,Fpparam,Faparam,Atendon,shift)
 
 FMo = params(:,1);
-lMo = params(:,2);
+lMo = lMo_scaling.*params(:,2);
 lTs = params(:,3);
 alphao = params(:,4);
 Atendon = Atendon;

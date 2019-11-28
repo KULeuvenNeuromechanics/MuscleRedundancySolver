@@ -4,13 +4,13 @@
 
 function [err, FT] = ForceEquilibrium_FtildeState(a,fse,dfse,lMT,vMT,params,Fvparam,Fpparam,Faparam,Atendon,shift)
 
-FMo = ones(size(a,1),1)*params(1,:);
-lMo = ones(size(a,1),1)*params(2,:);
-lTs = ones(size(a,1),1)*params(3,:);
-alphao = ones(size(a,1),1)*params(4,:);
-vMmax = ones(size(a,1),1)*params(5,:);
-Atendon = ones(size(a,1),1)*Atendon;
-shift = ones(size(a,1),1)*shift;
+FMo = params(:,1);
+lMo = params(:,2);
+lTs = params(:,3);
+alphao = params(:,4);
+vMmax = params(:,5);
+Atendon = Atendon;
+shift = shift;
 
 % Inverse tendon force-length characteristic
 lTtilde = log(5*(fse + 0.25 - shift))./Atendon + 0.995;
