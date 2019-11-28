@@ -1,12 +1,12 @@
-function DatStore = SolveStaticOptimization_IPOPT_CasADi(DatStore)
+function DatStore = SolveStaticOptimization_IPOPT_CasADi(DatStore,Misc,trial)
 
 % STEP 1. Inputs
 % --------------
 
-time = DatStore.time;
+time = DatStore(trial).time;
 N = length(time);
-M = DatStore.nMuscles;
-nDOF = DatStore.nDOF;
+M = DatStore(trial).nMuscles;
+nDOF = DatStore(trial).nDOF;
 
 load('ActiveFVParameters.mat','ActiveFVParameters');
 load('PassiveFLParameters','PassiveFLParameters');
@@ -18,14 +18,14 @@ FMvtilde = ones(N,M);
 Fpe = ones(N,M);
 cos_alpha = ones(N,M);
 for m = 1:M
-    pp_y = spline(time,DatStore.LMT(:,m));
+    pp_y = spline(time,DatStore(trial).LMT(:,m));
     [LMTg,vMTg,~] = SplineEval_ppuval(pp_y,time,1);
     [~, ~, FMltilde(:,m), FMvtilde(:,m), Fpe(:,m), cos_alpha(:,m)] = ...
-        HillModel_RigidTendon(act(:,m),LMTg,vMTg,DatStore.params(:,m),...
+        HillModel_RigidTendon(act(:,m),LMTg,vMTg,Misc.params(:,m),...
         ActiveFVParameters,PassiveFLParameters,Faparam);
     clear pp_y 
 end
-FMo = ones(size(act,1),1)*DatStore.Fiso;
+FMo = ones(size(act,1),1)*Misc.Fiso;
 Fpas = FMo.*Fpe.*cos_alpha;
 Fact = FMo.*FMltilde.*FMvtilde.*cos_alpha;
 
@@ -34,13 +34,13 @@ Topt = 150/sqrt(1000);
 Fpas = [Fpas zeros(N,nDOF)];
 Fact = [Fact Topt*ones(N,nDOF)];
 
-ID_data = DatStore.T_exp;
+ID_data = DatStore(trial).T_exp;
 
 I = N*(M+nDOF);
 MomentArms = zeros(I,nDOF);
 temp = zeros(N,M);
 for i = 1:nDOF    
-    temp(:,:) = DatStore.dM(:,i,:);
+    temp(:,:) = DatStore(trial).dM(:,i,:);
     MomentArms(:,i) = ...
         reshape([temp zeros(N,i-1) ones(N,1) zeros(N,nDOF-i)]',I,1);    
 end
@@ -78,8 +78,8 @@ sol = opti.solve();
 x_opt = reshape(sol.value(x), M+nDOF, N)';
 act = x_opt(:,1:M);
 eT = x_opt(:, M+1:M+nDOF)*Topt;
-DatStore.SoAct = act;
-DatStore.SoRAct = eT;
+DatStore(trial).SoAct = act;
+DatStore(trial).SoRAct = eT;
 SoForce = FMo.*(act.*FMltilde.*FMvtilde + Fpe); 
-DatStore.SoForce = SoForce;
-DatStore.cos_alpha = cos_alpha;
+DatStore(trial).SoForce = SoForce;
+DatStore(trial).cos_alpha = cos_alpha;

@@ -14,23 +14,21 @@ MainPath = newdir(1:idcs(end)-1);
 % Add all folders under main path
 addpath(genpath(MainPath));
 
-% Input arguments
-% Datapath =fullfile(MainPath,'Examples','EMG_constraintMRI');
-% IK_path = fullfile(Datapath,'gait1_kinematics.mot');      % point to the IK file
-% ID_path = fullfile(Datapath,'inverse_dynamics.sto');      % point to the ID file
-% model_path = fullfile(Datapath,'SEMLS_2_gen_final_2392_Fmax.osim');         % point to the model
-
-% As example we use trial 2
-IK_path = fullfile(DataPath,'trial_2_IK.mot');
-ID_path = fullfile(DataPath,'trial_2_ID.mot');
-US_path = fullfile(DataPath,'trial_2_US.mot');
+% Add here the paths of IK, ID and US data trials you want to work with
+% As example we use trial 2 & 4
+IK_path = [fullfile(DataPath,'trial_2_IK.mot'); fullfile(DataPath,'trial_4_IK.mot')];
+ID_path = [fullfile(DataPath,'trial_2_ID.mot'); fullfile(DataPath,'trial_4_ID.mot')];
+US_path = [fullfile(DataPath,'trial_2_US.mot'); fullfile(DataPath,'trial_4_US.mot')];
 
 model_path = fullfile(DataPath,'model.osim');
 Out_path=fullfile(ExamplePath,'Results');                    % folder to store results
 
-% Example for Hans: Note if you want to analyse all the data in the IK file
-IK = importdata(IK_path);
-time = [IK.data(1,1) IK.data(end,1)];
+% Get times from the different trials
+time = zeros(size(IK_path,1),2);
+for i = 1:size(IK_path,1)
+IK = importdata(IK_path(i,:));
+time(i,:) = [IK.data(1,1) IK.data(end,1)];
+end
 
 % settings
 % Misc.DofNames_Input={'ankle_flex_r','knee_flex_r'};    % select the DOFs you want to include in the optimization

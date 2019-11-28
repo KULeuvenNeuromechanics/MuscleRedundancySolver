@@ -1,4 +1,4 @@
-function [DatStore] = getMuscleInfo(IK_path,ID_path,Misc)
+function [DatStore] = getMuscleInfo(IK_path,ID_path,Misc,DatStore,trial)
 %   Get_dof_MuscleInfo selects the DOF that are acuated by muscles specified by the user and selects for those dof the moment arms of the muscles
 %   author: Maarten Afschrift,
 %   Last Update: 29 Januari 2019
@@ -40,7 +40,7 @@ for i=1:length(Misc.DofNames_Input)
         
         % read indexes in time frame for muscle analysis
         t_Mus=dm_Data_temp.data(:,1);           t_Mus=round(t_Mus*10000)/10000;
-        ind0=find(t_Mus>=Misc.time(1),1,'first'); ind_end=find(t_Mus<=Misc.time(2),1,'last');
+        ind0=find(t_Mus>=Misc.time(trial,1),1,'first'); ind_end=find(t_Mus<=Misc.time(trial,2),1,'last');
         Mus_inds=ind0:ind_end;
     end
     
@@ -79,7 +79,7 @@ t_dM = dm_Data_temp.data(:,1);
 t_dM=round(t_dM*10000)/10000;
 fs=1/mean(diff(t_dM));
 [B,A] = butter(Misc.f_order_dM, Misc.f_cutoff_dM/(fs/2));
-DatStore.dM = filtfilt(B,A,dM_raw);
+DatStore(trial).dM = filtfilt(B,A,dM_raw);
 
 % filter Muscle-tendon lengths and store them in DatStore.LMT
 LMT_dat=importdata(fullfile(Misc.MuscleAnalysisPath,[Misc.trialName '_MuscleAnalysis_Length.sto']));
@@ -88,13 +88,13 @@ t_lMT = LMT_dat.data(:,1);
 t_lMT=round(t_lMT*10000)/10000;
 fs=1/mean(diff(t_lMT));             % sampling frequency
 [B,A] = butter(Misc.f_order_lMT,Misc.f_cutoff_lMT/(fs/2));
-DatStore.LMT = filtfilt(B,A,LMT_raw);
+DatStore(trial).LMT = filtfilt(B,A,LMT_raw);
 
 % store information in the DatStore structure
-DatStore.MuscleNames = Misc.MuscleNames;
-DatStore.DOFNames    = Misc.DofNames;
-DatStore.nMuscles    = length(Misc.MuscleNames);
-DatStore.nDOF        = length(Misc.DofNames);
+DatStore(trial).MuscleNames = Misc.MuscleNames;
+DatStore(trial).DOFNames    = Misc.DofNames;
+DatStore(trial).nMuscles    = length(Misc.MuscleNames);
+DatStore(trial).nDOF        = length(Misc.DofNames);
 
 %% Filter IK
 
@@ -107,7 +107,7 @@ end
 
 % select the IK information between the selected time frames
 t_IK=IK_data.data(:,1);     t_IK=round(t_IK*10000)/10000; 
-ind0=find(t_IK>=Misc.time(1),1,'first'); ind_end=find(t_IK<=Misc.time(2),1,'last');
+ind0=find(t_IK>=Misc.time(trial,1),1,'first'); ind_end=find(t_IK<=Misc.time(trial,2),1,'last');
 IK_inds=ind0:ind_end;
 
 % filter the kinematics and kinetics
@@ -145,19 +145,19 @@ end
 % select ID data between start and end
 ID_data_int=interp1(ID_data.data(:,1),ID_data.data,IK_data.data(:,1));       % interpolate data for IK sampling frequency
 t_ID=ID_data_int(:,1); t_ID=round(t_ID*10000)/10000;
-ind0=find(t_ID>=Misc.time(1),1,'first'); ind_end=find(t_ID<=Misc.time(2),1,'last');
+ind0=find(t_ID>=Misc.time(trial,1),1,'first'); ind_end=find(t_ID<=Misc.time(trial,2),1,'last');
 ID_inds=ind0:ind_end;
 
 %% store the data
-DatStore.T_exp = ID_data_int(ID_inds,ID_Header_inds);
-DatStore.q_exp = IK_data.data(IK_inds,IK_Header_inds); 
-DatStore.time = t_IK(IK_inds);
+DatStore(trial).T_exp = ID_data_int(ID_inds,ID_Header_inds);
+DatStore(trial).q_exp = IK_data.data(IK_inds,IK_Header_inds); 
+DatStore(trial).time = t_IK(IK_inds);
 
 
 % check if size of IK and ID matrices are equal
 if length(ID_inds) ~= length(IK_inds)    
     disp(['Time range IK in the solution file: first time frame ' num2str(IK_data.data(1,1)) '  last time frame:' num2str(IK_data.data(end,1))]);
     disp(['Time range ID in the solution file: first time frame ' num2str(ID_data.data(1,1)) '  last time frame:' num2str(ID_data.data(end,1))]);
-    disp(['Selected time range is: ' num2str(Misc.time)]);
+    disp(['Selected time range is: ' num2str(Misc.time(trial,:))]);
     error('There is something wrong with the time frames in your IK or ID file');
 end

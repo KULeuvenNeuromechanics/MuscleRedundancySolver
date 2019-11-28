@@ -13,6 +13,19 @@ Found 116 state vectors with time stamps ranging from 3.61 to 4.76.
 Executing the analyses from 3.61 to 4.76...
 Printing results of investigation trial_2_IK to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
 Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+AbstractTool trial_4_IK loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot.
+Old version storage/motion file encountered
+Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot (nr=120 nc=42)
+.. assuming rotations in Degrees.
+Coordinate.setValue: WARN- coordinate pro_sup_r is locked. Unable to change its value.
+Coordinate.setValue: WARN- coordinate pro_sup_l is locked. Unable to change its value.
+Found 120 state vectors with time stamps ranging from 6 to 7.19.
+Executing the analyses from 6 to 7.19...
+Printing results of investigation trial_4_IK to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
 Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
 Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
 AbstractTool trial_2_IK loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
@@ -29,6 +42,19 @@ Found 116 state vectors with time stamps ranging from 3.61 to 4.76.
 Executing the analyses from 3.61 to 4.76...
 Printing results of investigation trial_2_IK to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
 Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+AbstractTool trial_4_IK loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot.
+Old version storage/motion file encountered
+Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot (nr=120 nc=42)
+.. assuming rotations in Degrees.
+Coordinate.setValue: WARN- coordinate pro_sup_r is locked. Unable to change its value.
+Coordinate.setValue: WARN- coordinate pro_sup_l is locked. Unable to change its value.
+Found 120 state vectors with time stamps ranging from 6 to 7.19.
+Executing the analyses from 6 to 7.19...
+Printing results of investigation trial_4_IK to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
 Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
 Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
 AbstractTool trial_2_IK loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
@@ -45,6 +71,19 @@ Found 116 state vectors with time stamps ranging from 3.61 to 4.76.
 Executing the analyses from 3.61 to 4.76...
 Printing results of investigation trial_2_IK to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
 Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+AbstractTool trial_4_IK loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot.
+Old version storage/motion file encountered
+Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot (nr=120 nc=42)
+.. assuming rotations in Degrees.
+Coordinate.setValue: WARN- coordinate pro_sup_r is locked. Unable to change its value.
+Coordinate.setValue: WARN- coordinate pro_sup_l is locked. Unable to change its value.
+Found 120 state vectors with time stamps ranging from 6 to 7.19.
+Executing the analyses from 6 to 7.19...
+Printing results of investigation trial_4_IK to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
 Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
 Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
 AbstractTool trial_2_IK loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
@@ -61,6 +100,19 @@ Found 116 state vectors with time stamps ranging from 3.61 to 4.76.
 Executing the analyses from 3.61 to 4.76...
 Printing results of investigation trial_2_IK to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
 Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+AbstractTool trial_4_IK loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot.
+Old version storage/motion file encountered
+Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot (nr=120 nc=42)
+.. assuming rotations in Degrees.
+Coordinate.setValue: WARN- coordinate pro_sup_r is locked. Unable to change its value.
+Coordinate.setValue: WARN- coordinate pro_sup_l is locked. Unable to change its value.
+Found 120 state vectors with time stamps ranging from 6 to 7.19.
+Executing the analyses from 6 to 7.19...
+Printing results of investigation trial_4_IK to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
 Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
 Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
 AbstractTool trial_2_IK loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
@@ -77,6 +129,19 @@ Found 116 state vectors with time stamps ranging from 3.61 to 4.76.
 Executing the analyses from 3.61 to 4.76...
 Printing results of investigation trial_2_IK to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
 Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+AbstractTool trial_4_IK loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot.
+Old version storage/motion file encountered
+Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot (nr=120 nc=42)
+.. assuming rotations in Degrees.
+Coordinate.setValue: WARN- coordinate pro_sup_r is locked. Unable to change its value.
+Coordinate.setValue: WARN- coordinate pro_sup_l is locked. Unable to change its value.
+Found 120 state vectors with time stamps ranging from 6 to 7.19.
+Executing the analyses from 6 to 7.19...
+Printing results of investigation trial_4_IK to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
 Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
 Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
 AbstractTool trial_2_IK loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
@@ -93,6 +158,19 @@ Found 116 state vectors with time stamps ranging from 3.61 to 4.76.
 Executing the analyses from 3.61 to 4.76...
 Printing results of investigation trial_2_IK to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
 Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+AbstractTool trial_4_IK loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot.
+Old version storage/motion file encountered
+Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot (nr=120 nc=42)
+.. assuming rotations in Degrees.
+Coordinate.setValue: WARN- coordinate pro_sup_r is locked. Unable to change its value.
+Coordinate.setValue: WARN- coordinate pro_sup_l is locked. Unable to change its value.
+Found 120 state vectors with time stamps ranging from 6 to 7.19.
+Executing the analyses from 6 to 7.19...
+Printing results of investigation trial_4_IK to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
 Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
 Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
 AbstractTool trial_2_IK loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
@@ -109,6 +187,19 @@ Found 116 state vectors with time stamps ranging from 3.61 to 4.76.
 Executing the analyses from 3.61 to 4.76...
 Printing results of investigation trial_2_IK to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
 Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+AbstractTool trial_4_IK loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot.
+Old version storage/motion file encountered
+Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot (nr=120 nc=42)
+.. assuming rotations in Degrees.
+Coordinate.setValue: WARN- coordinate pro_sup_r is locked. Unable to change its value.
+Coordinate.setValue: WARN- coordinate pro_sup_l is locked. Unable to change its value.
+Found 120 state vectors with time stamps ranging from 6 to 7.19.
+Executing the analyses from 6 to 7.19...
+Printing results of investigation trial_4_IK to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
 Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
 Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
 AbstractTool trial_2_IK loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
@@ -125,6 +216,19 @@ Found 116 state vectors with time stamps ranging from 3.61 to 4.76.
 Executing the analyses from 3.61 to 4.76...
 Printing results of investigation trial_2_IK to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
 Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+AbstractTool trial_4_IK loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot.
+Old version storage/motion file encountered
+Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot (nr=120 nc=42)
+.. assuming rotations in Degrees.
+Coordinate.setValue: WARN- coordinate pro_sup_r is locked. Unable to change its value.
+Coordinate.setValue: WARN- coordinate pro_sup_l is locked. Unable to change its value.
+Found 120 state vectors with time stamps ranging from 6 to 7.19.
+Executing the analyses from 6 to 7.19...
+Printing results of investigation trial_4_IK to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
 Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
 Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
 AbstractTool trial_2_IK loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
@@ -141,6 +245,19 @@ Found 116 state vectors with time stamps ranging from 3.61 to 4.76.
 Executing the analyses from 3.61 to 4.76...
 Printing results of investigation trial_2_IK to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
 Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+AbstractTool trial_4_IK loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot.
+Old version storage/motion file encountered
+Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot (nr=120 nc=42)
+.. assuming rotations in Degrees.
+Coordinate.setValue: WARN- coordinate pro_sup_r is locked. Unable to change its value.
+Coordinate.setValue: WARN- coordinate pro_sup_l is locked. Unable to change its value.
+Found 120 state vectors with time stamps ranging from 6 to 7.19.
+Executing the analyses from 6 to 7.19...
+Printing results of investigation trial_4_IK to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
 Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
 Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
 AbstractTool trial_2_IK loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
@@ -157,6 +274,19 @@ Found 116 state vectors with time stamps ranging from 3.61 to 4.76.
 Executing the analyses from 3.61 to 4.76...
 Printing results of investigation trial_2_IK to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
 Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+AbstractTool trial_4_IK loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot.
+Old version storage/motion file encountered
+Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot (nr=120 nc=42)
+.. assuming rotations in Degrees.
+Coordinate.setValue: WARN- coordinate pro_sup_r is locked. Unable to change its value.
+Coordinate.setValue: WARN- coordinate pro_sup_l is locked. Unable to change its value.
+Found 120 state vectors with time stamps ranging from 6 to 7.19.
+Executing the analyses from 6 to 7.19...
+Printing results of investigation trial_4_IK to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
 Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
 Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
 AbstractTool trial_2_IK loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
@@ -173,6 +303,19 @@ Found 116 state vectors with time stamps ranging from 3.61 to 4.76.
 Executing the analyses from 3.61 to 4.76...
 Printing results of investigation trial_2_IK to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
 Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+AbstractTool trial_4_IK loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot.
+Old version storage/motion file encountered
+Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot (nr=120 nc=42)
+.. assuming rotations in Degrees.
+Coordinate.setValue: WARN- coordinate pro_sup_r is locked. Unable to change its value.
+Coordinate.setValue: WARN- coordinate pro_sup_l is locked. Unable to change its value.
+Found 120 state vectors with time stamps ranging from 6 to 7.19.
+Executing the analyses from 6 to 7.19...
+Printing results of investigation trial_4_IK to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
 Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
 Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
 AbstractTool trial_2_IK loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
@@ -189,4 +332,75 @@ Found 116 state vectors with time stamps ranging from 3.61 to 4.76.
 Executing the analyses from 3.61 to 4.76...
 Printing results of investigation trial_2_IK to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
 Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+AbstractTool trial_4_IK loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot.
+Old version storage/motion file encountered
+Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot (nr=120 nc=42)
+.. assuming rotations in Degrees.
+Coordinate.setValue: WARN- coordinate pro_sup_r is locked. Unable to change its value.
+Coordinate.setValue: WARN- coordinate pro_sup_l is locked. Unable to change its value.
+Found 120 state vectors with time stamps ranging from 6 to 7.19.
+Executing the analyses from 6 to 7.19...
+Printing results of investigation trial_4_IK to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+AbstractTool trial_2_IK loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_2_IK.mot.
+Old version storage/motion file encountered
+Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_2_IK.mot (nr=116 nc=42)
+.. assuming rotations in Degrees.
+Coordinate.setValue: WARN- coordinate pro_sup_r is locked. Unable to change its value.
+Coordinate.setValue: WARN- coordinate pro_sup_l is locked. Unable to change its value.
+Found 116 state vectors with time stamps ranging from 3.61 to 4.76.
+Executing the analyses from 3.61 to 4.76...
+Printing results of investigation trial_2_IK to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+AbstractTool trial_4_IK loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot.
+Old version storage/motion file encountered
+Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot (nr=120 nc=42)
+.. assuming rotations in Degrees.
+Coordinate.setValue: WARN- coordinate pro_sup_r is locked. Unable to change its value.
+Coordinate.setValue: WARN- coordinate pro_sup_l is locked. Unable to change its value.
+Found 120 state vectors with time stamps ranging from 6 to 7.19.
+Executing the analyses from 6 to 7.19...
+Printing results of investigation trial_4_IK to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+AbstractTool trial_2_IK loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_2_IK.mot.
+Old version storage/motion file encountered
+Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_2_IK.mot (nr=116 nc=42)
+.. assuming rotations in Degrees.
+Coordinate.setValue: WARN- coordinate pro_sup_r is locked. Unable to change its value.
+Coordinate.setValue: WARN- coordinate pro_sup_l is locked. Unable to change its value.
+Found 116 state vectors with time stamps ranging from 3.61 to 4.76.
+Executing the analyses from 3.61 to 4.76...
+Printing results of investigation trial_2_IK to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+AbstractTool trial_4_IK loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot.
+Old version storage/motion file encountered
+Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot (nr=120 nc=42)
+.. assuming rotations in Degrees.
+Coordinate.setValue: WARN- coordinate pro_sup_r is locked. Unable to change its value.
+Coordinate.setValue: WARN- coordinate pro_sup_l is locked. Unable to change its value.
+Found 120 state vectors with time stamps ranging from 6 to 7.19.
+Executing the analyses from 6 to 7.19...
+Printing results of investigation trial_4_IK to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
 Loaded model gait2392_simbody_3DOF_MD_scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
