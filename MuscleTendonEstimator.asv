@@ -385,23 +385,15 @@ lb_lTs_scaling(DatStore.free_lMo(:)) = 0.8*lb_lTs_scaling(DatStore.free_lMo(:));
 ub_lTs_scaling(DatStore.free_lMo(:)) = 1.3*ub_lTs_scaling(DatStore.free_lMo(:));
 opti_MTE.subject_to(lb_lTs_scaling < lTs_scaling_param < ub_lTs_scaling);
 
-% Free tendon stifness
-kT_scaling_param = opti_MTE.variable(auxdata.NMuscles,1);
-lb_kT_scaling_param = ones(auxdata.NMuscles,1); ub_kT_scaling_param = ones(auxdata.NMuscles,1);
-lb_kT_scaling_param(DatStore.free_lMo(:)) = 0.5*lb_kT_scaling_param(DatStore.free_lMo(:));
-ub_kT_scaling_param(DatStore.free_lMo(:)) = 1.2*ub_kT_scaling_param(DatStore.free_lMo(:));
-opti_MTE.subject_to(lb_kT_scaling_param < kT_scaling_param < ub_kT_scaling_param);
-
 % Set initial guess
 if Misc.MRSBool == 1
     opti_MTE.set_initial(a,MActivation.genericMRS);             % Initial guess generic MRS
-    opti_MTE.set_initial(lMtilde, lMtildeopt.genericMRS);
+    opti_MTE.set_initial(lMtilde,lMtildeInterp');
     opti_MTE.set_initial(e, MExcitation.genericMRS);
     opti_MTE.set_initial(vMtilde,MvMtilde.genericMRS);
     opti_MTE.set_initial(aT,RActivation.genericMRS./auxdata.Topt);
     opti_MTE.set_initial(lMo_scaling_param,1);
     opti_MTE.set_initial(lTs_scaling_param,1);
-    opti_MTE.set_initial(kT_scaling_param,1); 
 else
     opti_MTE.set_initial(a,SoActInterp');             % Initial guess (static optimization)
     opti_MTE.set_initial(lMtilde,lMtildeopt.genericMRS);
@@ -410,7 +402,6 @@ else
     opti_MTE.set_initial(aT,SoRActInterp(1:N,:)'./auxdata.Topt);
     opti_MTE.set_initial(lMo_scaling_param,1);
     opti_MTE.set_initial(lTs_scaling_param,1);
-    opti_MTE.set_initial(kT_scaling_param,1);
 end
 
 
@@ -428,8 +419,8 @@ for k=1:N
     opti_MTE.subject_to(eulerIntegrator(Xk,Zk,Uk,h) == 0);
     
     % Get muscle-tendon forces and derive Hill-equilibrium
-    [Hilldiffk,FTk] = f_ForceEquilibrium_lMtildeState_lMoFree_lTsFree_kTFree(ak,lMtildek,vMtildek,LMTinterp(k,:)',[lMo_scaling_param lTs_scaling_param kT_scaling_param]);
-    
+    [Hilldiffk,FTk] = f_ForceEquilibrium_lMtildeState_lMoFree_lTsFree(ak,lMtildek,vMtildek,LMTinterp(k,:)',[lMo_scaling_param lTs_scaling_param]);
+
     % Add path constraints
     % Moment constraints
     for dof = 1:auxdata.Ndof
@@ -474,6 +465,7 @@ optionssol.ipopt.tol = output.setup.nlp.ipoptoptions.tolerance;
 optionssol.ipopt.max_iter = output.setup.nlp.ipoptoptions.maxiterations;
 
 opti_MTE.solver(output.setup.nlp.solver,optionssol);
+    opti_MTE.callback(@(i) opti_MTE.debug.show_infeasibilities(1));
 
 % Solve
 diary('MTE.txt');
@@ -486,9 +478,6 @@ diary off
 a_opt = sol.value(a);
 lMtilde_opt = sol.value(lMtilde);
 lMo_scaling_param_opt = sol.value(lMo_scaling_param);
-lTs_scaling_param_opt = sol.value(lTs_scaling_param);
-kT_scaling_param_opt = sol.value(kT_scaling_param);
-
 lMo_opt = lMo_scaling_param_opt.*auxdata.params(2,:)';
 % Muscle excitations
 e_opt = sol.value(e);
@@ -500,13 +489,11 @@ aT_opt = sol.value(aT);
 % Grid
 % Mesh points
 tgrid = linspace(t0,tf,N+1)';
-
-% Plot US tracking
 figure(5)
 plot(tgrid,lMtilde_opt(DatStore.free_lMo(:),:).*lMo_opt(DatStore.free_lMo(:)),'LineWidth',2); hold on;
 plot(tgrid,lMtildeopt.genericMRS(DatStore.free_lMo(:),:).*auxdata.params(2,DatStore.free_lMo(:))','LineWidth',2); hold on;
 plot(tgrid,US_data.data(:,2)'/1000,'LineWidth',2);
-legend('MTE','MRS','USdata');
+legend('MTE','MRS','USdata')
 
 % Save results
 Time.MTE = tgrid;
@@ -515,11 +502,7 @@ lMtildeopt.MTE = lMtilde_opt;
 lM.MTE = lMtilde_opt.*lMo_opt;
 MExcitation.MTE = e_opt;
 RActivation.MTE = aT_opt*auxdata.Topt;
-
 lMo_scaling_paramopt.MTE = lMo_scaling_param_opt;
-lTs_scaling_paramopt.MTE = lTs_scaling_param_opt;
-kT_scaling_paramopt.MTE = kT_scaling_param_opt;
-
 MuscleNames = DatStore.MuscleNames;
 OptInfo = output;
 % Tendon forces from lMtilde

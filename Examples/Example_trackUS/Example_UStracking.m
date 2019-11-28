@@ -85,7 +85,7 @@ Misc.ActBound = 1;
 
 % Plotter Bool: Boolean to select if you want to plot lots of output information of intermediate steps in the script
 Misc.PlotBool = 1;
-
+Misc.MRSBool = 1;
 
 % Run muscle tendon estimator:
 % ...... (Run function here)

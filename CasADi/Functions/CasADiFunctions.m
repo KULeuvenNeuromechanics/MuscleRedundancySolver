@@ -69,10 +69,17 @@ lMT_SX = SX.sym('lMT',auxdata.NMuscles); % Muscle-tendon lengths
 [Hilldiff_SX,FT_SX] = ForceEquilibrium_lMtildeState(a_SX,lMtilde_SX,vMtilde_SX,lMT_SX,auxdata.params',auxdata.Fvparam,auxdata.Fpparam,auxdata.Faparam,auxdata.Atendon',auxdata.shift');
 f_forceEquilibrium_lMtildeState = Function('f_forceEquilibrium_lMtildeState',{a_SX,lMtilde_SX,vMtilde_SX,lMT_SX},{Hilldiff_SX,FT_SX});
 
-lM_opt_scaling_SX = SX.sym('lM_opt',auxdata.NMuscles);
+lM_opt_scaling_SX = SX.sym('lM_opt_scaling',auxdata.NMuscles);
 [Hilldiff_SX,FT_SX] = ForceEquilibrium_lMtildeState_lMoFree(a_SX,lMtilde_SX,vMtilde_SX,lMT_SX,lM_opt_scaling_SX,auxdata.params',auxdata.Fvparam,auxdata.Fpparam,auxdata.Faparam,auxdata.Atendon',auxdata.shift');
 f_ForceEquilibrium_lMtildeState_lMoFree = Function('f_ForceEquilibrium_lMtildeState_lMoFree',{a_SX,lMtilde_SX,vMtilde_SX,lMT_SX,lM_opt_scaling_SX},{Hilldiff_SX,FT_SX});
 
+lM_lTs_opt_scaling_SX = SX.sym('lM_lTs_opt_scaling',auxdata.NMuscles,2);
+[Hilldiff_SX,FT_SX] = ForceEquilibrium_lMtildeState_lMoFree_lTsFree(a_SX,lMtilde_SX,vMtilde_SX,lMT_SX,lM_lTs_opt_scaling_SX,auxdata.params',auxdata.Fvparam,auxdata.Fpparam,auxdata.Faparam,auxdata.Atendon',auxdata.shift');
+f_ForceEquilibrium_lMtildeState_lMoFree_lTsFree = Function('f_ForceEquilibrium_lMtildeState_lMoFree_lTsFree',{a_SX,lMtilde_SX,vMtilde_SX,lMT_SX,lM_lTs_opt_scaling_SX},{Hilldiff_SX,FT_SX});
+
+lM_lTs_kT_opt_scaling_SX = SX.sym('lM_lTs_kT_opt_scaling',auxdata.NMuscles,3);
+[Hilldiff_SX,FT_SX] = ForceEquilibrium_lMtildeState_lMoFree_lTsFree_kTFree(a_SX,lMtilde_SX,vMtilde_SX,lMT_SX,lM_lTs_kT_opt_scaling_SX,auxdata.params',auxdata.Fvparam,auxdata.Fpparam,auxdata.Faparam,auxdata.Atendon',auxdata.shift');
+f_ForceEquilibrium_lMtildeState_lMoFree_lTsFree_kTFree = Function('f_ForceEquilibrium_lMtildeState_lMoFree_lTsFree_kTFree',{a_SX,lMtilde_SX,vMtilde_SX,lMT_SX,lM_lTs_kT_opt_scaling_SX},{Hilldiff_SX,FT_SX});
 
 % Test function
 % atest = rand(auxdata.NMuscles,1);
