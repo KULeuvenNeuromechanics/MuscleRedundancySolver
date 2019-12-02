@@ -85,21 +85,13 @@ for i = 1:size(IK_path,1)
     [DatStore] = getMuscleInfo(IK_path_trial,ID_path_trial,Misc,DatStore,i);
     
     DatStore(i).free_lMo = zeros(length(Misc.Estimate_OptFL),1);
-    DatStore(i).free_kT = zeros(length(Misc.Estimate_TendonStifness),1);
-    DatStore(i).coupled_kT = zeros(size(Misc.Coupled_TendonStifness))';
+    DatStore(i).free_kT = zeros(length(Misc.Estimate_TendonStifness),1);Coupled_TendonStifness
+    DatStore(i).coupled_kT = zeros(size(Misc.Coupled_TendonStifness));
     for j = 1:length(DatStore(i).free_lMo)
         DatStore(i).free_lMo(j) = find(strcmp(DatStore(i).MuscleNames,Misc.Estimate_OptFL{j}));
-    end
-    
-    for j = 1:length(DatStore(i).free_kT)
         DatStore(i).free_kT(j) = find(strcmp(DatStore(i).MuscleNames,Misc.Estimate_TendonStifness{j}));
     end
     
-    for k = 1:size((DatStore(i).coupled_kT),1)
-        for j = 1:size((DatStore(i).coupled_kT),2)
-            DatStore(i).coupled_kT(k,j) = find(strcmp(DatStore(i).MuscleNames,Misc.Coupled_TendonStifness{j,k}));
-        end
-    end
 end
 
 
@@ -435,14 +427,10 @@ opti_MTE.subject_to(lb_lTs_scaling < lTs_scaling_param < ub_lTs_scaling);
 % Free tendon stifness
 kT_scaling_param = opti_MTE.variable(DatStore(1).NMuscles,1);
 lb_kT_scaling_param = ones(DatStore(1).NMuscles,1); ub_kT_scaling_param = ones(DatStore(1).NMuscles,1);
-lb_kT_scaling_param(DatStore(1).free_kT(:)) = 0.2*lb_kT_scaling_param(DatStore(1).free_kT(:));
-ub_kT_scaling_param(DatStore(1).free_kT(:)) = 1.2*ub_kT_scaling_param(DatStore(1).free_kT(:));
+lb_kT_scaling_param(DatStore(1).free_lMo(:)) = 0.2*lb_kT_scaling_param(DatStore(1).free_lMo(:));
+ub_kT_scaling_param(DatStore(1).free_lMo(:)) = 1.2*ub_kT_scaling_param(DatStore(1).free_lMo(:));
 opti_MTE.subject_to(lb_kT_scaling_param < kT_scaling_param < ub_kT_scaling_param);
-for k = 1:size(DatStore(i).coupled_kT,1)
-       for j = 1:size(DatStore(i).coupled_kT,2)-1
-            opti_MTE.subject_to(kT_scaling_param(DatStore(1).coupled_kT(k,j)) - kT_scaling_param(DatStore(1).coupled_kT(k,j+1)) == 0);
-       end
-end
+
 % Set initial guess
 if Misc.MRSBool == 1
     opti_MTE.set_initial(a,a_opt);             % Initial guess generic MRS
@@ -482,12 +470,12 @@ for trial = 1:Misc.nTrials
     US_tracking(trial).MTE = US_data.data;
     for k=1:N
         % Variables within current mesh interval
-        ak = a(:,(N_acc+trial-1) + k); lMtildek = lMtilde(:,(N_acc+trial-1) + k);
-        vMtildek = vMtilde(:,N_acc + k); aTk = aT(:,N_acc + k); ek = e(:,N_acc + k);
+        ak = a(:,(N_acc+trial-1)*(trial-1) + k); lMtildek = lMtilde(:,(N_acc+trial-1)*(trial-1) + k);
+        vMtildek = vMtilde(:,N_acc*(trial-1) + k); aTk = aT(:,N_acc*(trial-1) + k); ek = e(:,N_acc*(trial-1) + k);
         
         % Integration   Uk = (X_(k+1) - X_k)/*dt
         Xk = [ak; lMtildek];
-        Zk = [a(:,(N_acc+trial-1) + k + 1);lMtilde(:,(N_acc+trial-1) + k + 1)];
+        Zk = [a(:,(N_acc+trial-1)*(trial-1) + k + 1);lMtilde(:,(N_acc+trial-1)*(trial-1) + k + 1)];
         Uk = [ActivationDynamics(ek,ak,Misc.tauAct,Misc.tauDeact,Misc.b); vMtildek];
         opti_MTE.subject_to(eulerIntegrator(Xk,Zk,Uk,h) == 0);
         
@@ -509,7 +497,7 @@ for trial = 1:Misc.nTrials
     end
     lMo = lMo_scaling_param(DatStore(trial).free_lMo(:)).*Misc.params(2,DatStore(trial).free_lMo(:))';
     lMtilde_tracking = US_data.data(:,2)'./lMo/1000;
-    lMtilde_simulated = lMtilde(DatStore(trial).free_lMo(:),(N_acc + trial - 1) + 1:(N_acc + trial - 1) + N + 1);
+    lMtilde_simulated = lMtilde(DatStore(trial).free_lMo(:),(trial-1)*(N_acc + trial - 1) + 1:(trial-1)*(N_acc + trial - 1) + N + 1);
     J = J + ...
         10*sumsqr(lMtilde_simulated-lMtilde_tracking)/N;
     N_acc = N_acc + N;
