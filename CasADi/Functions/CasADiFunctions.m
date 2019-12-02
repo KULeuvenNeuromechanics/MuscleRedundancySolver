@@ -4,7 +4,7 @@ import casadi.*
 
 %% Functions for sum of squared values
 % # muscles
-e_ss = SX.sym('etemp_NMuscles',auxdata.NMuscles);
+e_ss = SX.sym('etemp_NMuscles',Misc.NMuscles);
 J_ss = 0;
 for i=1:length(e_ss)
     J_ss = J_ss + e_ss(i).^2;

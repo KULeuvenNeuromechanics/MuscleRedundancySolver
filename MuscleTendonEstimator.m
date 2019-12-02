@@ -58,7 +58,7 @@ end
 % ----------------------------------------------------------------------- %
 % Muscle analysis ------------------------------------------------------- %
 % Perform muscle analysis for the different selected trials
-Misc.nTrials = 1:size(IK_path,1);
+Misc.nTrials = size(IK_path,1);
 
 DatStore = struct;
 for i = 1:size(IK_path,1)
@@ -144,7 +144,7 @@ Misc.Topt = 150;                     % Scaling factor: reserve actuators
 
 tau_act = 0.015; Misc.tauAct = tau_act * ones(1,DatStore(1).nMuscles);       % activation time constant (activation dynamics)
 tau_deact = 0.06; Misc.tauDeact = tau_deact * ones(1,DatStore(1).nMuscles);  % deactivation time constant (activation dynamics)
-auxdata.b = 0.1;
+Misc.b = 0.1;
 
 % Parameters of active muscle force-velocity characteristic
 load('ActiveFVParameters.mat','ActiveFVParameters');
@@ -228,65 +228,84 @@ end
 % CasADi setup
 import casadi.*
 % Load CasADi function
-CasADiFunctions
+% CasADiFunctions
 
 opti = casadi.Opti();
 
+% What if different trials involve different nr of muscles?
 if Misc.MRSBool == 1
     nTrials = Misc.nTrials;
+    N_tot = 0;
+    SoActGuess = []; lMtildeGuess = []; vMtildeGuess = []; SoRActGuess = []; SoExcGuess = [];
+    for trial = 1:nTrials
+        % Time bounds
+        t0 = DatStore(trial).time(1); tf = DatStore(trial).time(end);
+        % Discretization
+        N = round((tf-t0)*Misc.Mesh_Frequency);
+        N_tot = N_tot + N;
+        SoActGuess = [SoActGuess DatStore(trial).SoActInterp'];
+        SoExcGuess = [SoExcGuess DatStore(trial).SoActInterp(1:end-1,:)'];
+        lMtildeGuess = [lMtildeGuess DatStore(trial).lMtildeInterp'];
+        vMtildeGuess = [vMtildeGuess DatStore(trial).vMtildeinterp(1:end-1,:)'];
+        SoRActGuess = [SoRActGuess DatStore(trial).SoRActInterp(1:end-1,:)'];
+        
+    end
+    
     % Variables - bounds and initial guess
     % States (at mesh and collocation points)
     % Muscle activations
-    a = opti.variable(DatStore.NMuscles,(N+1)*nTrials);      % Variable at mesh points
+    a = opti.variable(DatStore(trial).NMuscles,N_tot+nTrials);      % Variable at mesh points
     opti.subject_to(a_min < a < a_max);           % Bounds
-    opti.set_initial(a,SoActInterp');             % Initial guess (static optimization)
+    opti.set_initial(a,SoActGuess);             % Initial guess (static optimization)
     % Muscle fiber lengths
-    lMtilde = opti.variable(DatStore.NMuscles,(N+1)*nTrials);
+    lMtilde = opti.variable(DatStore(trial).NMuscles,N_tot+nTrials);
     opti.subject_to(lMtilde_min < lMtilde < lMtilde_max);
-    opti.set_initial(lMtilde,lMtildeInterp');
+    opti.set_initial(lMtilde,lMtildeGuess);
     
     % Controls
-    e = opti.variable(DatStore.NMuscles,N*nTrials);
+    e = opti.variable(DatStore(trial).NMuscles,N_tot);
     opti.subject_to(e_min < e < e_max);
-    opti.set_initial(e, SoActInterp(1:N,:)');
+    opti.set_initial(e, SoExcGuess);
     % Reserve actuators
-    aT = opti.variable(DatStore.Ndof,N*nTrials);
+    aT = opti.variable(DatStore(trial).Ndof,N_tot);
     opti.subject_to(-1 < aT <1);
-    opti.set_initial(aT,SoRActInterp(1:N,:)'./Misc.Topt);
+    opti.set_initial(aT,SoRActGuess./Misc.Topt);
     % Time derivative of muscle-tendon forces (states)
-    vMtilde = Misc.scaling.vMtilde.*opti.variable(DatStore.NMuscles,N*nTrials);
+    vMtilde = Misc.scaling.vMtilde.*opti.variable(DatStore(trial).NMuscles,N_tot);
     opti.subject_to(vMtilde_min < vMtilde < vMtilde_max);
-    opti.set_initial(vMtilde,vMtildeinterp(1:N,:)');
+    opti.set_initial(vMtilde,vMtildeGuess);
     
     
     % Loop over mesh points formulating NLP
     J = 0; % Initialize cost function
+    N_acc = 0;
     for trial = 1:Misc.nTrials
         % Time bounds
         t0 = DatStore(trial).time(1); tf = DatStore(trial).time(end);
         % Discretization
         N = round((tf-t0)*Misc.Mesh_Frequency);
         h = (tf-t0)/N;
+        
         for k=1:N
             % Variables within current mesh interval
-            ak = a(:,(N+1)*(trial-1) + k); lMtildek = lMtilde(:,(N+1)*(trial-1) + k);
-            vMtildek = vMtilde(:,N*(trial-1) + k); aTk = aT(:,N*(trial-1) + k); ek = e(:,N*(trial-1) + k);
+            ak = a(:,(N_acc+trial)*(trial-1) + k); lMtildek = lMtilde(:,(N_acc+trial)*(trial-1) + k);
+            vMtildek = vMtilde(:,N_acc*(trial-1) + k); aTk = aT(:,N_acc*(trial-1) + k); ek = e(:,N_acc*(trial-1) + k);
             
             % Integration   Uk = (X_(k+1) - X_k)/*dt
             Xk = [ak; lMtildek];
             Zk = [a(:,k+1);lMtilde(:,k+1)];
-            Uk = [f_ActivationDynamics(ek,ak); vMtildek];
+            Uk = [ActivationDynamics(ek,ak,Misc.tauAct,Misc.tauDeact,Misc.b); vMtildek];
             opti.subject_to(eulerIntegrator(Xk,Zk,Uk,h) == 0);
             
             % Get muscle-tendon forces and derive Hill-equilibrium
-            [Hilldiffk,FTk] = f_forceEquilibrium_lMtildeState(ak,lMtildek,vMtildek,DatStore(trial).LMTinterp(k,:)');
+            [Hilldiffk,FTk] = ForceEquilibrium_lMtildeState(ak,lMtildek,vMtildek,DatStore(trial).LMTinterp(k,:)',Misc.params',Misc.Fvparam,Misc.Fpparam,Misc.Faparam,Misc.Atendon',Misc.shift');
             
             % Add path constraints
             % Moment constraints
             for dof = 1:DatStore(trial).Ndof
                 T_exp = DatStore(trial).IDinterp(k,dof);
-                index_sel = (dof-1)*(DatStore(trial).NMuscles)+1:(dof-1)*(DatStore.NMuscles)+DatStore.NMuscles;
-                T_sim = f_spNMuscles(DatStore(trial).MAinterp(k,index_sel),FTk) + Misc.Topt*aTk(dof);
+                index_sel = (dof-1)*(DatStore(trial).NMuscles)+1:(dof-1)*(DatStore(trial).NMuscles)+DatStore(trial).NMuscles;
+                T_sim = FTk'*DatStore(trial).MAinterp(k,index_sel)' + Misc.Topt*aTk(dof);
                 opti.subject_to(T_exp - T_sim == 0);
             end
             % Hill-equilibrium constraint
@@ -298,11 +317,12 @@ if Misc.MRSBool == 1
             sumsqr(e)/N/DatStore(trial).NMuscles + ...
             Misc.w1*sumsqr(aT)/N/DatStore(trial).Ndof + ...
             Misc.w2*sumsqr(vMtilde)/N/DatStore(trial).NMuscles;
+        N_acc = N_acc + N;
     end
     opti.minimize(J); % Define cost function in opti
     
     % Create an NLP solver
-    output.setup.auxdata = auxdata;
+    output.setup.Misc = Misc;
     output.setup.nlp.solver = 'ipopt';
     output.setup.nlp.ipoptoptions.linear_solver = 'mumps';
     % Set derivativelevel to 'first' for approximating the Hessian
@@ -344,20 +364,20 @@ if Misc.MRSBool == 1
     % Mesh points
     tgrid = linspace(t0,tf,N+1)';
     % Save results
-    Time.genericMRS = tgrid;
-    MActivation.genericMRS = a_opt;
-    lMtildeopt.genericMRS = lMtilde_opt;
-    lM.genericMRS = lMtilde_opt.*repmat(DatStore.lOpt',1,length(Time.genericMRS));
-    MvMtilde.genericMRS = vMtilde_opt;
-    MExcitation.genericMRS = e_opt;
-    RActivation.genericMRS = aT_opt*Misc.Topt;
+    Time(trial).genericMRS = tgrid;
+    MActivation(trial).genericMRS = a_opt;
+    lMtildeopt(trial).genericMRS = lMtilde_opt;
+    lM(trial).genericMRS = lMtilde_opt.*repmat(DatStore.lOpt',1,length(Time.genericMRS));
+    MvMtilde(trial).genericMRS = vMtilde_opt;
+    MExcitation(trial).genericMRS = e_opt;
+    RActivation(trial).genericMRS = aT_opt*Misc.Topt;
     MuscleNames = DatStore.MuscleNames;
     OptInfo = output;
     % Tendon forces from lMtilde
-    lMTinterp.genericMRS = LMTinterp;
+    lMTinterp(trial).genericMRS = LMTinterp;
     [TForcetilde_,TForce_] = TendonForce_lMtilde(lMtildeopt.genericMRS',Misc.params,lMTinterp.genericMRS,Misc.Atendon,Misc.shift);
-    TForcetilde.genericMRS = TForcetilde_';
-    TForce.genericMRS = TForce_';
+    TForcetilde(trial).genericMRS = TForcetilde_';
+    TForce(trial).genericMRS = TForce_';
     
     clear opti a lMtilde e vMtilde aT
     
@@ -408,11 +428,11 @@ opti_MTE.subject_to(lb_kT_scaling_param < kT_scaling_param < ub_kT_scaling_param
 
 % Set initial guess
 if Misc.MRSBool == 1
-    opti_MTE.set_initial(a,MActivation.genericMRS);             % Initial guess generic MRS
-    opti_MTE.set_initial(lMtilde, lMtildeopt.genericMRS);
-    opti_MTE.set_initial(e, MExcitation.genericMRS);
-    opti_MTE.set_initial(vMtilde,MvMtilde.genericMRS);
-    opti_MTE.set_initial(aT,RActivation.genericMRS./Misc.Topt);
+    opti_MTE.set_initial(a,a_opt);             % Initial guess generic MRS
+    opti_MTE.set_initial(lMtilde,lMtilde_opt);
+    opti_MTE.set_initial(e,e_opt);
+    opti_MTE.set_initial(vMtilde,vMtilde_opt);
+    opti_MTE.set_initial(aT,aT_opt);
     opti_MTE.set_initial(lMo_scaling_param,1);
     opti_MTE.set_initial(lTs_scaling_param,1);
     opti_MTE.set_initial(kT_scaling_param,1);
