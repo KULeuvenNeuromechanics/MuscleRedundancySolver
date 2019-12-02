@@ -85,13 +85,21 @@ for i = 1:size(IK_path,1)
     [DatStore] = getMuscleInfo(IK_path_trial,ID_path_trial,Misc,DatStore,i);
     
     DatStore(i).free_lMo = zeros(length(Misc.Estimate_OptFL),1);
-    DatStore(i).free_kT = zeros(length(Misc.Estimate_TendonStifness),1);Coupled_TendonStifness
-    DatStore(i).coupled_kT = zeros(size(Misc.Coupled_TendonStifness));
+    DatStore(i).free_kT = zeros(length(Misc.Estimate_TendonStifness),1);
+    DatStore(i).coupled_kT = zeros(size(Misc.Coupled_TendonStifness))';
     for j = 1:length(DatStore(i).free_lMo)
         DatStore(i).free_lMo(j) = find(strcmp(DatStore(i).MuscleNames,Misc.Estimate_OptFL{j}));
+    end
+    
+    for j = 1:length(DatStore(i).free_kT)
         DatStore(i).free_kT(j) = find(strcmp(DatStore(i).MuscleNames,Misc.Estimate_TendonStifness{j}));
     end
     
+    for k = 1:size((DatStore(i).coupled_kT),1)
+        for j = 1:size((DatStore(i).coupled_kT),2)
+            DatStore(i).coupled_kT(k,j) = find(strcmp(DatStore(i).MuscleNames,Misc.Coupled_TendonStifness{j,k}));
+        end
+    end
 end
 
 
@@ -289,12 +297,12 @@ if Misc.MRSBool == 1
         
         for k=1:N
             % Variables within current mesh interval
-            ak = a(:,(N_acc+trial-1)*(trial-1) + k); lMtildek = lMtilde(:,(N_acc+trial-1)*(trial-1) + k);
-            vMtildek = vMtilde(:,N_acc*(trial-1) + k); aTk = aT(:,N_acc*(trial-1) + k); ek = e(:,N_acc*(trial-1) + k);
+            ak = a(:,(N_acc+trial-1) + k); lMtildek = lMtilde(:,(N_acc+trial-1) + k);
+            vMtildek = vMtilde(:,N_acc + k); aTk = aT(:,N_acc + k); ek = e(:,N_acc + k);
             
             % Integration   Uk = (X_(k+1) - X_k)/*dt
             Xk = [ak; lMtildek];
-            Zk = [a(:,(N_acc+trial-1)*(trial-1) + k + 1);lMtilde(:,(N_acc+trial-1)*(trial-1) + k + 1)];
+            Zk = [a(:,(N_acc+trial-1) + k + 1);lMtilde(:,(N_acc+trial-1) + k + 1)];
             Uk = [ActivationDynamics(ek,ak,Misc.tauAct,Misc.tauDeact,Misc.b); vMtildek];
             opti.subject_to(eulerIntegrator(Xk,Zk,Uk,h) == 0);
             
@@ -370,12 +378,12 @@ if Misc.MRSBool == 1
         tgrid = linspace(t0,tf,N+1)';
         % Save results
         Time(trial).genericMRS = tgrid;
-        MActivation(trial).genericMRS = a_opt(:,(trial-1)*(Ntot + trial - 1) + 1:(trial-1)*(Ntot + trial - 1) + N + 1);
-        lMtildeopt(trial).genericMRS = lMtilde_opt(:,(trial-1)*(Ntot + trial - 1) + 1:(trial-1)*(Ntot + trial - 1) + N + 1);
-        lM(trial).genericMRS = lMtilde_opt(:,(trial-1)*(Ntot + trial - 1) + 1:(trial-1)*(Ntot + trial - 1) + N + 1).*repmat(Misc.lOpt',1,length(tgrid));
-        MvMtilde(trial).genericMRS = vMtilde_opt(:,Ntot*(trial-1) + 1:Ntot*(trial-1) + N);
-        MExcitation(trial).genericMRS = e_opt(:,Ntot*(trial-1) + 1:Ntot*(trial-1) + N);
-        RActivation(trial).genericMRS = aT_opt(:,Ntot*(trial-1) + 1:Ntot*(trial-1) + N)*Misc.Topt;
+        MActivation(trial).genericMRS = a_opt(:,(Ntot + trial - 1) + 1:(Ntot + trial - 1) + N + 1);
+        lMtildeopt(trial).genericMRS = lMtilde_opt(:,(Ntot + trial - 1) + 1:(Ntot + trial - 1) + N + 1);
+        lM(trial).genericMRS = lMtilde_opt(:,(Ntot + trial - 1) + 1:(Ntot + trial - 1) + N + 1).*repmat(Misc.lOpt',1,length(tgrid));
+        MvMtilde(trial).genericMRS = vMtilde_opt(:,Ntot + 1:Ntot + N);
+        MExcitation(trial).genericMRS = e_opt(:,Ntot + 1:Ntot + N);
+        RActivation(trial).genericMRS = aT_opt(:,Ntot + 1:Ntot + N)*Misc.Topt;
         MuscleNames = DatStore.MuscleNames;
         OptInfo = output;
         % Tendon forces from lMtilde
@@ -413,24 +421,28 @@ opti_MTE.subject_to(vMtilde_min < vMtilde < vMtilde_max);
 % Free optimal fiber length
 lMo_scaling_param = opti_MTE.variable(DatStore(1).NMuscles,1);
 lb_lMo_scaling = ones(DatStore(1).NMuscles,1); ub_lMo_scaling = ones(DatStore(1).NMuscles,1);
-lb_lMo_scaling(DatStore(1).free_lMo(:)) = 0.8*lb_lMo_scaling(DatStore(1).free_lMo(:));
-ub_lMo_scaling(DatStore(1).free_lMo(:)) = 1.3*ub_lMo_scaling(DatStore(1).free_lMo(:));
+lb_lMo_scaling(DatStore(1).free_lMo(:)) = Misc.lb_lMo_scaling*lb_lMo_scaling(DatStore(1).free_lMo(:));
+ub_lMo_scaling(DatStore(1).free_lMo(:)) = Misc.ub_lMo_scaling*ub_lMo_scaling(DatStore(1).free_lMo(:));
 opti_MTE.subject_to(lb_lMo_scaling < lMo_scaling_param < ub_lMo_scaling);
 
 % Free slack length
 lTs_scaling_param = opti_MTE.variable(DatStore(1).NMuscles,1);
 lb_lTs_scaling = ones(DatStore(1).NMuscles,1); ub_lTs_scaling = ones(DatStore(1).NMuscles,1);
-lb_lTs_scaling(DatStore(1).free_lMo(:)) = 0.8*lb_lTs_scaling(DatStore(1).free_lMo(:));
-ub_lTs_scaling(DatStore(1).free_lMo(:)) = 1.3*ub_lTs_scaling(DatStore(1).free_lMo(:));
+lb_lTs_scaling(DatStore(1).free_lMo(:)) = Misc.lb_lTs_scaling*lb_lTs_scaling(DatStore(1).free_lMo(:));
+ub_lTs_scaling(DatStore(1).free_lMo(:)) = Misc.ub_lTs_scaling*ub_lTs_scaling(DatStore(1).free_lMo(:));
 opti_MTE.subject_to(lb_lTs_scaling < lTs_scaling_param < ub_lTs_scaling);
 
 % Free tendon stifness
 kT_scaling_param = opti_MTE.variable(DatStore(1).NMuscles,1);
 lb_kT_scaling_param = ones(DatStore(1).NMuscles,1); ub_kT_scaling_param = ones(DatStore(1).NMuscles,1);
-lb_kT_scaling_param(DatStore(1).free_lMo(:)) = 0.2*lb_kT_scaling_param(DatStore(1).free_lMo(:));
-ub_kT_scaling_param(DatStore(1).free_lMo(:)) = 1.2*ub_kT_scaling_param(DatStore(1).free_lMo(:));
+lb_kT_scaling_param(DatStore(1).free_kT(:)) = Misc.lb_kT_scaling*lb_kT_scaling_param(DatStore(1).free_kT(:));
+ub_kT_scaling_param(DatStore(1).free_kT(:)) = Misc.ub_kT_scaling*ub_kT_scaling_param(DatStore(1).free_kT(:));
 opti_MTE.subject_to(lb_kT_scaling_param < kT_scaling_param < ub_kT_scaling_param);
-
+for k = 1:size(DatStore(i).coupled_kT,1)
+       for j = 1:size(DatStore(i).coupled_kT,2)-1
+            opti_MTE.subject_to(kT_scaling_param(DatStore(1).coupled_kT(k,j)) - kT_scaling_param(DatStore(1).coupled_kT(k,j+1)) == 0);
+       end
+end
 % Set initial guess
 if Misc.MRSBool == 1
     opti_MTE.set_initial(a,a_opt);             % Initial guess generic MRS
@@ -470,12 +482,12 @@ for trial = 1:Misc.nTrials
     US_tracking(trial).MTE = US_data.data;
     for k=1:N
         % Variables within current mesh interval
-        ak = a(:,(N_acc+trial-1)*(trial-1) + k); lMtildek = lMtilde(:,(N_acc+trial-1)*(trial-1) + k);
-        vMtildek = vMtilde(:,N_acc*(trial-1) + k); aTk = aT(:,N_acc*(trial-1) + k); ek = e(:,N_acc*(trial-1) + k);
+        ak = a(:,(N_acc+trial-1) + k); lMtildek = lMtilde(:,(N_acc+trial-1) + k);
+        vMtildek = vMtilde(:,N_acc + k); aTk = aT(:,N_acc + k); ek = e(:,N_acc + k);
         
         % Integration   Uk = (X_(k+1) - X_k)/*dt
         Xk = [ak; lMtildek];
-        Zk = [a(:,(N_acc+trial-1)*(trial-1) + k + 1);lMtilde(:,(N_acc+trial-1)*(trial-1) + k + 1)];
+        Zk = [a(:,(N_acc+trial-1) + k + 1);lMtilde(:,(N_acc+trial-1) + k + 1)];
         Uk = [ActivationDynamics(ek,ak,Misc.tauAct,Misc.tauDeact,Misc.b); vMtildek];
         opti_MTE.subject_to(eulerIntegrator(Xk,Zk,Uk,h) == 0);
         
@@ -497,9 +509,8 @@ for trial = 1:Misc.nTrials
     end
     lMo = lMo_scaling_param(DatStore(trial).free_lMo(:)).*Misc.params(2,DatStore(trial).free_lMo(:))';
     lMtilde_tracking = US_data.data(:,2)'./lMo/1000;
-    lMtilde_simulated = lMtilde(DatStore(trial).free_lMo(:),(trial-1)*(N_acc + trial - 1) + 1:(trial-1)*(N_acc + trial - 1) + N + 1);
-    J = J + ...
-        10*sumsqr(lMtilde_simulated-lMtilde_tracking)/N;
+    lMtilde_simulated = lMtilde(DatStore(trial).free_lMo(:),(N_acc + trial - 1) + 1:(N_acc + trial - 1) + N + 1);
+    J = J + 10*sumsqr(lMtilde_simulated-lMtilde_tracking)/N;
     N_acc = N_acc + N;
 end
 
@@ -568,12 +579,12 @@ for trial = 1:nTrials
     tgrid = linspace(t0,tf,N+1)';
     % Save results
     Time(trial).MTE = tgrid;
-    MActivation(trial).MTE = a_opt(:,(trial-1)*(Ntot + trial - 1) + 1:(trial-1)*(Ntot + trial - 1) + N + 1);
-    lMtildeopt(trial).MTE = lMtilde_opt(:,(trial-1)*(Ntot + trial - 1) + 1:(trial-1)*(Ntot + trial - 1) + N + 1);
-    lM(trial).MTE = lMtilde_opt(:,(trial-1)*(Ntot + trial - 1) + 1:(trial-1)*(Ntot + trial - 1) + N + 1).*repmat(Misc.lOpt',1,length(tgrid));
-    MvMtilde(trial).MTE = vMtilde_opt(:,Ntot*(trial-1) + 1:Ntot*(trial-1) + N);
-    MExcitation(trial).MTE = e_opt(:,Ntot*(trial-1) + 1:Ntot*(trial-1) + N);
-    RActivation(trial).MTE = aT_opt(:,Ntot*(trial-1) + 1:Ntot*(trial-1) + N)*Misc.Topt;
+    MActivation(trial).MTE = a_opt(:,(Ntot + trial - 1) + 1:(Ntot + trial - 1) + N + 1);
+    lMtildeopt(trial).MTE = lMtilde_opt(:,(Ntot + trial - 1) + 1:(Ntot + trial - 1) + N + 1);
+    lM(trial).MTE = lMtilde_opt(:,(Ntot + trial - 1) + 1:(Ntot + trial - 1) + N + 1).*repmat(Misc.lOpt',1,length(tgrid));
+    MvMtilde(trial).MTE = vMtilde_opt(:,Ntot + 1:Ntot + N);
+    MExcitation(trial).MTE = e_opt(:,Ntot + 1:Ntot + N);
+    RActivation(trial).MTE = aT_opt(:,Ntot + 1:Ntot + N)*Misc.Topt;
     lMo_opt(trial).MTE = lMo_opt_;
     MuscleNames = DatStore(trial).MuscleNames;
     OptInfo = output;
@@ -594,7 +605,7 @@ for trial = 1:nTrials
     subplot(nTrials,1,trial)
     plot(Time(trial).MTE,lMtildeopt(trial).MTE(DatStore(trial).free_lMo(:),:).*lMo_opt(trial).MTE(DatStore(trial).free_lMo(:)),'LineWidth',2); hold on;
     if Misc.MRSBool == 1    
-        plot(Time(trial).MTE,lMtildeopt.genericMRS(DatStore(trial).free_lMo(:),:).*Misc.params(2,DatStore(trial).free_lMo(:))','LineWidth',2); hold on;
+        plot(Time(trial).MTE,lMtildeopt(trial).genericMRS(DatStore(trial).free_lMo(:),:).*Misc.params(2,DatStore(trial).free_lMo(:))','LineWidth',2); hold on;
     end
     plot(Time(trial).MTE,US_tracking(trial).MTE (:,2)'/1000,'LineWidth',2);
         if Misc.MRSBool == 1    
@@ -624,6 +635,8 @@ Results.lMTinterp = lMTinterp;
 Results.lMo_scaling_paramopt = lMo_scaling_paramopt;
 Results.lTs_scaling_paramopt = lTs_scaling_paramopt;
 Results.kT_scaling_paramopt = kT_scaling_paramopt;
+
+if Misc.ValidationMRS == 
 
 end
 

@@ -16,9 +16,9 @@ addpath(genpath(MainPath));
 
 % Add here the paths of IK, ID and US data trials you want to work with
 % As example we use trial 2 & 4
-IK_path = [fullfile(DataPath,'trial_2_IK.mot'); fullfile(DataPath,'trial_2_IK.mot'); fullfile(DataPath,'trial_4_IK.mot')];
-ID_path = [fullfile(DataPath,'trial_2_ID.mot'); fullfile(DataPath,'trial_2_ID.mot'); fullfile(DataPath,'trial_4_ID.mot')];
-US_path = [fullfile(DataPath,'trial_2_US.mot'); fullfile(DataPath,'trial_2_US.mot'); fullfile(DataPath,'trial_4_US.mot')]; %
+IK_path = [fullfile(DataPath,'trial_1_IK.mot'); fullfile(DataPath,'trial_2_IK.mot'); fullfile(DataPath,'trial_4_IK.mot')];
+ID_path = [fullfile(DataPath,'trial_1_ID.mot'); fullfile(DataPath,'trial_2_ID.mot'); fullfile(DataPath,'trial_4_ID.mot')];
+US_path = [fullfile(DataPath,'trial_1_US.mot'); fullfile(DataPath,'trial_2_US.mot'); fullfile(DataPath,'trial_4_US.mot')]; %
 
 model_path = fullfile(DataPath,'model.osim');
 Out_path=fullfile(ExamplePath,'Results');                    % folder to store results
@@ -37,10 +37,19 @@ Misc.RunAnalysis = 0;   % boolean to select if you want to run the muscle analys
 
 % Settings related to tendon stiffness
 Misc.ATendon = [];      % default way to set tendon stiffenss (default values is 35)
+
 Misc.Estimate_TendonStifness = {'med_gas_l';'lat_gas_l';'soleus_l'}; % Names of muscles of which tendon stifness is estimated
+Misc.lb_kT_scaling = 0.2; % Lower bound for scaling generic tendon stiffness
+Misc.ub_kT_scaling = 1.2; % Upper bound for scaling generic tendon stiffness
+Misc.Coupled_TendonStifness = {'med_gas_l';'lat_gas_l';'soleus_l'}; % Couple muscles that should have equal tendon stifness
+
 Misc.Estimate_OptFL = {'med_gas_l'};%;'lat_gas_l';'soleus_l'}; % Names of muscles of which optimal fiber length is estimated - slack length is estimated for these muscles as well
+Misc.lb_lMo_scaling = 0.7; % Lower bound for scaling optimal fiber length
+Misc.ub_lMo_scaling = 1.5; % Upper bound for scaling optimal fiber length
+Misc.lb_lTs_scaling = 0.7; % Lower bound for scaling tendon slack length
+Misc.ub_lTs_scaling = 1.5; % Upper bound for scaling tendon slack length
+
 Misc.FL_expdata = 'med_gas_l';
-Bounds = 0.1;
 
 % information for the EMG constraint
 Misc.EMGconstr  = 1;     % Boolean to select EMG constrained option
@@ -83,7 +92,10 @@ Misc.ActBound = 1;
 
 % Plotter Bool: Boolean to select if you want to plot lots of output information of intermediate steps in the script
 Misc.PlotBool = 1;
+% MRS Bool: Select if you want to run the generic muscle redundancy solver 
 Misc.MRSBool = 1;
+% Validation Bool: Select if you want to run the muscle redundancy solver with the optimized parameters
+Misc.ValidationBool = 1;
 
 % Run muscle tendon estimator:
 % ...... (Run function here)

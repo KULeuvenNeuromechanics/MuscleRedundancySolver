@@ -37,11 +37,19 @@ Misc.RunAnalysis = 0;   % boolean to select if you want to run the muscle analys
 
 % Settings related to tendon stiffness
 Misc.ATendon = [];      % default way to set tendon stiffenss (default values is 35)
+
 Misc.Estimate_TendonStifness = {'med_gas_l';'lat_gas_l';'soleus_l'}; % Names of muscles of which tendon stifness is estimated
-Misc.Coupled_TendonStifness = {'med_gas_l';'lat_gas_l';'soleus_l'}; % Names of muscles of which tendon stifness is estimated
+Misc.lb_kT_scaling = 0.2; % Lower bound for scaling generic tendon stiffness
+Misc.ub_kT_scaling = 1.2; % Upper bound for scaling generic tendon stiffness
+Misc.Coupled_TendonStifness = {'med_gas_l';'lat_gas_l';'soleus_l'}; % Couple muscles that should have equal tendon stifness
+
 Misc.Estimate_OptFL = {'med_gas_l'};%;'lat_gas_l';'soleus_l'}; % Names of muscles of which optimal fiber length is estimated - slack length is estimated for these muscles as well
+Misc.lb_lMo_scaling = 0.7; % Lower bound for scaling optimal fiber length
+Misc.ub_lMo_scaling = 1.5; % Upper bound for scaling optimal fiber length
+Misc.lb_lTs_scaling = 0.7; % Lower bound for scaling tendon slack length
+Misc.ub_lTs_scaling = 1.5; % Upper bound for scaling tendon slack length
+
 Misc.FL_expdata = 'med_gas_l';
-Bounds = 0.1;
 
 % information for the EMG constraint
 Misc.EMGconstr  = 1;     % Boolean to select EMG constrained option
@@ -65,7 +73,7 @@ Misc.EMGSelection = {'rectus_fem_r', 'vas_lat_r', 'bi_fem_lh_r', 'semiten_r', 't
 Misc.EMG_MuscleCopies = {'gas_med_r','gas_lat_r'};       %  use gastrocnemius medialis EMG to constrain activity of the lateral gastrocn
 
 
-
+Bounds = 0.1;
 
 % Use this weird implementation with adapting to bounds based on activity
 % of a static optimization without constraints
@@ -84,7 +92,10 @@ Misc.ActBound = 1;
 
 % Plotter Bool: Boolean to select if you want to plot lots of output information of intermediate steps in the script
 Misc.PlotBool = 1;
-Misc.MRSBool = 0;
+% MRS Bool: Select if you want to run the generic muscle redundancy solver 
+Misc.MRSBool = 1;
+% Validation Bool: Select if you want to run the muscle redundancy solver with the optimized parameters
+Misc.ValidationBool = 1;
 
 % Run muscle tendon estimator:
 % ...... (Run function here)
