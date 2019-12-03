@@ -259,7 +259,7 @@ for trial = 1:nTrials
 end
 
 % What if different trials involve different nr of muscles?
-if Misc.MRSBool == 1    
+if Misc.MRSBool == 1
     % Variables - bounds and initial guess
     % States (at mesh and collocation points)
     % Muscle activations
@@ -439,9 +439,9 @@ lb_kT_scaling_param(DatStore(1).free_kT(:)) = Misc.lb_kT_scaling*lb_kT_scaling_p
 ub_kT_scaling_param(DatStore(1).free_kT(:)) = Misc.ub_kT_scaling*ub_kT_scaling_param(DatStore(1).free_kT(:));
 opti_MTE.subject_to(lb_kT_scaling_param < kT_scaling_param < ub_kT_scaling_param);
 for k = 1:size(DatStore(i).coupled_kT,1)
-       for j = 1:size(DatStore(i).coupled_kT,2)-1
-            opti_MTE.subject_to(kT_scaling_param(DatStore(1).coupled_kT(k,j)) - kT_scaling_param(DatStore(1).coupled_kT(k,j+1)) == 0);
-       end
+    for j = 1:size(DatStore(i).coupled_kT,2)-1
+        opti_MTE.subject_to(kT_scaling_param(DatStore(1).coupled_kT(k,j)) - kT_scaling_param(DatStore(1).coupled_kT(k,j+1)) == 0);
+    end
 end
 % Set initial guess
 if Misc.MRSBool == 1
@@ -599,23 +599,6 @@ for trial = 1:nTrials
     Ntot = Ntot + N;
 end
 
-% Plot US tracking
-figure(5)
-for trial = 1:nTrials
-    subplot(nTrials,1,trial)
-    plot(Time(trial).MTE,lMtildeopt(trial).MTE(DatStore(trial).free_lMo(:),:).*lMo_opt(trial).MTE(DatStore(trial).free_lMo(:)),'LineWidth',2); hold on;
-    if Misc.MRSBool == 1    
-        plot(Time(trial).MTE,lMtildeopt(trial).genericMRS(DatStore(trial).free_lMo(:),:).*Misc.params(2,DatStore(trial).free_lMo(:))','LineWidth',2); hold on;
-    end
-    plot(Time(trial).MTE,US_tracking(trial).MTE (:,2)'/1000,'LineWidth',2);
-        if Misc.MRSBool == 1    
-
-    legend('MTE','MRS','USdata');
-        else
-                legend('MTE','USdata');
-        end
-
-end
 
 clear opti_MTE a lMtilde e vMtilde aT
 
@@ -668,7 +651,7 @@ if Misc.ValidationBool == true
     optimized_params(:,2) = lMo_scaling_paramopt(trial).MTE.*optimized_params(:,2);
     optimized_params(:,3) = lTs_scaling_paramopt(trial).MTE.*optimized_params(:,3);
     optimized_Atendon = kT_scaling_paramopt(trial).MTE.*Misc.Atendon';
-    optimized_shift = (exp(Atendon.*(1 - 0.995)))/5 - (exp(35.*(1 - 0.995)))/5;
+    optimized_shift = (exp(optimized_Atendon.*(1 - 0.995)))/5 - (exp(35.*(1 - 0.995)))/5;
     
     % Loop over mesh points formulating NLP
     J = 0; % Initialize cost function
@@ -780,6 +763,40 @@ if Misc.ValidationBool == true
     end
     clear opti_validation a lMtilde e vMtilde aT
 end
+
+% Collect results
+Results.Time = Time;
+Results.MActivation = MActivation;
+Results.lMtildeopt = lMtildeopt;
+Results.lM = lM;
+Results.MvMtilde = MvMtilde;
+Results.MExcitation = MExcitation;
+Results.RActivation = RActivation;
+Results.lMTinterp = lMTinterp;
+
+
+% Plot US tracking
+figure(5)
+for trial = 1:nTrials
+    subplot(nTrials,1,trial)
+    plot(Time(trial).MTE,lMtildeopt(trial).MTE(DatStore(trial).free_lMo(:),:).*lMo_opt(trial).MTE(DatStore(trial).free_lMo(:)),'LineWidth',2); hold on;
+    if Misc.MRSBool == 1
+        plot(Time(trial).MTE,lMtildeopt(trial).genericMRS(DatStore(trial).free_lMo(:),:).*Misc.params(2,DatStore(trial).free_lMo(:))','LineWidth',2); hold on;
+    end
+    if Misc.ValidationBool == 1
+        plot(Time(trial).validationMRS,lMtildeopt(trial).validationMRS(DatStore(trial).free_lMo(:),:).*optimized_params(DatStore(trial).free_lMo(:),2),'LineWidth',2); hold on;
+    end
+    plot(Time(trial).MTE,US_tracking(trial).MTE (:,2)'/1000,'LineWidth',2);
+    if Misc.MRSBool == 1 && Misc.ValidationBool == 1
+        
+        legend('MTE','Generic MRS','Optimized MRS','USdata');
+    elseif Misc.MRSBool == 1
+        legend('MTE','MRS','USdata');
+    else
+        legend('MTE','USdata');
+    end
+end
+
 
 end
 
