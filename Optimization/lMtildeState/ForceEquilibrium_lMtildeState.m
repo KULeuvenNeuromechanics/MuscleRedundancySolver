@@ -4,12 +4,12 @@
 
 function [err, FT] = ForceEquilibrium_lMtildeState(a,lMtilde,vMtilde,lMT,params,Fvparam,Fpparam,Faparam,Atendon,shift)
 
-FMo = ones(size(a,1),1)*params(1,:);
-lMo = ones(size(a,1),1)*params(2,:);
-lTs = ones(size(a,1),1)*params(3,:);
-alphao = ones(size(a,1),1)*params(4,:);
-Atendon = ones(size(a,1),1)*Atendon;
-shift = ones(size(a,1),1)*shift;
+FMo = params(:,1);
+lMo = params(:,2);
+lTs = params(:,3);
+alphao = params(:,4);
+Atendon = Atendon;
+shift = shift;
 
 % Hill-type muscle model: geometric relationships
 lM = lMtilde.*lMo;

@@ -19,6 +19,7 @@ fse_kt = fse;
 shift = fse_kt35-fse_kt;
 fse = (exp(kT.*(lTtilde - 0.995)))/5 - 0.25 + shift;
 
+
 if sum(abs(fse - fse_kt35)>1e-12) ~= 0
     shift = NaN;
     warning('Error in shift tendon force-length curve');

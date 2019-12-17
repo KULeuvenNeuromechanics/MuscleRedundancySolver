@@ -4,7 +4,7 @@ import casadi.*
 
 %% Functions for sum of squared values
 % # muscles
-e_ss = SX.sym('etemp_NMuscles',auxdata.NMuscles);
+e_ss = SX.sym('etemp_NMuscles',Misc.NMuscles);
 J_ss = 0;
 for i=1:length(e_ss)
     J_ss = J_ss + e_ss(i).^2;
@@ -39,9 +39,7 @@ Hilldiff_SX = SX(auxdata.NMuscles,1); % Hill equilibrium
 FT_SX = SX(auxdata.NMuscles,1); % Tendon forces
 lMT_SX = SX.sym('lMT',auxdata.NMuscles); % Muscle-tendon lengths
 vMT_SX = SX.sym('vMT',auxdata.NMuscles); % Muscle-tendon velocities
-for m = 1:auxdata.NMuscles 
-    [Hilldiff_SX(m),FT_SX(m)] = ForceEquilibrium_FtildeState(a_SX(m),FTtilde_SX(m),dFTtilde_SX(m),lMT_SX(m),vMT_SX(m),auxdata.params(:,m),auxdata.Fvparam,auxdata.Fpparam,auxdata.Faparam,auxdata.Atendon(m),auxdata.shift(m));        
-end
+[Hilldiff_SX,FT_SX] = ForceEquilibrium_FtildeState(a_SX,FTtilde_SX,dFTtilde_SX,lMT_SX,vMT_SX,auxdata.params',auxdata.Fvparam,auxdata.Fpparam,auxdata.Faparam,auxdata.Atendon',auxdata.shift');        
 f_forceEquilibrium_FtildeState = Function('f_forceEquilibrium_FtildeState',{a_SX,FTtilde_SX,dFTtilde_SX,lMT_SX,vMT_SX,},{Hilldiff_SX,FT_SX});
 % Test function
 % atest = rand(auxdata.NMuscles,1);
@@ -68,10 +66,21 @@ vMtilde_SX = SX.sym('vMtilde',auxdata.NMuscles); % Derivative muscle fiber lengt
 Hilldiff_SX = SX(auxdata.NMuscles,1); % Hill equilibrium
 FT_SX = SX(auxdata.NMuscles,1); % Tendon forces
 lMT_SX = SX.sym('lMT',auxdata.NMuscles); % Muscle-tendon lengths
-for m = 1:auxdata.NMuscles     
-    [Hilldiff_SX(m),FT_SX(m)] = ForceEquilibrium_lMtildeState(a_SX(m),lMtilde_SX(m),vMtilde_SX(m),lMT_SX(m),auxdata.params(:,m),auxdata.Fvparam,auxdata.Fpparam,auxdata.Faparam,auxdata.Atendon(m),auxdata.shift(m));
-end
+[Hilldiff_SX,FT_SX] = ForceEquilibrium_lMtildeState(a_SX,lMtilde_SX,vMtilde_SX,lMT_SX,auxdata.params',auxdata.Fvparam,auxdata.Fpparam,auxdata.Faparam,auxdata.Atendon',auxdata.shift');
 f_forceEquilibrium_lMtildeState = Function('f_forceEquilibrium_lMtildeState',{a_SX,lMtilde_SX,vMtilde_SX,lMT_SX},{Hilldiff_SX,FT_SX});
+
+lM_opt_scaling_SX = SX.sym('lM_opt_scaling',auxdata.NMuscles);
+[Hilldiff_SX,FT_SX] = ForceEquilibrium_lMtildeState_lMoFree(a_SX,lMtilde_SX,vMtilde_SX,lMT_SX,lM_opt_scaling_SX,auxdata.params',auxdata.Fvparam,auxdata.Fpparam,auxdata.Faparam,auxdata.Atendon',auxdata.shift');
+f_ForceEquilibrium_lMtildeState_lMoFree = Function('f_ForceEquilibrium_lMtildeState_lMoFree',{a_SX,lMtilde_SX,vMtilde_SX,lMT_SX,lM_opt_scaling_SX},{Hilldiff_SX,FT_SX});
+
+lM_lTs_opt_scaling_SX = SX.sym('lM_lTs_opt_scaling',auxdata.NMuscles,2);
+[Hilldiff_SX,FT_SX] = ForceEquilibrium_lMtildeState_lMoFree_lTsFree(a_SX,lMtilde_SX,vMtilde_SX,lMT_SX,lM_lTs_opt_scaling_SX,auxdata.params',auxdata.Fvparam,auxdata.Fpparam,auxdata.Faparam,auxdata.Atendon',auxdata.shift');
+f_ForceEquilibrium_lMtildeState_lMoFree_lTsFree = Function('f_ForceEquilibrium_lMtildeState_lMoFree_lTsFree',{a_SX,lMtilde_SX,vMtilde_SX,lMT_SX,lM_lTs_opt_scaling_SX},{Hilldiff_SX,FT_SX});
+
+lM_lTs_kT_opt_scaling_SX = SX.sym('lM_lTs_kT_opt_scaling',auxdata.NMuscles,3);
+[Hilldiff_SX,FT_SX] = ForceEquilibrium_lMtildeState_lMoFree_lTsFree_kTFree(a_SX,lMtilde_SX,vMtilde_SX,lMT_SX,lM_lTs_kT_opt_scaling_SX,auxdata.params',auxdata.Fvparam,auxdata.Fpparam,auxdata.Faparam,auxdata.Atendon',auxdata.shift');
+f_ForceEquilibrium_lMtildeState_lMoFree_lTsFree_kTFree = Function('f_ForceEquilibrium_lMtildeState_lMoFree_lTsFree_kTFree',{a_SX,lMtilde_SX,vMtilde_SX,lMT_SX,lM_lTs_kT_opt_scaling_SX},{Hilldiff_SX,FT_SX});
+
 % Test function
 % atest = rand(auxdata.NMuscles,1);
 % lMtildetest = rand(auxdata.NMuscles,1);
