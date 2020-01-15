@@ -146,32 +146,17 @@ Misc.Atendon=Misc.Atendon;
 Misc.shift=Misc.shift;
 
 
-%% Descretisation
-
-% mesh descretisation
-for trial = 1:Misc.nTrials
-    t0 = DatStore(trial).time(1); tf = DatStore(trial).time(end);
-    Mesh(trial).N = round((tf-t0)*Misc.Mesh_Frequency);    
-    Mesh(trial).step = (tf-t0)/Mesh(trial).N;
-    Mesh(trial).t = t0:Mesh(trial).step:tf;    
-end
-
-
 %% Evaluate splines at Mesh Points
 % ----------------------------------------------------------------------- %
 % Get IK, ID, muscle analysis and static opt information at mesh points
 for trial = 1:size(IK_path,1)
-    
-    % Discretization
-    N = Mesh(trial).N;
-    time_opt = Mesh(trial).t;
-    
-    % Convert moment arms from 3D to 2D
     DatStore(trial).NMuscles = DatStore(trial).nMuscles;   % number of muscles
-    DatStore(trial).Ndof = DatStore(trial).nDOF;           % number of dofs    
+    DatStore(trial).Ndof = DatStore(trial).nDOF;           % number of dofs
+    % Convert moment arms from 3D to 2D
     for i = 1:DatStore(trial).Ndof
         DatStore(trial).MA(i).Joint(:,:) = DatStore(trial).dM(:,i,:);  % moment arms
     end
+    
     
     % Spline approximation of muscle-tendon length (LMT), moment arms (MA) and inverse dynamic torques (ID)
     for dof = 1:DatStore(trial).Ndof
@@ -185,7 +170,10 @@ for trial = 1:size(IK_path,1)
         DatStore(trial).LMTSpline(m) = spline(DatStore(trial).time,DatStore(trial).LMT(:,m));
     end
     
-    % Evaluate LMT, VMT, MA and ID at optimization mesh    
+    % Evaluate LMT, VMT, MA and ID at optimization mesh
+    step = (tf-t0)/(N);
+    time_opt = t0:step:tf;
+    DatStore(trial).time_opt = time_opt;
     DatStore(trial).LMTinterp = zeros(length(time_opt),DatStore(trial).NMuscles); % Muscle-tendon length
     for m = 1:DatStore(trial).NMuscles
         [DatStore(trial).LMTinterp(:,m),~,~] = SplineEval_ppuval(DatStore(trial).LMTSpline(m),time_opt,1);
@@ -233,8 +221,10 @@ nTrials = Misc.nTrials;
 N_tot   = 0;
 SoActGuess = []; lMtildeGuess = []; vMtildeGuess = []; SoRActGuess = []; SoExcGuess = [];
 for trial = 1:nTrials
+    % Time bounds
+    t0 = DatStore(trial).time(1); tf = DatStore(trial).time(end);
     % Update guess based on static optimization results
-    N = Mesh(trial).N;
+    N = round((tf-t0)*Misc.Mesh_Frequency);
     N_tot = N_tot + N;
     SoActGuess = [SoActGuess DatStore(trial).SoActInterp'];
     SoExcGuess = [SoExcGuess DatStore(trial).SoActInterp(1:end-1,:)'];
@@ -272,8 +262,8 @@ if Misc.MRSBool == 1
         % Time bounds
         t0 = DatStore(trial).time(1); tf = DatStore(trial).time(end);
         % Discretization
-        N = Mesh(trial).N;
-        h = Mesh(trial).step;
+        N = round((tf-t0)*Misc.Mesh_Frequency);
+        h = (tf-t0)/N;
         
         for k=1:N
             % Variables within current mesh interval
@@ -459,7 +449,7 @@ end
 % evaluate EMG at optimization mesh
 for trial = 1:Misc.nTrials
     if DatStore(trial).boolEMG
-        EMGTracking(trial).data = interp1(DatStore(iF).EMG.time,DatStore(iF).EMG.EMGsel,Mesh(trial).t);
+        EMGTracking(trial).data = interp1(DatStore(iF).EMG.time,DatStore(iF).EMG.EMGsel,DatStore(iF).time_opt);
     end
 end
 
@@ -467,9 +457,11 @@ end
 J = 0; % Initialize cost function
 N_acc = 0;
 for trial = 1:Misc.nTrials
-    % Time bounds    
-    N = Mesh(trial).N;
-    h = Mesh(trial).step;
+    % Time bounds
+    t0 = DatStore(trial).time(1); tf = DatStore(trial).time(end);
+    % Discretization
+    N = round((tf-t0)*Misc.Mesh_Frequency);
+    h = (tf-t0)/N;
     US_data = importdata(US_path(trial,:));
     US_tracking(trial).MTE = US_data.data;
     for k=1:N
@@ -659,8 +651,10 @@ if Misc.ValidationBool == true
     N_acc = 0;
     for trial = 1:Misc.nTrials
         % Time bounds
-        N = Mesh(trial).N;
-        h = Mesh(trial).step;
+        t0 = DatStore(trial).time(1); tf = DatStore(trial).time(end);
+        % Discretization
+        N = round((tf-t0)*Misc.Mesh_Frequency);
+        h = (tf-t0)/N;
         
         for k=1:N
             % Variables within current mesh interval
@@ -772,6 +766,7 @@ Results.MvMtilde = MvMtilde;
 Results.MExcitation = MExcitation;
 Results.RActivation = RActivation;
 Results.lMTinterp = lMTinterp;
+
 
 % Plot US tracking
 figure(5)
