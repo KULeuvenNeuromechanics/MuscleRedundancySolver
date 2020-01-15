@@ -213,6 +213,27 @@ for trial = 1:size(IK_path,1)
     end
 end
 
+%% setup options for the solver
+% Create an NLP solver
+% output.setup.auxdata = auxdata;
+output.setup.nlp.solver = 'ipopt';
+output.setup.nlp.ipoptoptions.linear_solver = 'mumps';
+% Set derivativelevel to 'first' for approximating the Hessian
+output.setup.derivatives.derivativelevel = 'second';
+output.setup.nlp.ipoptoptions.tolerance = 1e-6;
+output.setup.nlp.ipoptoptions.maxiterations = 10000;
+if strcmp(output.setup.derivatives.derivativelevel, 'first')
+    optionssol.ipopt.hessian_approximation = 'limited-memory';
+end
+% By default, the barrier parameter update strategy is monotone.
+% https://www.coin-or.org/Ipopt/documentation/node46.html#SECTION000116020000000000000
+% Uncomment the following line to use an adaptive strategy
+% optionssol.ipopt.mu_strategy = 'adaptive';
+optionssol.ipopt.nlp_scaling_method = 'gradient-based';
+optionssol.ipopt.linear_solver = output.setup.nlp.ipoptoptions.linear_solver;
+optionssol.ipopt.tol = output.setup.nlp.ipoptoptions.tolerance;
+optionssol.ipopt.max_iter = output.setup.nlp.ipoptoptions.maxiterations;
+
 
 %% Dynamic Optimization - Default parameters
 % ----------------------------------------------------------------------- %
@@ -309,26 +330,7 @@ if Misc.MRSBool == 1
     end
     opti.minimize(J); % Define cost function in opti
     
-    % Create an NLP solver
-    output.setup.Misc = Misc;
-    output.setup.nlp.solver = 'ipopt';
-    output.setup.nlp.ipoptoptions.linear_solver = 'mumps';
-    % Set derivativelevel to 'first' for approximating the Hessian
-    output.setup.derivatives.derivativelevel = 'second';
-    output.setup.nlp.ipoptoptions.tolerance = 1e-6;
-    output.setup.nlp.ipoptoptions.maxiterations = 10000;
-    if strcmp(output.setup.derivatives.derivativelevel, 'first')
-        optionssol.ipopt.hessian_approximation = 'limited-memory';
-    end
-    % By default, the barrier parameter update strategy is monotone.
-    % https://www.coin-or.org/Ipopt/documentation/node46.html#SECTION000116020000000000000
-    % Uncomment the following line to use an adaptive strategy
-    % optionssol.ipopt.mu_strategy = 'adaptive';
-    optionssol.ipopt.nlp_scaling_method = 'gradient-based';
-    optionssol.ipopt.linear_solver = output.setup.nlp.ipoptoptions.linear_solver;
-    optionssol.ipopt.tol = output.setup.nlp.ipoptoptions.tolerance;
-    optionssol.ipopt.max_iter = output.setup.nlp.ipoptoptions.maxiterations;
-    
+    % Create an NLP solver    
     opti.solver(output.setup.nlp.solver,optionssol);
     
     % Solve
@@ -432,7 +434,7 @@ end
 if DatStore(1).EMG.boolEMG
     nEMG        = DatStore(1).EMG.nEMG;
     EMGscale    = opti_MTE.variable(nEMG,1);
-    opti_MTE.subject_to(0 < EMGscale < Misc.EMG.MaxScaleEMG);
+    opti_MTE.subject_to(0 < EMGscale < Misc.MaxScaleEMG);
 end
 
 % Set initial guess
@@ -456,12 +458,23 @@ else
     opti_MTE.set_initial(kT_scaling_param,1);
 end
 
-% evaluate EMG at optimization mesh
+% get EMG at optimization mesh
 for trial = 1:Misc.nTrials
-    if DatStore(trial).boolEMG
-        EMGTracking(trial).data = interp1(DatStore(iF).EMG.time,DatStore(iF).EMG.EMGsel,Mesh(trial).t);
+    if DatStore(trial).EMG.boolEMG
+        EMGTracking(trial).data = interp1(DatStore(trial).EMG.time,DatStore(trial).EMG.EMGsel,Mesh(trial).t(1:end-1));
     end
 end
+
+% get US data at optimization mesh
+if ~isempty(US_path)
+    for trial = 1:Misc.nTrials
+        DatStore(trial).boolUS = 1;
+        USdata =  importdata(US_path{trial});
+        USTracking(trial).data = interp1(USdata.data(:,1),USdata.data(:,2),Mesh(trial).t);
+    end
+end
+
+
 
 % Loop over mesh points formulating NLP
 J = 0; % Initialize cost function
@@ -470,8 +483,6 @@ for trial = 1:Misc.nTrials
     % Time bounds    
     N = Mesh(trial).N;
     h = Mesh(trial).step;
-    US_data = importdata(US_path(trial,:));
-    US_tracking(trial).MTE = US_data.data;
     for k=1:N
         % Variables within current mesh interval
         ak = a(:,(N_acc+trial-1) + k); lMtildek = lMtilde(:,(N_acc+trial-1) + k);
@@ -495,22 +506,23 @@ for trial = 1:Misc.nTrials
             opti_MTE.subject_to(T_exp - T_sim == 0);
         end
         % Hill-equilibrium constraint
-        opti_MTE.subject_to(Hilldiffk == 0);
-        
+        opti_MTE.subject_to(Hilldiffk == 0);        
     end
 
     % tracking lMtilde
-    lMo = lMo_scaling_param(DatStore(trial).free_lMo(:)).*Misc.params(2,DatStore(trial).free_lMo(:))';
-    lMtilde_tracking = US_data.data(:,2)'./lMo/1000;
-    lMtilde_simulated = lMtilde(DatStore(trial).free_lMo(:),(N_acc + trial - 1) + 1:(N_acc + trial - 1) + N + 1);
-    J = J + Misc.wlM*sumsqr(lMtilde_simulated-lMtilde_tracking)/N;
+    if DatStore(trial).boolUS        
+        lMo = lMo_scaling_param(DatStore(trial).free_lMo(:)).*Misc.params(2,DatStore(trial).free_lMo(:))';
+        lMtilde_tracking = USTracking(trial).data./lMo/1000;
+        lMtilde_simulated = lMtilde(DatStore(trial).free_lMo(:),(N_acc+trial:N_acc+trial+N)); 
+        J = J + Misc.wlM*sumsqr(lMtilde_simulated-lMtilde_tracking)/N;
+    end
 
     % tracking Muscle activity
-    if DatStore(trial).boolEMG
-        eSim  = ek(DatStore(trial).EMG.EMGindices,:);
-        eMeas = EMGTracking(trial).data' * repmat(EMGscale,1,N);
+    if DatStore(trial).EMG.boolEMG
+        eSim  = e(DatStore(trial).EMG.EMGindices,N_acc:N_acc+N-1);
+        eMeas = EMGTracking(trial).data' .* repmat(EMGscale,1,N);
         JEMG  = sumsqr(eSim-eMeas);
-        J     = J + Misc.wEMG * JEMG/DatStore(trial).nEMG/N;
+        J     = J + Misc.wEMG * JEMG/DatStore(trial).EMG.nEMG/N;
     end
     N_acc = N_acc + N;
 end
@@ -521,27 +533,6 @@ J = J + ...
     Misc.w2*sumsqr(vMtilde)/N_tot/DatStore(trial).NMuscles;
 
 opti_MTE.minimize(J); % Define cost function in opti
-
-% Create an NLP solver
-% output.setup.auxdata = auxdata;
-output.setup.nlp.solver = 'ipopt';
-output.setup.nlp.ipoptoptions.linear_solver = 'mumps';
-% Set derivativelevel to 'first' for approximating the Hessian
-output.setup.derivatives.derivativelevel = 'second';
-output.setup.nlp.ipoptoptions.tolerance = 1e-6;
-output.setup.nlp.ipoptoptions.maxiterations = 10000;
-if strcmp(output.setup.derivatives.derivativelevel, 'first')
-    optionssol.ipopt.hessian_approximation = 'limited-memory';
-end
-% By default, the barrier parameter update strategy is monotone.
-% https://www.coin-or.org/Ipopt/documentation/node46.html#SECTION000116020000000000000
-% Uncomment the following line to use an adaptive strategy
-% optionssol.ipopt.mu_strategy = 'adaptive';
-optionssol.ipopt.nlp_scaling_method = 'gradient-based';
-optionssol.ipopt.linear_solver = output.setup.nlp.ipoptoptions.linear_solver;
-optionssol.ipopt.tol = output.setup.nlp.ipoptoptions.tolerance;
-optionssol.ipopt.max_iter = output.setup.nlp.ipoptoptions.maxiterations;
-
 opti_MTE.solver(output.setup.nlp.solver,optionssol);
 
 % Solve
@@ -698,25 +689,6 @@ if Misc.ValidationBool == true
     opti_validation.minimize(J); % Define cost function in opti
     
     % Create an NLP solver
-    output.setup.Misc = Misc;
-    output.setup.nlp.solver = 'ipopt';
-    output.setup.nlp.ipoptoptions.linear_solver = 'mumps';
-    % Set derivativelevel to 'first' for approximating the Hessian
-    output.setup.derivatives.derivativelevel = 'second';
-    output.setup.nlp.ipoptoptions.tolerance = 1e-6;
-    output.setup.nlp.ipoptoptions.maxiterations = 10000;
-    if strcmp(output.setup.derivatives.derivativelevel, 'first')
-        optionssol.ipopt.hessian_approximation = 'limited-memory';
-    end
-    % By default, the barrier parameter update strategy is monotone.
-    % https://www.coin-or.org/Ipopt/documentation/node46.html#SECTION000116020000000000000
-    % Uncomment the following line to use an adaptive strategy
-    % optionssol.ipopt.mu_strategy = 'adaptive';
-    optionssol.ipopt.nlp_scaling_method = 'gradient-based';
-    optionssol.ipopt.linear_solver = output.setup.nlp.ipoptoptions.linear_solver;
-    optionssol.ipopt.tol = output.setup.nlp.ipoptoptions.tolerance;
-    optionssol.ipopt.max_iter = output.setup.nlp.ipoptoptions.maxiterations;
-    
     opti_validation.solver(output.setup.nlp.solver,optionssol);
     
     % Solve
@@ -784,7 +756,7 @@ for trial = 1:nTrials
     if Misc.ValidationBool == 1
         plot(Time(trial).validationMRS,lMtildeopt(trial).validationMRS(DatStore(trial).free_lMo(:),:).*optimized_params(DatStore(trial).free_lMo(:),2),'LineWidth',2); hold on;
     end
-    plot(Time(trial).MTE,US_tracking(trial).MTE (:,2)'/1000,'LineWidth',2);
+    plot(Time(trial).MTE,USTracking(trial).data/1000,'LineWidth',2);
     if Misc.MRSBool == 1 && Misc.ValidationBool == 1        
         legend('MTE','Generic MRS','Optimized MRS','USdata');
     elseif Misc.MRSBool == 1
