@@ -1,4 +1,4 @@
-function [Results,Parameters,DatStore] = MuscleTendonEstimator(model_path,IK_path,ID_path,US_path,time,Bounds,OutPath,Misc)
+function [Results,Parameters,DatStore] = MuscleTendonEstimator(model_path,time,Bounds,OutPath,Misc)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -60,11 +60,11 @@ end
 %% Extract muscle information
 % ----------------------------------------------------------------------- %
 % Perform muscle analysis for the different selected trials
-Misc.nTrials = size(IK_path,1);
+Misc.nTrials = size(Misc.IKfile,1);
 DatStore = struct;
-for i = 1:size(IK_path,1)
-    IK_path_trial = IK_path{i};
-    ID_path_trial = ID_path{i};
+for i = 1:size(Misc.IKfile,1)
+    IK_path_trial = Misc.IKfile{i};
+    ID_path_trial = Misc.IDfile{i};
     
     Misc.time=time;
     MuscleAnalysisPath=fullfile(OutPath,'MuscleAnalysis'); if ~exist(MuscleAnalysisPath,'dir'); mkdir(MuscleAnalysisPath); end    
@@ -114,6 +114,7 @@ end
 
 % get the EMG information
 [DatStore] = GetEMGInfo(Misc,DatStore);
+[DatStore] = GetUSInfo(Misc,DatStore);
 
 
 %% Static optimization
@@ -160,7 +161,7 @@ end
 %% Evaluate splines at Mesh Points
 % ----------------------------------------------------------------------- %
 % Get IK, ID, muscle analysis and static opt information at mesh points
-for trial = 1:size(IK_path,1)
+for trial = 1:size(Misc.IKfile,1)
     
     % Discretization
     N = Mesh(trial).N;
@@ -424,8 +425,8 @@ lb_kT_scaling_param = ones(DatStore(1).NMuscles,1); ub_kT_scaling_param = ones(D
 lb_kT_scaling_param(DatStore(1).free_kT(:)) = Misc.lb_kT_scaling*lb_kT_scaling_param(DatStore(1).free_kT(:));
 ub_kT_scaling_param(DatStore(1).free_kT(:)) = Misc.ub_kT_scaling*ub_kT_scaling_param(DatStore(1).free_kT(:));
 opti_MTE.subject_to(lb_kT_scaling_param < kT_scaling_param < ub_kT_scaling_param);
-for k = 1:size(DatStore(i).coupled_kT,1)
-    for j = 1:size(DatStore(i).coupled_kT,2)-1
+for k = 1:size(DatStore(1).coupled_kT,1)
+    for j = 1:size(DatStore(1).coupled_kT,2)-1
         opti_MTE.subject_to(kT_scaling_param(DatStore(1).coupled_kT(k,j)) - kT_scaling_param(DatStore(1).coupled_kT(k,j+1)) == 0);
     end
 end
@@ -466,11 +467,11 @@ for trial = 1:Misc.nTrials
 end
 
 % get US data at optimization mesh
-if ~isempty(US_path)
+if ~isempty(Misc.USfile)
     for trial = 1:Misc.nTrials
         DatStore(trial).boolUS = 1;
-        USdata =  importdata(US_path{trial});
-        USTracking(trial).data = interp1(USdata.data(:,1),USdata.data(:,2),Mesh(trial).t);
+        USdata =  importdata(Misc.USfile{trial});
+        USTracking(trial).data = interp1(DatStore(trial).US.time,DatStore(trial).US.USsel,Mesh(trial).t(1:end));
     end
 end
 
@@ -512,9 +513,9 @@ for trial = 1:Misc.nTrials
     % tracking lMtilde
     if DatStore(trial).boolUS        
         lMo = lMo_scaling_param(DatStore(trial).free_lMo(:)).*Misc.params(2,DatStore(trial).free_lMo(:))';
-        lMtilde_tracking = USTracking(trial).data./lMo/1000;
-        lMtilde_simulated = lMtilde(DatStore(trial).free_lMo(:),(N_acc+trial:N_acc+trial+N)); 
-        J = J + Misc.wlM*sumsqr(lMtilde_simulated-lMtilde_tracking)/N;
+        lMtilde_tracking = USTracking(trial).data./lMo/1000; % US data expected in mm in the input file.
+        lMtilde_simulated = lMtilde(DatStore(trial).US.USindices,(N_acc+trial:N_acc+trial+N)); 
+        J = J + Misc.wlM*sumsqr(lMtilde_simulated-lMtilde_tracking)/DatStore(trial).US.nUS/N;
     end
 
     % tracking Muscle activity
@@ -761,6 +762,8 @@ for trial = 1:nTrials
         legend('MTE','Generic MRS','Optimized MRS','USdata');
     elseif Misc.MRSBool == 1
         legend('MTE','MRS','USdata');
+    elseif Misc.ValidationBool == 1
+        legend('MTE','Optimized MRS','USdata');
     else
         legend('MTE','USdata');
     end

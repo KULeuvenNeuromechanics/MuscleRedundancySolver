@@ -4,7 +4,7 @@ nRows=121
 nColumns=93
 inDegrees=no
 
-This analysis gathers basic information about muscles during a simulation (e.g., forces, tendon lengths, moment arms, etc).
+This analysis gathers basic information about muscles during a simulation (e.g., forces, tendon lenghts, moment arms, etc).
 Units are S.I. units (second, meters, Newtons, ...)
 Angles are in degrees.
 
