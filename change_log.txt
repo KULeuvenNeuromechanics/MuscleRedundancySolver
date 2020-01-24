@@ -1,0 +1,14 @@
+Change log
+
+MuscleTendonEstimatior - 514 - typo in vairable name
+MuscleTendonEstimatior - 716 - added US conditionals to skip plotting (lines 765-781)
+
+MuscleTendonEstimatior - multiple sections - Added fibre length and slack length coupleing
+
+
+GetEMGInfo 88 added EMG_MuscleCopies conditional to skip if no muscle copies 
+
+
+
+Advice:
+	Need to check plotting section. Assumes single muscle of interest.  
