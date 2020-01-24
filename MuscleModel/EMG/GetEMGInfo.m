@@ -84,18 +84,22 @@ if boolEMG
             EMGindices(i) = find(strcmp(Misc.EMGSelection{i},DatStore(iF).MuscleNames));
         end        
         % add twins
-        nCopy = length(Misc.EMG_MuscleCopies(:,1));
-        EMGsel = [EMGsel zeros(nfr,nCopy)];
-        EMGindices = [ EMGindices ; zeros(nCopy,1)];        
-        for j=1:length(Misc.EMG_MuscleCopies(:,1))
-            NameSel = Misc.EMG_MuscleCopies{j,1};
-            NameCopy =  Misc.EMG_MuscleCopies{j,2};
-            
-            Ind_ColCopy = strcmp(Misc.EMGSelection,NameSel);
-            EMGsel(:,i+j) = EMGsel(:,Ind_ColCopy);
-            EMGindices(i+j) = find(strcmp(NameCopy,DatStore(iF).MuscleNames));
-            EMGselection = [EMGselection {NameCopy}];
-        end
+        % Added conditional statement to check to see if
+        % Misc.EMG_MuscleCopies is used. - JPCB 22/01/2020
+        if  ~isempty(Misc.EMG_MuscleCopies)
+            nCopy = length(Misc.EMG_MuscleCopies(:,1));
+            EMGsel = [EMGsel zeros(nfr,nCopy)];
+            EMGindices = [ EMGindices ; zeros(nCopy,1)];        
+            for j=1:length(Misc.EMG_MuscleCopies(:,1))
+                NameSel = Misc.EMG_MuscleCopies{j,1};
+                NameCopy =  Misc.EMG_MuscleCopies{j,2};
+
+                Ind_ColCopy = strcmp(Misc.EMGSelection,NameSel);
+                EMGsel(:,i+j) = EMGsel(:,Ind_ColCopy);
+                EMGindices(i+j) = find(strcmp(NameCopy,DatStore(iF).MuscleNames));
+                EMGselection = [EMGselection {NameCopy}];
+            end
+        end    
         DatStore(iF).EMG.MaxScale       = Misc.MaxScaleEMG;
         DatStore(iF).EMG.EMGbounds      = Misc.EMGbounds;
         DatStore(iF).EMG.nEMG           = length(EMGindices);
