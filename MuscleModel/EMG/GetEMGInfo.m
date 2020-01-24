@@ -20,29 +20,29 @@ end
 
 if boolEMG    
     % file information
-    nFiles = length(Misc.EMGfile);
+    nF = length(Misc.EMGfile);
     % Load the data and check for errors
-    for iFile = 1:nF        
+    for iF = 1:nF        
         % get information for the EMG constraints
-        EMGFile(iFile)      = importdata(Misc.EMGfile{nF});        
+        EMGFile(iF)      = importdata(Misc.EMGfile{iF});        
     end    
     % prevent errors with the headers
-    for iFile = 1:nF
-        if ~isfield(EMGFile(iFile),'colheaders')
-            EMGFile(iFile).colheaders = strsplit(EMGFile(1).textdata{end});
+    for iF = 1:nF
+        if ~isfield(EMGFile(iF),'colheaders')
+            EMGFile(iF).colheaders = strsplit(EMGFile(1).textdata{end});
         end
     end
     % check if we have to update the headers based on user input
     bool_updateheader   = 0;
-    if isfield(Misc,'EMGheaders') && ~isempty(Misc.EMGheaders);        
+    if isfield(Misc,'EMGheaders') && ~isempty(Misc.EMGheaders)        
         bool_updateheader=1;
     end
     % verify if the selected muscles are in the model
-    iFile       = 1;    
+    iF       = 1;    
     bool_error  = 0;
     IndError=zeros(length(Misc.EMGSelection),1);
     for i=1:length(Misc.EMGSelection)
-        if ~any(strcmp(Misc.EMGSelection{i},DatStore(iFile).MuscleNames))
+        if ~any(strcmp(Misc.EMGSelection{i},DatStore(iF).MuscleNames))
             disp(['Could not find ' Misc.EMGSelection{i} ' in the model, Update the Misc.EMGSelection structure']);
             bool_error=1;
             IndError(i)=1;
@@ -70,9 +70,10 @@ if boolEMG
         Misc.EMGSelection(find(IndError)) = [];
     end    
     
-    %% Process the data    
+    %% Process the data 
+    % ERROR IN FOR LOOP PARAMETERS FIXED - 24/01/2020 JPCB
     for iF = 1:nF
-        EMGdat              = EMGFile(iFile).data;        
+        EMGdat              = EMGFile(iF).data;        
         [nfr, nc] = size(EMGdat);  
         % get the EMG data
         nIn = length(Misc.EMGSelection);

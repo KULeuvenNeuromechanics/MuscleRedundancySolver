@@ -22,14 +22,15 @@ if boolUS
     % file information
     nFiles = length(Misc.USfile);
     % Load the data and check for errors
-    for iFile = 1:nF        
+    % ERROR IN FOR LOOP PARAMETERS FIXED - 24/01/2020 JPCB
+    for iF = 1:nFiles        
         % get information for the EMG constraints
-        USfile(iFile)      = importdata(Misc.USfile{nF});        
+        USfile(iF)      = importdata(Misc.USfile{iF});        
     end    
     % prevent errors with the headers
-    for iFile = 1:nF
-        if ~isfield(USfile(iFile),'colheaders')
-            USfile(iFile).colheaders = strsplit(USfile(1).textdata{end});
+    for iF = 1:nF
+        if ~isfield(USfile(iF),'colheaders')
+            USfile(iF).colheaders = strsplit(USfile(1).textdata{end});
         end
     end
 %     TOD0
@@ -40,18 +41,18 @@ if boolUS
 %         bool_updateheader=1;
 %     end
     % verify if the selected muscles are in the model
-    iFile       = 1;    
+    iF       = 1;    
     bool_error  = 0;
     IndError=zeros(length(Misc.USSelection),1);
     for i=1:length(Misc.USSelection)
-        if ~any(strcmp(Misc.USSelection{i},DatStore(iFile).MuscleNames))
+        if ~any(strcmp(Misc.USSelection{i},DatStore(iF).MuscleNames))
             disp(['Could not find ' Misc.USSelection{i} ' in the model, update the Misc.USSelection structure']);
             bool_error=1;
             IndError(i)=1;
         end
     end
     % verify if the muscles in the .mot files are in the model
-    USheaders  = USfile(iFile).colheaders;
+    USheaders  = USfile(iF).colheaders;
 %     TOD0 see couple lines higher
 %     check if we have to update the headers based on user input, but here
 %     for the US input??
@@ -77,7 +78,7 @@ if boolUS
     
     %% Process the data    
     for iF = 1:nF
-        USdat              = USfile(iFile).data;        
+        USdat              = USfile(iF).data;        
         [nfr, nc] = size(USdat);  
         % get the US data
         nIn = length(Misc.USSelection);
