@@ -49,7 +49,7 @@ if boolEMG
         end
     end
     % verify if the muscles in the .mot files are in the model
-    EMGheaders  = EMGFile(iFile).colheaders;
+    EMGheaders  = EMGFile(iF).colheaders;
     if bool_updateheader
        EMGheaders      = Misc.EMGheaders; 
     end
@@ -85,8 +85,6 @@ if boolEMG
             EMGindices(i) = find(strcmp(Misc.EMGSelection{i},DatStore(iF).MuscleNames));
         end        
         % add twins
-        % Added conditional statement to check to see if
-        % Misc.EMG_MuscleCopies is used. - JPCB 22/01/2020
         if  ~isempty(Misc.EMG_MuscleCopies)
             nCopy = length(Misc.EMG_MuscleCopies(:,1));
             EMGsel = [EMGsel zeros(nfr,nCopy)];
@@ -101,7 +99,7 @@ if boolEMG
                 EMGselection = [EMGselection {NameCopy}];
             end
         end    
-        DatStore(iF).EMG.MaxScale       = Misc.MaxScaleEMG;
+        DatStore(iF).EMG.BoundsScaleEMG = Misc.BoundsScaleEMG;
         DatStore(iF).EMG.EMGbounds      = Misc.EMGbounds;
         DatStore(iF).EMG.nEMG           = length(EMGindices);
         DatStore(iF).EMG.EMGindices     = EMGindices;
@@ -114,7 +112,7 @@ if boolEMG
 else
     for iF = 1:length(DatStore)
         % Boolean in DatStore that EMG info is not used ?
-        DatStore(iF).EMG.MaxScale       = [];
+        DatStore(iF).EMG.BoundsScaleEMG       = [];
         DatStore(iF).EMG.EMGbounds      = [];
         DatStore(iF).EMG.nEMG           = [];
         DatStore(iF).EMG.EMGindices     = [];

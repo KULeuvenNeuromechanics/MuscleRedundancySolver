@@ -56,6 +56,10 @@ end
 if ~isfield(Misc,'RunAnalysis') || isempty(Misc.RunAnalysis)
     Misc.RunAnalysis = 1;
 end
+% bounds on scaling EMG
+if ~isfield(Misc,'BoundsScaleEMG') || isempty(Misc.BoundsScaleEMG)
+    Misc.BoundsScaleEMG = [0.9 1.1];
+end
 
 %% Extract muscle information
 % ----------------------------------------------------------------------- %
@@ -106,18 +110,18 @@ for i = 1:size(Misc.IKfile,1)
             DatStore(i).coupled_kT(k,j) = find(strcmp(DatStore(i).MuscleNames,Misc.Coupled_TendonStifness{j,k}));
         end
     end
-    % ADDED FIBRE LENGTH COUPLEING 24/01/2020 
+    % ADDED FIBRE LENGTH COUPLEING 24/01/2020
     for k = 1:size((DatStore(i).coupled_lMo),1)
         for j = 1:size((DatStore(i).coupled_lMo),2)
             DatStore(i).coupled_lMo(k,j) = find(strcmp(DatStore(i).MuscleNames,Misc.Coupled_fiber_length{j,k}));
         end
     end
-    % ADDED SLACK LENGTH COUPLEING 24/01/2020 
+    % ADDED SLACK LENGTH COUPLEING 24/01/2020
     for k = 1:size((DatStore(i).coupled_lTs),1)
         for j = 1:size((DatStore(i).coupled_lTs),2)
             DatStore(i).coupled_lTs(k,j) = find(strcmp(DatStore(i).MuscleNames,Misc.Coupled_slack_length{j,k}));
         end
-    end    
+    end
 end
 
 % update Tendon stiffness for specific muscles based on input arguments (we
@@ -147,7 +151,6 @@ end
 
 %% Input activation and contraction dynamics
 % ----------------------------------------------------------------------- %
-Misc.params = Misc.params;          % Muscle-tendon parameters
 Misc.scaling.vMtilde = 10;          % Scaling factor: derivative muscle fiber lengths
 Misc.w1 = 1000;                     % Weight objective function
 Misc.w2 = 0.01;
@@ -445,13 +448,13 @@ for k = 1:size(DatStore(1).coupled_kT,1)
     end
 end
 
-% ADDED FIBRE LENGTH COUPLEING 24/01/2020 
+% ADDED FIBRE LENGTH COUPLEING 24/01/2020
 for k = 1:size(DatStore(1).coupled_lMo,1)
     for j = 1:size(DatStore(1).coupled_lMo,2)-1
         opti_MTE.subject_to(lMo_scaling_param(DatStore(1).coupled_lMo(k,j)) - lMo_scaling_param(DatStore(1).coupled_lMo(k,j+1)) == 0);
     end
 end
-% ADDED FIBRE LENGTH COUPLEING 24/01/2020 
+% ADDED FIBRE LENGTH COUPLEING 24/01/2020
 for k = 1:size(DatStore(1).coupled_lTs,1)
     for j = 1:size(DatStore(1).coupled_lTs,2)-1
         opti_MTE.subject_to(lTs_scaling_param(DatStore(1).coupled_lTs(k,j)) - lTs_scaling_param(DatStore(1).coupled_lTs(k,j+1)) == 0);
@@ -462,8 +465,8 @@ end
 if DatStore(1).EMG.boolEMG
     nEMG        = DatStore(1).EMG.nEMG;
     EMGscale    = opti_MTE.variable(nEMG,1);
-%     Changed the scaling factor from 0 to 0.95  JPCB 22/01/2020
-    opti_MTE.subject_to(0.95 < EMGscale < Misc.MaxScaleEMG);
+    %     Changed the scaling factor from 0 to 0.95  JPCB 22/01/2020
+    opti_MTE.subject_to(Misc.BoundsScaleEMG(1) < EMGscale < Misc.BoundsScaleEMG(2));
 end
 
 % Set initial guess
@@ -502,7 +505,7 @@ if ~isempty(Misc.USfile)
         USTracking(trial).data = interp1(DatStore(trial).US.time,DatStore(trial).US.USsel,Mesh(trial).t(1:end));
     end
 end
-
+DatStore.USTracking = USTracking;
 
 
 % Loop over mesh points formulating NLP
@@ -539,7 +542,6 @@ for trial = 1:Misc.nTrials
     end
     
     % tracking lMtilde
-    % FIXED TYPO (DatStore(trial).boolUS) JPCB 22/01/2020
     if DatStore(trial).US.boolUS
         lMo = lMo_scaling_param(DatStore(trial).free_lMo(:)).*Misc.params(2,DatStore(trial).free_lMo(:))';
         lMtilde_tracking = USTracking(trial).data./lMo/1000; % US data expected in mm in the input file.
@@ -615,9 +617,9 @@ for trial = 1:nTrials
     [TForcetilde_,TForce_] = TendonForce_lMtilde(lMtildeopt(trial).MTE',Misc.params,lMTinterp(trial).MTE,Misc.Atendon,Misc.shift);
     TForcetilde(trial).MTE = TForcetilde_';
     TForce(trial).MTE = TForce_';
-    lMo_scaling_paramopt(trial).MTE = lMo_scaling_param_opt;
-    lTs_scaling_paramopt(trial).MTE = lTs_scaling_param_opt;
-    kT_scaling_paramopt(trial).MTE = kT_scaling_param_opt;
+    %lMo_scaling_paramopt(trial).MTE = lMo_scaling_param_opt;
+    %lTs_scaling_paramopt(trial).MTE = lTs_scaling_param_opt;
+    %kT_scaling_paramopt(trial).MTE = kT_scaling_param_opt;
     Ntot = Ntot + N;
 end
 
@@ -637,9 +639,30 @@ Results.MExcitation = MExcitation;
 Results.RActivation = RActivation;
 Results.lMo_opt = lMo_opt;
 Results.lMTinterp = lMTinterp;
-Results.lMo_scaling_paramopt = lMo_scaling_paramopt;
-Results.lTs_scaling_paramopt = lTs_scaling_paramopt;
-Results.kT_scaling_paramopt = kT_scaling_paramopt;
+Results.Param.lMo_scaling_paramopt  = lMo_scaling_param_opt;
+Results.Param.lTs_scaling_paramopt  = lTs_scaling_param_opt;
+Results.Param.kT_scaling_paramopt   = kT_scaling_param_opt;
+Results.Param.EMGscale              = sol.value(EMGscale);
+
+% save original and estimated parameters (and the bounds)
+Results.Param.Original.Fiso      = Misc.params(1,:);
+Results.Param.Original.lOpt      = Misc.params(2,:);
+Results.Param.Original.L_Slack   = Misc.params(3,:);
+Results.Param.Original.Pennation = Misc.params(4,:);
+Results.Param.Original.ATendon   = Misc.Atendon;
+Results.Param.Estimated.Fiso     = Results.Param.Original.Fiso;
+Results.Param.Estimated.lOpt     = Results.Param.Original.lOpt .* Results.Param.lMo_scaling_paramopt';
+Results.Param.Estimated.L_Slack  = Results.Param.Original.L_Slack .* Results.Param.lTs_scaling_paramopt';
+Results.Param.Estimated.Pennation = Results.Param.Original.Pennation;
+Results.Param.Estimated.ATendon  = Results.Param.Original.ATendon .* Results.Param.kT_scaling_paramopt';
+Results.Param.Bound.lOp.lb       = Misc.lb_lMo_scaling;
+Results.Param.Bound.lOp.ub       = Misc.ub_lMo_scaling;
+Results.Param.Bound.lTs.lb       = Misc.lb_lTs_scaling;
+Results.Param.Bound.lTs.ub       = Misc.ub_lTs_scaling;
+Results.Param.Bound.kT.lb        = Misc.lb_kT_scaling;
+Results.Param.Bound.kT.ub        = Misc.ub_kT_scaling;
+Results.Param.Bound.EMG.lb       = Misc.BoundsScaleEMG(1);
+Results.Param.Bound.EMG.ub       = Misc.BoundsScaleEMG(2);
 
 if Misc.ValidationBool == true
     opti_validation = casadi.Opti();
@@ -670,9 +693,9 @@ if Misc.ValidationBool == true
     
     % Generate optimized parameters for specific trial by scaling generic parameters
     optimized_params = Misc.params';
-    optimized_params(:,2) = lMo_scaling_paramopt(trial).MTE.*optimized_params(:,2);
-    optimized_params(:,3) = lTs_scaling_paramopt(trial).MTE.*optimized_params(:,3);
-    optimized_Atendon = kT_scaling_paramopt(trial).MTE.*Misc.Atendon';
+    optimized_params(:,2) = Results.Param.lMo_scaling_paramopt.*optimized_params(:,2);
+    optimized_params(:,3) = Results.Param.lTs_scaling_paramopt.*optimized_params(:,3);
+    optimized_Atendon = Results.Param.kT_scaling_paramopt.*Misc.Atendon';
     optimized_shift = (exp(optimized_Atendon.*(1 - 0.995)))/5 - (exp(35.*(1 - 0.995)))/5;
     
     % Loop over mesh points formulating NLP
@@ -775,39 +798,216 @@ Results.MExcitation = MExcitation;
 Results.RActivation = RActivation;
 Results.lMTinterp = lMTinterp;
 
-    figure(5)
-    for trial = 1:nTrials
-        subplot(nTrials,1,trial)
-        plot(Time(trial).MTE,lMtildeopt(trial).MTE(DatStore(trial).free_lMo(:),:).*lMo_opt(trial).MTE(DatStore(trial).free_lMo(:)),'LineWidth',2); hold on;
-        if Misc.MRSBool == 1
-            plot(Time(trial).MTE,lMtildeopt(trial).genericMRS(DatStore(trial).free_lMo(:),:).*Misc.params(2,DatStore(trial).free_lMo(:))','LineWidth',2); hold on;
-        end
-        if Misc.ValidationBool == 1
-            plot(Time(trial).validationMRS,lMtildeopt(trial).validationMRS(DatStore(trial).free_lMo(:),:).*optimized_params(DatStore(trial).free_lMo(:),2),'LineWidth',2); hold on;
-        end
-        % Plot US tracking
-        % ADDED TO SKIP IF NO US JPCB 22/01/2020
-        if Misc.UStracking == 1    
-            plot(Time(trial).MTE,USTracking(trial).data/1000,'LineWidth',2);
-        end    
-        if Misc.MRSBool == 1 && Misc.ValidationBool == 1 && Misc.UStracking == 1
-            legend('MTE','Generic MRS','Optimized MRS','USdata');
-        elseif Misc.MRSBool == 1 && Misc.UStracking == 1
-            legend('MTE','MRS','USdata');
-        elseif Misc.ValidationBool == 1 && Misc.UStracking == 1
-            legend('MTE','Optimized MRS','USdata');
-        elseif Misc.UStracking == 1
-            legend('MTE','USdata');
-        elseif Misc.MRSBool == 1 && Misc.ValidationBool == 1
-            legend('MTE','Generic MRS','Optimized MRS');    
-        elseif Misc.MRSBool == 1
-            legend('MTE','MRS');
-        elseif Misc.ValidationBool == 1
-            legend('MTE','Optimized MRS');
-        else
-            legend('MTE');    
-        end
-    end
+% store the Misc structure as well in the results
+Results.Misc = Misc;
+
+
+
+%% Plot Output
+
+% plot EMG tracking
+if Misc.PlotBool
+    PlotEMGTracking(Results,DatStore);
+end
+
+% plot estimated parameters
+if Misc.PlotBool
+    PlotEstimatedParameters(Results,DatStore);
+end
+
+% plot fiber length
+if Misc.PlotBool    
+   PlotFiberLength(Results,DatStore) 
+end
+
+
+%% Plot figures
+% if Misc.PlotBool
+%     figure('Name','Muscle fiber length information');
+%     for trial = 1:nTrials
+%         subplot(nTrials,1,trial)
+%         plot(Time(trial).MTE,lMtildeopt(trial).MTE(DatStore(trial).free_lMo(:),:).*lMo_opt(trial).MTE(DatStore(trial).free_lMo(:)),'LineWidth',2); hold on;
+%         if Misc.MRSBool == 1
+%             plot(Time(trial).MTE,lMtildeopt(trial).genericMRS(DatStore(trial).free_lMo(:),:).*Misc.params(2,DatStore(trial).free_lMo(:))','LineWidth',2); hold on;
+%         end
+%         if Misc.ValidationBool == 1
+%             plot(Time(trial).validationMRS,lMtildeopt(trial).validationMRS(DatStore(trial).free_lMo(:),:).*optimized_params(DatStore(trial).free_lMo(:),2),'LineWidth',2); hold on;
+%         end
+%         % Plot US tracking
+%         if Misc.UStracking == 1
+%             plot(Time(trial).MTE,USTracking(trial).data/1000,'LineWidth',2);
+%         end
+%         if Misc.MRSBool == 1 && Misc.ValidationBool == 1 && Misc.UStracking == 1
+%             legend('MTE','Generic MRS','Optimized MRS','USdata');
+%         elseif Misc.MRSBool == 1 && Misc.UStracking == 1
+%             legend('MTE','MRS','USdata');
+%         elseif Misc.ValidationBool == 1 && Misc.UStracking == 1
+%             legend('MTE','Optimized MRS','USdata');
+%         elseif Misc.UStracking == 1
+%             legend('MTE','USdata');
+%         elseif Misc.MRSBool == 1 && Misc.ValidationBool == 1
+%             legend('MTE','Generic MRS','Optimized MRS');
+%         elseif Misc.MRSBool == 1
+%             legend('MTE','MRS');
+%         elseif Misc.ValidationBool == 1
+%             legend('MTE','Optimized MRS');
+%         else
+%             legend('MTE');
+%         end
+%     end
+% end
+% 
+% save('workspaceTemp.mat');
+
+
+% if Misc.PlotBool
+%     h = figure('Name','Tracking EMG');
+%     nPhases = length(Misc.IKfile);
+%     if nPhases > 1
+%         hTabGroup = uitabgroup;
+%     end
+%     for i=1:nPhases
+%         % set the name of the tab
+%         if nPhases>1
+%             [path,file,ext]=fileparts(Misc.IKfile{i});
+%             tab = uitab(hTabGroup, 'Title', file);
+%             axes('parent',tab);
+%         end
+%         % plot the EMG signals for this file
+%         nEMG = DatStore(i).EMG.nEMG;
+%         p    = numSubplots(nEMG);
+%         EMGinds = DatStore(i).EMG.EMGindices;
+%         % interpolate EMG
+%         tSim = Results.Time(i).MTE;
+%         EMG = ppval(DatStore(i).EMG.EMGspline,tSim)';
+%         for j=1:nEMG
+%             subplot(p(1),p(2),j);
+%             % simulated muscle activity - parameter estimation
+%             Cs = [89, 135, 189]./255;
+%             eSim = Results.MExcitation(i).MTE(EMGinds(j),:)';
+%             tSim = Results.Time(i).MTE;
+%             plot(tSim(1:end-1),eSim,'Color',Cs); hold on;
+%             % measured EMG
+%             EMGscaled = EMG(:,j).*Results.Param.EMGscale(j);
+%             plot(tSim,EMGscaled,'--k');
+%             % simulated muscle activity - parameter estimation
+%             if Misc.ValidationBool
+%                 Cs = [161, 116, 64]./255;
+%                 eSim = Results.MExcitation(i).validationMRS(EMGinds(j),:);
+%                 tSim = Results.Time(i).validationMRS;
+%                 plot(tSim(1:end-1),eSim,'Color',Cs);
+%             end
+%             if j==nEMG
+%                 if Misc.ValidationBool
+%                     legend('Parameter estimation','EMG','Validation');
+%                 else
+%                     legend('Parameter estimation','EMG');
+%                 end
+%             end
+%             title(DatStore(i).EMG.EMGselection{j});
+%         end
+%     end
+% end
+
+
+%% Plot the optimized parameters
+
+% 
+% if Misc.PlotBool
+%     h = figure('Name','Opt Param');
+%     hTabGroup = uitabgroup;
+%     
+%     % plot estimated lmOpt
+%     tab = uitab(hTabGroup, 'Title', 'Opt Fiber length');
+%     axes('parent',tab);
+%     iM = DatStore(1).free_lMo(:); % Muscle indexes
+%     nMus = length(iM);
+%     p    = numSubplots(nMus);
+%     Cs = [89, 135, 189]./255;
+%     for i=1:nMus
+%         subplot(p(1),p(2),i)
+%         or = Results.Param.Original.lOpt(iM(i));
+%         est = Results.Param.Estimated.lOpt(iM(i));
+%         lb = Results.Param.Bound.lOp.lb;    ub = Results.Param.Bound.lOp.ub;
+%         b = bar(1,or);  b.FaceColor = [0 0 0]; hold on;
+%         b = bar(2,est); b.FaceColor = Cs;
+%         l = line([0 3],repmat(or*lb,1,2)); l.Color = [0 0 0];
+%         l = line([0 3],repmat(or*ub,1,2)); l.Color = [0 0 0];
+%         set(gca,'XTick',[]);
+%         title(DatStore(1).MuscleNames{iM(i)},'interpreter','none');
+%     end
+%     legend('Original','Estimated','Bound');
+%     
+%     % plot estimated tendon stiffness
+%     tab = uitab(hTabGroup, 'Title', 'Tendon Stiffness');
+%     axes('parent',tab);
+%     iM = DatStore(1).free_kT(:); % Muscle indexes
+%     nMus = length(iM);
+%     p    = numSubplots(nMus);
+%     Cs = [89, 135, 189]./255;
+%     for i=1:nMus
+%         subplot(p(1),p(2),i)
+%         or = Results.Param.Original.ATendon(iM(i));
+%         est = Results.Param.Estimated.ATendon(iM(i));
+%         lb = Results.Param.Bound.kT.lb;    ub = Results.Param.Bound.kT.ub;
+%         b = bar(1,or);  b.FaceColor = [0 0 0]; hold on;
+%         b = bar(2,est); b.FaceColor = Cs;
+%         l = line([0 3],repmat(or*lb,1,2)); l.Color = [0 0 0];
+%         l = line([0 3],repmat(or*ub,1,2)); l.Color = [0 0 0];
+%         set(gca,'XTick',[]);
+%         title(DatStore(1).MuscleNames{iM(i)},'interpreter','none');
+%     end
+%     legend('Original','Estimated','Bound');
+%     
+%     % plot estimated tendon slack length
+%     tab = uitab(hTabGroup, 'Title', 'Tendon slack length');
+%     axes('parent',tab);
+%     iM = DatStore(1).free_lMo(:); % Muscle indexes
+%     nMus = length(iM);
+%     p    = numSubplots(nMus);
+%     Cs = [89, 135, 189]./255;
+%     for i=1:nMus
+%         subplot(p(1),p(2),i)
+%         or = Results.Param.Original.L_Slack(iM(i));
+%         est = Results.Param.Estimated.L_Slack(iM(i));
+%         lb = Results.Param.Bound.lTs.lb;    ub = Results.Param.Bound.lTs.ub;
+%         b = bar(1,or);  b.FaceColor = [0 0 0]; hold on;
+%         b = bar(2,est); b.FaceColor = Cs;
+%         l = line([0 3],repmat(or*lb,1,2)); l.Color = [0 0 0];
+%         l = line([0 3],repmat(or*ub,1,2)); l.Color = [0 0 0];
+%         set(gca,'XTick',[]);
+%         title(DatStore(1).MuscleNames{iM(i)},'interpreter','none');
+%     end
+%     legend('Original','Estimated','Bound');
+%     
+%     % Plot the bounds on EMG
+%     tab = uitab(hTabGroup, 'Title', 'EMG scale Factor');
+%     axes('parent',tab);
+%     nEMG = DatStore(1).EMG.nEMG;
+%     bar(Results.Param.EMGscale); hold on;  % scale factor
+%     plot(1:nEMG,repmat(Results.Param.Bound.EMG.lb,1,nEMG),'--k');  % lower bound
+%     plot(1:nEMG,repmat(Results.Param.Bound.EMG.ub,1,nEMG),'--k');  % upper bound
+%     set(gca,'XTick',1:DatStore(1).EMG.nEMG);
+%     set(gca,'XTickLabel',DatStore(1).EMG.EMGselection);
+%     set(gca,'XTickLabelRotation',60);
+% end
+% 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 end
 
 
