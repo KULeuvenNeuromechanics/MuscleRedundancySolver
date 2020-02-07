@@ -20,36 +20,36 @@ end
 
 if boolEMG    
     % file information
-    nFiles = length(Misc.EMGfile);
+    nF = length(Misc.EMGfile);
     % Load the data and check for errors
-    for iFile = 1:nF        
+    for iF = 1:nF        
         % get information for the EMG constraints
-        EMGFile(iFile)      = importdata(Misc.EMGfile{nF});        
+        EMGFile(iF)      = importdata(Misc.EMGfile{iF});        
     end    
     % prevent errors with the headers
-    for iFile = 1:nF
-        if ~isfield(EMGFile(iFile),'colheaders')
-            EMGFile(iFile).colheaders = strsplit(EMGFile(1).textdata{end});
+    for iF = 1:nF
+        if ~isfield(EMGFile(iF),'colheaders')
+            EMGFile(iF).colheaders = strsplit(EMGFile(1).textdata{end});
         end
     end
     % check if we have to update the headers based on user input
     bool_updateheader   = 0;
-    if isfield(Misc,'EMGheaders') && ~isempty(Misc.EMGheaders);        
+    if isfield(Misc,'EMGheaders') && ~isempty(Misc.EMGheaders)        
         bool_updateheader=1;
     end
     % verify if the selected muscles are in the model
-    iFile       = 1;    
+    iF       = 1;    
     bool_error  = 0;
     IndError=zeros(length(Misc.EMGSelection),1);
     for i=1:length(Misc.EMGSelection)
-        if ~any(strcmp(Misc.EMGSelection{i},DatStore(iFile).MuscleNames))
+        if ~any(strcmp(Misc.EMGSelection{i},DatStore(iF).MuscleNames))
             disp(['Could not find ' Misc.EMGSelection{i} ' in the model, Update the Misc.EMGSelection structure']);
             bool_error=1;
             IndError(i)=1;
         end
     end
     % verify if the muscles in the .mot files are in the model
-    EMGheaders  = EMGFile(iFile).colheaders;
+    EMGheaders  = EMGFile(iF).colheaders;
     if bool_updateheader
        EMGheaders      = Misc.EMGheaders; 
     end
@@ -70,9 +70,10 @@ if boolEMG
         Misc.EMGSelection(find(IndError)) = [];
     end    
     
-    %% Process the data    
+    %% Process the data 
+    % ERROR IN FOR LOOP PARAMETERS FIXED - 24/01/2020 JPCB
     for iF = 1:nF
-        EMGdat              = EMGFile(iFile).data;        
+        EMGdat              = EMGFile(iF).data;        
         [nfr, nc] = size(EMGdat);  
         % get the EMG data
         nIn = length(Misc.EMGSelection);
@@ -84,19 +85,21 @@ if boolEMG
             EMGindices(i) = find(strcmp(Misc.EMGSelection{i},DatStore(iF).MuscleNames));
         end        
         % add twins
-        nCopy = length(Misc.EMG_MuscleCopies(:,1));
-        EMGsel = [EMGsel zeros(nfr,nCopy)];
-        EMGindices = [ EMGindices ; zeros(nCopy,1)];        
-        for j=1:length(Misc.EMG_MuscleCopies(:,1))
-            NameSel = Misc.EMG_MuscleCopies{j,1};
-            NameCopy =  Misc.EMG_MuscleCopies{j,2};
-            
-            Ind_ColCopy = strcmp(Misc.EMGSelection,NameSel);
-            EMGsel(:,i+j) = EMGsel(:,Ind_ColCopy);
-            EMGindices(i+j) = find(strcmp(NameCopy,DatStore(iF).MuscleNames));
-            EMGselection = [EMGselection {NameCopy}];
-        end
-        DatStore(iF).EMG.MaxScale       = Misc.MaxScaleEMG;
+        if  ~isempty(Misc.EMG_MuscleCopies)
+            nCopy = length(Misc.EMG_MuscleCopies(:,1));
+            EMGsel = [EMGsel zeros(nfr,nCopy)];
+            EMGindices = [ EMGindices ; zeros(nCopy,1)];        
+            for j=1:length(Misc.EMG_MuscleCopies(:,1))
+                NameSel = Misc.EMG_MuscleCopies{j,1};
+                NameCopy =  Misc.EMG_MuscleCopies{j,2};
+
+                Ind_ColCopy = strcmp(Misc.EMGSelection,NameSel);
+                EMGsel(:,i+j) = EMGsel(:,Ind_ColCopy);
+                EMGindices(i+j) = find(strcmp(NameCopy,DatStore(iF).MuscleNames));
+                EMGselection = [EMGselection {NameCopy}];
+            end
+        end    
+        DatStore(iF).EMG.BoundsScaleEMG = Misc.BoundsScaleEMG;
         DatStore(iF).EMG.EMGbounds      = Misc.EMGbounds;
         DatStore(iF).EMG.nEMG           = length(EMGindices);
         DatStore(iF).EMG.EMGindices     = EMGindices;
@@ -109,7 +112,7 @@ if boolEMG
 else
     for iF = 1:length(DatStore)
         % Boolean in DatStore that EMG info is not used ?
-        DatStore(iF).EMG.MaxScale       = [];
+        DatStore(iF).EMG.BoundsScaleEMG       = [];
         DatStore(iF).EMG.EMGbounds      = [];
         DatStore(iF).EMG.nEMG           = [];
         DatStore(iF).EMG.EMGindices     = [];
