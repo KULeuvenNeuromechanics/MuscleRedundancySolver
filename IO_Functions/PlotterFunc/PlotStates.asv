@@ -1,0 +1,93 @@
+function [ h ] = PlotStates( Results,DatStore,Misc )
+h = figure('Name','Optimal states and controls');
+hTabGroup = uitabgroup;
+
+
+for trial = 1:length(Results.MActivation(:))
+% plot optimal activations
+tab = uitab(hTabGroup, 'Title', ['Trial ' num2str(trial) ': activation']);
+axes('parent',tab);
+lw = 2;
+nMus = DatStore.NMuscles;
+p    = numSubplots(nMus);
+for i=1:nMus
+    subplot(p(1),p(2),i)
+    plot(Results.Time(trial).MTE,Results.MActivation(trial).MTE(i,:),'LineWidth',lw); hold on;
+    plot(Results.Time(trial).genericMRS,Results.MActivation(trial).genericMRS(i,:),'LineWidth',1);
+    title(DatStore(1).MuscleNames{i},'interpreter','none');
+    xlim([Results.Time(trial).MTE(1) Results.Time(trial).MTE(end)])
+end
+legend('MTE','genericMRS')
+
+% plot optimal lMtilde
+tab = uitab(hTabGroup, 'Title', ['Trial ' num2str(trial) ': normalized FL']);
+axes('parent',tab);
+lw = 2;
+nMus = DatStore.NMuscles;
+p    = numSubplots(nMus);
+Cs = linspecer(3);
+legend_title = {};
+for i=1:nMus
+    subplot(p(1),p(2),i)
+    if Misc.UStracking==1  
+        plot(Results.Time(trial).MTE,Results.lMtildeopt(trial).MTE(i,:),'Color',Cs(1,:),'LineWidth',lw); hold on;
+        if i == 1
+            legend_title = [legend_title,'Parameter Estimation'];
+        end
+    end
+    if Misc.ValidationBool==1     
+        plot(Results.Time(trial).validationMRS,Results.lMtildeopt(trial).validationMRS(i,:),'Color',Cs(2,:),'LineWidth',lw);
+        if i == 1
+            legend_title = [legend_title;'Validation MRS'];
+        end
+    end
+    if Misc.MRSBool==1          
+        plot(Results.Time(trial).genericMRS,Results.lMtildeopt(trial).genericMRS(i,:),'Color',Cs(3,:),'LineWidth',1);
+        if i == 1
+            legend_title = [legend_title;'Generic MRS'v;
+        end
+    end
+
+    title(DatStore(1).MuscleNames{i},'interpreter','none');
+    xlim([Results.Time(trial).MTE(1) Results.Time(trial).MTE(end)])
+end
+legend(legend_title(2:end))
+
+% plot optimal lM
+tab = uitab(hTabGroup, 'Title', ['Trial ' num2str(trial) ': FL']);
+axes('parent',tab);
+lw = 2;
+nMus = DatStore.NMuscles;
+p    = numSubplots(nMus);
+Cs = [89, 135, 189]./255;
+for i=1:nMus
+    subplot(p(1),p(2),i)
+    plot(Results.Time(trial).MTE,Results.lM(trial).MTE(i,:),'LineWidth',lw); hold on;
+    plot(Results.Time(trial).genericMRS,Results.lM(trial).genericMRS(i,:),'LineWidth',lw);
+
+    title(DatStore(1).MuscleNames{i},'interpreter','none');
+    xlim([Results.Time(trial).MTE(1) Results.Time(trial).MTE(end)])
+end
+   legend('MTE','genericMRS')
+ 
+
+% plot residual actuators
+tab = uitab(hTabGroup, 'Title', ['Trial ' num2str(trial) ': Residual actuators']);
+axes('parent',tab);
+lw = 2;
+nDOF = DatStore.nDOF;
+p    = numSubplots(nDOF);
+Cs = [89, 135, 189]./255;
+for i=1:nDOF
+    subplot(p(1),p(2),i)
+    plot(Results.Time(trial).MTE(1:end-1),Results.RActivation(trial).MTE(i,:),'LineWidth',lw); hold on;
+    plot(Results.Time(trial).genericMRS(1:end-1),Results.RActivation(trial).genericMRS(i,:),'LineWidth',lw);
+
+    title(DatStore(1).DOFNames{i},'interpreter','none');
+    xlim([Results.Time(trial).MTE(1) Results.Time(trial).MTE(end)])
+end
+legend('MTE','genericMRS')
+
+end
+end
+

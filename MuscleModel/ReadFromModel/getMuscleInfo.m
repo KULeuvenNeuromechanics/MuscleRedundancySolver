@@ -40,13 +40,13 @@ for i=1:length(Misc.DofNames_Input)
         
         % read indexes in time frame for muscle analysis
         t_Mus=dm_Data_temp.data(:,1);           t_Mus=round(t_Mus*10000)/10000;
-        ind0=find(t_Mus>=Misc.time(trial,1),1,'first'); ind_end=find(t_Mus<=Misc.time(trial,2),1,'last');
+        ind0=find(t_Mus>=Misc.time(trial,1)-0.001,1,'first'); ind_end=find(t_Mus<=Misc.time(trial,2),1,'last');
         Mus_inds=ind0:ind_end;
     end
     
     % Evaluate if one of the muscles spans this DOF (when moment arms > 0.001)
     dM=dm_Data_temp.data(Mus_inds,Inds_muscles);    
-    if any(any(abs(dM)>0.001))
+    if any(any(abs(dM)>0.0001))
         Misc.DofNames_muscles{ct}=Misc.DofNames_Input{i};
         dM_temp(:,i,:)=dM;
         DOF_inds(ct)=i;
@@ -107,7 +107,7 @@ end
 
 % select the IK information between the selected time frames
 t_IK=IK_data.data(:,1);     t_IK=round(t_IK*10000)/10000; 
-ind0=find(t_IK>=Misc.time(trial,1),1,'first'); ind_end=find(t_IK<=Misc.time(trial,2),1,'last');
+ind0=find(t_IK>=Misc.time(trial,1)-0.001,1,'first'); ind_end=find(t_IK<=Misc.time(trial,2),1,'last');
 IK_inds=ind0:ind_end;
 
 % filter the kinematics and kinetics
@@ -145,7 +145,7 @@ end
 % select ID data between start and end
 ID_data_int=interp1(ID_data.data(:,1),ID_data.data,IK_data.data(:,1));       % interpolate data for IK sampling frequency
 t_ID=ID_data_int(:,1); t_ID=round(t_ID*10000)/10000;
-ind0=find(t_ID>=Misc.time(trial,1),1,'first'); ind_end=find(t_ID<=Misc.time(trial,2),1,'last');
+ind0=find(t_ID>=Misc.time(trial,1)-0.001,1,'first'); ind_end=find(t_ID<=Misc.time(trial,2),1,'last');
 ID_inds=ind0:ind_end;
 
 %% store the data
