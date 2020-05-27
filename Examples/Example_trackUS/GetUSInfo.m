@@ -24,7 +24,7 @@ if boolUS
     % Load the data and check for errors
     for iFile = 1:nF        
         % get information for the EMG constraints
-        USfile(iFile)      = importdata(Misc.USfile{nF});        
+        USfile(iFile)      = importdata(Misc.USfile{iFile});        
     end    
     % prevent errors with the headers
     for iFile = 1:nF
@@ -77,7 +77,7 @@ if boolUS
     
     %% Process the data    
     for iF = 1:nF
-        USdat              = USfile(iFile).data;        
+        USdat              = USfile(iF).data;        
         [nfr, nc] = size(USdat);  
         % get the US data
         nIn = length(Misc.USSelection);
