@@ -1,4 +1,4 @@
-function [h] = PlotEstimatedParameters(Results,DatStore,Misc)
+function [h] = PlotEstimatedParameters(Results,DatStore)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -9,7 +9,7 @@ hTabGroup = uitabgroup;
 % plot estimated lmOpt
 tab = uitab(hTabGroup, 'Title', 'Opt Fiber length');
 axes('parent',tab);
-iM = DatStore(1).free_kT(:); % Muscle indexes
+iM = DatStore(1).free_lMo(:); % Muscle indexes
 nMus = length(iM);
 p    = numSubplots(nMus);
 Cs = [89, 135, 189]./255;
@@ -70,17 +70,15 @@ end
 legend('Original','Estimated','Bound');
 
 % Plot the bounds on EMG
-if Misc.EMGconstr 
-    tab = uitab(hTabGroup, 'Title', 'EMG scale Factor');
-    axes('parent',tab);
-    nEMG = DatStore(1).EMG.nEMG;
-    bar(Results.Param.EMGscale); hold on;  % scale factor
-    plot(1:nEMG,repmat(Results.Param.Bound.EMG.lb,1,nEMG),'--k');  % lower bound
-    plot(1:nEMG,repmat(Results.Param.Bound.EMG.ub,1,nEMG),'--k');  % upper bound
-    set(gca,'XTick',1:DatStore(1).EMG.nEMG);
-    set(gca,'XTickLabel',DatStore(1).EMG.EMGselection);
-    set(gca,'XTickLabelRotation',60);
-end
+tab = uitab(hTabGroup, 'Title', 'EMG scale Factor');
+axes('parent',tab);
+nEMG = DatStore(1).EMG.nEMG;
+bar(Results.Param.EMGscale); hold on;  % scale factor
+plot(1:nEMG,repmat(Results.Param.Bound.EMG.lb,1,nEMG),'--k');  % lower bound
+plot(1:nEMG,repmat(Results.Param.Bound.EMG.ub,1,nEMG),'--k');  % upper bound
+set(gca,'XTick',1:DatStore(1).EMG.nEMG);
+set(gca,'XTickLabel',DatStore(1).EMG.EMGselection);
+set(gca,'XTickLabelRotation',60);
 
 
 
