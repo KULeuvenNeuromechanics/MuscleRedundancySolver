@@ -10,7 +10,7 @@ for trial = 1:length(Results.MActivation(:))
     % plot optimal activations
     tab = uitab(hTabGroup, 'Title', ['Trial ' num2str(trial) ': activation']);
     axes('parent',tab);
-    nMus = DatStore.NMuscles;
+    nMus = length(DatStore(trial).MuscleNames);
     lw   = 4;
     p    = numSubplots(nMus);
     legend_title = {};
@@ -42,8 +42,6 @@ for trial = 1:length(Results.MActivation(:))
     % plot optimal lMtilde
     tab = uitab(hTabGroup, 'Title', ['Trial ' num2str(trial) ': normalized FL']);
     axes('parent',tab);
-    nMus = DatStore.NMuscles;
-    p    = numSubplots(nMus);
     legend_title = {};
     for i=1:nMus
         subplot(p(1),p(2),i)
@@ -75,8 +73,6 @@ for trial = 1:length(Results.MActivation(:))
     tab = uitab(hTabGroup, 'Title', ['Trial ' num2str(trial) ': FL']);
     axes('parent',tab);
     lw = 2;
-    nMus = DatStore.NMuscles;
-    p    = numSubplots(nMus);
     legend_title = {};
     for i=1:nMus
         subplot(p(1),p(2),i)
@@ -109,8 +105,7 @@ for trial = 1:length(Results.MActivation(:))
     tab = uitab(hTabGroup, 'Title', ['Trial ' num2str(trial) ': Residual actuators']);
     axes('parent',tab);
     nDOF = DatStore.nDOF;
-    p    = numSubplots(nDOF);
-    
+    p    = numSubplots(nDOF);    
     legend_title = {};
     for i=1:nDOF
         subplot(p(1),p(2),i)

@@ -64,7 +64,7 @@ e1 = Fvparam(1);
 e2 = Fvparam(2);
 e3 = Fvparam(3);
 e4 = Fvparam(4);
-FMvtilde = e1*log((e2*vMtilde+e3)+sqrt((e2*vMtilde+e3).^2+1))+e4;
+FMvtilde = e1*log((e2*vMtilde./10+e3)+sqrt((e2*vMtilde./10+e3).^2+1))+e4;
 
 
 

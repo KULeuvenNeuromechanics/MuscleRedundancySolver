@@ -26,25 +26,31 @@ for trial = 1:nPhases
     p     = numSubplots(nMus);
     
     for j=1:nMus
-       subplot(p(1),p(2),j)     
+       subplot(p(1),p(2),j)   
+        % simulated fiber length -- parameter estimation
+       if Misc.UStracking
+            lMSim = Results.lM(trial).MTE(Minds(j),:);
+            tSim = Results.Time(trial).MTE;
+            plot(tSim,lMSim,'Color',Cs(1,:),'LineWidth',lw); hold on;
+       end        
        % simulated fiber length -- validation simulation
        if Misc.ValidationBool
             lMSim = Results.lM(trial).validationMRS(Minds(j),:);
             tSim = Results.Time(trial).validationMRS;
-            plot(tSim,lMSim,'Color',Cs(2,:),'LineWidth',lw);
+            plot(tSim,lMSim,'Color',Cs(2,:),'LineWidth',lw);  hold on;
        end 
        % generic MRS results
        if Misc.UStracking
             lMSim = Results.lM(trial).genericMRS(Minds(j),:);
             tSim = Results.Time(trial).genericMRS;
-            plot(tSim,lMSim,'Color',Cs(3,:),'LineWidth',lw);
+            plot(tSim,lMSim,'Color',Cs(3,:),'LineWidth',lw);hold on;
        end  
        % measured fiber length
        if Misc.UStracking
            if nMus == 1
-             plot(Results.Time(trial).MTE,DatStore(trial).USTracking(j,:)/1000,'--k','LineWidth',lw);
+             plot(Results.Time(trial).MTE,DatStore(trial).USTracking(j,:)/1000,'--k','LineWidth',lw);hold on;
            else
-             plot(Results.Time(trial).MTE,DatStore(trial).USTracking(:,j)/1000,'--k','LineWidth',lw);
+             plot(Results.Time(trial).MTE,DatStore(trial).USTracking(:,j)/1000,'--k','LineWidth',lw);hold on;
            end
        end
        title(DatStore(trial).MuscleNames{Minds(j)});

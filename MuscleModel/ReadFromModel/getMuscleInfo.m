@@ -138,7 +138,7 @@ end
 % select ID data between start and end
 ID_data_int = interp1(ID_data.data(:,1),ID_data.data,IK_data.data(:,1));       % interpolate data for IK sampling frequency
 t_ID = IK_data.data(:,1);
-ind0 = find(t_ID>=Misc.time(1),1,'first'); ind_end=find(t_ID<=Misc.time(2),1,'last');
+ind0 = find(t_ID>=Misc.time(trial,1),1,'first'); ind_end=find(t_ID<=Misc.time(trial,2),1,'last');
 ID_inds=ind0:ind_end;
 
 %% store the data

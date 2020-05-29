@@ -67,7 +67,7 @@ Bounds = [];
 Misc.OutName = 'Walking_';
 
 %% Run muscle tendon estimator:
-[Results,Parameters,DatStore] = MuscleTendonEstimator(model_path,time,Bounds,Out_path,Misc);
+[Results,DatStore] = MuscleTendonEstimator(model_path,time,Bounds,Out_path,Misc);
 
 % Save the results structure where you want
 save('Results.mat','Results');

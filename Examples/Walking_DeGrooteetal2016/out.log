@@ -674,3 +674,1399 @@ Updating Model file from 30000 to latest format...
 Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
 ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
 ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_2_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_2_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_2_IK.mot (nr=116 nc=42)
+.. assuming rotations in Degrees.
+Found 116 state vectors with time stamps ranging from 3.61 to 4.76.
+Executing the analyses from 3.61 to 4.76...
+Printing results of investigation trial_2_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_2_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_2_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_2_IK.mot (nr=116 nc=42)
+.. assuming rotations in Degrees.
+Found 116 state vectors with time stamps ranging from 3.61 to 4.76.
+Executing the analyses from 3.61 to 4.76...
+Printing results of investigation trial_2_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_2_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_2_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_2_IK.mot (nr=116 nc=42)
+.. assuming rotations in Degrees.
+Found 116 state vectors with time stamps ranging from 3.61 to 4.76.
+Executing the analyses from 3.61 to 4.76...
+Printing results of investigation trial_2_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_4_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot (nr=120 nc=42)
+.. assuming rotations in Degrees.
+Found 120 state vectors with time stamps ranging from 6 to 7.19.
+Executing the analyses from 6 to 7.19...
+Printing results of investigation trial_4_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_2_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_2_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_2_IK.mot (nr=116 nc=42)
+.. assuming rotations in Degrees.
+Found 116 state vectors with time stamps ranging from 3.61 to 4.76.
+Executing the analyses from 3.61 to 4.76...
+Printing results of investigation trial_2_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_4_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot (nr=120 nc=42)
+.. assuming rotations in Degrees.
+Found 120 state vectors with time stamps ranging from 6 to 7.19.
+Executing the analyses from 6 to 7.19...
+Printing results of investigation trial_4_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_2_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_2_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_2_IK.mot (nr=116 nc=42)
+.. assuming rotations in Degrees.
+Found 116 state vectors with time stamps ranging from 3.61 to 4.76.
+Executing the analyses from 3.61 to 4.76...
+Printing results of investigation trial_2_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_4_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot (nr=120 nc=42)
+.. assuming rotations in Degrees.
+Found 120 state vectors with time stamps ranging from 6 to 7.19.
+Executing the analyses from 6 to 7.19...
+Printing results of investigation trial_4_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_2_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_2_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_2_IK.mot (nr=116 nc=42)
+.. assuming rotations in Degrees.
+Found 116 state vectors with time stamps ranging from 3.61 to 4.76.
+Executing the analyses from 3.61 to 4.76...
+Printing results of investigation trial_2_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_4_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot (nr=120 nc=42)
+.. assuming rotations in Degrees.
+Found 120 state vectors with time stamps ranging from 6 to 7.19.
+Executing the analyses from 6 to 7.19...
+Printing results of investigation trial_4_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_2_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_2_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_2_IK.mot (nr=116 nc=42)
+.. assuming rotations in Degrees.
+Found 116 state vectors with time stamps ranging from 3.61 to 4.76.
+Executing the analyses from 3.61 to 4.76...
+Printing results of investigation trial_2_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_4_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot (nr=120 nc=42)
+.. assuming rotations in Degrees.
+Found 120 state vectors with time stamps ranging from 6 to 7.19.
+Executing the analyses from 6 to 7.19...
+Printing results of investigation trial_4_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_2_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_2_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_2_IK.mot (nr=116 nc=42)
+.. assuming rotations in Degrees.
+Found 116 state vectors with time stamps ranging from 3.61 to 4.76.
+Executing the analyses from 3.61 to 4.76...
+Printing results of investigation trial_2_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_4_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot (nr=120 nc=42)
+.. assuming rotations in Degrees.
+Found 120 state vectors with time stamps ranging from 6 to 7.19.
+Executing the analyses from 6 to 7.19...
+Printing results of investigation trial_4_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_2_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_2_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_2_IK.mot (nr=116 nc=42)
+.. assuming rotations in Degrees.
+Found 116 state vectors with time stamps ranging from 3.61 to 4.76.
+Executing the analyses from 3.61 to 4.76...
+Printing results of investigation trial_2_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_4_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot (nr=120 nc=42)
+.. assuming rotations in Degrees.
+Found 120 state vectors with time stamps ranging from 6 to 7.19.
+Executing the analyses from 6 to 7.19...
+Printing results of investigation trial_4_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_2_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_2_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_2_IK.mot (nr=116 nc=42)
+.. assuming rotations in Degrees.
+Found 116 state vectors with time stamps ranging from 3.61 to 4.76.
+Executing the analyses from 3.61 to 4.76...
+Printing results of investigation trial_2_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_4_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot (nr=120 nc=42)
+.. assuming rotations in Degrees.
+Found 120 state vectors with time stamps ranging from 6 to 7.19.
+Executing the analyses from 6 to 7.19...
+Printing results of investigation trial_4_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_1_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_1_IK.mot (nr=121 nc=42)
+.. assuming rotations in Degrees.
+Found 121 state vectors with time stamps ranging from 2.39 to 3.59.
+Executing the analyses from 2.39 to 3.59...
+Printing results of investigation trial_1_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_2_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_2_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_2_IK.mot (nr=116 nc=42)
+.. assuming rotations in Degrees.
+Found 116 state vectors with time stamps ranging from 3.61 to 4.76.
+Executing the analyses from 3.61 to 4.76...
+Printing results of investigation trial_2_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool trial_4_IK loading model 'C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot.
+Old version storage/motion file encountered
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\trial_4_IK.mot (nr=120 nc=42)
+.. assuming rotations in Degrees.
+Found 120 state vectors with time stamps ranging from 6 to 7.19.
+Executing the analyses from 6 to 7.19...
+Printing results of investigation trial_4_IK to C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\Misc\MuscleTendonEstimator\Examples\Example_trackUS\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.

@@ -59,7 +59,7 @@ Misc.lb_lTs_scaling = 0.7; % Lower bound for scaling tendon slack length
 Misc.ub_lTs_scaling = 1.5; % Upper bound for scaling tendon slack length
 
 % Select muscle for which you want the fiberlengths to track the US data
-Misc.UStracking  = 0;            % Boolean to select US tracking option
+Misc.UStracking  = 1;            % Boolean to select US tracking option
 Misc.USSelection = {'med_gas_l'};
 
 % Provide the correct headers int case you EMG file has not the same
@@ -79,7 +79,7 @@ Misc.EMG_MuscleCopies = {'med_gas_l','lat_gas_l'};       %  use gastrocnemius me
 Bounds = [];		% currently still empty
 
 % information for the EMG constraint
-Misc.EMGconstr  = 0;     		% Boolean to select EMG constrained option
+Misc.EMGconstr  = 1;     		% Boolean to select EMG constrained option
 Misc.EMGbounds  = [-0.3 0.3];  	% upper and lower bound for deviation simulated and measured muscle activity
 Misc.MaxScaleEMG = 10; 			% maximal value to scale EMG
 
@@ -97,7 +97,7 @@ Misc.ValidationBool = 0; 	% TO DO: we should report results of EMG driven simula
 % change mesh frequency
 Misc.Mesh_Frequency = 100;
 %% Run muscle tendon estimator:
-[Results,Parameters,DatStore,Misc] = MuscleTendonEstimator(model_path,time,Bounds,Out_path,Misc);
+[Results,DatStore,Misc] = MuscleTendonEstimator(model_path,time,Bounds,Out_path,Misc);
 
 % Save the results structure where you want
 save('Results.mat','Results');
