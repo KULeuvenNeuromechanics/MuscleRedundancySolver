@@ -38,66 +38,34 @@ Out_path    = fullfile(ExamplePath,'Results');                    % folder to st
 time = [0 9999];  % (selects the full file) 
 
 %% Settings
-Misc.DofNames_Input={'ankle_angle_l','knee_angle_l','hip_flexion_l','hip_adduction_l','hip_rotation_l'};    % select the DOFs you want to include in the optimization
+Misc.DofNames_Input={'ankle_angle_l'};    % select the DOFs you want to include in the optimization
 
-% Set the tendon stifness of all muscles
-Misc.ATendon = [];      % default way to set tendon stiffenss (default values is 35)
-
-% Settings for estimating tendon stiffness
-Misc.Estimate_TendonStifness = {'med_gas_l';'lat_gas_l';'soleus_l'}; % Names of muscles of which tendon stifness is estimated
-Misc.lb_kT_scaling = 0.2; % Lower bound for scaling generic tendon stiffness
-Misc.ub_kT_scaling = 1.2; % Upper bound for scaling generic tendon stiffness
-Misc.Coupled_TendonStifness = {'med_gas_l';'lat_gas_l';'soleus_l'}; % Couple muscles that should have equal tendon stifness
-Misc.Coupled_fiber_length = {'med_gas_l';'lat_gas_l'};
-Misc.Coupled_slack_length = {}; %{'med_gas_l';'lat_gas_l'};
-
-% Settings for estimating optimal fiber length
-Misc.Estimate_OptFL = {'med_gas_l';'lat_gas_l'};%;'lat_gas_l';'soleus_l'}; % Names of muscles of which optimal fiber length is estimated - slack length is estimated for these muscles as well
-Misc.lb_lMo_scaling = 0.7; % Lower bound for scaling optimal fiber length
-Misc.ub_lMo_scaling = 1.5; % Upper bound for scaling optimal fiber length
-Misc.lb_lTs_scaling = 0.7; % Lower bound for scaling tendon slack length
-Misc.ub_lTs_scaling = 1.5; % Upper bound for scaling tendon slack length
-
+Misc.MuscleNames_Input = {'med_gas_l','lat_gas_l','soleus_l','tib_ant_l'}; % select muscles
+Misc.Atendon = [];
 % Select muscle for which you want the fiberlengths to track the US data
 Misc.UStracking  = 0;            % Boolean to select US tracking option
-Misc.USSelection = {'med_gas_l'};
-
-% Provide the correct headers int case you EMG file has not the same
-% headers as the muscle names in OpenSim (leave empty when you don't want
-% to use this)
-Misc.EMGheaders = {'time','med_gas_l', 'soleus_l', 'vas_lat_l'};
-
-% channels you want to use for EMG constraints
-Misc.EMGSelection = {'med_gas_l', 'soleus_l'};
-
-% Use this structure if you want to use one EMG channel for multiple
-% muscles in the opensim model. The first name of each row is the reference
-% and should always be in the header of the EMGfile or in the  EMGheaders.
-Misc.EMG_MuscleCopies = {'med_gas_l','lat_gas_l'};       %  use gastrocnemius medialis EMG to constrain activity of the lateral gastrocn
-
-% ???????s
 Bounds = [];		% currently still empty
-
 % information for the EMG constraint
 Misc.EMGconstr  = 0;     		% Boolean to select EMG constrained option
-Misc.EMGbounds  = [-0.3 0.3];  	% upper and lower bound for deviation simulated and measured muscle activity
-Misc.MaxScaleEMG = 10; 			% maximal value to scale EMG
-
-% Set weights
-Misc.wEMG 		= 0.001;			% weight on tracking EMG
-Misc.wlM    = 10;               % weight on tracking fiber length
-
 % Plotter Bool: Boolean to select if you want to plot lots of output information of intermediate steps in the script
 Misc.PlotBool = 1;
 % MRS Bool: Select if you want to run the generic muscle redundancy solver
 Misc.MRSBool = 1;
 % Validation Bool: Select if you want to run the muscle redundancy solver with the optimized parameters
 Misc.ValidationBool = 0; 	% TO DO: we should report results of EMG driven simulation as well
-
 % change mesh frequency
 Misc.Mesh_Frequency = 100;
+% output name
+Misc.OutName = 'Minimal_';
 %% Run muscle tendon estimator:
 [Results,Parameters,DatStore,Misc] = MuscleTendonEstimator(model_path,time,Bounds,Out_path,Misc);
 
 % Save the results structure where you want
 save('Results.mat','Results');
+
+%% evaluate results
+F = Results.TForce.genericMRS';
+dM = DatStore.MAinterp;
+
+Tm = F.*dM;
+figure(); plot(Tm); legend(DatStore.MuscleNames);

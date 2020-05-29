@@ -60,13 +60,35 @@ end
 if ~isfield(Misc,'BoundsScaleEMG') || isempty(Misc.BoundsScaleEMG)
     Misc.BoundsScaleEMG = [0.9 1.1];
 end
+% ResultsName
+if ~isfield(Misc,'OutName') || isempty(Misc.OutName)
+    Misc.OutName = '';
+end
+
+% check if all the input files exist
+
+%check if we have to adapt the start and end time so that it corresponds to
+%time frames in the IK solution
+Misc.nTrials = size(Misc.IKfile,1);
+
+% adapt the time indices based on time vector IK solution
+for i = 1: Misc.nTrials
+    IK = importdata(Misc.IKfile{i});
+    tIK = IK.data(:,1);
+    t0 = tIK(tIK>= time(i,1)); t0 = t0(1);
+    tend = tIK(tIK<= time(i,2)); tend = tend(end);
+    time_new = [t0 tend];
+    if sum(time(i,:)-time_new) ~= 0
+        disp(['Adapted time window to framerate IK solution: ' num2str(time_new)]);
+        time(i,:) = time_new;
+    end
+end
 
 %% Extract muscle information
 % ----------------------------------------------------------------------- %
 % Perform muscle analysis for the different selected trials
-Misc.nTrials = size(Misc.IKfile,1);
 DatStore = struct;
-for i = 1:size(Misc.IKfile,1)
+for i = 1:Misc.nTrials
     IK_path_trial = Misc.IKfile{i};
     ID_path_trial = Misc.IDfile{i};
     
@@ -86,6 +108,9 @@ for i = 1:size(Misc.IKfile,1)
     [~,Misc.trialName,~]=fileparts(IK_path_trial);
     if ~isfield(Misc,'MuscleNames_Input') || isempty(Misc.MuscleNames_Input)
         Misc=getMuscles4DOFS(Misc);
+    end
+    if ~isfield(Misc,'ATendon')
+        Misc.Atendon =ones(1,length(Misc.MuscleNames_Input)).*35;
     end
     % Shift tendon force-length curve as a function of the tendon stiffness
     Misc.shift = getShift(Misc.Atendon);
@@ -140,7 +165,6 @@ end
 % get the EMG information
 [DatStore] = GetEMGInfo(Misc,DatStore);
 [DatStore] = GetUSInfo(Misc,DatStore);
-
 
 %% Static optimization
 % ----------------------------------------------------------------------- %
@@ -267,7 +291,7 @@ optionssol.ipopt.max_iter = output.setup.nlp.ipoptoptions.maxiterations;
 % Problem bounds
 e_min = 0; e_max = 1;                   % bounds on muscle excitation
 a_min = 0; a_max = 1;                   % bounds on muscle activation
-vMtilde_min = -15; vMtilde_max = 15;    % bounds on normalized muscle fiber velocity
+vMtilde_min = -30; vMtilde_max = 30;    % bounds on normalized muscle fiber velocity
 lMtilde_min = 0.2; lMtilde_max = 1.5;   % bounds on normalized muscle fiber length
 
 % CasADi setup
@@ -306,12 +330,10 @@ if Misc.MRSBool == 1
     %   - Reserve actuators
     aT = opti.variable(DatStore(trial).Ndof,N_tot);
     opti.subject_to(-1 < aT <1);
-    %     opti.set_initial(aT,SoRActGuess./Misc.Topt);
     %   - Time derivative of muscle-tendon forces (states)
     vMtilde = Misc.scaling.vMtilde.*opti.variable(DatStore(trial).NMuscles,N_tot);
     opti.subject_to(vMtilde_min < vMtilde < vMtilde_max);
-    opti.set_initial(vMtilde,vMtildeGuess);
-    
+    opti.set_initial(vMtilde,vMtildeGuess);    
     %   - Auxilary variable to avoid muscle buckling
     aux = opti.variable(DatStore(trial).NMuscles,N_tot+nTrials);
     opti.subject_to(1e-4 < aux(:));
@@ -324,7 +346,6 @@ if Misc.MRSBool == 1
     opti.set_initial(aux,auxGuess);
     
     % Loop over mesh points formulating NLP
-    J = 0; % Initialize cost function
     N_acc = 0;
     for trial = 1:Misc.nTrials
         % Time bounds
@@ -348,10 +369,9 @@ if Misc.MRSBool == 1
             % Get muscle-tendon forces and derive Hill-equilibrium
             [Hilldiffk,FTk] = ForceEquilibrium_lMtildeState(ak,lMtildek,vMtildek,auxk,DatStore(trial).LMTinterp(k,:)',Misc.params',Misc.Atendon',Misc.shift');
             
+            % Hill-type muscle model: geometric relationships
             lMo = Misc.params(2,:)';
             alphao = Misc.params(4,:)';
-            
-            % Hill-type muscle model: geometric relationships
             lMk = lMtildek.*lMo;
             w = lMo.*sin(alphao);
             opti.subject_to(lMk.^2 - w.^2 == auxk.^2);
@@ -360,27 +380,26 @@ if Misc.MRSBool == 1
             % Moment constraints
             for dof = 1:DatStore(trial).Ndof
                 T_exp = DatStore(trial).IDinterp(k,dof);
-                index_sel = (dof-1)*(DatStore(trial).NMuscles)+1:(dof-1)*(DatStore(trial).NMuscles)+DatStore(trial).NMuscles;
-                T_sim = FTk'*DatStore(trial).MAinterp(k,index_sel)' + Misc.Topt*aTk(dof);
+                index_sel = (dof-1)*(DatStore(trial).NMuscles)+1:(dof-1)*(DatStore(trial).NMuscles)+DatStore(trial).NMuscles; % moment is a vector with the different dofs "below" each other
+                T_sim = DatStore(trial).MAinterp(k,index_sel)*FTk + Misc.Topt*aTk(dof);
                 opti.subject_to(T_exp - T_sim == 0);
             end
             % Hill-equilibrium constraint
             opti.subject_to(Hilldiffk == 0);
         end
-        
-        J = J + ...
-            0.5*(sumsqr(e)/N/DatStore(trial).NMuscles + sumsqr(a)/N/DatStore(trial).NMuscles) + ...
-            Misc.w1*sumsqr(aT)/N/DatStore(trial).Ndof + ...
-            Misc.w2*sumsqr(vMtilde)/N/DatStore(trial).NMuscles;
         N_acc = N_acc + N;
     end
+    J = 0.5*(sumsqr(e)/N/DatStore(trial).NMuscles + sumsqr(a)/N/DatStore(trial).NMuscles) + ...
+        Misc.w1*sumsqr(aT)/N/DatStore(trial).Ndof + ...
+        Misc.w2*sumsqr(vMtilde)/N/DatStore(trial).NMuscles;
+    
     opti.minimize(J); % Define cost function in opti
     
     % Create an NLP solver
     opti.solver(output.setup.nlp.solver,optionssol);
     
     % Solve
-    diary('GenericMRS.txt');
+    diary(fullfile(OutPath,[Misc.OutName 'GenericMRS.txt']));
     sol = opti.solve();
     diary off
     
@@ -398,7 +417,7 @@ if Misc.MRSBool == 1
     % Optimal auxilary variable
     aux_opt = sol.value(aux);
     
-    % Save results
+    % Append results to output structures
     Ntot = 0;
     for trial = 1:nTrials
         t0 = DatStore(trial).time(1); tf = DatStore(trial).time(end);
@@ -415,11 +434,16 @@ if Misc.MRSBool == 1
         RActivation(trial).genericMRS = aT_opt(:,Ntot + 1:Ntot + N)*Misc.Topt;
         MuscleNames = DatStore.MuscleNames;
         OptInfo = output;
-        % Tendon forces from lMtilde
+        % Tendon force
         lMTinterp(trial).genericMRS = DatStore(trial).LMTinterp;
-        [TForcetilde_,TForce_] = TendonForce_lMtilde(lMtildeopt(trial).genericMRS',Misc.params,lMTinterp(trial).genericMRS,Misc.Atendon,Misc.shift);
+        [TForcetilde_,TForce_] = TendonForce_lMtilde(lMtildeopt(trial).genericMRS',Misc.params,lMTinterp(trial).genericMRS,Misc.Atendon,Misc.shift);    
         TForcetilde(trial).genericMRS = TForcetilde_';
         TForce(trial).genericMRS = TForce_';
+        % get information F/l and F/v properties
+        [Fpe_,FMltilde_,FMvtilde_] = getForceLengthVelocityProperties(lMtildeopt(trial).genericMRS',MvMtilde(trial).genericMRS');
+        Fpe(trial).genericMRS = Fpe_';
+        FMltilde(trial).genericMRS = FMltilde_';
+        FMvtilde(trial).genericMRS = FMvtilde_';
         Ntot = Ntot + N;
     end
     clear opti a lMtilde e vMtilde aT
@@ -433,10 +457,10 @@ end
 % information is active
 BoolParamOpt = 0;
 if Misc.UStracking == 1 || Misc.EMGconstr == 1
-   BoolParamOpt = 1; 
+    BoolParamOpt = 1;
 end
 
-if BoolParamOpt == 1 
+if BoolParamOpt == 1
     % Estimate parameters
     opti_MTE = casadi.Opti();
     % States
@@ -462,8 +486,7 @@ if BoolParamOpt == 1
     aux = opti_MTE.variable(DatStore(trial).NMuscles,N_tot+nTrials);
     opti_MTE.subject_to(1e-4 < aux(:));
     lMo = Misc.params(2,:)';
-    alphao = Misc.params(4,:)';
-    
+    alphao = Misc.params(4,:)';  
     
     % Free optimal fiber length
     lMo_scaling_param  = opti_MTE.variable(DatStore(1).NMuscles,1);
@@ -493,24 +516,22 @@ if BoolParamOpt == 1
         end
     end
     
-    % ADDED FIBRE LENGTH COUPLEING 24/01/2020
+    % added fibre length coupling
     for k = 1:size(DatStore(1).coupled_lMo,1)
         for j = 1:size(DatStore(1).coupled_lMo,2)-1
             opti_MTE.subject_to(lMo_scaling_param(DatStore(1).coupled_lMo(k,j)) - lMo_scaling_param(DatStore(1).coupled_lMo(k,j+1)) == 0);
         end
     end
-    % ADDED FIBRE LENGTH COUPLEING 24/01/2020
+    % added fibre length coupling
     for k = 1:size(DatStore(1).coupled_lTs,1)
         for j = 1:size(DatStore(1).coupled_lTs,2)-1
             opti_MTE.subject_to(lTs_scaling_param(DatStore(1).coupled_lTs(k,j)) - lTs_scaling_param(DatStore(1).coupled_lTs(k,j+1)) == 0);
         end
-    end
-    
+    end    
     % Scale factor for EMG
     if DatStore(1).EMG.boolEMG
         nEMG        = DatStore(1).EMG.nEMG;
         EMGscale    = opti_MTE.variable(nEMG,1);
-        %     Changed the scaling factor from 0 to 0.95  JPCB 22/01/2020
         opti_MTE.subject_to(Misc.BoundsScaleEMG(1) < EMGscale < Misc.BoundsScaleEMG(2));
     end
     
@@ -558,8 +579,6 @@ if BoolParamOpt == 1
         end
     end
     
-    
-    
     % Loop over mesh points formulating NLP
     J = 0; % Initialize cost function
     N_acc = 0;
@@ -588,8 +607,7 @@ if BoolParamOpt == 1
             % Hill-type muscle model: geometric relationships
             lMk = lMtildek.*lMo;
             w = lMo.*sin(alphao);
-            opti_MTE.subject_to((lMk.^2 - w.^2) == auxk.^2);
-            
+            opti_MTE.subject_to((lMk.^2 - w.^2) == auxk.^2);            
             
             % Add path constraints
             % Moment constraints
@@ -632,15 +650,10 @@ if BoolParamOpt == 1
     
     opti_MTE.minimize(J); % Define cost function in opti
     opti_MTE.solver(output.setup.nlp.solver,optionssol);
-    % opti_MTE.debug.g_describe(180173)
-    % Solve
-    %         opti_MTE.callback(@(i) opti_MTE.debug.show_infeasibilities(1e-1));
-    
-    diary('MTE.txt');
+    diary(fullfile(OutPath,[Misc.OutName 'MTE.txt']));
     sol = opti_MTE.solve();
     diary off
-end
-if BoolParamOpt == 1
+    
     %% Extract results
     % Variables at mesh points
     % Muscle activations and muscle-tendon forces
@@ -659,13 +672,7 @@ if BoolParamOpt == 1
     vMtilde_opt = sol.value(vMtilde);
     % Auxilary variable
     aux_opt = sol.value(aux);
-    
-    % Grid
-    % Mesh points
-    tgrid = linspace(t0,tf,N+1)';
-    
-    
-    % Save results
+    % append results structures
     Ntot = 0;
     for trial = 1:nTrials
         t0 = DatStore(trial).time(1); tf = DatStore(trial).time(end);
@@ -679,20 +686,16 @@ if BoolParamOpt == 1
         lM(trial).MTE = lMtilde_opt(:,(Ntot + trial - 1) + 1:(Ntot + trial - 1) + N + 1).*repmat(lMo_opt_,1,length(tgrid));
         MvMtilde(trial).MTE = vMtilde_opt(:,Ntot + 1:Ntot + N);
         MExcitation(trial).MTE = e_opt(:,Ntot + 1:Ntot + N);
-        Aux_opt(trial).MTE = aux_opt(:,(Ntot + trial - 1) + 1:(Ntot + trial - 1) + N + 1);
-        
         RActivation(trial).MTE = aT_opt(:,Ntot + 1:Ntot + N)*Misc.Topt;
-        lMo_opt(trial).MTE = lMo_opt_;
-        MuscleNames = DatStore(trial).MuscleNames;
-        OptInfo = output;
         % Tendon forces from lMtilde
         lMTinterp(trial).MTE = DatStore(trial).LMTinterp;
         [TForcetilde_,TForce_] = TendonForce_lMtilde(lMtildeopt(trial).MTE',Misc.params,lMTinterp(trial).MTE,Misc.Atendon,Misc.shift);
         TForcetilde(trial).MTE = TForcetilde_';
         TForce(trial).MTE = TForce_';
-        %lMo_scaling_paramopt(trial).MTE = lMo_scaling_param_opt;
-        %lTs_scaling_paramopt(trial).MTE = lTs_scaling_param_opt;
-        %kT_scaling_paramopt(trial).MTE = kT_scaling_param_opt;
+        [Fpe_,FMltilde_,FMvtilde_] = getForceLengthVelocityProperties(lMtildeopt(trial).MTE',MvMtilde(trial).MTE');
+        Fpe(trial).MTE = Fpe_';
+        FMltilde(trial).MTE = FMltilde_';
+        FMvtilde(trial).MTE = FMvtilde_';
         Ntot = Ntot + N;
     end
 else
@@ -704,55 +707,8 @@ end
 clear opti_MTE a lMtilde e vMtilde aT
 
 
-Parameters = [];
-
-% Collect results
-Results.BoolParamOpt = BoolParamOpt;
-Results.Time = Time;
-Results.MActivation = MActivation;
-Results.lMtildeopt = lMtildeopt;
-Results.lM = lM;
-Results.MvMtilde = MvMtilde;
-Results.MExcitation = MExcitation;
-Results.RActivation = RActivation;
-
-% % Results.lMo_opt = lMo_scaling_param_opt;
-Results.lMTinterp = lMTinterp;
-Results.Param.lMo_scaling_paramopt  = lMo_scaling_param_opt;
-Results.Param.lTs_scaling_paramopt  = lTs_scaling_param_opt;
-Results.Param.kT_scaling_paramopt   = kT_scaling_param_opt;
-if DatStore(1).EMG.boolEMG
-    Results.Param.EMGscale          = sol.value(EMGscale);
-else
-    Results.Param.EMGscale = 1;
-end
-
-% save original and estimated parameters (and the bounds)
-Results.Param.Original.Fiso      = Misc.params(1,:);
-Results.Param.Original.lOpt      = Misc.params(2,:);
-Results.Param.Original.L_Slack   = Misc.params(3,:);
-Results.Param.Original.Pennation = Misc.params(4,:);
-Results.Param.Original.ATendon   = Misc.Atendon;
-if BoolParamOpt
-    Results.Param.Estimated.Fiso     = Results.Param.Original.Fiso;
-    Results.Param.Estimated.lOpt     = Results.Param.Original.lOpt .* Results.Param.lMo_scaling_paramopt';
-    Results.Param.Estimated.L_Slack  = Results.Param.Original.L_Slack .* Results.Param.lTs_scaling_paramopt';
-    Results.Param.Estimated.Pennation = Results.Param.Original.Pennation;
-    Results.Param.Estimated.ATendon  = Results.Param.Original.ATendon .* Results.Param.kT_scaling_paramopt';
-    Results.Param.Bound.lOp.lb       = Misc.lb_lMo_scaling;
-    Results.Param.Bound.lOp.ub       = Misc.ub_lMo_scaling;
-    Results.Param.Bound.lTs.lb       = Misc.lb_lTs_scaling;
-    Results.Param.Bound.lTs.ub       = Misc.ub_lTs_scaling;
-    Results.Param.Bound.kT.lb        = Misc.lb_kT_scaling;
-    Results.Param.Bound.kT.ub        = Misc.ub_kT_scaling;
-    Results.Param.Bound.EMG.lb       = Misc.BoundsScaleEMG(1);
-    Results.Param.Bound.EMG.ub       = Misc.BoundsScaleEMG(2);
-end
-
-% store the Misc structure as well in the results
-Results.Misc = Misc;
-
-if Misc.ValidationBool == true
+%% Validate results parameter estimation 
+if Misc.ValidationBool == true && BoolParamOpt
     opti_validation = casadi.Opti();
     
     % Variables - bounds and initial guess
@@ -787,9 +743,9 @@ if Misc.ValidationBool == true
     
     % Generate optimized parameters for specific trial by scaling generic parameters
     optimized_params = Misc.params';
-    optimized_params(:,2) = Results.Param.lMo_scaling_paramopt.*optimized_params(:,2);
-    optimized_params(:,3) = Results.Param.lTs_scaling_paramopt.*optimized_params(:,3);
-    optimized_Atendon = Results.Param.kT_scaling_paramopt.*Misc.Atendon';
+    optimized_params(:,2) = lMo_scaling_paramopt.*optimized_params(:,2);
+    optimized_params(:,3) = lTs_scaling_paramopt.*optimized_params(:,3);
+    optimized_Atendon = kT_scaling_paramopt.*Misc.Atendon';
     optimized_shift = (exp(optimized_Atendon.*(1 - 0.995)))/5 - (exp(35.*(1 - 0.995)))/5;
     
     % Loop over mesh points formulating NLP
@@ -850,7 +806,7 @@ if Misc.ValidationBool == true
     %         opti_validation.callback(@(i) opti_validation.debug.show_infeasibilities(1e2));
     
     % Solve
-    diary('ValidationMRS.txt');
+    diary(fullfile(OutPath,[Misc.OutName 'ValidationMRS.txt']));
     sol = opti_validation.solve();
     diary off
     
@@ -888,233 +844,90 @@ if Misc.ValidationBool == true
         [TForcetilde_,TForce_] = TendonForce_lMtilde(lMtildeopt(trial).validationMRS',optimized_params',lMTinterp(trial).validationMRS,optimized_Atendon',optimized_shift');
         TForcetilde(trial).validationMRS = TForcetilde_';
         TForce(trial).validationMRS = TForce_';
+        [Fpe_,FMltilde_,FMvtilde_] = getForceLengthVelocityProperties(lMtildeopt(trial).MTE',MvMtilde(trial).MTE');
+        Fpe(trial).validationMRS = Fpe_';
+        FMltilde(trial).validationMRS = FMltilde_';
+        FMvtilde(trial).validationMRS = FMvtilde_';
         Ntot = Ntot + N;
     end
     clear opti_validation a lMtilde e vMtilde aT
-    
-    % save results of validation step
-    Results.Time = Time;
-    Results.MActivation = MActivation;
-    Results.lMtildeopt = lMtildeopt;
-    Results.lM = lM;
-    Results.MvMtilde = MvMtilde;
-    Results.MExcitation = MExcitation;
-    Results.RActivation = RActivation;
-    Results.lMTinterp = lMTinterp;    
 end
+
+%% Store Results
+
+Parameters = [];
+% Collect results
+Results.BoolParamOpt = BoolParamOpt;
+Results.Time = Time;
+Results.MActivation = MActivation;
+Results.lMtildeopt = lMtildeopt;
+Results.lM = lM;
+Results.MvMtilde = MvMtilde;
+Results.MExcitation = MExcitation;
+Results.RActivation = RActivation;
+Results.TForce = TForce;
+Results.Fpe = Fpe;
+Results.lMTinterp = lMTinterp;
+Results.FMltilde = FMltilde;
+Results.FMvtilde = FMvtilde;
+
+% save original and estimated parameters (and the bounds)
+Results.Param.lMo_scaling_paramopt  = lMo_scaling_param_opt;
+Results.Param.lTs_scaling_paramopt  = lTs_scaling_param_opt;
+Results.Param.kT_scaling_paramopt   = kT_scaling_param_opt;
+Results.Param.Original.Fiso      = Misc.params(1,:);
+Results.Param.Original.lOpt      = Misc.params(2,:);
+Results.Param.Original.L_Slack   = Misc.params(3,:);
+Results.Param.Original.Pennation = Misc.params(4,:);
+Results.Param.Original.ATendon   = Misc.Atendon;
+if BoolParamOpt
+    Results.Param.Estimated.Fiso     = Results.Param.Original.Fiso;
+    Results.Param.Estimated.lOpt     = Results.Param.Original.lOpt .* Results.Param.lMo_scaling_paramopt';
+    Results.Param.Estimated.L_Slack  = Results.Param.Original.L_Slack .* Results.Param.lTs_scaling_paramopt';
+    Results.Param.Estimated.Pennation = Results.Param.Original.Pennation;
+    Results.Param.Estimated.ATendon  = Results.Param.Original.ATendon .* Results.Param.kT_scaling_paramopt';
+    Results.Param.Bound.lOp.lb       = Misc.lb_lMo_scaling;
+    Results.Param.Bound.lOp.ub       = Misc.ub_lMo_scaling;
+    Results.Param.Bound.lTs.lb       = Misc.lb_lTs_scaling;
+    Results.Param.Bound.lTs.ub       = Misc.ub_lTs_scaling;
+    Results.Param.Bound.kT.lb        = Misc.lb_kT_scaling;
+    Results.Param.Bound.kT.ub        = Misc.ub_kT_scaling;
+    Results.Param.Bound.EMG.lb       = Misc.BoundsScaleEMG(1);
+    Results.Param.Bound.EMG.ub       = Misc.BoundsScaleEMG(2);
+    if DatStore(1).EMG.boolEMG
+        Results.Param.EMGscale          = sol.value(EMGscale);
+    end
+end
+
+% store the Misc structure as well in the results
+Results.Misc = Misc;
 
 
 %% Plot Output
 
 % plot EMG tracking
 if Misc.PlotBool && Misc.EMGconstr == 1
-    PlotEMGTracking(Results,DatStore);
+    h = PlotEMGTracking(Results,DatStore);
 end
 
 % plot estimated parameters
 if Misc.PlotBool == 1 && BoolParamOpt ==1
-    PlotEstimatedParameters(Results,DatStore,Misc);
+    h = PlotEstimatedParameters(Results,DatStore,Misc);
 end
 
 % plot fiber length
 if Misc.PlotBool && Misc.UStracking == 1
-    PlotFiberLength(Results,DatStore)
+    h = PlotFiberLength(Results,DatStore)
 end
 
 % plot the states of the muscles in the simulation
-if Misc.PlotBool 
-    PlotStates(Results,DatStore,Misc);
+if Misc.PlotBool
+    h = PlotStates(Results,DatStore,Misc);
 end
 
+%% save the results
 % plot states and variables from parameter estimation simulation
-
-
-
-%% Plot figures
-% if Misc.PlotBool
-%     figure('Name','Muscle fiber length information');
-%     for trial = 1:nTrials
-%         subplot(nTrials,1,trial)
-%         plot(Time(trial).MTE,lMtildeopt(trial).MTE(DatStore(trial).free_lMo(:),:).*lMo_opt(trial).MTE(DatStore(trial).free_lMo(:)),'LineWidth',2); hold on;
-%         if Misc.MRSBool == 1
-%             plot(Time(trial).MTE,lMtildeopt(trial).genericMRS(DatStore(trial).free_lMo(:),:).*Misc.params(2,DatStore(trial).free_lMo(:))','LineWidth',2); hold on;
-%         end
-%         if Misc.ValidationBool == 1
-%             plot(Time(trial).validationMRS,lMtildeopt(trial).validationMRS(DatStore(trial).free_lMo(:),:).*optimized_params(DatStore(trial).free_lMo(:),2),'LineWidth',2); hold on;
-%         end
-%         % Plot US tracking
-%         if Misc.UStracking == 1
-%             plot(Time(trial).MTE,USTracking(trial).data/1000,'LineWidth',2);
-%         end
-%         if Misc.MRSBool == 1 && Misc.ValidationBool == 1 && Misc.UStracking == 1
-%             legend('MTE','Generic MRS','Optimized MRS','USdata');
-%         elseif Misc.MRSBool == 1 && Misc.UStracking == 1
-%             legend('MTE','MRS','USdata');
-%         elseif Misc.ValidationBool == 1 && Misc.UStracking == 1
-%             legend('MTE','Optimized MRS','USdata');
-%         elseif Misc.UStracking == 1
-%             legend('MTE','USdata');
-%         elseif Misc.MRSBool == 1 && Misc.ValidationBool == 1
-%             legend('MTE','Generic MRS','Optimized MRS');
-%         elseif Misc.MRSBool == 1
-%             legend('MTE','MRS');
-%         elseif Misc.ValidationBool == 1
-%             legend('MTE','Optimized MRS');
-%         else
-%             legend('MTE');
-%         end
-%     end
-% end
-%
-% save('workspaceTemp.mat');
-
-
-% if Misc.PlotBool
-%     h = figure('Name','Tracking EMG');
-%     nPhases = length(Misc.IKfile);
-%     if nPhases > 1
-%         hTabGroup = uitabgroup;
-%     end
-%     for i=1:nPhases
-%         % set the name of the tab
-%         if nPhases>1
-%             [path,file,ext]=fileparts(Misc.IKfile{i});
-%             tab = uitab(hTabGroup, 'Title', file);
-%             axes('parent',tab);
-%         end
-%         % plot the EMG signals for this file
-%         nEMG = DatStore(i).EMG.nEMG;
-%         p    = numSubplots(nEMG);
-%         EMGinds = DatStore(i).EMG.EMGindices;
-%         % interpolate EMG
-%         tSim = Results.Time(i).MTE;
-%         EMG = ppval(DatStore(i).EMG.EMGspline,tSim)';
-%         for j=1:nEMG
-%             subplot(p(1),p(2),j);
-%             % simulated muscle activity - parameter estimation
-%             Cs = [89, 135, 189]./255;
-%             eSim = Results.MExcitation(i).MTE(EMGinds(j),:)';
-%             tSim = Results.Time(i).MTE;
-%             plot(tSim(1:end-1),eSim,'Color',Cs); hold on;
-%             % measured EMG
-%             EMGscaled = EMG(:,j).*Results.Param.EMGscale(j);
-%             plot(tSim,EMGscaled,'--k');
-%             % simulated muscle activity - parameter estimation
-%             if Misc.ValidationBool
-%                 Cs = [161, 116, 64]./255;
-%                 eSim = Results.MExcitation(i).validationMRS(EMGinds(j),:);
-%                 tSim = Results.Time(i).validationMRS;
-%                 plot(tSim(1:end-1),eSim,'Color',Cs);
-%             end
-%             if j==nEMG
-%                 if Misc.ValidationBool
-%                     legend('Parameter estimation','EMG','Validation');
-%                 else
-%                     legend('Parameter estimation','EMG');
-%                 end
-%             end
-%             title(DatStore(i).EMG.EMGselection{j});
-%         end
-%     end
-% end
-
-
-%% Plot the optimized parameters
-
-%
-% if Misc.PlotBool
-%     h = figure('Name','Opt Param');
-%     hTabGroup = uitabgroup;
-%
-%     % plot estimated lmOpt
-%     tab = uitab(hTabGroup, 'Title', 'Opt Fiber length');
-%     axes('parent',tab);
-%     iM = DatStore(1).free_lMo(:); % Muscle indexes
-%     nMus = length(iM);
-%     p    = numSubplots(nMus);
-%     Cs = [89, 135, 189]./255;
-%     for i=1:nMus
-%         subplot(p(1),p(2),i)
-%         or = Results.Param.Original.lOpt(iM(i));
-%         est = Results.Param.Estimated.lOpt(iM(i));
-%         lb = Results.Param.Bound.lOp.lb;    ub = Results.Param.Bound.lOp.ub;
-%         b = bar(1,or);  b.FaceColor = [0 0 0]; hold on;
-%         b = bar(2,est); b.FaceColor = Cs;
-%         l = line([0 3],repmat(or*lb,1,2)); l.Color = [0 0 0];
-%         l = line([0 3],repmat(or*ub,1,2)); l.Color = [0 0 0];
-%         set(gca,'XTick',[]);
-%         title(DatStore(1).MuscleNames{iM(i)},'interpreter','none');
-%     end
-%     legend('Original','Estimated','Bound');
-%
-%     % plot estimated tendon stiffness
-%     tab = uitab(hTabGroup, 'Title', 'Tendon Stiffness');
-%     axes('parent',tab);
-%     iM = DatStore(1).free_kT(:); % Muscle indexes
-%     nMus = length(iM);
-%     p    = numSubplots(nMus);
-%     Cs = [89, 135, 189]./255;
-%     for i=1:nMus
-%         subplot(p(1),p(2),i)
-%         or = Results.Param.Original.ATendon(iM(i));
-%         est = Results.Param.Estimated.ATendon(iM(i));
-%         lb = Results.Param.Bound.kT.lb;    ub = Results.Param.Bound.kT.ub;
-%         b = bar(1,or);  b.FaceColor = [0 0 0]; hold on;
-%         b = bar(2,est); b.FaceColor = Cs;
-%         l = line([0 3],repmat(or*lb,1,2)); l.Color = [0 0 0];
-%         l = line([0 3],repmat(or*ub,1,2)); l.Color = [0 0 0];
-%         set(gca,'XTick',[]);
-%         title(DatStore(1).MuscleNames{iM(i)},'interpreter','none');
-%     end
-%     legend('Original','Estimated','Bound');
-%
-%     % plot estimated tendon slack length
-%     tab = uitab(hTabGroup, 'Title', 'Tendon slack length');
-%     axes('parent',tab);
-%     iM = DatStore(1).free_lMo(:); % Muscle indexes
-%     nMus = length(iM);
-%     p    = numSubplots(nMus);
-%     Cs = [89, 135, 189]./255;
-%     for i=1:nMus
-%         subplot(p(1),p(2),i)
-%         or = Results.Param.Original.L_Slack(iM(i));
-%         est = Results.Param.Estimated.L_Slack(iM(i));
-%         lb = Results.Param.Bound.lTs.lb;    ub = Results.Param.Bound.lTs.ub;
-%         b = bar(1,or);  b.FaceColor = [0 0 0]; hold on;
-%         b = bar(2,est); b.FaceColor = Cs;
-%         l = line([0 3],repmat(or*lb,1,2)); l.Color = [0 0 0];
-%         l = line([0 3],repmat(or*ub,1,2)); l.Color = [0 0 0];
-%         set(gca,'XTick',[]);
-%         title(DatStore(1).MuscleNames{iM(i)},'interpreter','none');
-%     end
-%     legend('Original','Estimated','Bound');
-%
-%     % Plot the bounds on EMG
-%     tab = uitab(hTabGroup, 'Title', 'EMG scale Factor');
-%     axes('parent',tab);
-%     nEMG = DatStore(1).EMG.nEMG;
-%     bar(Results.Param.EMGscale); hold on;  % scale factor
-%     plot(1:nEMG,repmat(Results.Param.Bound.EMG.lb,1,nEMG),'--k');  % lower bound
-%     plot(1:nEMG,repmat(Results.Param.Bound.EMG.ub,1,nEMG),'--k');  % upper bound
-%     set(gca,'XTick',1:DatStore(1).EMG.nEMG);
-%     set(gca,'XTickLabel',DatStore(1).EMG.EMGselection);
-%     set(gca,'XTickLabelRotation',60);
-% end
-%
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+save(fullfile(OutPath,[Misc.OutName 'Results.mat']),'Results','Parameters','DatStore','Misc');
 
 
 end

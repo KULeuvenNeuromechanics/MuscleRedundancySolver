@@ -59,9 +59,12 @@ Misc.PlotBool = 1;
 Misc.MRSBool = 1;
 % Validation Bool: Select if you want to run the muscle redundancy solver with the optimized parameters
 Misc.ValidationBool = 0; 	% TO DO: we should report results of EMG driven simulation as well
-
+% set the mesh frequency
+Misc.Mesh_Frequency = 200;
 % bounds
 Bounds = [];
+% name output
+Misc.OutName = 'Walking_';
 
 %% Run muscle tendon estimator:
 [Results,Parameters,DatStore] = MuscleTendonEstimator(model_path,time,Bounds,Out_path,Misc);

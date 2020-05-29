@@ -17,7 +17,6 @@ if isfield(Misc,'UStracking') && Misc.UStracking == 1
     end
 end
 
-
 if boolUS    
     % file information
     nFiles = length(Misc.USfile);
@@ -32,13 +31,6 @@ if boolUS
             USfile(iFile).colheaders = strsplit(USfile(1).textdata{end});
         end
     end
-%     TOD0
-%     check if we have to update the headers based on user input, but here
-%     for the US input??
-%     bool_updateheader   = 0;
-%     if isfield(Misc,'EMGheaders') && ~isempty(Misc.EMGheaders);        
-%         bool_updateheader=1;
-%     end
     % verify if the selected muscles are in the model
     iFile       = 1;    
     bool_error  = 0;
@@ -52,12 +44,6 @@ if boolUS
     end
     % verify if the muscles in the .mot files are in the model
     USheaders  = USfile(iFile).colheaders;
-%     TOD0 see couple lines higher
-%     check if we have to update the headers based on user input, but here
-%     for the US input??
-%     if bool_updateheader
-%        USheaders      = Misc.USheaders; 
-%     end
     for i=1:length(Misc.USSelection)
         if ~any(strcmp(Misc.EMGSelection{i},USheaders))
             if bool_updateheader == 0
@@ -87,8 +73,7 @@ if boolUS
             ind = strcmp(Misc.USSelection{i},USheaders);
             USsel(:,i) = USdat(:,ind);
             USindices(i) = find(strcmp(Misc.USSelection{i},DatStore(iF).MuscleNames));
-        end        
-
+        end 
         DatStore(iF).US.nUS           = length(USindices);
         DatStore(iF).US.USindices     = USindices;
         DatStore(iF).US.USsel         = USsel;

@@ -71,7 +71,6 @@ if boolEMG
     end    
     
     %% Process the data 
-    % ERROR IN FOR LOOP PARAMETERS FIXED - 24/01/2020 JPCB
     for iF = 1:nF
         EMGdat              = EMGFile(iF).data;        
         [nfr, nc] = size(EMGdat);  
