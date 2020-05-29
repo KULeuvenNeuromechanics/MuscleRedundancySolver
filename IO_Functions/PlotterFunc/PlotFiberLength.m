@@ -12,8 +12,7 @@ if nPhases > 1
     hTabGroup = uitabgroup;
 end
 Cs = linspecer(3);
-for trial = 1:nPhases
-    
+for trial = 1:nPhases    
     % set the name of the tab
     if nPhases>1
         [path,file,ext]=fileparts(Misc.IKfile{trial});
@@ -27,32 +26,19 @@ for trial = 1:nPhases
     p     = numSubplots(nMus);
     
     for j=1:nMus
-       subplot(p(1),p(2),j)
-       
-       
-       
-%        % simulated fiber length -- parameter estimation
-%        lMSim = Results.lM(trial).MTE(Minds(j),:)';
-%        lMTSim = Results.lMTinterp(trial).MTE(:,Minds(j));
-%        tSim = Results.Time(trial).MTE;
-%        plot(tSim,lMSim,'Color',Cs(1,:),'LineWidth',lw); hold on;
-%        plot(tSim,lMTSim,'Color',Cs,'LineWidth',lw); hold on;
-       
+       subplot(p(1),p(2),j)     
        % simulated fiber length -- validation simulation
        if Misc.ValidationBool
             lMSim = Results.lM(trial).validationMRS(Minds(j),:);
             tSim = Results.Time(trial).validationMRS;
             plot(tSim,lMSim,'Color',Cs(2,:),'LineWidth',lw);
        end 
-       
        % generic MRS results
        if Misc.UStracking
             lMSim = Results.lM(trial).genericMRS(Minds(j),:);
             tSim = Results.Time(trial).genericMRS;
             plot(tSim,lMSim,'Color',Cs(3,:),'LineWidth',lw);
-       end
-       
-       
+       end  
        % measured fiber length
        if Misc.UStracking
            if nMus == 1
@@ -61,8 +47,6 @@ for trial = 1:nPhases
              plot(Results.Time(trial).MTE,DatStore(trial).USTracking(:,j)/1000,'--k','LineWidth',lw);
            end
        end
-       
-
        title(DatStore(trial).MuscleNames{Minds(j)});
     end
     if Misc.ValidationBool==1 && Misc.UStracking==1  && Misc.MRSBool==1          

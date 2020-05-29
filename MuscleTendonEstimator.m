@@ -92,39 +92,41 @@ for i = 1:size(Misc.IKfile,1)
     [DatStore] = getMuscleInfo(IK_path_trial,ID_path_trial,Misc,DatStore,i);
     
     % get indexes of the muscles for which optimal fiber length, tendon stiffness are estimated
-    DatStore(i).free_lMo = zeros(length(Misc.Estimate_OptFL),1);
-    DatStore(i).USsel = zeros(length(Misc.USSelection),1);
-    DatStore(i).free_kT = zeros(length(Misc.Estimate_TendonStifness),1);
-    DatStore(i).coupled_kT = zeros(size(Misc.Coupled_TendonStifness))';
-    DatStore(i).coupled_lMo = zeros(size(Misc.Coupled_fiber_length))';
-    DatStore(i).coupled_lTs = zeros(size(Misc.Coupled_slack_length))';
-    for j = 1:length(DatStore(i).free_lMo)
-        DatStore(i).free_lMo(j) = find(strcmp(DatStore(i).MuscleNames,Misc.Estimate_OptFL{j}));
-    end
-    
-    for j = 1:length(DatStore(i).free_kT)
-        DatStore(i).free_kT(j) = find(strcmp(DatStore(i).MuscleNames,Misc.Estimate_TendonStifness{j}));
-    end
-    
-    for j = 1:length(DatStore(i).USsel)
-        DatStore(i).USsel(j) = find(strcmp(DatStore(i).MuscleNames,Misc.USSelection{j}));
-    end
-    
-    for k = 1:size((DatStore(i).coupled_kT),1)
-        for j = 1:size((DatStore(i).coupled_kT),2)
-            DatStore(i).coupled_kT(k,j) = find(strcmp(DatStore(i).MuscleNames,Misc.Coupled_TendonStifness{j,k}));
+    if Misc.UStracking == 1
+        DatStore(i).free_lMo = zeros(length(Misc.Estimate_OptFL),1);
+        DatStore(i).USsel = zeros(length(Misc.USSelection),1);
+        DatStore(i).free_kT = zeros(length(Misc.Estimate_TendonStifness),1);
+        DatStore(i).coupled_kT = zeros(size(Misc.Coupled_TendonStifness))';
+        DatStore(i).coupled_lMo = zeros(size(Misc.Coupled_fiber_length))';
+        DatStore(i).coupled_lTs = zeros(size(Misc.Coupled_slack_length))';
+        for j = 1:length(DatStore(i).free_lMo)
+            DatStore(i).free_lMo(j) = find(strcmp(DatStore(i).MuscleNames,Misc.Estimate_OptFL{j}));
         end
-    end
-    % ADDED FIBRE LENGTH COUPLEING 24/01/2020
-    for k = 1:size((DatStore(i).coupled_lMo),1)
-        for j = 1:size((DatStore(i).coupled_lMo),2)
-            DatStore(i).coupled_lMo(k,j) = find(strcmp(DatStore(i).MuscleNames,Misc.Coupled_fiber_length{j,k}));
+        
+        for j = 1:length(DatStore(i).free_kT)
+            DatStore(i).free_kT(j) = find(strcmp(DatStore(i).MuscleNames,Misc.Estimate_TendonStifness{j}));
         end
-    end
-    % ADDED SLACK LENGTH COUPLEING 24/01/2020
-    for k = 1:size((DatStore(i).coupled_lTs),1)
-        for j = 1:size((DatStore(i).coupled_lTs),2)
-            DatStore(i).coupled_lTs(k,j) = find(strcmp(DatStore(i).MuscleNames,Misc.Coupled_slack_length{j,k}));
+        
+        for j = 1:length(DatStore(i).USsel)
+            DatStore(i).USsel(j) = find(strcmp(DatStore(i).MuscleNames,Misc.USSelection{j}));
+        end
+        
+        for k = 1:size((DatStore(i).coupled_kT),1)
+            for j = 1:size((DatStore(i).coupled_kT),2)
+                DatStore(i).coupled_kT(k,j) = find(strcmp(DatStore(i).MuscleNames,Misc.Coupled_TendonStifness{j,k}));
+            end
+        end
+        % added coupling of muscle fiber length 24/01/2020
+        for k = 1:size((DatStore(i).coupled_lMo),1)
+            for j = 1:size((DatStore(i).coupled_lMo),2)
+                DatStore(i).coupled_lMo(k,j) = find(strcmp(DatStore(i).MuscleNames,Misc.Coupled_fiber_length{j,k}));
+            end
+        end
+        % added coupling of tendon slack length 24/01/2020
+        for k = 1:size((DatStore(i).coupled_lTs),1)
+            for j = 1:size((DatStore(i).coupled_lTs),2)
+                DatStore(i).coupled_lTs(k,j) = find(strcmp(DatStore(i).MuscleNames,Misc.Coupled_slack_length{j,k}));
+            end
         end
     end
 end
@@ -304,7 +306,7 @@ if Misc.MRSBool == 1
     %   - Reserve actuators
     aT = opti.variable(DatStore(trial).Ndof,N_tot);
     opti.subject_to(-1 < aT <1);
-%     opti.set_initial(aT,SoRActGuess./Misc.Topt);
+    %     opti.set_initial(aT,SoRActGuess./Misc.Topt);
     %   - Time derivative of muscle-tendon forces (states)
     vMtilde = Misc.scaling.vMtilde.*opti.variable(DatStore(trial).NMuscles,N_tot);
     opti.subject_to(vMtilde_min < vMtilde < vMtilde_max);
@@ -320,7 +322,7 @@ if Misc.MRSBool == 1
     w = lMo.*sin(alphao);
     auxGuess = sqrt((lMGuess.^2 - w.^2));
     opti.set_initial(aux,auxGuess);
-
+    
     % Loop over mesh points formulating NLP
     J = 0; % Initialize cost function
     N_acc = 0;
@@ -345,15 +347,15 @@ if Misc.MRSBool == 1
             
             % Get muscle-tendon forces and derive Hill-equilibrium
             [Hilldiffk,FTk] = ForceEquilibrium_lMtildeState(ak,lMtildek,vMtildek,auxk,DatStore(trial).LMTinterp(k,:)',Misc.params',Misc.Atendon',Misc.shift');
-
+            
             lMo = Misc.params(2,:)';
             alphao = Misc.params(4,:)';
-
+            
             % Hill-type muscle model: geometric relationships
             lMk = lMtildek.*lMo;
             w = lMo.*sin(alphao);
             opti.subject_to(lMk.^2 - w.^2 == auxk.^2);
-
+            
             % Add path constraints
             % Moment constraints
             for dof = 1:DatStore(trial).Ndof
@@ -424,268 +426,275 @@ if Misc.MRSBool == 1
     
 end
 
-if Misc.UStracking == 1
-
 %% Dynamic Optimization - Parameter estimation
 % ----------------------------------------------------------------------- %
-% Estimate parameters
-opti_MTE = casadi.Opti();
-% States
-%   - Muscle activations
-a = opti_MTE.variable(DatStore(1).NMuscles,N_tot+nTrials);      % Variable at mesh points
-opti_MTE.subject_to(a_min < a < a_max);           % Bounds
-%   - Muscle fiber lengths
-lMtilde = opti_MTE.variable(DatStore(1).NMuscles,N_tot+nTrials);
-opti_MTE.subject_to(lMtilde_min < lMtilde < lMtilde_max);
 
-% Controls
-%   - Muscle excitations
-e = opti_MTE.variable(DatStore(1).NMuscles,N_tot);
-opti_MTE.subject_to(e_min < e < e_max);
-%   - Reserve actuators
-aT = opti_MTE.variable(DatStore(1).Ndof,N_tot);
-opti_MTE.subject_to(-1 < aT <1);
-%   - Time derivative of muscle-tendon forces (states)
-vMtilde = Misc.scaling.vMtilde.*opti_MTE.variable(DatStore(1).NMuscles,N_tot);
-opti_MTE.subject_to(vMtilde_min < vMtilde < vMtilde_max);
+% Parameter optimization selected if EMG information or ultrasound
+% information is active
+BoolParamOpt = 0;
+if Misc.UStracking == 1 || Misc.EMGconstr == 1
+   BoolParamOpt = 1; 
+end
 
-%   - Auxilary variable to avoid muscle buckling
-aux = opti_MTE.variable(DatStore(trial).NMuscles,N_tot+nTrials);
-opti_MTE.subject_to(1e-4 < aux(:));
-lMo = Misc.params(2,:)';
-alphao = Misc.params(4,:)';
-
+if BoolParamOpt == 1 
+    % Estimate parameters
+    opti_MTE = casadi.Opti();
+    % States
+    %   - Muscle activations
+    a = opti_MTE.variable(DatStore(1).NMuscles,N_tot+nTrials);      % Variable at mesh points
+    opti_MTE.subject_to(a_min < a < a_max);           % Bounds
+    %   - Muscle fiber lengths
+    lMtilde = opti_MTE.variable(DatStore(1).NMuscles,N_tot+nTrials);
+    opti_MTE.subject_to(lMtilde_min < lMtilde < lMtilde_max);
     
-% Free optimal fiber length
-lMo_scaling_param  = opti_MTE.variable(DatStore(1).NMuscles,1);
-lb_lMo_scaling     = ones(DatStore(1).NMuscles,1);   % default upper and lower bound is one (equality constraint)
-ub_lMo_scaling     = ones(DatStore(1).NMuscles,1);   % default upper and lower bound is one (equality constraint)
-iM                 = DatStore(1).free_lMo(:);        % index muscles with parameter estimation
-lb_lMo_scaling(iM) = Misc.lb_lMo_scaling;            % update lower bound for these muscles
-ub_lMo_scaling(iM) = Misc.ub_lMo_scaling;            % update uppder bound for these muscles
-opti_MTE.subject_to(lb_lMo_scaling < lMo_scaling_param < ub_lMo_scaling); % update the upper and lower bounds
-
-% Free slack length
-lTs_scaling_param = opti_MTE.variable(DatStore(1).NMuscles,1);
-lb_lTs_scaling = ones(DatStore(1).NMuscles,1); ub_lTs_scaling = ones(DatStore(1).NMuscles,1);
-lb_lTs_scaling(DatStore(1).free_lMo(:)) = Misc.lb_lTs_scaling*lb_lTs_scaling(DatStore(1).free_lMo(:));
-ub_lTs_scaling(DatStore(1).free_lMo(:)) = Misc.ub_lTs_scaling*ub_lTs_scaling(DatStore(1).free_lMo(:));
-opti_MTE.subject_to(lb_lTs_scaling < lTs_scaling_param < ub_lTs_scaling);
-
-% Free tendon stifness
-kT_scaling_param = opti_MTE.variable(DatStore(1).NMuscles,1);
-lb_kT_scaling_param = ones(DatStore(1).NMuscles,1); ub_kT_scaling_param = ones(DatStore(1).NMuscles,1);
-lb_kT_scaling_param(DatStore(1).free_kT(:)) = Misc.lb_kT_scaling*lb_kT_scaling_param(DatStore(1).free_kT(:));
-ub_kT_scaling_param(DatStore(1).free_kT(:)) = Misc.ub_kT_scaling*ub_kT_scaling_param(DatStore(1).free_kT(:));
-opti_MTE.subject_to(lb_kT_scaling_param < kT_scaling_param < ub_kT_scaling_param);
-for k = 1:size(DatStore(1).coupled_kT,1)
-    for j = 1:size(DatStore(1).coupled_kT,2)-1
-        opti_MTE.subject_to(kT_scaling_param(DatStore(1).coupled_kT(k,j)) - kT_scaling_param(DatStore(1).coupled_kT(k,j+1)) == 0);
+    % Controls
+    %   - Muscle excitations
+    e = opti_MTE.variable(DatStore(1).NMuscles,N_tot);
+    opti_MTE.subject_to(e_min < e < e_max);
+    %   - Reserve actuators
+    aT = opti_MTE.variable(DatStore(1).Ndof,N_tot);
+    opti_MTE.subject_to(-1 < aT <1);
+    %   - Time derivative of muscle-tendon forces (states)
+    vMtilde = Misc.scaling.vMtilde.*opti_MTE.variable(DatStore(1).NMuscles,N_tot);
+    opti_MTE.subject_to(vMtilde_min < vMtilde < vMtilde_max);
+    
+    %   - Auxilary variable to avoid muscle buckling
+    aux = opti_MTE.variable(DatStore(trial).NMuscles,N_tot+nTrials);
+    opti_MTE.subject_to(1e-4 < aux(:));
+    lMo = Misc.params(2,:)';
+    alphao = Misc.params(4,:)';
+    
+    
+    % Free optimal fiber length
+    lMo_scaling_param  = opti_MTE.variable(DatStore(1).NMuscles,1);
+    lb_lMo_scaling     = ones(DatStore(1).NMuscles,1);   % default upper and lower bound is one (equality constraint)
+    ub_lMo_scaling     = ones(DatStore(1).NMuscles,1);   % default upper and lower bound is one (equality constraint)
+    iM                 = DatStore(1).free_lMo(:);        % index muscles with parameter estimation
+    lb_lMo_scaling(iM) = Misc.lb_lMo_scaling;            % update lower bound for these muscles
+    ub_lMo_scaling(iM) = Misc.ub_lMo_scaling;            % update uppder bound for these muscles
+    opti_MTE.subject_to(lb_lMo_scaling < lMo_scaling_param < ub_lMo_scaling); % update the upper and lower bounds
+    
+    % Free slack length
+    lTs_scaling_param = opti_MTE.variable(DatStore(1).NMuscles,1);
+    lb_lTs_scaling = ones(DatStore(1).NMuscles,1); ub_lTs_scaling = ones(DatStore(1).NMuscles,1);
+    lb_lTs_scaling(DatStore(1).free_lMo(:)) = Misc.lb_lTs_scaling*lb_lTs_scaling(DatStore(1).free_lMo(:));
+    ub_lTs_scaling(DatStore(1).free_lMo(:)) = Misc.ub_lTs_scaling*ub_lTs_scaling(DatStore(1).free_lMo(:));
+    opti_MTE.subject_to(lb_lTs_scaling < lTs_scaling_param < ub_lTs_scaling);
+    
+    % Free tendon stifness
+    kT_scaling_param = opti_MTE.variable(DatStore(1).NMuscles,1);
+    lb_kT_scaling_param = ones(DatStore(1).NMuscles,1); ub_kT_scaling_param = ones(DatStore(1).NMuscles,1);
+    lb_kT_scaling_param(DatStore(1).free_kT(:)) = Misc.lb_kT_scaling*lb_kT_scaling_param(DatStore(1).free_kT(:));
+    ub_kT_scaling_param(DatStore(1).free_kT(:)) = Misc.ub_kT_scaling*ub_kT_scaling_param(DatStore(1).free_kT(:));
+    opti_MTE.subject_to(lb_kT_scaling_param < kT_scaling_param < ub_kT_scaling_param);
+    for k = 1:size(DatStore(1).coupled_kT,1)
+        for j = 1:size(DatStore(1).coupled_kT,2)-1
+            opti_MTE.subject_to(kT_scaling_param(DatStore(1).coupled_kT(k,j)) - kT_scaling_param(DatStore(1).coupled_kT(k,j+1)) == 0);
+        end
     end
-end
-
-% ADDED FIBRE LENGTH COUPLEING 24/01/2020
-for k = 1:size(DatStore(1).coupled_lMo,1)
-    for j = 1:size(DatStore(1).coupled_lMo,2)-1
-        opti_MTE.subject_to(lMo_scaling_param(DatStore(1).coupled_lMo(k,j)) - lMo_scaling_param(DatStore(1).coupled_lMo(k,j+1)) == 0);
+    
+    % ADDED FIBRE LENGTH COUPLEING 24/01/2020
+    for k = 1:size(DatStore(1).coupled_lMo,1)
+        for j = 1:size(DatStore(1).coupled_lMo,2)-1
+            opti_MTE.subject_to(lMo_scaling_param(DatStore(1).coupled_lMo(k,j)) - lMo_scaling_param(DatStore(1).coupled_lMo(k,j+1)) == 0);
+        end
     end
-end
-% ADDED FIBRE LENGTH COUPLEING 24/01/2020
-for k = 1:size(DatStore(1).coupled_lTs,1)
-    for j = 1:size(DatStore(1).coupled_lTs,2)-1
-        opti_MTE.subject_to(lTs_scaling_param(DatStore(1).coupled_lTs(k,j)) - lTs_scaling_param(DatStore(1).coupled_lTs(k,j+1)) == 0);
+    % ADDED FIBRE LENGTH COUPLEING 24/01/2020
+    for k = 1:size(DatStore(1).coupled_lTs,1)
+        for j = 1:size(DatStore(1).coupled_lTs,2)-1
+            opti_MTE.subject_to(lTs_scaling_param(DatStore(1).coupled_lTs(k,j)) - lTs_scaling_param(DatStore(1).coupled_lTs(k,j+1)) == 0);
+        end
     end
-end
-
-% Scale factor for EMG
-if DatStore(1).EMG.boolEMG
-    nEMG        = DatStore(1).EMG.nEMG;
-    EMGscale    = opti_MTE.variable(nEMG,1);
-    %     Changed the scaling factor from 0 to 0.95  JPCB 22/01/2020
-    opti_MTE.subject_to(Misc.BoundsScaleEMG(1) < EMGscale < Misc.BoundsScaleEMG(2));
-end
-
-% Set initial guess
-if Misc.MRSBool == 1
-    opti_MTE.set_initial(a,a_opt);             % Initial guess generic MRS
-    opti_MTE.set_initial(lMtilde,lMtilde_opt);
-    opti_MTE.set_initial(e,e_opt);
-    opti_MTE.set_initial(vMtilde,vMtilde_opt);
-    opti_MTE.set_initial(aT,aT_opt);
-    opti_MTE.set_initial(lMo_scaling_param,1);
-    opti_MTE.set_initial(lTs_scaling_param,1);
-    opti_MTE.set_initial(kT_scaling_param,1);
-    opti_MTE.set_initial(aux,aux_opt);
-else
-    opti_MTE.set_initial(a,SoActGuess);             % Initial guess (static optimization)
-    opti_MTE.set_initial(lMtilde,lMtildeGuess);
-    opti_MTE.set_initial(e, SoExcGuess);
-    opti_MTE.set_initial(vMtilde,vMtildeGuess);
-    opti_MTE.set_initial(aT,SoRActGuess./Misc.Topt);
-    opti_MTE.set_initial(lMo_scaling_param,1);
-    opti_MTE.set_initial(lTs_scaling_param,1);
-    opti_MTE.set_initial(kT_scaling_param,1);
-    % Hill-type muscle model: geometric relationships
-    lMGuess = lMtildeGuess.*lMo;
-    w = lMo.*sin(alphao);
-    auxGuess = sqrt((lMGuess.^2 - w.^2));
-    opti_MTE.set_initial(aux,auxGuess);
-end
-
-% get EMG at optimization mesh
-for trial = 1:Misc.nTrials
-    if DatStore(trial).EMG.boolEMG
-        EMGTracking(trial).data = interp1(DatStore(trial).EMG.time,DatStore(trial).EMG.EMGsel,Mesh(trial).t(1:end-1));
+    
+    % Scale factor for EMG
+    if DatStore(1).EMG.boolEMG
+        nEMG        = DatStore(1).EMG.nEMG;
+        EMGscale    = opti_MTE.variable(nEMG,1);
+        %     Changed the scaling factor from 0 to 0.95  JPCB 22/01/2020
+        opti_MTE.subject_to(Misc.BoundsScaleEMG(1) < EMGscale < Misc.BoundsScaleEMG(2));
     end
-end
-
-% get US data at optimization mesh
-if ~isempty(Misc.USfile)
-    for trial = 1:Misc.nTrials
-        DatStore(trial).boolUS = 1;
-        USdata =  importdata(Misc.USfile{trial});
-        USTracking(trial).data = interp1(DatStore(trial).US.time,DatStore(trial).US.USsel,Mesh(trial).t(1:end));
-        DatStore(trial).USTracking = interp1(DatStore(trial).US.time,DatStore(trial).US.USsel,Mesh(trial).t(1:end));
-    end
-end
-
-
-
-% Loop over mesh points formulating NLP
-J = 0; % Initialize cost function
-N_acc = 0;
-for trial = 1:Misc.nTrials
-    % Time bounds
-    N = Mesh(trial).N;
-    h = Mesh(trial).step;
-    for k=1:N
-        % Variables within current mesh interval
-        ak = a(:,(N_acc+trial-1) + k); lMtildek = lMtilde(:,(N_acc+trial-1) + k);
-        vMtildek = vMtilde(:,N_acc + k); aTk = aT(:,N_acc + k); ek = e(:,N_acc + k);
-        auxk = aux(:,(N_acc+trial-1) + k);
-        
-        % Integration   Uk = (X_(k+1) - X_k)/*dt
-        Xk = [ak; lMtildek];
-        Zk = [a(:,(N_acc+trial-1) + k + 1);lMtilde(:,(N_acc+trial-1) + k + 1)];
-        Uk = [ActivationDynamics(ek,ak,Misc.tauAct,Misc.tauDeact,Misc.b); vMtildek];
-        opti_MTE.subject_to(eulerIntegrator(Xk,Zk,Uk,h) == 0);
-        
-        % Get muscle-tendon forces and derive Hill-equilibrium
-        [Hilldiffk,FTk] = ForceEquilibrium_lMtildeState_lMoFree_lTsFree_kTFree(ak,lMtildek,vMtildek,auxk,DatStore(trial).LMTinterp(k,:)',[lMo_scaling_param lTs_scaling_param kT_scaling_param],Misc.params',Misc.Atendon');
-        
-        lMo = lMo_scaling_param.*Misc.params(2,:)';
-        alphao = Misc.params(4,:)';
-
+    
+    % Set initial guess
+    if Misc.MRSBool == 1
+        opti_MTE.set_initial(a,a_opt);             % Initial guess generic MRS
+        opti_MTE.set_initial(lMtilde,lMtilde_opt);
+        opti_MTE.set_initial(e,e_opt);
+        opti_MTE.set_initial(vMtilde,vMtilde_opt);
+        opti_MTE.set_initial(aT,aT_opt);
+        opti_MTE.set_initial(lMo_scaling_param,1);
+        opti_MTE.set_initial(lTs_scaling_param,1);
+        opti_MTE.set_initial(kT_scaling_param,1);
+        opti_MTE.set_initial(aux,aux_opt);
+    else
+        opti_MTE.set_initial(a,SoActGuess);             % Initial guess (static optimization)
+        opti_MTE.set_initial(lMtilde,lMtildeGuess);
+        opti_MTE.set_initial(e, SoExcGuess);
+        opti_MTE.set_initial(vMtilde,vMtildeGuess);
+        opti_MTE.set_initial(aT,SoRActGuess./Misc.Topt);
+        opti_MTE.set_initial(lMo_scaling_param,1);
+        opti_MTE.set_initial(lTs_scaling_param,1);
+        opti_MTE.set_initial(kT_scaling_param,1);
         % Hill-type muscle model: geometric relationships
-        lMk = lMtildek.*lMo;
+        lMGuess = lMtildeGuess.*lMo;
         w = lMo.*sin(alphao);
-        opti_MTE.subject_to((lMk.^2 - w.^2) == auxk.^2);
-            
-            
-        % Add path constraints
-        % Moment constraints
-        for dof = 1:DatStore(trial).Ndof
-            T_exp = DatStore(trial).IDinterp(k,dof);
-            index_sel = (dof-1)*(DatStore(trial).NMuscles)+1:(dof-1)*(DatStore(trial).NMuscles)+DatStore(trial).NMuscles;
-            T_sim = FTk'*DatStore(trial).MAinterp(k,index_sel)' + Misc.Topt*aTk(dof);
-            opti_MTE.subject_to(T_exp - T_sim == 0);
-        end
-        % Hill-equilibrium constraint
-        opti_MTE.subject_to(Hilldiffk == 0);
+        auxGuess = sqrt((lMGuess.^2 - w.^2));
+        opti_MTE.set_initial(aux,auxGuess);
     end
     
-    % tracking lMtilde
-    if DatStore(trial).US.boolUS
-        lMo = lMo_scaling_param(DatStore(trial).USsel)'.*Misc.params(2,DatStore(trial).USsel(:));
-        lMo = ones(size(USTracking(trial).data,1),1)*lMo;
-        lMtilde_tracking = USTracking(trial).data./lMo/1000; % US data expected in mm in the input file.
-        lMtilde_simulated = lMtilde(DatStore(trial).US.USindices,(N_acc+trial:N_acc+trial+N));
-        if size(lMtilde_simulated,1) ~= size(lMtilde_tracking,1)
-            lMtilde_simulated = lMtilde_simulated';
+    % get EMG at optimization mesh
+    for trial = 1:Misc.nTrials
+        if DatStore(trial).EMG.boolEMG
+            EMGTracking(trial).data = interp1(DatStore(trial).EMG.time,DatStore(trial).EMG.EMGsel,Mesh(trial).t(1:end-1));
         end
-        J = J + Misc.wlM*sumsqr(lMtilde_simulated-lMtilde_tracking)/DatStore(trial).US.nUS/N;
     end
     
-    % tracking Muscle activity
-    if DatStore(trial).EMG.boolEMG
-        eSim  = e(DatStore(trial).EMG.EMGindices,N_acc:N_acc+N-1);
-        eMeas = EMGTracking(trial).data' .* repmat(EMGscale,1,N);
-        JEMG  = sumsqr(eSim-eMeas);
-        J     = J + Misc.wEMG * JEMG/DatStore(trial).EMG.nEMG/N;
+    % get US data at optimization mesh
+    if ~isempty(Misc.USfile)
+        for trial = 1:Misc.nTrials
+            DatStore(trial).boolUS = 1;
+            USdata =  importdata(Misc.USfile{trial});
+            USTracking(trial).data = interp1(DatStore(trial).US.time,DatStore(trial).US.USsel,Mesh(trial).t(1:end));
+            DatStore(trial).USTracking = interp1(DatStore(trial).US.time,DatStore(trial).US.USsel,Mesh(trial).t(1:end));
+        end
     end
-    N_acc = N_acc + N;
+    
+    
+    
+    % Loop over mesh points formulating NLP
+    J = 0; % Initialize cost function
+    N_acc = 0;
+    for trial = 1:Misc.nTrials
+        % Time bounds
+        N = Mesh(trial).N;
+        h = Mesh(trial).step;
+        for k=1:N
+            % Variables within current mesh interval
+            ak = a(:,(N_acc+trial-1) + k); lMtildek = lMtilde(:,(N_acc+trial-1) + k);
+            vMtildek = vMtilde(:,N_acc + k); aTk = aT(:,N_acc + k); ek = e(:,N_acc + k);
+            auxk = aux(:,(N_acc+trial-1) + k);
+            
+            % Integration   Uk = (X_(k+1) - X_k)/*dt
+            Xk = [ak; lMtildek];
+            Zk = [a(:,(N_acc+trial-1) + k + 1);lMtilde(:,(N_acc+trial-1) + k + 1)];
+            Uk = [ActivationDynamics(ek,ak,Misc.tauAct,Misc.tauDeact,Misc.b); vMtildek];
+            opti_MTE.subject_to(eulerIntegrator(Xk,Zk,Uk,h) == 0);
+            
+            % Get muscle-tendon forces and derive Hill-equilibrium
+            [Hilldiffk,FTk] = ForceEquilibrium_lMtildeState_lMoFree_lTsFree_kTFree(ak,lMtildek,vMtildek,auxk,DatStore(trial).LMTinterp(k,:)',[lMo_scaling_param lTs_scaling_param kT_scaling_param],Misc.params',Misc.Atendon');
+            
+            lMo = lMo_scaling_param.*Misc.params(2,:)';
+            alphao = Misc.params(4,:)';
+            
+            % Hill-type muscle model: geometric relationships
+            lMk = lMtildek.*lMo;
+            w = lMo.*sin(alphao);
+            opti_MTE.subject_to((lMk.^2 - w.^2) == auxk.^2);
+            
+            
+            % Add path constraints
+            % Moment constraints
+            for dof = 1:DatStore(trial).Ndof
+                T_exp = DatStore(trial).IDinterp(k,dof);
+                index_sel = (dof-1)*(DatStore(trial).NMuscles)+1:(dof-1)*(DatStore(trial).NMuscles)+DatStore(trial).NMuscles;
+                T_sim = FTk'*DatStore(trial).MAinterp(k,index_sel)' + Misc.Topt*aTk(dof);
+                opti_MTE.subject_to(T_exp - T_sim == 0);
+            end
+            % Hill-equilibrium constraint
+            opti_MTE.subject_to(Hilldiffk == 0);
+        end
+        
+        % tracking lMtilde
+        if DatStore(trial).US.boolUS
+            lMo = lMo_scaling_param(DatStore(trial).USsel)'.*Misc.params(2,DatStore(trial).USsel(:));
+            lMo = ones(size(USTracking(trial).data,1),1)*lMo;
+            lMtilde_tracking = USTracking(trial).data./lMo/1000; % US data expected in mm in the input file.
+            lMtilde_simulated = lMtilde(DatStore(trial).US.USindices,(N_acc+trial:N_acc+trial+N));
+            if size(lMtilde_simulated,1) ~= size(lMtilde_tracking,1)
+                lMtilde_simulated = lMtilde_simulated';
+            end
+            J = J + Misc.wlM*sumsqr(lMtilde_simulated-lMtilde_tracking)/DatStore(trial).US.nUS/N;
+        end
+        
+        % tracking Muscle activity
+        if DatStore(trial).EMG.boolEMG
+            eSim  = e(DatStore(trial).EMG.EMGindices,N_acc:N_acc+N-1);
+            eMeas = EMGTracking(trial).data' .* repmat(EMGscale,1,N);
+            JEMG  = sumsqr(eSim-eMeas);
+            J     = J + Misc.wEMG * JEMG/DatStore(trial).EMG.nEMG/N;
+        end
+        N_acc = N_acc + N;
+    end
+    
+    J = J + ...
+        0.5*(sumsqr(e)/N_tot/DatStore(trial).NMuscles + sumsqr(a)/N_tot/DatStore(trial).NMuscles) + ...
+        Misc.w1*sumsqr(aT)/N_tot/DatStore(trial).Ndof + ...
+        Misc.w2*sumsqr(vMtilde)/N_tot/DatStore(trial).NMuscles;
+    
+    opti_MTE.minimize(J); % Define cost function in opti
+    opti_MTE.solver(output.setup.nlp.solver,optionssol);
+    % opti_MTE.debug.g_describe(180173)
+    % Solve
+    %         opti_MTE.callback(@(i) opti_MTE.debug.show_infeasibilities(1e-1));
+    
+    diary('MTE.txt');
+    sol = opti_MTE.solve();
+    diary off
 end
-
-J = J + ...
-    0.5*(sumsqr(e)/N_tot/DatStore(trial).NMuscles + sumsqr(a)/N_tot/DatStore(trial).NMuscles) + ...
-    Misc.w1*sumsqr(aT)/N_tot/DatStore(trial).Ndof + ...
-    Misc.w2*sumsqr(vMtilde)/N_tot/DatStore(trial).NMuscles;
-
-opti_MTE.minimize(J); % Define cost function in opti
-opti_MTE.solver(output.setup.nlp.solver,optionssol);
-% opti_MTE.debug.g_describe(180173)
-% Solve
-%         opti_MTE.callback(@(i) opti_MTE.debug.show_infeasibilities(1e-1));
-
-diary('MTE.txt');
-sol = opti_MTE.solve();
-diary off
-end
-if Misc.UStracking == 1
-%% Extract results
-% Variables at mesh points
-% Muscle activations and muscle-tendon forces
-a_opt = sol.value(a);
-lMtilde_opt = sol.value(lMtilde);
-lMo_scaling_param_opt = sol.value(lMo_scaling_param);
-lTs_scaling_param_opt = sol.value(lTs_scaling_param);
-kT_scaling_param_opt = sol.value(kT_scaling_param);
-
-lMo_opt_ = lMo_scaling_param_opt.*Misc.params(2,:)';
-% Muscle excitations
-e_opt = sol.value(e);
-% Reserve actuators
-aT_opt = sol.value(aT);
-% Time derivatives of muscle-tendon forces
-vMtilde_opt = sol.value(vMtilde);
-% Auxilary variable
-aux_opt = sol.value(aux);
-
-% Grid
-% Mesh points
-tgrid = linspace(t0,tf,N+1)';
-
-
-% Save results
-Ntot = 0;
-for trial = 1:nTrials
-    t0 = DatStore(trial).time(1); tf = DatStore(trial).time(end);
-    N = round((tf-t0)*Misc.Mesh_Frequency);
-    % Time grid
+if BoolParamOpt == 1
+    %% Extract results
+    % Variables at mesh points
+    % Muscle activations and muscle-tendon forces
+    a_opt = sol.value(a);
+    lMtilde_opt = sol.value(lMtilde);
+    lMo_scaling_param_opt = sol.value(lMo_scaling_param);
+    lTs_scaling_param_opt = sol.value(lTs_scaling_param);
+    kT_scaling_param_opt = sol.value(kT_scaling_param);
+    
+    lMo_opt_ = lMo_scaling_param_opt.*Misc.params(2,:)';
+    % Muscle excitations
+    e_opt = sol.value(e);
+    % Reserve actuators
+    aT_opt = sol.value(aT);
+    % Time derivatives of muscle-tendon forces
+    vMtilde_opt = sol.value(vMtilde);
+    % Auxilary variable
+    aux_opt = sol.value(aux);
+    
+    % Grid
+    % Mesh points
     tgrid = linspace(t0,tf,N+1)';
+    
+    
     % Save results
-    Time(trial).MTE = tgrid;
-    MActivation(trial).MTE = a_opt(:,(Ntot + trial - 1) + 1:(Ntot + trial - 1) + N + 1);
-    lMtildeopt(trial).MTE = lMtilde_opt(:,(Ntot + trial - 1) + 1:(Ntot + trial - 1) + N + 1);
-    lM(trial).MTE = lMtilde_opt(:,(Ntot + trial - 1) + 1:(Ntot + trial - 1) + N + 1).*repmat(lMo_opt_,1,length(tgrid));
-    MvMtilde(trial).MTE = vMtilde_opt(:,Ntot + 1:Ntot + N);
-    MExcitation(trial).MTE = e_opt(:,Ntot + 1:Ntot + N);
-    Aux_opt(trial).MTE = aux_opt(:,(Ntot + trial - 1) + 1:(Ntot + trial - 1) + N + 1);
-
-    RActivation(trial).MTE = aT_opt(:,Ntot + 1:Ntot + N)*Misc.Topt;
-    lMo_opt(trial).MTE = lMo_opt_;
-    MuscleNames = DatStore(trial).MuscleNames;
-    OptInfo = output;
-    % Tendon forces from lMtilde
-    lMTinterp(trial).MTE = DatStore(trial).LMTinterp;
-    [TForcetilde_,TForce_] = TendonForce_lMtilde(lMtildeopt(trial).MTE',Misc.params,lMTinterp(trial).MTE,Misc.Atendon,Misc.shift);
-    TForcetilde(trial).MTE = TForcetilde_';
-    TForce(trial).MTE = TForce_';
-    %lMo_scaling_paramopt(trial).MTE = lMo_scaling_param_opt;
-    %lTs_scaling_paramopt(trial).MTE = lTs_scaling_param_opt;
-    %kT_scaling_paramopt(trial).MTE = kT_scaling_param_opt;
-    Ntot = Ntot + N;
-end
+    Ntot = 0;
+    for trial = 1:nTrials
+        t0 = DatStore(trial).time(1); tf = DatStore(trial).time(end);
+        N = round((tf-t0)*Misc.Mesh_Frequency);
+        % Time grid
+        tgrid = linspace(t0,tf,N+1)';
+        % Save results
+        Time(trial).MTE = tgrid;
+        MActivation(trial).MTE = a_opt(:,(Ntot + trial - 1) + 1:(Ntot + trial - 1) + N + 1);
+        lMtildeopt(trial).MTE = lMtilde_opt(:,(Ntot + trial - 1) + 1:(Ntot + trial - 1) + N + 1);
+        lM(trial).MTE = lMtilde_opt(:,(Ntot + trial - 1) + 1:(Ntot + trial - 1) + N + 1).*repmat(lMo_opt_,1,length(tgrid));
+        MvMtilde(trial).MTE = vMtilde_opt(:,Ntot + 1:Ntot + N);
+        MExcitation(trial).MTE = e_opt(:,Ntot + 1:Ntot + N);
+        Aux_opt(trial).MTE = aux_opt(:,(Ntot + trial - 1) + 1:(Ntot + trial - 1) + N + 1);
+        
+        RActivation(trial).MTE = aT_opt(:,Ntot + 1:Ntot + N)*Misc.Topt;
+        lMo_opt(trial).MTE = lMo_opt_;
+        MuscleNames = DatStore(trial).MuscleNames;
+        OptInfo = output;
+        % Tendon forces from lMtilde
+        lMTinterp(trial).MTE = DatStore(trial).LMTinterp;
+        [TForcetilde_,TForce_] = TendonForce_lMtilde(lMtildeopt(trial).MTE',Misc.params,lMTinterp(trial).MTE,Misc.Atendon,Misc.shift);
+        TForcetilde(trial).MTE = TForcetilde_';
+        TForce(trial).MTE = TForce_';
+        %lMo_scaling_paramopt(trial).MTE = lMo_scaling_param_opt;
+        %lTs_scaling_paramopt(trial).MTE = lTs_scaling_param_opt;
+        %kT_scaling_paramopt(trial).MTE = kT_scaling_param_opt;
+        Ntot = Ntot + N;
+    end
 else
     lMo_scaling_param_opt = ones(DatStore(1).NMuscles,1);
     lTs_scaling_param_opt = ones(DatStore(1).NMuscles,1);
@@ -698,6 +707,7 @@ clear opti_MTE a lMtilde e vMtilde aT
 Parameters = [];
 
 % Collect results
+Results.BoolParamOpt = BoolParamOpt;
 Results.Time = Time;
 Results.MActivation = MActivation;
 Results.lMtildeopt = lMtildeopt;
@@ -705,6 +715,7 @@ Results.lM = lM;
 Results.MvMtilde = MvMtilde;
 Results.MExcitation = MExcitation;
 Results.RActivation = RActivation;
+
 % % Results.lMo_opt = lMo_scaling_param_opt;
 Results.lMTinterp = lMTinterp;
 Results.Param.lMo_scaling_paramopt  = lMo_scaling_param_opt;
@@ -713,7 +724,7 @@ Results.Param.kT_scaling_paramopt   = kT_scaling_param_opt;
 if DatStore(1).EMG.boolEMG
     Results.Param.EMGscale          = sol.value(EMGscale);
 else
-   Results.Param.EMGscale = 1;
+    Results.Param.EMGscale = 1;
 end
 
 % save original and estimated parameters (and the bounds)
@@ -722,19 +733,24 @@ Results.Param.Original.lOpt      = Misc.params(2,:);
 Results.Param.Original.L_Slack   = Misc.params(3,:);
 Results.Param.Original.Pennation = Misc.params(4,:);
 Results.Param.Original.ATendon   = Misc.Atendon;
-Results.Param.Estimated.Fiso     = Results.Param.Original.Fiso;
-Results.Param.Estimated.lOpt     = Results.Param.Original.lOpt .* Results.Param.lMo_scaling_paramopt';
-Results.Param.Estimated.L_Slack  = Results.Param.Original.L_Slack .* Results.Param.lTs_scaling_paramopt';
-Results.Param.Estimated.Pennation = Results.Param.Original.Pennation;
-Results.Param.Estimated.ATendon  = Results.Param.Original.ATendon .* Results.Param.kT_scaling_paramopt';
-Results.Param.Bound.lOp.lb       = Misc.lb_lMo_scaling;
-Results.Param.Bound.lOp.ub       = Misc.ub_lMo_scaling;
-Results.Param.Bound.lTs.lb       = Misc.lb_lTs_scaling;
-Results.Param.Bound.lTs.ub       = Misc.ub_lTs_scaling;
-Results.Param.Bound.kT.lb        = Misc.lb_kT_scaling;
-Results.Param.Bound.kT.ub        = Misc.ub_kT_scaling;
-Results.Param.Bound.EMG.lb       = Misc.BoundsScaleEMG(1);
-Results.Param.Bound.EMG.ub       = Misc.BoundsScaleEMG(2);
+if BoolParamOpt
+    Results.Param.Estimated.Fiso     = Results.Param.Original.Fiso;
+    Results.Param.Estimated.lOpt     = Results.Param.Original.lOpt .* Results.Param.lMo_scaling_paramopt';
+    Results.Param.Estimated.L_Slack  = Results.Param.Original.L_Slack .* Results.Param.lTs_scaling_paramopt';
+    Results.Param.Estimated.Pennation = Results.Param.Original.Pennation;
+    Results.Param.Estimated.ATendon  = Results.Param.Original.ATendon .* Results.Param.kT_scaling_paramopt';
+    Results.Param.Bound.lOp.lb       = Misc.lb_lMo_scaling;
+    Results.Param.Bound.lOp.ub       = Misc.ub_lMo_scaling;
+    Results.Param.Bound.lTs.lb       = Misc.lb_lTs_scaling;
+    Results.Param.Bound.lTs.ub       = Misc.ub_lTs_scaling;
+    Results.Param.Bound.kT.lb        = Misc.lb_kT_scaling;
+    Results.Param.Bound.kT.ub        = Misc.ub_kT_scaling;
+    Results.Param.Bound.EMG.lb       = Misc.BoundsScaleEMG(1);
+    Results.Param.Bound.EMG.ub       = Misc.BoundsScaleEMG(2);
+end
+
+% store the Misc structure as well in the results
+Results.Misc = Misc;
 
 if Misc.ValidationBool == true
     opti_validation = casadi.Opti();
@@ -767,8 +783,8 @@ if Misc.ValidationBool == true
     aux = opti_validation.variable(DatStore(trial).NMuscles,N_tot+nTrials);
     opti_validation.subject_to(1e-4 < aux(:));
     opti_validation.set_initial(aux,aux_opt);
-
-
+    
+    
     % Generate optimized parameters for specific trial by scaling generic parameters
     optimized_params = Misc.params';
     optimized_params(:,2) = Results.Param.lMo_scaling_paramopt.*optimized_params(:,2);
@@ -789,7 +805,7 @@ if Misc.ValidationBool == true
             ak = a(:,(N_acc+trial-1) + k); lMtildek = lMtilde(:,(N_acc+trial-1) + k);
             vMtildek = vMtilde(:,N_acc + k); aTk = aT(:,N_acc + k); ek = e(:,N_acc + k);
             auxk = aux(:,(N_acc+trial-1) + k);
-
+            
             % Integration   Uk = (X_(k+1) - X_k)/*dt
             Xk = [ak; lMtildek];
             Zk = [a(:,(N_acc+trial-1) + k + 1);lMtilde(:,(N_acc+trial-1) + k + 1)];
@@ -831,13 +847,13 @@ if Misc.ValidationBool == true
     
     % Create an NLP solver
     opti_validation.solver(output.setup.nlp.solver,optionssol);
-%         opti_validation.callback(@(i) opti_validation.debug.show_infeasibilities(1e2));
-
+    %         opti_validation.callback(@(i) opti_validation.debug.show_infeasibilities(1e2));
+    
     % Solve
     diary('ValidationMRS.txt');
     sol = opti_validation.solve();
     diary off
-
+    
     %% Extract results
     % Variables at mesh points
     % Muscle activations and muscle-tendon forces
@@ -875,21 +891,17 @@ if Misc.ValidationBool == true
         Ntot = Ntot + N;
     end
     clear opti_validation a lMtilde e vMtilde aT
+    
+    % save results of validation step
+    Results.Time = Time;
+    Results.MActivation = MActivation;
+    Results.lMtildeopt = lMtildeopt;
+    Results.lM = lM;
+    Results.MvMtilde = MvMtilde;
+    Results.MExcitation = MExcitation;
+    Results.RActivation = RActivation;
+    Results.lMTinterp = lMTinterp;    
 end
-
-% Collect results
-Results.Time = Time;
-Results.MActivation = MActivation;
-Results.lMtildeopt = lMtildeopt;
-Results.lM = lM;
-Results.MvMtilde = MvMtilde;
-Results.MExcitation = MExcitation;
-Results.RActivation = RActivation;
-Results.lMTinterp = lMTinterp;
-
-% store the Misc structure as well in the results
-Results.Misc = Misc;
-
 
 
 %% Plot Output
@@ -900,16 +912,19 @@ if Misc.PlotBool && Misc.EMGconstr == 1
 end
 
 % plot estimated parameters
-if Misc.PlotBool
+if Misc.PlotBool == 1 && BoolParamOpt ==1
     PlotEstimatedParameters(Results,DatStore,Misc);
 end
 
 % plot fiber length
-if Misc.PlotBool    
-   PlotFiberLength(Results,DatStore) 
+if Misc.PlotBool && Misc.UStracking == 1
+    PlotFiberLength(Results,DatStore)
 end
 
-PlotStates(Results,DatStore,Misc) 
+% plot the states of the muscles in the simulation
+if Misc.PlotBool 
+    PlotStates(Results,DatStore,Misc);
+end
 
 % plot states and variables from parameter estimation simulation
 
@@ -950,7 +965,7 @@ PlotStates(Results,DatStore,Misc)
 %         end
 %     end
 % end
-% 
+%
 % save('workspaceTemp.mat');
 
 
@@ -1006,11 +1021,11 @@ PlotStates(Results,DatStore,Misc)
 
 %% Plot the optimized parameters
 
-% 
+%
 % if Misc.PlotBool
 %     h = figure('Name','Opt Param');
 %     hTabGroup = uitabgroup;
-%     
+%
 %     % plot estimated lmOpt
 %     tab = uitab(hTabGroup, 'Title', 'Opt Fiber length');
 %     axes('parent',tab);
@@ -1031,7 +1046,7 @@ PlotStates(Results,DatStore,Misc)
 %         title(DatStore(1).MuscleNames{iM(i)},'interpreter','none');
 %     end
 %     legend('Original','Estimated','Bound');
-%     
+%
 %     % plot estimated tendon stiffness
 %     tab = uitab(hTabGroup, 'Title', 'Tendon Stiffness');
 %     axes('parent',tab);
@@ -1052,7 +1067,7 @@ PlotStates(Results,DatStore,Misc)
 %         title(DatStore(1).MuscleNames{iM(i)},'interpreter','none');
 %     end
 %     legend('Original','Estimated','Bound');
-%     
+%
 %     % plot estimated tendon slack length
 %     tab = uitab(hTabGroup, 'Title', 'Tendon slack length');
 %     axes('parent',tab);
@@ -1073,7 +1088,7 @@ PlotStates(Results,DatStore,Misc)
 %         title(DatStore(1).MuscleNames{iM(i)},'interpreter','none');
 %     end
 %     legend('Original','Estimated','Bound');
-%     
+%
 %     % Plot the bounds on EMG
 %     tab = uitab(hTabGroup, 'Title', 'EMG scale Factor');
 %     axes('parent',tab);
@@ -1085,7 +1100,7 @@ PlotStates(Results,DatStore,Misc)
 %     set(gca,'XTickLabel',DatStore(1).EMG.EMGselection);
 %     set(gca,'XTickLabelRotation',60);
 % end
-% 
+%
 
 
 
