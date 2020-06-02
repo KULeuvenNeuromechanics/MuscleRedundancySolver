@@ -1,662 +1,134 @@
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool PSF_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\GitProjects\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool PSF_IK_stride2 loading model 'C:\Users\u0088756\Documents\FWO\Software\GitProjects\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\GitProjects\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
 No external loads will be applied (external loads file not specified).
 
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot.
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\GitProjects\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot.
 Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot (nr=147 nc=38)
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\GitProjects\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot (nr=147 nc=38)
 .. assuming rotations in Degrees.
 Found 147 state vectors with time stamps ranging from 0.33 to 1.06.
 Executing the analyses from 0.33 to 1.06...
-Printing results of investigation PSF_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool +15_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
+Printing results of investigation PSF_IK_stride2 to C:\Users\u0088756\Documents\FWO\Software\GitProjects\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\GitProjects\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool PSF_IK_stride2 loading model 'C:\Users\u0088756\Documents\FWO\Software\GitProjects\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\GitProjects\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
 No external loads will be applied (external loads file not specified).
 
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+15_IK_stride2.mot.
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\GitProjects\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot.
 Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+15_IK_stride2.mot (nr=127 nc=38)
-.. assuming rotations in Degrees.
-Found 127 state vectors with time stamps ranging from 0.15 to 0.78.
-Executing the analyses from 0.15 to 0.78...
-Printing results of investigation +15_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool PSF_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot (nr=147 nc=38)
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\GitProjects\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot (nr=147 nc=38)
 .. assuming rotations in Degrees.
 Found 147 state vectors with time stamps ranging from 0.33 to 1.06.
 Executing the analyses from 0.33 to 1.06...
-Printing results of investigation PSF_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool +15_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
+Printing results of investigation PSF_IK_stride2 to C:\Users\u0088756\Documents\FWO\Software\GitProjects\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\GitProjects\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool +8_IK_stride2 loading model 'C:\Users\u0088756\Documents\FWO\Software\GitProjects\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\GitProjects\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
 No external loads will be applied (external loads file not specified).
 
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+15_IK_stride2.mot.
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\GitProjects\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+8_IK_stride2.mot.
 Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+15_IK_stride2.mot (nr=127 nc=38)
-.. assuming rotations in Degrees.
-Found 127 state vectors with time stamps ranging from 0.15 to 0.78.
-Executing the analyses from 0.15 to 0.78...
-Printing results of investigation +15_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool PSF_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot (nr=147 nc=38)
-.. assuming rotations in Degrees.
-Found 147 state vectors with time stamps ranging from 0.33 to 1.06.
-Executing the analyses from 0.33 to 1.06...
-Printing results of investigation PSF_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool +15_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+15_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+15_IK_stride2.mot (nr=127 nc=38)
-.. assuming rotations in Degrees.
-Found 127 state vectors with time stamps ranging from 0.15 to 0.78.
-Executing the analyses from 0.15 to 0.78...
-Printing results of investigation +15_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool PSF_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot (nr=147 nc=38)
-.. assuming rotations in Degrees.
-Found 147 state vectors with time stamps ranging from 0.33 to 1.06.
-Executing the analyses from 0.33 to 1.06...
-Printing results of investigation PSF_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool +15_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+15_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+15_IK_stride2.mot (nr=127 nc=38)
-.. assuming rotations in Degrees.
-Found 127 state vectors with time stamps ranging from 0.15 to 0.78.
-Executing the analyses from 0.15 to 0.78...
-Printing results of investigation +15_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool PSF_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot (nr=147 nc=38)
-.. assuming rotations in Degrees.
-Found 147 state vectors with time stamps ranging from 0.33 to 1.06.
-Executing the analyses from 0.33 to 1.06...
-Printing results of investigation PSF_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool +15_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+15_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+15_IK_stride2.mot (nr=127 nc=38)
-.. assuming rotations in Degrees.
-Found 127 state vectors with time stamps ranging from 0.15 to 0.78.
-Executing the analyses from 0.15 to 0.78...
-Printing results of investigation +15_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool PSF_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot (nr=147 nc=38)
-.. assuming rotations in Degrees.
-Found 147 state vectors with time stamps ranging from 0.33 to 1.06.
-Executing the analyses from 0.33 to 1.06...
-Printing results of investigation PSF_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool +15_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+15_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+15_IK_stride2.mot (nr=127 nc=38)
-.. assuming rotations in Degrees.
-Found 127 state vectors with time stamps ranging from 0.15 to 0.78.
-Executing the analyses from 0.15 to 0.78...
-Printing results of investigation +15_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool PSF_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot (nr=147 nc=38)
-.. assuming rotations in Degrees.
-Found 147 state vectors with time stamps ranging from 0.33 to 1.06.
-Executing the analyses from 0.33 to 1.06...
-Printing results of investigation PSF_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool +15_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+15_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+15_IK_stride2.mot (nr=127 nc=38)
-.. assuming rotations in Degrees.
-Found 127 state vectors with time stamps ranging from 0.15 to 0.78.
-Executing the analyses from 0.15 to 0.78...
-Printing results of investigation +15_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool PSF_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot (nr=147 nc=38)
-.. assuming rotations in Degrees.
-Found 147 state vectors with time stamps ranging from 0.33 to 1.06.
-Executing the analyses from 0.33 to 1.06...
-Printing results of investigation PSF_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool +15_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+15_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+15_IK_stride2.mot (nr=127 nc=38)
-.. assuming rotations in Degrees.
-Found 127 state vectors with time stamps ranging from 0.15 to 0.78.
-Executing the analyses from 0.15 to 0.78...
-Printing results of investigation +15_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool PSF_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot (nr=147 nc=38)
-.. assuming rotations in Degrees.
-Found 147 state vectors with time stamps ranging from 0.33 to 1.06.
-Executing the analyses from 0.33 to 1.06...
-Printing results of investigation PSF_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool +15_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+15_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+15_IK_stride2.mot (nr=127 nc=38)
-.. assuming rotations in Degrees.
-Found 127 state vectors with time stamps ranging from 0.15 to 0.78.
-Executing the analyses from 0.15 to 0.78...
-Printing results of investigation +15_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool PSF_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot (nr=147 nc=38)
-.. assuming rotations in Degrees.
-Found 147 state vectors with time stamps ranging from 0.33 to 1.06.
-Executing the analyses from 0.33 to 1.06...
-Printing results of investigation PSF_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool +15_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+15_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+15_IK_stride2.mot (nr=127 nc=38)
-.. assuming rotations in Degrees.
-Found 127 state vectors with time stamps ranging from 0.15 to 0.78.
-Executing the analyses from 0.15 to 0.78...
-Printing results of investigation +15_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool PSF_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot (nr=147 nc=38)
-.. assuming rotations in Degrees.
-Found 147 state vectors with time stamps ranging from 0.33 to 1.06.
-Executing the analyses from 0.33 to 1.06...
-Printing results of investigation PSF_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool +15_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+15_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+15_IK_stride2.mot (nr=127 nc=38)
-.. assuming rotations in Degrees.
-Found 127 state vectors with time stamps ranging from 0.15 to 0.78.
-Executing the analyses from 0.15 to 0.78...
-Printing results of investigation +15_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool PSF_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot (nr=147 nc=38)
-.. assuming rotations in Degrees.
-Found 147 state vectors with time stamps ranging from 0.33 to 1.06.
-Executing the analyses from 0.33 to 1.06...
-Printing results of investigation PSF_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool +15_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+15_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+15_IK_stride2.mot (nr=127 nc=38)
-.. assuming rotations in Degrees.
-Found 127 state vectors with time stamps ranging from 0.15 to 0.78.
-Executing the analyses from 0.15 to 0.78...
-Printing results of investigation +15_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool PSF_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot (nr=147 nc=38)
-.. assuming rotations in Degrees.
-Found 147 state vectors with time stamps ranging from 0.33 to 1.06.
-Executing the analyses from 0.33 to 1.06...
-Printing results of investigation PSF_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool +15_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+15_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+15_IK_stride2.mot (nr=127 nc=38)
-.. assuming rotations in Degrees.
-Found 127 state vectors with time stamps ranging from 0.15 to 0.78.
-Executing the analyses from 0.15 to 0.78...
-Printing results of investigation +15_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool PSF_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot (nr=147 nc=38)
-.. assuming rotations in Degrees.
-Found 147 state vectors with time stamps ranging from 0.33 to 1.06.
-Executing the analyses from 0.33 to 1.06...
-Printing results of investigation PSF_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool +15_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+15_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+15_IK_stride2.mot (nr=127 nc=38)
-.. assuming rotations in Degrees.
-Found 127 state vectors with time stamps ranging from 0.15 to 0.78.
-Executing the analyses from 0.15 to 0.78...
-Printing results of investigation +15_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool PSF_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot (nr=147 nc=38)
-.. assuming rotations in Degrees.
-Found 147 state vectors with time stamps ranging from 0.33 to 1.06.
-Executing the analyses from 0.33 to 1.06...
-Printing results of investigation PSF_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool +15_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+15_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+15_IK_stride2.mot (nr=127 nc=38)
-.. assuming rotations in Degrees.
-Found 127 state vectors with time stamps ranging from 0.15 to 0.78.
-Executing the analyses from 0.15 to 0.78...
-Printing results of investigation +15_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool PSF_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot (nr=147 nc=38)
-.. assuming rotations in Degrees.
-Found 147 state vectors with time stamps ranging from 0.33 to 1.06.
-Executing the analyses from 0.33 to 1.06...
-Printing results of investigation PSF_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool +15_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+15_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+15_IK_stride2.mot (nr=127 nc=38)
-.. assuming rotations in Degrees.
-Found 127 state vectors with time stamps ranging from 0.15 to 0.78.
-Executing the analyses from 0.15 to 0.78...
-Printing results of investigation +15_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool PSF_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot (nr=147 nc=38)
-.. assuming rotations in Degrees.
-Found 147 state vectors with time stamps ranging from 0.33 to 1.06.
-Executing the analyses from 0.33 to 1.06...
-Printing results of investigation PSF_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool +8_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+8_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+8_IK_stride2.mot (nr=135 nc=38)
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\GitProjects\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+8_IK_stride2.mot (nr=135 nc=38)
 .. assuming rotations in Degrees.
 Found 135 state vectors with time stamps ranging from 0.26 to 0.93.
 Executing the analyses from 0.26 to 0.93...
-Printing results of investigation +8_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool +15_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
+Printing results of investigation +8_IK_stride2 to C:\Users\u0088756\Documents\FWO\Software\GitProjects\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\GitProjects\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool +15_IK_stride2 loading model 'C:\Users\u0088756\Documents\FWO\Software\GitProjects\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\GitProjects\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
 No external loads will be applied (external loads file not specified).
 
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+15_IK_stride2.mot.
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\GitProjects\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+15_IK_stride2.mot.
 Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+15_IK_stride2.mot (nr=127 nc=38)
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\GitProjects\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+15_IK_stride2.mot (nr=127 nc=38)
 .. assuming rotations in Degrees.
 Found 127 state vectors with time stamps ranging from 0.15 to 0.78.
 Executing the analyses from 0.15 to 0.78...
-Printing results of investigation +15_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool PSF_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
+Printing results of investigation +15_IK_stride2 to C:\Users\u0088756\Documents\FWO\Software\GitProjects\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\GitProjects\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\GitProjects\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool PSF_IK_stride2 loading model 'C:\Users\u0088756\Documents\FWO\Software\GitProjects\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\GitProjects\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
 No external loads will be applied (external loads file not specified).
 
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot.
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\GitProjects\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot.
 Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot (nr=147 nc=38)
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\GitProjects\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot (nr=147 nc=38)
 .. assuming rotations in Degrees.
 Found 147 state vectors with time stamps ranging from 0.33 to 1.06.
 Executing the analyses from 0.33 to 1.06...
-Printing results of investigation PSF_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool +8_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
+Printing results of investigation PSF_IK_stride2 to C:\Users\u0088756\Documents\FWO\Software\GitProjects\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\GitProjects\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool +8_IK_stride2 loading model 'C:\Users\u0088756\Documents\FWO\Software\GitProjects\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\GitProjects\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
 No external loads will be applied (external loads file not specified).
 
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+8_IK_stride2.mot.
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\GitProjects\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+8_IK_stride2.mot.
 Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+8_IK_stride2.mot (nr=135 nc=38)
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\GitProjects\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+8_IK_stride2.mot (nr=135 nc=38)
 .. assuming rotations in Degrees.
 Found 135 state vectors with time stamps ranging from 0.26 to 0.93.
 Executing the analyses from 0.26 to 0.93...
-Printing results of investigation +8_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool +15_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
+Printing results of investigation +8_IK_stride2 to C:\Users\u0088756\Documents\FWO\Software\GitProjects\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\GitProjects\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+AbstractTool +15_IK_stride2 loading model 'C:\Users\u0088756\Documents\FWO\Software\GitProjects\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\GitProjects\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
 No external loads will be applied (external loads file not specified).
 
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+15_IK_stride2.mot.
+Loading coordinates from file C:\Users\u0088756\Documents\FWO\Software\GitProjects\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+15_IK_stride2.mot.
 Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+15_IK_stride2.mot (nr=127 nc=38)
+Storage: read data file =C:\Users\u0088756\Documents\FWO\Software\GitProjects\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+15_IK_stride2.mot (nr=127 nc=38)
 .. assuming rotations in Degrees.
 Found 127 state vectors with time stamps ranging from 0.15 to 0.78.
 Executing the analyses from 0.15 to 0.78...
-Printing results of investigation +15_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool PSF_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot (nr=147 nc=38)
-.. assuming rotations in Degrees.
-Found 147 state vectors with time stamps ranging from 0.33 to 1.06.
-Executing the analyses from 0.33 to 1.06...
-Printing results of investigation PSF_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool PSF_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot (nr=147 nc=38)
-.. assuming rotations in Degrees.
-Found 147 state vectors with time stamps ranging from 0.33 to 1.06.
-Executing the analyses from 0.33 to 1.06...
-Printing results of investigation PSF_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool PSF_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot (nr=147 nc=38)
-.. assuming rotations in Degrees.
-Found 147 state vectors with time stamps ranging from 0.33 to 1.06.
-Executing the analyses from 0.33 to 1.06...
-Printing results of investigation PSF_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool PSF_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot (nr=147 nc=38)
-.. assuming rotations in Degrees.
-Found 147 state vectors with time stamps ranging from 0.33 to 1.06.
-Executing the analyses from 0.33 to 1.06...
-Printing results of investigation PSF_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool PSF_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot (nr=147 nc=38)
-.. assuming rotations in Degrees.
-Found 147 state vectors with time stamps ranging from 0.33 to 1.06.
-Executing the analyses from 0.33 to 1.06...
-Printing results of investigation PSF_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool PSF_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot (nr=147 nc=38)
-.. assuming rotations in Degrees.
-Found 147 state vectors with time stamps ranging from 0.33 to 1.06.
-Executing the analyses from 0.33 to 1.06...
-Printing results of investigation PSF_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool PSF_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot (nr=147 nc=38)
-.. assuming rotations in Degrees.
-Found 147 state vectors with time stamps ranging from 0.33 to 1.06.
-Executing the analyses from 0.33 to 1.06...
-Printing results of investigation PSF_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool PSF_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot (nr=147 nc=38)
-.. assuming rotations in Degrees.
-Found 147 state vectors with time stamps ranging from 0.33 to 1.06.
-Executing the analyses from 0.33 to 1.06...
-Printing results of investigation PSF_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool PSF_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot (nr=147 nc=38)
-.. assuming rotations in Degrees.
-Found 147 state vectors with time stamps ranging from 0.33 to 1.06.
-Executing the analyses from 0.33 to 1.06...
-Printing results of investigation PSF_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool PSF_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot (nr=147 nc=38)
-.. assuming rotations in Degrees.
-Found 147 state vectors with time stamps ranging from 0.33 to 1.06.
-Executing the analyses from 0.33 to 1.06...
-Printing results of investigation PSF_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool +8_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+8_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+8_IK_stride2.mot (nr=135 nc=38)
-.. assuming rotations in Degrees.
-Found 135 state vectors with time stamps ranging from 0.26 to 0.93.
-Executing the analyses from 0.26 to 0.93...
-Printing results of investigation +8_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool +15_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+15_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+15_IK_stride2.mot (nr=127 nc=38)
-.. assuming rotations in Degrees.
-Found 127 state vectors with time stamps ranging from 0.15 to 0.78.
-Executing the analyses from 0.15 to 0.78...
-Printing results of investigation +15_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool PSF_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\PSF_IK_stride2.mot (nr=147 nc=38)
-.. assuming rotations in Degrees.
-Found 147 state vectors with time stamps ranging from 0.33 to 1.06.
-Executing the analyses from 0.33 to 1.06...
-Printing results of investigation PSF_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool +8_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+8_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+8_IK_stride2.mot (nr=135 nc=38)
-.. assuming rotations in Degrees.
-Found 135 state vectors with time stamps ranging from 0.26 to 0.93.
-Executing the analyses from 0.26 to 0.93...
-Printing results of investigation +8_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-AbstractTool +15_IK_stride2 loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim'
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
-No external loads will be applied (external loads file not specified).
-
-Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+15_IK_stride2.mot.
-Old version storage/motion file encountered
-Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\+15_IK_stride2.mot (nr=127 nc=38)
-.. assuming rotations in Degrees.
-Found 127 state vectors with time stamps ranging from 0.15 to 0.78.
-Executing the analyses from 0.15 to 0.78...
-Printing results of investigation +15_IK_stride2 to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
-Loaded model subject1 from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
+Printing results of investigation +15_IK_stride2 to C:\Users\u0088756\Documents\FWO\Software\GitProjects\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Results\MuscleAnalysis.
+Updating Model file from 30000 to latest format...
+Loaded model subject1 from file C:\Users\u0088756\Documents\FWO\Software\GitProjects\MuscleTendonEstimator\Examples\Example_TendonEstimator_RunningData\Data\model.osim
+ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.

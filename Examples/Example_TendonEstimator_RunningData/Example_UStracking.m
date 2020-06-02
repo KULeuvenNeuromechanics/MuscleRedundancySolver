@@ -19,10 +19,10 @@ addpath(genpath(MainPath));
 
 % Add here the paths of IK, ID , US and EMG data trials you want to work with
 % As example we use trial 1 2 & 4 
-Misc.IKfile = {fullfile(DataPath,'trial_1_IK.mot');fullfile(DataPath,'trial_2_IK.mot');fullfile(DataPath,'trial_3_IK.mot')};
-Misc.IDfile = {fullfile(DataPath,'trial_1_ID.mot');fullfile(DataPath,'trial_2_ID.mot');fullfile(DataPath,'trial_3_ID.mot')};
-Misc.USfile = {fullfile(DataPath,'trial_1_US.mot');fullfile(DataPath,'trial_2_US.mot');fullfile(DataPath,'trial_3_US.mot')}; %
-Misc.EMGfile = {fullfile(DataPath,'trial_1_emg.mot'); fullfile(DataPath,'trial_2_emg.mot'); fullfile(DataPath,'trial_3_emg.mot')};
+Misc.IKfile = {fullfile(DataPath,'PSF_IK_stride2.mot');fullfile(DataPath,'+8_IK_stride2.mot');fullfile(DataPath,'+15_IK_stride2.mot')};
+Misc.IDfile = {fullfile(DataPath,'PSF_ID_stride2.mot');fullfile(DataPath,'+8_ID_stride2.mot');fullfile(DataPath,'+15_ID_stride2.mot')};
+Misc.USfile = {fullfile(DataPath,'PSF_US_stride2.mot');fullfile(DataPath,'+8_US_stride2.mot');fullfile(DataPath,'+15_US_stride2.mot')};
+Misc.EMGfile = [];
 
 model_path  = fullfile(DataPath,'model.osim');
 Out_path    = fullfile(ExamplePath,'Results');                    % folder to store results
@@ -92,10 +92,10 @@ Misc.PlotBool = 1;
 % better initial guess.
 Misc.MRSBool = 1;
 % Validation Bool: Select if you want to run the muscle redundancy solver with the optimized parameters
-Misc.ValidationBool = 0; 	% TO DO: we should report results of EMG driven simulation as well
+Misc.ValidationBool = 1;
 
 %% Run muscle tendon estimator:
-[Results,Parameters,DatStore] = MuscleTendonEstimator(model_path,time,Bounds,Out_path,Misc);
+[Results,DatStore,Misc] = MuscleTendonEstimator(model_path,time,Bounds,Out_path,Misc);
 
 % Save the results structure where you want
 save('Results.mat','Results');
