@@ -622,6 +622,39 @@ end
 clear opti_MTE a lMtilde e vMtilde aT
 
 
+%% Store Results
+
+% save original and estimated parameters (and the bounds)
+Results.Param.lMo_scaling_paramopt  = lMo_scaling_param_opt;
+Results.Param.lTs_scaling_paramopt  = lTs_scaling_param_opt;
+Results.Param.kT_scaling_paramopt   = kT_scaling_param_opt;
+Results.Param.Original.Fiso      = Misc.params(1,:);
+Results.Param.Original.lOpt      = Misc.params(2,:);
+Results.Param.Original.L_Slack   = Misc.params(3,:);
+Results.Param.Original.Pennation = Misc.params(4,:);
+Results.Param.Original.ATendon   = Misc.Atendon;
+if BoolParamOpt
+    Results.Param.Estimated.Fiso     = Results.Param.Original.Fiso;
+    Results.Param.Estimated.lOpt     = Results.Param.Original.lOpt .* Results.Param.lMo_scaling_paramopt';
+    Results.Param.Estimated.L_Slack  = Results.Param.Original.L_Slack .* Results.Param.lTs_scaling_paramopt';
+    Results.Param.Estimated.Pennation = Results.Param.Original.Pennation;
+    Results.Param.Estimated.ATendon  = Results.Param.Original.ATendon .* Results.Param.kT_scaling_paramopt';
+    Results.Param.Bound.lOp.lb       = Misc.lb_lMo_scaling;
+    Results.Param.Bound.lOp.ub       = Misc.ub_lMo_scaling;
+    Results.Param.Bound.lTs.lb       = Misc.lb_lTs_scaling;
+    Results.Param.Bound.lTs.ub       = Misc.ub_lTs_scaling;
+    Results.Param.Bound.kT.lb        = Misc.lb_kT_scaling;
+    Results.Param.Bound.kT.ub        = Misc.ub_kT_scaling;
+    Results.Param.Bound.EMG.lb       = Misc.BoundsScaleEMG(1);
+    Results.Param.Bound.EMG.ub       = Misc.BoundsScaleEMG(2);
+    if DatStore(1).EMG.boolEMG
+        Results.Param.EMGscale       = sol.value(EMGscale);
+    end
+end
+
+% store the Misc structure as well in the results
+Results.Misc = Misc;
+
 %% Validate results parameter estimation 
 if Misc.ValidationBool == true && BoolParamOpt
     opti_validation = casadi.Opti();
@@ -764,40 +797,6 @@ if Misc.ValidationBool == true && BoolParamOpt
     end
     clear opti_validation a lMtilde e vMtilde aT
 end
-
-%% Store Results
-
-% save original and estimated parameters (and the bounds)
-Results.Param.lMo_scaling_paramopt  = lMo_scaling_param_opt;
-Results.Param.lTs_scaling_paramopt  = lTs_scaling_param_opt;
-Results.Param.kT_scaling_paramopt   = kT_scaling_param_opt;
-Results.Param.Original.Fiso      = Misc.params(1,:);
-Results.Param.Original.lOpt      = Misc.params(2,:);
-Results.Param.Original.L_Slack   = Misc.params(3,:);
-Results.Param.Original.Pennation = Misc.params(4,:);
-Results.Param.Original.ATendon   = Misc.Atendon;
-if BoolParamOpt
-    Results.Param.Estimated.Fiso     = Results.Param.Original.Fiso;
-    Results.Param.Estimated.lOpt     = Results.Param.Original.lOpt .* Results.Param.lMo_scaling_paramopt';
-    Results.Param.Estimated.L_Slack  = Results.Param.Original.L_Slack .* Results.Param.lTs_scaling_paramopt';
-    Results.Param.Estimated.Pennation = Results.Param.Original.Pennation;
-    Results.Param.Estimated.ATendon  = Results.Param.Original.ATendon .* Results.Param.kT_scaling_paramopt';
-    Results.Param.Bound.lOp.lb       = Misc.lb_lMo_scaling;
-    Results.Param.Bound.lOp.ub       = Misc.ub_lMo_scaling;
-    Results.Param.Bound.lTs.lb       = Misc.lb_lTs_scaling;
-    Results.Param.Bound.lTs.ub       = Misc.ub_lTs_scaling;
-    Results.Param.Bound.kT.lb        = Misc.lb_kT_scaling;
-    Results.Param.Bound.kT.ub        = Misc.ub_kT_scaling;
-    Results.Param.Bound.EMG.lb       = Misc.BoundsScaleEMG(1);
-    Results.Param.Bound.EMG.ub       = Misc.BoundsScaleEMG(2);
-    if DatStore(1).EMG.boolEMG
-        Results.Param.EMGscale          = sol.value(EMGscale);
-    end
-end
-
-% store the Misc structure as well in the results
-Results.Misc = Misc;
-
 
 %% Plot Output
 
