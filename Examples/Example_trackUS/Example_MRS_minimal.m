@@ -1,7 +1,6 @@
 %% Example solve muscle redundancy with an MRI model
 
-% clear variables and commond window
-clear all; clc;
+clear all;
 
 %% Input information
 % Install instructions:
@@ -30,11 +29,6 @@ Out_path    = fullfile(ExamplePath,'Results');                    % folder to st
 
 % Get start and end time of the different files (you can also specify this
 % manually)
-% time = zeros(size(Misc.IKfile,1),2);
-% for i = 1:size(Misc.IKfile,1)
-%     IK = importdata(Misc.IKfile{i});
-%     time(i,:) = [IK.data(1,1) IK.data(end,1)];
-% end
 time = [0 9999];  % (selects the full file) 
 
 %% Settings
@@ -44,7 +38,6 @@ Misc.MuscleNames_Input = {'med_gas_l','lat_gas_l','soleus_l','tib_ant_l'}; % sel
 Misc.Atendon = [];
 % Select muscle for which you want the fiberlengths to track the US data
 Misc.UStracking  = 0;            % Boolean to select US tracking option
-Bounds = [];		% currently still empty
 % information for the EMG constraint
 Misc.EMGconstr  = 0;     		% Boolean to select EMG constrained option
 % Plotter Bool: Boolean to select if you want to plot lots of output information of intermediate steps in the script
@@ -58,7 +51,7 @@ Misc.Mesh_Frequency = 100;
 % output name
 Misc.OutName = 'Minimal_';
 %% Run muscle tendon estimator:
-[Results,DatStore,Misc] = MuscleTendonEstimator(model_path,time,Bounds,Out_path,Misc);
+[Results,DatStore,Misc] = MuscleTendonEstimator(model_path,time,Out_path,Misc);
 
 % Save the results structure where you want
 save('Results.mat','Results');

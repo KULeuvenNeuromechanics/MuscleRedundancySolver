@@ -1,8 +1,6 @@
 %% Example solve muscle redundancy with an MRI model
 
-% clear variables and commond window
-clear all; clc; close all;
-
+clear all;
 %% Input information
 % Install instructions:
 %   Add the main path ...\solvemuscleredundancy_dev to your matlab folder,
@@ -46,7 +44,7 @@ Misc.Estimate_TendonStifness = {'med_gas_l';'lat_gas_l';'soleus_l'}; % Names of 
 Misc.lb_kT_scaling = 0.1; % Lower bound for scaling generic tendon stiffness
 Misc.ub_kT_scaling = 1.2; % Upper bound for scaling generic tendon stiffness
 Misc.Coupled_TendonStifness = {'med_gas_l';'lat_gas_l';'soleus_l'}; %'med_gas_l';'lat_gas_l';'soleus_l' Couple muscles that should have equal tendon stifness
-Misc.Coupled_fiber_length = {}; %{'med_gas_l';'lat_gas_l'};
+Misc.Coupled_fiber_length = {'med_gas_l';'lat_gas_l'};
 Misc.Coupled_slack_length = {}; %{'med_gas_l';'lat_gas_l'};
 
 % Settings for estimating optimal fiber length
@@ -73,17 +71,16 @@ Misc.EMGSelection = {'med_gas_l', 'soleus_l'};
 % and should always be in the header of the EMGfile or in the  EMGheaders.
 Misc.EMG_MuscleCopies = {'med_gas_l','lat_gas_l'};       %  use gastrocnemius medialis EMG to constrain activity of the lateral gastrocn
 
-% ???????s
-Bounds = [];		% currently still empty
-
 % information for the EMG constraint
 Misc.EMGconstr  = 0;     		% Boolean to select EMG constrained option
 Misc.EMGbounds  = [-0.3 0.3];  	% upper and lower bound for deviation simulated and measured muscle activity
 Misc.MaxScaleEMG = 10; 			% maximal value to scale EMG
 
 % Set weights
-Misc.wEMG 		= 0.001;			% weight on tracking EMG
-Misc.wlM    = 10;               % weight on tracking fiber length
+Misc.wEMG   = 0.001;            % weight on tracking EMG
+Misc.wlM    = 1;                % weight on tracking fiber length: note that
+% increasing this weight most likely results in "extreme" overfitting.
+% Run the validation tool to investigate this
 
 % Plotter Bool: Boolean to select if you want to plot lots of output information of intermediate steps in the script
 Misc.PlotBool = 1;
@@ -95,7 +92,7 @@ Misc.MRSBool = 1;
 Misc.ValidationBool = 1;
 
 %% Run muscle tendon estimator:
-[Results,DatStore,Misc] = MuscleTendonEstimator(model_path,time,Bounds,Out_path,Misc);
+[Results,DatStore,Misc] = MuscleTendonEstimator(model_path,time,Out_path,Misc);
 
 % Save the results structure where you want
 save('Results.mat','Results');

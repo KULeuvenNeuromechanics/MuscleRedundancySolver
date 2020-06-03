@@ -1,8 +1,6 @@
 %% Example solve muscle redundancy with an MRI model
 
-% clear variables and commond window
-clear all; clc;
-
+clear all;
 %% Input information
 % Install instructions:
 %   Add the main path ...\solvemuscleredundancy_dev to your matlab folder,
@@ -61,13 +59,11 @@ Misc.MRSBool = 1;
 Misc.ValidationBool = 0; 	% TO DO: we should report results of EMG driven simulation as well
 % set the mesh frequency
 Misc.Mesh_Frequency = 200;
-% bounds
-Bounds = [];
 % name output
 Misc.OutName = 'Walking_';
 
 %% Run muscle tendon estimator:
-[Results,DatStore] = MuscleTendonEstimator(model_path,time,Bounds,Out_path,Misc);
+[Results,DatStore] = MuscleTendonEstimator(model_path,time,Out_path,Misc);
 
 % Save the results structure where you want
 save('Results.mat','Results');

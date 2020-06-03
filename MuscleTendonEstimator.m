@@ -1,4 +1,4 @@
-function [Results,DatStore,Misc] = MuscleTendonEstimator(model_path,time,Bounds,OutPath,Misc)
+function [Results,DatStore,Misc] = MuscleTendonEstimator(model_path,time,OutPath,Misc)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -153,8 +153,8 @@ for trial = 1:Misc.nTrials
     end
     
     % Initial guess static optimization
-    DatStore(trial).SoActInterp = interp1(DatStore(trial).time,DatStore(trial).SoAct,time_opt);
-    DatStore(trial).SoRActInterp = interp1(DatStore(trial).time,DatStore(trial).SoRAct,time_opt);
+    DatStore(trial).SoActInterp = interp1(DatStore(trial).time,DatStore(trial).SoAct,time_opt');
+    DatStore(trial).SoRActInterp = interp1(DatStore(trial).time,DatStore(trial).SoRAct,time_opt');
     DatStore(trial).SoForceInterp = interp1(DatStore(trial).time,DatStore(trial).SoForce.*DatStore(trial).cos_alpha./Misc.Fiso,time_opt);
     [~,DatStore(trial).lMtildeInterp ] = FiberLength_Ftilde(DatStore(trial).SoForceInterp,Misc.params,DatStore(trial).LMTinterp,Misc.Atendon,Misc.shift);
     DatStore(trial).vMtildeinterp = zeros(size(DatStore(trial).lMtildeInterp));

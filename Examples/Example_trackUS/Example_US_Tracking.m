@@ -1,7 +1,6 @@
 %% Example solve muscle redundancy with an MRI model
 
-% clear variables and commond window
-clear all; clc;
+clear all;
 
 %% Input information
 % Install instructions:
@@ -72,9 +71,6 @@ Misc.EMGSelection = {'med_gas_l', 'soleus_l'};
 % and should always be in the header of the EMGfile or in the  EMGheaders.
 Misc.EMG_MuscleCopies = {'med_gas_l','lat_gas_l'};       %  use gastrocnemius medialis EMG to constrain activity of the lateral gastrocn
 
-% ???????s
-Bounds = [];		% currently still empty
-
 % information for the EMG constraint
 Misc.EMGconstr  = 0;     		% Boolean to select EMG constrained option
 Misc.EMGbounds  = [-0.3 0.3];  	% upper and lower bound for deviation simulated and measured muscle activity
@@ -94,7 +90,7 @@ Misc.ValidationBool = 1; 	% TO DO: we should report results of EMG driven simula
 % change mesh frequency
 Misc.Mesh_Frequency = 100;
 %% Run muscle tendon estimator:
-[Results,DatStore,Misc] = MuscleTendonEstimator(model_path,time,Bounds,Out_path,Misc);
+[Results,DatStore,Misc] = MuscleTendonEstimator(model_path,time,Out_path,Misc);
 
 % Save the results structure where you want
 save('Results.mat','Results');
