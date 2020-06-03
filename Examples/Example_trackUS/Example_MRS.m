@@ -58,7 +58,7 @@ Misc.lb_lTs_scaling = 0.7; % Lower bound for scaling tendon slack length
 Misc.ub_lTs_scaling = 1.5; % Upper bound for scaling tendon slack length
 
 % Select muscle for which you want the fiberlengths to track the US data
-Misc.UStracking  = 1;            % Boolean to select US tracking option
+Misc.UStracking  = 0;            % Boolean to select US tracking option
 Misc.USSelection = {'med_gas_l'};
 
 % Provide the correct headers int case you EMG file has not the same
@@ -75,7 +75,7 @@ Misc.EMGSelection = {'med_gas_l', 'soleus_l'};
 Misc.EMG_MuscleCopies = {'med_gas_l','lat_gas_l'};       %  use gastrocnemius medialis EMG to constrain activity of the lateral gastrocn
 
 % information for the EMG constraint
-Misc.EMGconstr  = 1;     		% Boolean to select EMG constrained option
+Misc.EMGconstr  = 0;     		% Boolean to select EMG constrained option
 Misc.EMGbounds  = [-0.3 0.3];  	% upper and lower bound for deviation simulated and measured muscle activity
 Misc.MaxScaleEMG = 10; 			% maximal value to scale EMG
 
