@@ -18,7 +18,9 @@ Misc.IDfile = {fullfile(ID_DataPath,'ng10203_ID.sto'); fullfile(ID_DataPath,'ng1
 Misc.USfile = [];
 Misc.EMGfile = {fullfile(EMG_DataPath,'ng10203_crop_emg.mot'); fullfile(EMG_DataPath,'ng10220_crop_emg.mot')};% fullfile(EMG_DataPath,'ng10217_emg.mot'); fullfile(EMG_DataPath,'ng10220_emg.mot'); fullfile(EMG_DataPath,'ng10224_emg.mot')};
 
-model_path  = fullfile(Models_DataPath,'gait2392_arms_ORLAU_scaled.osim');
+% model_path  = fullfile(Models_DataPath,'gait2392_arms_ORLAU_scaled.osim');
+model_path  = fullfile(Models_DataPath,'model.osim');
+
 Out_path    = fullfile(Results_DataPath);                    % folder to store results
 
 % Get start and end time of the different files 

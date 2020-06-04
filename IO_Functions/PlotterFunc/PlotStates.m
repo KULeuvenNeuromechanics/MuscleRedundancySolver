@@ -16,7 +16,7 @@ for trial = 1:length(Results.MActivation(:))
     legend_title = {};
     for i=1:nMus
         subplot(p(1),p(2),i)
-        if Misc.UStracking==1
+        if Misc.UStracking==1 || Misc.EMGtracking==1
             plot(Results.Time(trial).MTE,Results.MActivation(trial).MTE(i,:),'Color',Cs(1,:),'LineWidth',lw); hold on;
             if i == 1
                 legend_title = [legend_title,'Parameter Estimation'];

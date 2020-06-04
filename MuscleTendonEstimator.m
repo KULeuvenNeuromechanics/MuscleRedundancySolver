@@ -827,14 +827,14 @@ if Misc.PlotBool && Misc.UStracking == 1
     saveas(h,fullfile(OutPath,'figures',[Misc.OutName '_fig_FiberLength.fig']));
 end
 
-% % plot the states of the muscles in the simulation
-% if Misc.PlotBool
-%     h = PlotStates(Results,DatStore,Misc);
-%     if ~isdir(fullfile(OutPath,'figures'))
-%         mkdir(fullfile(OutPath,'figures'));
-%     end
-%     saveas(h,fullfile(OutPath,'figures',[Misc.OutName '_fig_States.fig']));
-% end
+% plot the states of the muscles in the simulation
+if Misc.PlotBool
+    h = PlotStates(Results,DatStore,Misc);
+    if ~isdir(fullfile(OutPath,'figures'))
+        mkdir(fullfile(OutPath,'figures'));
+    end
+    saveas(h,fullfile(OutPath,'figures',[Misc.OutName '_fig_States.fig']));
+end
 
 %% save the results
 % plot states and variables from parameter estimation simulation
