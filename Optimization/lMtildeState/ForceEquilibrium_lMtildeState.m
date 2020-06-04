@@ -2,19 +2,15 @@
 % All muscle-tendon characteristics are fully described in the publication
 % and its online supplement
 
-function [err, FT] = ForceEquilibrium_lMtildeState(a,lMtilde,vMtilde,lMT,params,Atendon,shift)
+function [err, FT, Fpe, FMltilde, FMvtilde, cos_alpha] = ForceEquilibrium_lMtildeState(a,lMtilde,vMtilde,aux,lMT,params,Atendon,shift)
 
 FMo = params(:,1);
 lMo = params(:,2);
 lTs = params(:,3);
-alphao = params(:,4);
-Atendon = Atendon;
-shift = shift;
 
 % Hill-type muscle model: geometric relationships
 lM = lMtilde.*lMo;
-w = lMo.*sin(alphao);
-lT = lMT - sqrt((lM.^2 - w.^2));
+lT = lMT - aux;
 lTtilde = lT./lTs;
 
 % Tendon force-length characteristic

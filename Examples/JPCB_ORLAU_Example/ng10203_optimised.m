@@ -1,8 +1,6 @@
 %% Example solve muscle redundancy with an MRI model
 
-% clear variables and commond window
-clear all; clc;
-
+clear all;
 %% Input information
 % NEED TO ADD TO PATH HOW EVER YOU DO IT 
 
@@ -20,7 +18,9 @@ Misc.IDfile = {fullfile(ID_DataPath,'ng10203_ID.sto'); fullfile(ID_DataPath,'ng1
 Misc.USfile = [];
 Misc.EMGfile = {fullfile(EMG_DataPath,'ng10203_crop_emg.mot'); fullfile(EMG_DataPath,'ng10220_crop_emg.mot')};% fullfile(EMG_DataPath,'ng10217_emg.mot'); fullfile(EMG_DataPath,'ng10220_emg.mot'); fullfile(EMG_DataPath,'ng10224_emg.mot')};
 
-model_path  = fullfile(Models_DataPath,'gait2392_arms_ORLAU_scaled.osim');
+% model_path  = fullfile(Models_DataPath,'gait2392_arms_ORLAU_scaled.osim');
+model_path  = fullfile(Models_DataPath,'model.osim');
+
 Out_path    = fullfile(Results_DataPath);                    % folder to store results
 
 % Get start and end time of the different files 
@@ -71,12 +71,8 @@ Misc.EMGSelection = {'soleus_r', 'rect_fem_r',  'lat_gas_r', 'med_gas_r', 'vas_l
 % muscles in the opensim model. The first name of each row is the reference
 % and should always be in the header of the EMGfile or in the  EMGheaders.
 % Need to make clear to only include muscles in Misc.EMGSelection
-
 Misc.EMG_MuscleCopies = {'semimem_r','semiten_r'};       %  use gastrocnemius medialis EMG to constrain activity of the lateral gastrocn
 % Misc.EMG_MuscleCopies = [];
-
-% ???????s
-Bounds = [];		% currently still empty
 
 % information for the EMG constraint
 Misc.EMGconstr  = 1;     		% Boolean to select EMG constrained option
@@ -95,7 +91,7 @@ Misc.MRSBool = 1;
 Misc.ValidationBool = 1; 	% TO DO: we should report results of EMG driven simulation as well
 
 %% Run muscle tendon estimator:
-[Results,Parameters,DatStore] = MuscleTendonEstimator(model_path,time,Bounds,Out_path,Misc);
+[Results,DatStore,Misc] = MuscleTendonEstimator(model_path,time,Out_path,Misc);
 
 % Save the results structure where you want
 save('Results.mat','Results');

@@ -10,6 +10,7 @@ nPhases = length(Misc.IKfile);
 if nPhases > 1
     hTabGroup = uitabgroup;
 end
+Cs = linspecer(3);
 for i=1:nPhases
     % set the name of the tab
     if nPhases>1
@@ -24,29 +25,35 @@ for i=1:nPhases
     % interpolate EMG
     tSim = Results.Time(i).MTE;
     EMG = ppval(DatStore(i).EMG.EMGspline,tSim)';
+    legend_title = {};
     for j=1:nEMG
         subplot(p(1),p(2),j);
         % simulated muscle activity - parameter estimation
-        Cs = [89, 135, 189]./255;
         eSim = Results.MExcitation(i).MTE(EMGinds(j),:)';
         tSim = Results.Time(i).MTE;
-        plot(tSim(1:end-1),eSim,'Color',Cs,'LineWidth',lw); hold on;
+        plot(tSim(1:end-1),eSim,'Color',Cs(1,:),'LineWidth',lw); hold on;
+        legend_title = [legend_title,'Parameter Estimation'];
         % measured EMG
         EMGscaled = EMG(:,j).*Results.Param.EMGscale(j);
         plot(tSim,EMGscaled,'--k','LineWidth',lw);
         % simulated muscle activity - parameter estimation
         if Misc.ValidationBool
-            Cs = [161, 116, 64]./255;
             eSim = Results.MExcitation(i).validationMRS(EMGinds(j),:);
             tSim = Results.Time(i).validationMRS;
-            plot(tSim(1:end-1),eSim,'Color',Cs,'LineWidth',lw);
+            plot(tSim(1:end-1),eSim,'Color',Cs(2,:),'LineWidth',lw);
+            legend_title = [legend_title,'Validation MRS'];
         end
+        
+        if Misc.MRSBool
+            eSim = Results.MExcitation(i).genericMRS(EMGinds(j),:);
+            tSim = Results.Time(i).genericMRS;
+            plot(tSim(1:end-1),eSim,'Color',Cs(3,:),'LineWidth',lw);
+            legend_title = [legend_title,'Generic MRS'];
+
+        end
+        
         if j==nEMG
-            if Misc.ValidationBool
-                legend('Parameter estimation','EMG','Validation');
-            else
-                legend('Parameter estimation','EMG');
-            end
+            legend(legend_title);
         end
         title(DatStore(i).EMG.EMGselection{j});
     end
