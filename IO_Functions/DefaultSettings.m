@@ -2,7 +2,7 @@ function [Misc] = DefaultSettings(Misc)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 
-
+%% Filters
 if ~isfield(Misc,'f_cutoff_ID') || isempty(Misc.f_cutoff_ID)
     Misc.f_cutoff_ID=6;
 end
@@ -30,24 +30,56 @@ end
 if ~isfield(Misc,'f_order_IK') || isempty(Misc.f_order_IK)
     Misc.f_order_IK=6;
 end
-% Mesh Frequency
+
+%% Mesh Frequency
 if ~isfield(Misc,'Mesh_Frequency') || isempty(Misc.Mesh_Frequency)
     Misc.Mesh_Frequency=100;
 end
-% Run muscle analysis (default true)
+
+%% Run muscle analysis (default true)
 if ~isfield(Misc,'RunAnalysis') || isempty(Misc.RunAnalysis)
     Misc.RunAnalysis = 1;
+end
+
+%% EMG
+if ~isfield(Misc,'EMGconstr') || isempty(Misc.EMGconstr)
+    Misc.EMGconstr  = 0;
 end
 % bounds on scaling EMG
 if ~isfield(Misc,'BoundsScaleEMG') || isempty(Misc.BoundsScaleEMG)
     Misc.BoundsScaleEMG = [0.9 1.1];
 end
-% ResultsName
+% bounds on EMG signal
+if ~isfield(Misc,'EMGbounds')
+    Misc.EMGbounds = [];
+end
+
+%% ResultsName
 if ~isfield(Misc,'OutName') || isempty(Misc.OutName)
     Misc.OutName = '';
 end
 
+%% weights
+if ~isfield(Misc,'wlM') || isempty(Misc.wlM)
+    Misc.wlM = 0;
+end
+if ~isfield(Misc,'wEMG')|| isempty(Misc.wEMG)
+    Misc.wEMG = 0;
+end
+if ~isfield(Misc,'wAct')|| isempty(Misc.wAct)
+    Misc.wAct = 1;
+end
+if ~isfield(Misc,'wTres')|| isempty(Misc.wTres)
+    Misc.wTres = 1000;
+end
+if ~isfield(Misc,'wVm')|| isempty(Misc.wVm)
+    Misc.wVm = 0.01;
+end
 
+%% reserve actuator
+if ~isfield(Misc,'Topt')|| isempty(Misc.Topt)
+    Misc.Topt = 150;
+end
 
 end
 

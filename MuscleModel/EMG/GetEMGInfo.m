@@ -84,18 +84,18 @@ if boolEMG
             EMGindices(i) = find(strcmp(Misc.EMGSelection{i},DatStore(iF).MuscleNames));
         end        
         % add twins
-        if  ~isempty(Misc.EMG_MuscleCopies)
+        if  ~isempty(Misc.EMG_MuscleCopies)            
             nCopy = length(Misc.EMG_MuscleCopies(:,1));
-            EMGsel = [EMGsel zeros(nfr,nCopy)];
-            EMGindices = [ EMGindices ; zeros(nCopy,1)];        
-            for j=1:length(Misc.EMG_MuscleCopies(:,1))
+            for j=1:nCopy
                 NameSel = Misc.EMG_MuscleCopies{j,1};
                 NameCopy =  Misc.EMG_MuscleCopies{j,2};
-
                 Ind_ColCopy = strcmp(Misc.EMGSelection,NameSel);
-                EMGsel(:,i+j) = EMGsel(:,Ind_ColCopy);
-                EMGindices(i+j) = find(strcmp(NameCopy,DatStore(iF).MuscleNames));
-                EMGselection = [EMGselection {NameCopy}];
+                Ind_ColOut = strcmp(Misc.EMGSelection,NameCopy);
+                if any(Ind_ColCopy) && any(Ind_ColOut) % only if both muscles are selected
+                    EMGindices = [EMGindices find(strcmp(NameCopy,DatStore(iF).MuscleNames))];
+                    EMGsel = [EMGsel EMGsel(:,Ind_ColCopy)];
+                    EMGselection = [EMGselection {NameCopy}];
+                end
             end
         end    
         DatStore(iF).EMG.BoundsScaleEMG = Misc.BoundsScaleEMG;

@@ -57,7 +57,7 @@ for i = 1:Misc.nTrials
     if ~isfield(Misc,'MuscleNames_Input') || isempty(Misc.MuscleNames_Input)
         Misc=getMuscles4DOFS(Misc);
     end
-    if ~isfield(Misc,'ATendon')
+    if ~isfield(Misc,'ATendon') || isempty(Misc.ATendon)
         Misc.Atendon =ones(1,length(Misc.MuscleNames_Input)).*35;
     end
     % Shift tendon force-length curve as a function of the tendon stiffness
@@ -95,10 +95,6 @@ end
 
 %% Input activation and contraction dynamics
 % ----------------------------------------------------------------------- %
-Misc.w1 = 1000;                     % Weight objective function
-Misc.w2 = 0.01;
-Misc.Topt = 150;                    % Scaling factor: reserve actuators
-
 tau_act = 0.015;    Misc.tauAct = tau_act * ones(NMuscles, 1);       % activation time constant (activation dynamics)
 tau_deact = 0.06;   Misc.tauDeact = tau_deact * ones(NMuscles,1);  % deactivation time constant (activation dynamics)
 Misc.b = 0.1;       % tanh coefficient for smooth activation dynamics
@@ -302,8 +298,8 @@ if Misc.MRSBool == 1
         N_acc = N_acc + N;
     end
     J = 0.5*(sumsqr(e)/N/NMuscles + sumsqr(a)/N/NMuscles) + ...
-        Misc.w1*sumsqr(aT)/N/DatStore(trial).nDOF + ...
-        Misc.w2*sumsqr(vMtilde)/N/NMuscles;
+        Misc.wTres*sumsqr(aT)/N/DatStore(trial).nDOF + ...
+        Misc.wVm*sumsqr(vMtilde)/N/NMuscles;
     
     opti.minimize(J); % Define cost function in opti
     
@@ -427,15 +423,14 @@ if BoolParamOpt == 1
         for j = 1:size(DatStore(1).coupled_kT,2)-1
             opti_MTE.subject_to(kT_scaling_param(DatStore(1).coupled_kT(k,j)) - kT_scaling_param(DatStore(1).coupled_kT(k,j+1)) == 0);
         end
-    end
-    
+    end    
     % added fibre length coupling
     for k = 1:size(DatStore(1).coupled_lMo,1)
         for j = 1:size(DatStore(1).coupled_lMo,2)-1
             opti_MTE.subject_to(lMo_scaling_param(DatStore(1).coupled_lMo(k,j)) - lMo_scaling_param(DatStore(1).coupled_lMo(k,j+1)) == 0);
         end
     end
-    % added fibre length coupling
+    % added tendon slack length coupling
     for k = 1:size(DatStore(1).coupled_lTs,1)
         for j = 1:size(DatStore(1).coupled_lTs,2)-1
             opti_MTE.subject_to(lTs_scaling_param(DatStore(1).coupled_lTs(k,j)) - lTs_scaling_param(DatStore(1).coupled_lTs(k,j+1)) == 0);
@@ -447,7 +442,7 @@ if BoolParamOpt == 1
         EMGscale    = opti_MTE.variable(nEMG,1);
         opti_MTE.subject_to(Misc.BoundsScaleEMG(1) < EMGscale < Misc.BoundsScaleEMG(2));
     end
-    
+       
     % Set initial guess
     if Misc.MRSBool == 1
         opti_MTE.set_initial(a,a_opt);             % Initial guess generic MRS
@@ -533,8 +528,7 @@ if BoolParamOpt == 1
             end
             % Hill-equilibrium constraint
             opti_MTE.subject_to(Hilldiffk == 0);
-        end
-        
+        end        
         % tracking lMtilde
         if DatStore(trial).US.boolUS
             lMo = lMo_scaling_param(DatStore(trial).USsel)'.*Misc.params(2,DatStore(trial).USsel(:));
@@ -545,22 +539,27 @@ if BoolParamOpt == 1
                 lMtilde_simulated = lMtilde_simulated';
             end
             J = J + Misc.wlM*sumsqr(lMtilde_simulated-lMtilde_tracking)/DatStore(trial).US.nUS/N;
-        end
-        
+        end        
         % tracking Muscle activity
         if DatStore(trial).EMG.boolEMG
             eSim  = e(DatStore(trial).EMG.EMGindices,N_acc:N_acc+N-1);
             eMeas = EMGTracking(trial).data' .* repmat(EMGscale,1,N);
             JEMG  = sumsqr(eSim-eMeas);
             J     = J + Misc.wEMG * JEMG/DatStore(trial).EMG.nEMG/N;
+        end        
+        % Bounds on difference EMG - activations
+        if DatStore(trial).EMG.boolEMG && ~isempty(Misc.EMGbounds)
+            eSim  = e(DatStore(trial).EMG.EMGindices,N_acc:N_acc+N-1);
+            eMeas = EMGTracking(trial).data' .* repmat(EMGscale,1,N);
+            opti_MTE.subject_to(Misc.EMGbounds(1) < eSim-eMeas < Misc.EMGbounds(2));
         end
         N_acc = N_acc + N;
     end
     
     J = J + ...
-        0.5*(sumsqr(e)/N_tot/NMuscles + sumsqr(a)/N_tot/NMuscles) + ...
-        Misc.w1*sumsqr(aT)/N_tot/DatStore(trial).nDOF + ...
-        Misc.w2*sumsqr(vMtilde)/N_tot/NMuscles;
+        Misc.wAct*0.5*(sumsqr(e)/N_tot/NMuscles + sumsqr(a)/N_tot/NMuscles) + ...
+        Misc.wTres*sumsqr(aT)/N_tot/DatStore(trial).nDOF + ...
+        Misc.wVm*sumsqr(vMtilde)/N_tot/NMuscles;
     
     opti_MTE.minimize(J); % Define cost function in opti
     opti_MTE.solver(output.setup.nlp.solver,optionssol);
@@ -741,8 +740,8 @@ if Misc.ValidationBool == true && BoolParamOpt
         
         J = J + ...
             0.5*(sumsqr(e)/N/NMuscles + sumsqr(a)/N/NMuscles) + ...
-            Misc.w1*sumsqr(aT)/N/DatStore(trial).nDOF + ...
-            Misc.w2*sumsqr(vMtilde)/N/NMuscles;
+            Misc.wTres*sumsqr(aT)/N/DatStore(trial).nDOF + ...
+            Misc.wVm*sumsqr(vMtilde)/N/NMuscles;
         N_acc = N_acc + N;
     end
     opti_validation.minimize(J); % Define cost function in opti
