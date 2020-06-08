@@ -50,7 +50,7 @@
 %\makeindex
 \begin{document}
 
-\title{Manual SimTK optcntrlmuscle (v2.1)}
+\title{Manual SimTK optcntrlmuscle (v3.0)}
 \author{Friedl De Groote, Maarten Afschrift, Tom Van Wouwe, Antoine Falisse}
 \date{07/11/2018} 
 \maketitle
@@ -58,22 +58,24 @@
 
 \section{Release notes}
 
-\subsection{Release 2.1}
+\subsection{Release 3.0}
 \begin{itemize}
-	\item CasADi was added as an alternative to GPOPS-II and ADiGator (see section \ref{Overview} for details).
-	\item The reserve actuators (RActivation) were unscaled in the output of the main functions.
-	\item The time derivatives of the muscle contraction dynamics states, i.e. normalized muscle fiber velocities or derivatives of normalized tendon forces, were added to the cost function with a small weighting factor to prevent spiky outputs.
-	 \item The tendon stiffness was added as an optional user parameter (see section \ref{Example Gait10dof18m} for example).
+	\item EMG-driven/EMG-constrained solutions of the muscle redundancy problem are enabled.
+	\item Tracking of ultrasound (US) fiber length data is enabled.
+	\item Muscle-tendon parameters can be additional variables in the muscle redundancy problem. This allows estimation of muscle-tendon parameters based on experimental data (kinematics and/or US and/or EMG).
+	\item The estimation of the muscle-tendon parameters can be done using experimental data from different trials and motions all at once.
+	\item Implementations using GPOPS-II and ADiGator are omitted. CasADi's 'opti stack' functionality is used to model the NLPs.
+	\item Integration of the dynamic equations is done using Euler integration.
 \end{itemize}
 
 
 \section{Overview}
 \label{Overview}
 
-The provided MATLAB code solves the muscle redundancy problem using direct collocation as described in \textit{De Groote F, Kinney AL, Rao AV, Fregly BJ. Evaluation of direct collocation optimal control problem formulations for solving the muscle redundancy problem. Annals of Biomedical Engineering (2016).} \url{http://link.springer.com/article/10.1007%2Fs10439-016-1591-9}. 
+The provided MATLAB code can still be used to solve the muscle redundancy problem using direct collocation as described in \textit{De Groote F, Kinney AL, Rao AV, Fregly BJ. Evaluation of direct collocation optimal control problem formulations for solving the muscle redundancy problem. Annals of Biomedical Engineering (2016).} \url{http://link.springer.com/article/10.1007%2Fs10439-016-1591-9}. 
 \\
 
-From v2.1, CasADi can be used as an alternative to GPOPS-II and ADiGator. CasADi is an open-source tool for nonlinear optimization and algorithmic differentiation (\url{https://web.casadi.org/}). Results using CasADi and GPOPS-II are very similar (differences can be attributed to the different direct collocation formulations and scaling). We used CasADi's Opti stack, which is a collection of CasADi helper classes that provides a close correspondence between mathematical NLP notation and computer code (\url{https://web.casadi.org/docs/#document-opti}). CasADi is actively maintained and developed, and has an active forum (\url{https://groups.google.com/forum/#!forum/casadi-users}). \\
+From v3.0, there are possibilities to estimate parameters of the modelled muscle-tendon units by using collected EMG and ultrasound data. Optimal fiber length, tendon slack length and tendon stiffness can be made variables of the muscle redundancy problem. Experimentally measured fiber-lengths can be tracked (US-tracking), the tracking error is a part of the objective function. Collected EMG can either be tracked (EMG-tracking) or imposed exaclty (EMG-driven). The user can combine different trials of the same movement or from different movements to make estimation more reliable. We reckon that for solving the muscle redundancy problem OpenSim Moco might be a more user-friendly and straightforward alternative. However, our software allows the combination of different trials to estimate muscle-tendon parameters. Another difference is in that we use automatic differentiation, while this is not (yet) enabled in Moco. This software is still intended to solve inverse problems, for predictive simulations we refer to Moco our 'Antoine'. \\
 
 
 From v1.1, an implicit formulation of activation dynamics can be used to solve the muscle redundancy problem. Additionally, by using the activation dynamics model proposed by Raasch et al. (1997), we could introduce a nonlinear change of variables to exactly impose activation dynamics in a continuously differentiable form, omitting the need for a smooth approximation such as described in De Groote et al. (2016). A result of this change of variables is that muscle excitations are not directly accessible during the optimization. Therefore, we replaced muscle excitations by muscle activations in the objective function. This implicit formulation is described in \textit{De Groote F, Pipeleers G, Jonkers I, Demeulenaere B, Patten C, Swevers J, De Schutter J. A physiology based inverse dynamic analysis of human gait: potential and perspectives F. Computer Methods in Biomechanics and Biomedical Engineering (2009).} \url{http://www.tandfonline.com/doi/full/10.1080/10255840902788587}. Results from both formulations are very similar (differences can be attributed to the slightly different activation dynamics models and cost functions). However, the formulation with implicit activation dynamics (De Groote et al., (2009)) is computationally faster. This can mainly be explained by the omission of a tanh function in the constraint definition, whose evaluation is computationally expensive when solving the NLP. \\
