@@ -60,7 +60,7 @@ Misc.EMG_MuscleCopies = {'semimem_r','semiten_r'};       %  use gastrocnemius me
 
 % information for the EMG constraint
 Misc.EMGconstr  = 1;     		% Boolean to select EMG constrained option
-Misc.EMGbounds  = [-0.01 0.01];  	% upper and lower bound for difference between simulated and measured muscle activity
+Misc.EMGbounds  = [-10^-3 10^-3];  	% upper and lower bound for difference between simulated and measured muscle activity
 Misc.BoundsScaleEMG = [0.01 10];  % maximal value to scale EMG
 
 % Set weights

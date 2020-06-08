@@ -53,6 +53,31 @@ end
 if ~isfield(Misc,'EMGbounds')
     Misc.EMGbounds = [];
 end
+% copies of EMG
+if ~isfield(Misc,'EMG_MuscleCopies')
+    Misc.EMG_MuscleCopies = [];
+end
+% selected EMG information
+if ~isfield(Misc,'EMGSelection')
+    Misc.EMGSelection = [];
+end
+
+%% Info related to parameter optimization
+if ~isfield(Misc,'Estimate_OptFL')
+    Misc.Estimate_OptFL =[];
+end
+if ~isfield(Misc,'Estimate_TendonStifness')
+    Misc.Estimate_TendonStifness =[];
+end
+if ~isfield(Misc,'Coupled_fiber_length')
+    Misc.Coupled_fiber_length =[];
+end
+if ~isfield(Misc,'Coupled_slack_length')
+    Misc.Coupled_slack_length =[];
+end
+if ~isfield(Misc,'Coupled_TendonStifness')
+    Misc.Coupled_TendonStifness =[];
+end
 
 %% ResultsName
 if ~isfield(Misc,'OutName') || isempty(Misc.OutName)
@@ -81,5 +106,9 @@ if ~isfield(Misc,'Topt')|| isempty(Misc.Topt)
     Misc.Topt = 150;
 end
 
+%% ultrasound
+if ~isfield(Misc,'USfile')
+    Misc.USfile = [];
+end
 end
 

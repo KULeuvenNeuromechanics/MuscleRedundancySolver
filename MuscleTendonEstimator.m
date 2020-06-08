@@ -64,6 +64,9 @@ for i = 1:Misc.nTrials
     Misc.shift = getShift(Misc.Atendon);
     [DatStore] = getMuscleInfo(IK_path_trial,ID_path_trial,Misc,DatStore,i);
     
+    % display warnings in muscle selection
+    Warnings_MuscleNames(DatStore,Misc,i);
+    
     % get indexes of the muscles for which optimal fiber length, tendon stiffness are estimated
     [DatStore] = GetIndices_US(DatStore,Misc,i);
 end
@@ -600,9 +603,15 @@ if BoolParamOpt == 1
         Results.MvMtilde(trial).MTE = vMtilde_opt(:,Ntot + 1:Ntot + N);
         Results.MExcitation(trial).MTE = e_opt(:,Ntot + 1:Ntot + N);
         Results.RActivation(trial).MTE = aT_opt(:,Ntot + 1:Ntot + N)*Misc.Topt;
-        % Tendon forces from lMtilde
+        % Update muscle params      
+        AtendonOpt = Misc.Atendon .* kT_scaling_param_opt';
+        shiftOpt = getShift(AtendonOpt);        
+        paramsOpt =  Misc.params;
+        paramsOpt(2,:) = paramsOpt(2,:).*lMo_scaling_param_opt'; % updated optimal fiber length
+        paramsOpt(3,:) = paramsOpt(3,:).*lTs_scaling_param_opt';  % updated tendon slack length       
         Results.lMTinterp(trial).MTE = DatStore(trial).LMTinterp;
-        [TForcetilde_,TForce_] = TendonForce_lMtilde(Results.lMtildeopt(trial).MTE',Misc.params,Results.lMTinterp(trial).MTE,Misc.Atendon,Misc.shift);
+        % get force from muscle state
+        [TForcetilde_,TForce_] = TendonForce_lMtilde(Results.lMtildeopt(trial).MTE',paramsOpt,Results.lMTinterp(trial).MTE,AtendonOpt,shiftOpt);
         Results.TForcetilde(trial).MTE = TForcetilde_';
         Results.TForce(trial).MTE = TForce_';
         [Fpe_,FMltilde_,FMvtilde_] = getForceLengthVelocityProperties(Results.lMtildeopt(trial).MTE',Results.MvMtilde(trial).MTE');
@@ -693,7 +702,7 @@ if Misc.ValidationBool == true && BoolParamOpt
     optimized_params(:,2) = lMo_scaling_param_opt.*optimized_params(:,2);
     optimized_params(:,3) = lTs_scaling_param_opt.*optimized_params(:,3);
     optimized_Atendon = kT_scaling_param_opt.*Misc.Atendon';
-    optimized_shift = (exp(optimized_Atendon.*(1 - 0.995)))/5 - (exp(35.*(1 - 0.995)))/5;
+    optimized_shift = getShift(optimized_Atendon);
     
     % Loop over mesh points formulating NLP
     J = 0; % Initialize cost function

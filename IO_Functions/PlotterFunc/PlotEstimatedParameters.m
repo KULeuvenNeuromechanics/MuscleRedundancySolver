@@ -9,7 +9,7 @@ hTabGroup = uitabgroup;
 % plot estimated lmOpt
 tab = uitab(hTabGroup, 'Title', 'Opt Fiber length');
 axes('parent',tab);
-iM = DatStore(1).free_kT(:); % Muscle indexes
+iM = DatStore(1).free_lMo(:); % Muscle indexes
 nMus = length(iM);
 p    = numSubplots(nMus);
 Cs = [89, 135, 189]./255;

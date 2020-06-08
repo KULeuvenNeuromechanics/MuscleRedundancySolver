@@ -8,22 +8,10 @@
 function shift = getShift(kT)
 
 kT35 = 35;
-shift = 0;
 lTtilde = 1;
-fse = (exp(kT35.*(lTtilde - 0.995)))/5 - 0.25 + shift; 
-fse_kt35 = fse;
 
-fse = (exp(kT.*(lTtilde - 0.995)))/5 - 0.25 + shift; 
-fse_kt = fse;
-
+fse_kt35 = (exp(kT35.*(lTtilde - 0.995)))/5 - 0.25; 
+fse_kt = (exp(kT.*(lTtilde - 0.995)))/5 - 0.25; 
 shift = fse_kt35-fse_kt;
-fse = (exp(kT.*(lTtilde - 0.995)))/5 - 0.25 + shift;
-
-
-if sum(abs(fse - fse_kt35)>1e-12) ~= 0
-    shift = NaN;
-    warning('Error in shift tendon force-length curve');
-end
-
 end
 

@@ -10,7 +10,7 @@ lTs = lMo_lTs_kT_scaling(:,2).*params(:,3);
 alphao = params(:,4);
 Atendon = lMo_lTs_kT_scaling(:,3).*Atendon;
 
-shift = (exp(Atendon.*(1 - 0.995)))/5 - (exp(35.*(1 - 0.995)))/5;
+shift = getShift(Atendon);
 
 
 % Hill-type muscle model: geometric relationships
