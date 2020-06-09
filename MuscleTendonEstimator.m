@@ -247,15 +247,15 @@ if Misc.MRSBool == 1
     %   - Projected muscle fiber length - Auxilary variable to avoid muscle buckling & square root expression in muscle dynamics
     lM_projected = opti.variable(NMuscles,N_tot+nTrials);
     opti.subject_to(1e-4 < lM_projected(:)); % We impose that projected muscle fiber length has strict positive length
-        % Initial guess for this variable is retrieved from lMtilde guess
-        % and geometric relationship between pennation angle, muscle length
-        % and width
-        lMo = Misc.params(2,:)';
-        alphao = Misc.params(4,:)';
-        lMGuess = lMtildeGuess.*lMo;
-        w = lMo.*sin(alphao);
-        lM_projectedGuess = sqrt((lMGuess.^2 - w.^2));
-        opti.set_initial(lM_projected,lM_projectedGuess);
+    % Initial guess for this variable is retrieved from lMtilde guess
+    % and geometric relationship between pennation angle, muscle length
+    % and width
+    lMo = Misc.params(2,:)';
+    alphao = Misc.params(4,:)';
+    lMGuess = lMtildeGuess.*lMo;
+    w = lMo.*sin(alphao);
+    lM_projectedGuess = sqrt((lMGuess.^2 - w.^2));
+    opti.set_initial(lM_projected,lM_projectedGuess);
     
     N_acc = 0; % Index that keeps track of trials that are accumulated         
     % Loop over trials --> one simulation for each trial
@@ -315,7 +315,10 @@ if Misc.MRSBool == 1
     
     % Solve
     diary(fullfile(OutPath,[Misc.OutName 'GenericMRS.txt']));
+    tic
     sol = opti.solve();
+    dt = toc;
+    disp(['Computation time solving OCP: ' num2str(dt) ' s'])
     diary off
     
     % Extract results
@@ -469,6 +472,8 @@ if BoolParamOpt == 1
         opti_MTE.set_initial(lTs_scaling_param,1);
         opti_MTE.set_initial(kT_scaling_param,1);
         % Hill-type muscle model: geometric relationships
+        lMo = Misc.params(2,:)';
+        alphao = Misc.params(4,:)';
         lMGuess = lMtildeGuess.*lMo;
         w = lMo.*sin(alphao);
         lM_projectedGuess = sqrt((lMGuess.^2 - w.^2));
@@ -569,7 +574,10 @@ if BoolParamOpt == 1
     opti_MTE.minimize(J); % Define cost function in opti
     opti_MTE.solver(output.setup.nlp.solver,optionssol);
     diary(fullfile(OutPath,[Misc.OutName 'MTE.txt']));
+    tic
     sol = opti_MTE.solve();
+    dt = toc;
+    disp(['Computation time solving OCP: ' num2str(dt) ' s'])
     diary off
     
     %% Extract results
@@ -760,7 +768,10 @@ if Misc.ValidationBool == true && BoolParamOpt
     
     % Solve
     diary(fullfile(OutPath,[Misc.OutName 'ValidationMRS.txt']));
+    tic
     sol = opti_validation.solve();
+    dt = toc;
+    disp(['Computation time solving OCP: ' num2str(dt) ' s'])
     diary off
     
     %% Extract results

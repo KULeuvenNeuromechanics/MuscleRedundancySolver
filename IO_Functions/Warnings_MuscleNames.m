@@ -15,12 +15,12 @@ for i = 1:r
         end
     end
 end
-[r,c] = size(Misc.Estimate_TendonStifness);
+[r,c] = size(Misc.Estimate_TendonStiffness);
 for i = 1:r
     for j = 1:c
-        if ~any(strcmp(MNames,Misc.Estimate_TendonStifness{i,j}))
-            warning(['Could not find muscle ' Misc.Estimate_TendonStifness{i,j} ' in the selected dofs of the model',...
-                ', please adapt Misc.Estimate_TendonStifness']);
+        if ~any(strcmp(MNames,Misc.Estimate_TendonStiffness{i,j}))
+            warning(['Could not find muscle ' Misc.Estimate_TendonStiffness{i,j} ' in the selected dofs of the model',...
+                ', please adapt Misc.Estimate_TendonStiffness']);
         end
     end
 end
@@ -30,7 +30,7 @@ for i = 1:r
     for j = 1:c
         if ~any(strcmp(MNames,Misc.Coupled_fiber_length{i,j}))
             warning(['Could not find muscle ' Misc.Coupled_fiber_length{i,j} ' in the selected dofs of the model',...
-                ', please adapt Misc.Estimate_TendonStifness']);
+                ', please adapt Misc.Estimate_TendonStiffness']);
         end
     end
 end
@@ -40,17 +40,17 @@ for i = 1:r
     for j = 1:c
         if ~any(strcmp(MNames,Misc.Coupled_slack_length{i,j}))
             warning(['Could not find muscle ' Misc.Coupled_slack_length{i,j} ' in the selected dofs of the model',...
-                ', please adapt Misc.Estimate_TendonStifness']);
+                ', please adapt Misc.Estimate_TendonStiffness']);
         end
     end
 end
 
-[r,c] = size(Misc.Coupled_TendonStifness);
+[r,c] = size(Misc.Coupled_TendonStiffness);
 for i = 1:r
     for j = 1:c
-        if ~any(strcmp(MNames,Misc.Coupled_TendonStifness{i,j}))
-            warning(['Could not find muscle ' Misc.Coupled_TendonStifness{i,j} ' in the selected dofs of the model',...
-                ', please adapt Misc.Estimate_TendonStifness']);
+        if ~any(strcmp(MNames,Misc.Coupled_TendonStiffness{i,j}))
+            warning(['Could not find muscle ' Misc.Coupled_TendonStiffness{i,j} ' in the selected dofs of the model',...
+                ', please adapt Misc.Estimate_TendonStiffness']);
         end
     end
 end

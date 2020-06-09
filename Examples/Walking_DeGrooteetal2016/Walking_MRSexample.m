@@ -17,24 +17,20 @@ addpath(genpath(MainPath));
 
 % Add here the paths of IK, ID , US and EMG data trials you want to work with
 % As example we use trial 1 2 & 4 
-Misc.IKfile = {fullfile(DataPath,'Walking_IK.mot')};% fullfile(DataPath,'trial_2_IK.mot'); fullfile(DataPath,'trial_4_IK.mot')};
-Misc.IDfile = {fullfile(DataPath,'Walking_ID.sto')};% fullfile(DataPath,'trial_2_ID.mot'); fullfile(DataPath,'trial_4_ID.mot')};
-Misc.USfile = {};% fullfile(DataPath,'trial_2_US.mot'); fullfile(DataPath,'trial_4_US.mot')}; %
-Misc.EMGfile = {}; %fullfile(DataPath,'trial_2_emg.mot'); fullfile(DataPath,'trial_4_emg.mot')};
+Misc.IKfile = {fullfile(DataPath,'Walking_IK.mot')};
+Misc.IDfile = {fullfile(DataPath,'Walking_ID.sto')};
+Misc.USfile = {};
+Misc.EMGfile = {};
 
 model_path  = fullfile(DataPath,'subject1.osim');
 Out_path    = fullfile(ExamplePath,'Results');                    % folder to store results
 
 % Get start and end time of the different files (you can also specify this
 % manually)
-time = zeros(size(Misc.IKfile,1),2);
-for i = 1:size(Misc.IKfile,1)
-    IK = importdata(Misc.IKfile{i});
-    time(i,:) = [IK.data(1,1) IK.data(end,1)];
-end
+time=[0.516 1.95]; % Right stance phase (+50ms beginning and end of time interval, more details see manual and publication)
 
 %% Settings
-Misc.DofNames_Input={'ankle_angle_l'};%,'hip_flexion_l','hip_adduction_l','hip_rotation_l'};    % select the DOFs you want to include in the optimization
+Misc.DofNames_Input={'ankle_angle_r','knee_angle_r','hip_flexion_r','hip_adduction_r','hip_rotation_r'};    % select the DOFs you want to include in the optimization
 
 % Set the tendon stifness of all muscles
 Misc.ATendon = [];      % default way to set tendon stiffenss (default values is 35)
@@ -52,13 +48,13 @@ Misc.EMGheaders = {'time','med_gas_l', 'soleus_l', 'vas_lat_l'};
 Misc.EMGSelection = {'med_gas_l', 'soleus_l'};
 
 % Plotter Bool: Boolean to select if you want to plot lots of output information of intermediate steps in the script
-Misc.PlotBool = 1;
+Misc.PlotBool = 0;
 % MRS Bool: Select if you want to run the generic muscle redundancy solver
 Misc.MRSBool = 1;
 % Validation Bool: Select if you want to run the muscle redundancy solver with the optimized parameters
-Misc.ValidationBool = 0; 	% TO DO: we should report results of EMG driven simulation as well
+Misc.ValidationBool = 0;
 % set the mesh frequency
-Misc.Mesh_Frequency = 200;
+Misc.Mesh_Frequency = 100;
 % name output
 Misc.OutName = 'Walking_';
 

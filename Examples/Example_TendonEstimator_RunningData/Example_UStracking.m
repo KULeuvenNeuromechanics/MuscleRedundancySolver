@@ -20,7 +20,6 @@ addpath(genpath(MainPath));
 Misc.IKfile = {fullfile(DataPath,'PSF_IK_stride2.mot');fullfile(DataPath,'+8_IK_stride2.mot');fullfile(DataPath,'+15_IK_stride2.mot')};
 Misc.IDfile = {fullfile(DataPath,'PSF_ID_stride2.mot');fullfile(DataPath,'+8_ID_stride2.mot');fullfile(DataPath,'+15_ID_stride2.mot')};
 Misc.USfile = {fullfile(DataPath,'PSF_US_stride2.mot');fullfile(DataPath,'+8_US_stride2.mot');fullfile(DataPath,'+15_US_stride2.mot')};
-Misc.EMGfile = [];
 
 model_path  = fullfile(DataPath,'model.osim');
 Out_path    = fullfile(ExamplePath,'Results');                    % folder to store results
@@ -40,10 +39,10 @@ Misc.DofNames_Input={'ankle_angle_l','knee_angle_l'};%,'hip_flexion_l','hip_addu
 Misc.ATendon = [];      % default way to set tendon stiffenss (default values is 35)
 
 % Settings for estimating tendon stiffness
-Misc.Estimate_TendonStifness = {'med_gas_l';'lat_gas_l';'soleus_l'}; % Names of muscles of which tendon stifness is estimated
+Misc.Estimate_TendonStiffness = {'med_gas_l';'lat_gas_l';'soleus_l'}; % Names of muscles of which tendon stifness is estimated
 Misc.lb_kT_scaling = 0.1; % Lower bound for scaling generic tendon stiffness
 Misc.ub_kT_scaling = 1.2; % Upper bound for scaling generic tendon stiffness
-Misc.Coupled_TendonStifness = {'med_gas_l';'lat_gas_l';'soleus_l'}; %'med_gas_l';'lat_gas_l';'soleus_l' Couple muscles that should have equal tendon stifness
+Misc.Coupled_TendonStiffness = {'med_gas_l';'lat_gas_l';'soleus_l'}; %'med_gas_l';'lat_gas_l';'soleus_l' Couple muscles that should have equal tendon stifness
 Misc.Coupled_fiber_length = {'med_gas_l';'lat_gas_l'};
 Misc.Coupled_slack_length = {}; %{'med_gas_l';'lat_gas_l'};
 

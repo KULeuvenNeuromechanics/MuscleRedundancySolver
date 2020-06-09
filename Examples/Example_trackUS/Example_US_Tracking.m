@@ -40,10 +40,10 @@ Misc.DofNames_Input={'ankle_angle_l','knee_angle_l','hip_flexion_l','hip_adducti
 Misc.ATendon = [];      % default way to set tendon stiffenss (default values is 35)
 
 % Settings for estimating tendon stiffness
-Misc.Estimate_TendonStifness = {'med_gas_l';'lat_gas_l';'soleus_l'}; % Names of muscles of which tendon stifness is estimated
+Misc.Estimate_TendonStiffness = {'med_gas_l';'lat_gas_l';'soleus_l'}; % Names of muscles of which tendon stifness is estimated
 Misc.lb_kT_scaling = 0.2; % Lower bound for scaling generic tendon stiffness
 Misc.ub_kT_scaling = 1.2; % Upper bound for scaling generic tendon stiffness
-Misc.Coupled_TendonStifness = {'med_gas_l';'lat_gas_l';'soleus_l'}; % Couple muscles that should have equal tendon stifness
+Misc.Coupled_TendonStiffness = {'med_gas_l';'lat_gas_l';'soleus_l'}; % Couple muscles that should have equal tendon stifness
 Misc.Coupled_fiber_length = {'med_gas_l';'lat_gas_l'};
 Misc.Coupled_slack_length = {}; %{'med_gas_l';'lat_gas_l'};
 
@@ -77,16 +77,15 @@ Misc.EMGbounds  = [-0.3 0.3];  	% upper and lower bound for deviation simulated 
 Misc.MaxScaleEMG = 10; 			% maximal value to scale EMG
 
 % Set weights
-Misc.wEMG 		= 0.001;			% weight on tracking EMG
-Misc.wlM    = 10;               % weight on tracking fiber length
+Misc.wEMG 	= 0.001;		% weight on tracking EMG
+Misc.wlM    = 1;          	% weight on tracking fiber length
 
 % Plotter Bool: Boolean to select if you want to plot lots of output information of intermediate steps in the script
 Misc.PlotBool = 1;
 % MRS Bool: Select if you want to run the generic muscle redundancy solver
-Misc.MRSBool = 1;
+Misc.MRSBool = 0;
 % Validation Bool: Select if you want to run the muscle redundancy solver with the optimized parameters
-Misc.ValidationBool = 1; 	% TO DO: we should report results of EMG driven simulation as well
-
+Misc.ValidationBool = 1;
 % change mesh frequency
 Misc.Mesh_Frequency = 100;
 %% Run muscle tendon estimator:

@@ -30,7 +30,7 @@ Goal: estimate muscle-tendon parameters of a musculoskeletal model based on:
 
 - Inverse kinematics and dynamics data
 - EMG data
-- Ultrasound data]
+- Ultrasound data
 
 ---
 ## Overview Program
@@ -187,16 +187,61 @@ PlotStates(Results,DatStore,Misc);
 
 ---
 ## Example figure EMG tracking
+.center[<img src="figs/OutFig_EMG.png" alt="drawing" width="800"/>]
 
 ---
-## Example figure parameter estimation
+## Example figure parameters
+.center[<img src="figs/OutFig_Param.png" alt="drawing" width="600"/>]
 
 ---
 ## Example figure fiber length
+.center[<img src="figs/OutFig_FiberLength.png" alt="drawing" width="800"/>]
+---
+# Comparison versions
+
+---
+# Computation time
+
+<!--
+using automatic table generator: https://www.tablesgenerator.com/markdown_tables
+-->
+
+|     version               |     v2   implicit     |     v2   explicit     |     v3          |     |
+|-------------------------  |---------------------- |---------------------- |---------------  |---  |
+|     Time IPOPT            |     208.69s           |     41.65s            |     17.83s      |     |
+|     iterations            |     213               |     53                |     38          |     |
+|     nnz constr. Jac.      |     293798            |     293798            |     105248      |     |
+|     nnz Hessian           |     55664             |     73982             |     74546       |     |
 
 ---
 ## Example figure states
+.center[<img src="figs/OutFig_States.png" alt="drawing" width="800"/>]
 
+---
+## Comparison versions - excitations
+.center[<img src="figs/ComVersions_Exc.png" alt="drawing" width="800"/>]
+
+---
+## Comparison versions - activations
+.center[<img src="figs/ComVersions_Act.png" alt="drawing" width="800"/>]
+
+---
+## Comparison versions - fiber length
+.center[<img src="figs/ComVersions_lM.png" alt="drawing" width="800"/>]
+
+---
+## Comparison versions - Reserve actuators
+.center[<img src="figs/ComVersions_ResAct.png" alt="drawing" width="800"/>]
+
+---
+# Step function activation dynamics
+.center[<img src="figs/StepFunction.png" alt="drawing" width="400"/>]
+
+
+
+<!--
+<img src="https://drive.google.com/uc?id=10m9Nx5H9j5S5TYLxbwsn_-Sk5fLHEnlJ" alt="drawing" width="200"/>
+-->
 
     </textarea>
     <script src="https://remarkjs.com/downloads/remark-latest.min.js"> </script>

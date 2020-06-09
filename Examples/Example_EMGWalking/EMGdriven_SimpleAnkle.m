@@ -10,7 +10,7 @@ Misc.IKfile  = {fullfile(pwd,'IK_gait.mot')};
 Misc.IDfile  = {fullfile(pwd,'ID_gait.sto')};
 Misc.EMGfile = {fullfile(pwd,'EMG_gait.mot')};
 model_path   = {fullfile(pwd,'ScaledModel.osim')};
-Out_path     = fullfile(pwd,'Results_SimpleAnle');                    % folder to store results
+Out_path     = fullfile(pwd,'Results_SimpeAnkle');                    % folder to store results
 time = [1.2 2.3]; 
 
 %% Settings
@@ -28,10 +28,10 @@ Misc.MuscleNames_Input = {'med_gas_l','lat_gas_l','soleus_l','tib_ant_l'}; % sel
 Misc.ATendon = [];      % default way to set tendon stiffenss (default values is 35)
 
 % Settings for estimating tendon stiffness
-Misc.Estimate_TendonStifness = {'med_gas_l';'lat_gas_l';'soleus_l'}; % Names of muscles of which tendon stifness is estimated
+Misc.Estimate_TendonStiffness = {'med_gas_l';'lat_gas_l';'soleus_l'}; % Names of muscles of which tendon stifness is estimated
 Misc.lb_kT_scaling = 0.1; % Lower bound for scaling generic tendon stiffness
 Misc.ub_kT_scaling = 2.2; % Upper bound for scaling generic tendon stiffness
-Misc.Coupled_TendonStifness = {'med_gas_l';'lat_gas_l';'soleus_l'}; % Couple muscles that should have equal tendon stifness
+Misc.Coupled_TendonStiffness = {'med_gas_l';'lat_gas_l';'soleus_l'}; % Couple muscles that should have equal tendon stifness
 
 % Settings for estimating optimal fiber length
 Misc.Estimate_OptFL = {'med_gas_l';'soleus_l';'lat_gas_l';'tib_ant_l'}; % Names of muscles of which optimal fiber length is estimated - slack length is estimated for these muscles as well

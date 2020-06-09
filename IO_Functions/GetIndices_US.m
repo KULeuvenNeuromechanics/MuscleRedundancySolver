@@ -4,8 +4,8 @@ function [DatStore] = GetIndices_US(DatStore,Misc,i)
 
 if Misc.UStracking == 1 || Misc.EMGconstr == 1 
     DatStore(i).free_lMo = zeros(length(Misc.Estimate_OptFL),1);
-    DatStore(i).free_kT = zeros(length(Misc.Estimate_TendonStifness),1);
-    DatStore(i).coupled_kT = zeros(size(Misc.Coupled_TendonStifness))';
+    DatStore(i).free_kT = zeros(length(Misc.Estimate_TendonStiffness),1);
+    DatStore(i).coupled_kT = zeros(size(Misc.Coupled_TendonStiffness))';
     DatStore(i).coupled_lMo = zeros(size(Misc.Coupled_fiber_length))';
     DatStore(i).coupled_lTs = zeros(size(Misc.Coupled_slack_length))';
     
@@ -19,11 +19,11 @@ if Misc.UStracking == 1 || Misc.EMGconstr == 1
         end
     end    
     for j = 1:length(DatStore(i).free_kT)
-        IndsSel = find(strcmp(DatStore(i).MuscleNames,Misc.Estimate_TendonStifness{j}));
+        IndsSel = find(strcmp(DatStore(i).MuscleNames,Misc.Estimate_TendonStiffness{j}));
         if ~isempty(IndsSel)
             DatStore(i).free_kT(j) = IndsSel;
         else
-            warning(['Cannot optimize tendon stiffness of muscle ' Misc.Estimate_TendonStifness{j},...
+            warning(['Cannot optimize tendon stiffness of muscle ' Misc.Estimate_TendonStiffness{j},...
                 ' because this muscle is not included in the model']);
         end
     end    
@@ -35,11 +35,11 @@ if Misc.UStracking == 1 || Misc.EMGconstr == 1
     end
     for k = 1:size((DatStore(i).coupled_kT),1)
         for j = 1:size((DatStore(i).coupled_kT),2)
-            Inds = find(strcmp(DatStore(i).MuscleNames,Misc.Coupled_TendonStifness{j,k}));
+            Inds = find(strcmp(DatStore(i).MuscleNames,Misc.Coupled_TendonStiffness{j,k}));
             if ~isempty(Inds)
                 DatStore(i).coupled_kT(k,j) = Inds;
             else
-                warning(['Could not couple tendon stiffness of muscle ' Misc.Coupled_TendonStifness{j,k},...
+                warning(['Could not couple tendon stiffness of muscle ' Misc.Coupled_TendonStiffness{j,k},...
                 'because this muscle in not included in the model']);
             end
         end
@@ -51,7 +51,7 @@ if Misc.UStracking == 1 || Misc.EMGconstr == 1
             if ~isempty(Inds)
                 DatStore(i).coupled_lMo(k,j) = Inds;
             else
-                warning(['Could not couple fiber length of muscle ' Misc.Coupled_TendonStifness{j,k},...
+                warning(['Could not couple fiber length of muscle ' Misc.Coupled_TendonStiffness{j,k},...
                 'because this muscle in not included in the model']);
             end
         end
@@ -63,7 +63,7 @@ if Misc.UStracking == 1 || Misc.EMGconstr == 1
             if ~isempty(Inds)
                 DatStore(i).coupled_lTs(k,j) = Inds;
             else
-                warning(['Could not couple tendon slack length of muscle ' Misc.Coupled_TendonStifness{j,k},...
+                warning(['Could not couple tendon slack length of muscle ' Misc.Coupled_TendonStiffness{j,k},...
                 'because this muscle in not included in the model']);
             end
         end

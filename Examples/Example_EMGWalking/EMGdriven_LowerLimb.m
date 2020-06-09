@@ -39,10 +39,10 @@ Misc.EMG_MuscleCopies = {};       %  use gastrocnemius medialis EMG to constrain
 Misc.MuscleNames_Input = Misc.EMGSelection; % select muscles
 
 % Settings for estimating tendon stiffness
-Misc.Estimate_TendonStifness = Misc.EMGSelection; % Names of muscles of which tendon stifness is estimated
+Misc.Estimate_TendonStiffness = Misc.EMGSelection; % Names of muscles of which tendon stifness is estimated
 Misc.lb_kT_scaling = 0.1; % Lower bound for scaling generic tendon stiffness
 Misc.ub_kT_scaling = 2.2; % Upper bound for scaling generic tendon stiffness
-Misc.Coupled_TendonStifness = Misc.EMGSelection; % Couple muscles that should have equal tendon stifness
+Misc.Coupled_TendonStiffness = Misc.EMGSelection; % Couple muscles that should have equal tendon stifness
 
 % Settings for estimating optimal fiber length
 Misc.Estimate_OptFL = Misc.EMGSelection; % Names of muscles of which optimal fiber length is estimated - slack length is estimated for these muscles as well

@@ -40,7 +40,7 @@ for trial = 1:nPhases
             plot(tSim,lMSim,'Color',Cs(2,:),'LineWidth',lw);  hold on;
        end 
        % generic MRS results
-       if Misc.UStracking
+       if Misc.UStracking && Misc.MRSBool
             lMSim = Results.lM(trial).genericMRS(Minds(j),:);
             tSim = Results.Time(trial).genericMRS;
             plot(tSim,lMSim,'Color',Cs(3,:),'LineWidth',lw);hold on;
