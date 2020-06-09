@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+     .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+# Presentation muscle tendon estimator
+
+
+---
+## Muscle tendon estimator
+
+Goal: estimate muscle-tendon parameters of a musculoskeletal model based on:
+
+- Inverse kinematics and dynamics data
+- EMG data
+- Ultrasound data]
+
+---
+## Overview Program
+
+The program consists of the following steps
+
+1. Solve muscle redundancy problem without EMG or ultrasound data (i.e. provide initial guess)
+2. Optimal parameter estimation
+3. Validate parameter estimation using muscle redundancy solver with optimized parameters
+
+
+---
+## Step 1: muscle redundancy problem
+
+Same as in DeGroote 2016. Only changes are:
+
+1. Euler integration scheme
+
+2. Additional optimization variable (\\(lm_{proj}\\)) to prevent square root of negative number in muscle dynamics.
+	- \\(lT = lMT - lm_{proj}\\)
+	- \\(lm_{proj}^2 = l_m - w^2\\)
+ 
+3. Objective function: we included activations and excitations in the objective function
+
+  - \\((J = 0.5w_1 \sum (e_i^2 +a_i^2) + w_2 \sum (aT^2)+ w_3 \sum Vm )\\)
+
+
+---
+## Step 1: muscle redundancy solver - code
+
+```matlab
+  Misc.IKfile = {'Walking_IK.mot'};
+  Misc.IDfile = {'Walking_ID.mot'};
+  model_path  = 'subject1.osim';
+  Out_path    = fullfile(pwd,'Results');                    % folder to store results
+  time        = [0.516 1.95]; % Right stance phase
+
+  Misc.DofNames_Input={'ankle_angle_r','knee_angle_r','hip_flexion_r','hip_adduction_r','hip_rotation_r'};
+
+  Misc.PlotBool = 0;
+  Misc.MRSBool = 1;
+  Misc.ValidationBool = 0;
+
+  Misc.Mesh_Frequency = 300;
+
+  Misc.OutName = 'Walking_';
+
+  %% Run muscle tendon estimator:
+  [Results,DatStore] = MuscleTendonEstimator(model_path,time,Out_path,Misc);
+
+```
+
+---
+## Step 2: Optimal parameter estimation
+
+Same as in Falisse 2016 (EMG) en Delabastita (Ultrasound):
+
+Incorperating data in OCP:
+1. Electromyography data (EMG)
+    - Part of objective function: \\(J = ... + w_4 (s*EMG - e)^2\\)
+    - Imposing constraints: \\( lb < (s*EMG - e) < ub \\)
+    - with s an optimization variable that scales EMG to excitations
+2. Ultrasound data
+    - Part of objective function: \\(J = ... + w_5 (\hat{l_m} - l_m)^2\\)
+
+Parameter estimation:
+1. Optimal fiber length and optimal slack length
+2. "Tendon stiffness"
+
+---
+## Step 2: Optimal parameter estimation - Code
+
+Select parameters to optimize
+
+```matlab
+  % Settings for estimating tendon stiffness
+  Misc.Estimate_TendonStifness = {'med_gas_l';'lat_gas_l';'soleus_l'}; % Names of muscles of which tendon stifness is estimated
+  Misc.lb_kT_scaling = 0.1; % Lower bound 
+  Misc.ub_kT_scaling = 2.2; % Upper bound 
+  Misc.Coupled_TendonStifness = {'med_gas_l';'lat_gas_l';'soleus_l'}; % Couple muscles that should have equal tendon stifness
+
+  % Settings for estimating optimal fiber length
+  Misc.Estimate_OptFL = {'med_gas_l';'soleus_l';'lat_gas_l';'tib_ant_l'}; % Names of muscles of which opt fiber length is estimated
+  Misc.lb_lMo_scaling = 0.1; % Lower bound
+  Misc.ub_lMo_scaling = 2.2; % Upper bound
+  Misc.lb_lTs_scaling = 0.9; % Lower bound 
+  Misc.ub_lTs_scaling = 1.1; % Upper bound
+  Misc.Coupled_fiber_length = {'med_gas_l';'lat_gas_l'}; % Couple muscles that should have equal optimal fiber length
+  Misc.Coupled_slack_length = {'med_gas_l';'lat_gas_l'}; % Couple muscles that should have equal tendon slack length
+```
+---
+## Step 2: Optimal parameter estimation - Code
+
+Select EMG data and settings
+
+```matlab
+  % select EMG file
+  Misc.EMGfile = {fullfile(pwd,'EMG_gait.mot')};
+
+  % select EMG signals from file
+  Misc.EMGSelection = {'tib_ant_l','lat_gas_l','med_gas_l','soleus_l'};
+
+  % information for the EMG constraint
+  Misc.EMGconstr  = 1;        % Boolean to select EMG info
+  Misc.EMGbounds  = [-0.01 0.01];  % upper and lower bound 
+  Misc.BoundsScaleEMG = [0.01 3];  % maximal value to scale EMG
+
+  % Set weights
+  Misc.wEMG   = 0.1;   % weight on tracking EMG
+```
+---
+## Step 2: Optimal parameter estimation - Code
+
+Select US data and settings
+
+```matlab
+  % select US file
+  Misc.EMGfile = {'trial_1_US.mot'; 'trial_2_US.mot'); 'trial_4_US.mot'};
+
+  % Select muscle for which you want the fiberlengths to track the US data
+  Misc.UStracking  = 1;            % Boolean to select US tracking option
+  Misc.USSelection = {'med_gas_l'}; % selected muscles
+
+  % Set weights
+  Misc.wlM    = 10;               % weight on tracking fiber length
+```
+
+---
+## Step 3: validation 
+
+In the validation step, we solve the muscle redundancy problem again, but now with the optimized parameters.
+
+```matlab
+  % Validation Bool: Select if you want to run the muscle redundancy solver with the optimized parameters
+  Misc.ValidationBool = 0;
+```
+---
+## Addition tools
+
+We implemented some matlab functions that make it easier to visualise the simulatoin results. You can selected these functions using the optional input argument:
+
+```matlab
+% Plotter Bool: Boolean to select if you want to plot lots of output information of intermediate steps in the script
+Misc.PlotBool = 0;
+```
+
+Or by using the output of the redundancy solver
+```matlab
+PlotEMGTracking(Results,DatStore);
+PlotEstimatedParameters(Results,DatStore,Misc);
+PlotFiberLength(Results,DatStore);
+PlotStates(Results,DatStore,Misc);
+```
+
+---
+## Example figure EMG tracking
+
+---
+## Example figure parameter estimation
+
+---
+## Example figure fiber length
+
+---
+## Example figure states
+
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js"> </script>
+	<script src="https://gnab.github.io/remark/downloads/remark-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css">
+    <script type="text/javascript"> 
+	
+      var options = {};
+      var renderMath = function() {
+        renderMathInElement(document.body);
+        // or if you want to use $...$ for math,
+        //renderMathInElement(document.body, {delimiters: [ // mind the order of delimiters(!?)
+        //     {left: "$$", right: "$$", display: true},
+        //     {left: "$", right: "$", display: false},
+        //     {left: "\\[", right: "\\]", display: true},
+        //     {left: "\\(", right: "\\)", display: false},
+        // ]});
+      }	  
+      var slideshow = remark.create(options, renderMath);
+	</script>	
+  </body>
+</html>
