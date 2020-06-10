@@ -58,26 +58,10 @@ Misc.ub_lTs_scaling = 1.5; % Upper bound for scaling tendon slack length
 Misc.UStracking  = 1;            % Boolean to select US tracking option
 Misc.USSelection = {'med_gas_l'};
 
-% Provide the correct headers int case you EMG file has not the same
-% headers as the muscle names in OpenSim (leave empty when you don't want
-% to use this)
-Misc.EMGheaders = {'time','med_gas_l', 'soleus_l', 'vas_lat_l'};
-
-% channels you want to use for EMG constraints
-Misc.EMGSelection = {'med_gas_l', 'soleus_l'};
-
-% Use this structure if you want to use one EMG channel for multiple
-% muscles in the opensim model. The first name of each row is the reference
-% and should always be in the header of the EMGfile or in the  EMGheaders.
-Misc.EMG_MuscleCopies = {'med_gas_l','lat_gas_l'};       %  use gastrocnemius medialis EMG to constrain activity of the lateral gastrocn
-
 % information for the EMG constraint
 Misc.EMGconstr  = 0;     		% Boolean to select EMG constrained option
-Misc.EMGbounds  = [-0.3 0.3];  	% upper and lower bound for deviation simulated and measured muscle activity
-Misc.MaxScaleEMG = 10; 			% maximal value to scale EMG
 
 % Set weights
-Misc.wEMG 	= 0.001;		% weight on tracking EMG
 Misc.wlM    = 1;          	% weight on tracking fiber length
 
 % Plotter Bool: Boolean to select if you want to plot lots of output information of intermediate steps in the script

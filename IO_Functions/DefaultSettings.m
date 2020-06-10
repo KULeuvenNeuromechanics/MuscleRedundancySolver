@@ -62,12 +62,12 @@ if ~isfield(Misc,'EMGSelection')
     Misc.EMGSelection = [];
 end
 
-%% Info related to parameter optimization
+%% Info related to parameter optimizatiEMGbounds on
 if ~isfield(Misc,'Estimate_OptFL')
     Misc.Estimate_OptFL =[];
 end
-if ~isfield(Misc,'Estimate_TendonStifness')
-    Misc.Estimate_TendonStifness =[];
+if ~isfield(Misc,'Estimate_TendonStiffness')
+    Misc.Estimate_TendonStiffness =[];
 end
 if ~isfield(Misc,'Coupled_fiber_length')
     Misc.Coupled_fiber_length =[];
@@ -75,8 +75,33 @@ end
 if ~isfield(Misc,'Coupled_slack_length')
     Misc.Coupled_slack_length =[];
 end
-if ~isfield(Misc,'Coupled_TendonStifness')
-    Misc.Coupled_TendonStifness =[];
+if ~isfield(Misc,'Coupled_TendonStiffness')
+    Misc.Coupled_TendonStiffness =[];
+end
+
+if ~isfield(Misc,'Estimate_TendonStiffness')
+    Misc.Estimate_TendonStiffness = {};
+end
+
+if ~isfield(Misc,'lb_kT_scaling')
+    Misc.lb_kT_scaling = 0.2;
+end
+
+if ~isfield(Misc,'ub_kT_scaling')
+    Misc.lb_kT_scaling = 1.2;
+end
+
+if ~isfield(Misc,'Misc.lb_lMo_scaling')
+    Misc.lb_lMo_scaling = 0.7; % Lower bound for scaling optimal fiber length
+end
+if ~isfield(Misc,'Misc.ub_lMo_scaling')
+    Misc.ub_lMo_scaling = 1.5; % Upper bound for scaling optimal fiber length
+end
+if ~isfield(Misc,'lb_lTs_scaling')
+    Misc.lb_lTs_scaling = 0.7; % Lower bound for scaling tendon slack length
+end
+if ~isfield(Misc,'ub_lTs_scaling')
+    Misc.ub_lTs_scaling = 1.5; % Upper bound for scaling tendon slack length
 end
 
 %% ResultsName
@@ -105,10 +130,28 @@ end
 if ~isfield(Misc,'Topt')|| isempty(Misc.Topt)
     Misc.Topt = 150;
 end
+if ~isfield(Misc,'USSelection')
+    Misc.USSelection = {};
+end
 
 %% ultrasound
+if ~isfield(Misc,'UStracking')
+    Misc.UStracking = 0;
+end
 if ~isfield(Misc,'USfile')
     Misc.USfile = [];
 end
+
+%% Plotter
+if ~isfield(Misc,'PlotBool')
+    Misc.PlotBool = 0;
+end
+
+%% Validation
+if ~isfield(Misc,'ValidationBool')
+    Misc.ValidationBool = 1;
+end
+
+
 end
 
