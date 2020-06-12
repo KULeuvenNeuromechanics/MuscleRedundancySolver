@@ -1,28 +1,11 @@
 \BOOKMARK [1][-]{section.1}{Release notes}{}% 1
 \BOOKMARK [2][-]{subsection.1.1}{Release 3.0}{section.1}% 2
 \BOOKMARK [1][-]{section.2}{Overview}{}% 3
-\BOOKMARK [1][-]{section.3}{Installation Instruction}{}% 4
-\BOOKMARK [1][-]{section.4}{Main Function}{}% 5
-\BOOKMARK [2][-]{subsection.4.1}{Using GPOPS}{section.4}% 6
-\BOOKMARK [3][-]{subsubsection.4.1.1}{With explicit activation dynamics formulation \(De Groote et al. \(2016\)\)}{subsection.4.1}% 7
-\BOOKMARK [3][-]{subsubsection.4.1.2}{With implicit activation dynamics formulation \(De Groote et al. \(2009\)\)}{subsection.4.1}% 8
-\BOOKMARK [2][-]{subsection.4.2}{Using CasADi}{section.4}% 9
-\BOOKMARK [3][-]{subsubsection.4.2.1}{With explicit activation dynamics formulation \(De Groote et al. \(2016\)\)}{subsection.4.2}% 10
-\BOOKMARK [3][-]{subsubsection.4.2.2}{With implicit activation dynamics formulation \(De Groote et al. \(2009\)\)}{subsection.4.2}% 11
-\BOOKMARK [2][-]{subsection.4.3}{Input Arguments}{section.4}% 12
-\BOOKMARK [2][-]{subsection.4.4}{Output arguments}{section.4}% 13
-\BOOKMARK [3][-]{subsubsection.4.4.1}{Using GPOPS}{subsection.4.4}% 14
-\BOOKMARK [3][-]{subsubsection.4.4.2}{Using CasADi}{subsection.4.4}% 15
-\BOOKMARK [1][-]{section.5}{GPOPS-II}{}% 16
-\BOOKMARK [2][-]{subsection.5.1}{Setup}{section.5}% 17
-\BOOKMARK [2][-]{subsection.5.2}{Output}{section.5}% 18
-\BOOKMARK [1][-]{section.6}{CasADi}{}% 19
-\BOOKMARK [2][-]{subsection.6.1}{Setup}{section.6}% 20
-\BOOKMARK [2][-]{subsection.6.2}{Output}{section.6}% 21
-\BOOKMARK [1][-]{section.7}{Muscle model}{}% 22
-\BOOKMARK [1][-]{section.8}{Tips and Tricks}{}% 23
-\BOOKMARK [1][-]{section.9}{Examples}{}% 24
-\BOOKMARK [2][-]{subsection.9.1}{Walking example De Groote et al. 2016}{section.9}% 25
-\BOOKMARK [2][-]{subsection.9.2}{Running example De Groote et al. 2016}{section.9}% 26
-\BOOKMARK [2][-]{subsection.9.3}{OpenSim installation example Gait10dof18m}{section.9}% 27
-\BOOKMARK [2][-]{subsection.9.4}{OpenSim installation example Gait23dof54m}{section.9}% 28
+\BOOKMARK [2][-]{subsection.2.1}{Purpose of the software}{section.2}% 4
+\BOOKMARK [2][-]{subsection.2.2}{Structure of the code}{section.2}% 5
+\BOOKMARK [1][-]{section.3}{Installation Instruction}{}% 6
+\BOOKMARK [1][-]{section.4}{Main Function}{}% 7
+\BOOKMARK [2][-]{subsection.4.1}{Input Arguments}{section.4}% 8
+\BOOKMARK [2][-]{subsection.4.2}{Output arguments}{section.4}% 9
+\BOOKMARK [1][-]{section.5}{Muscle model}{}% 10
+\BOOKMARK [1][-]{section.6}{Examples}{}% 11

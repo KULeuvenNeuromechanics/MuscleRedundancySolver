@@ -66,21 +66,39 @@
 	\item The estimation of the muscle-tendon parameters can be done using experimental data from different trials and motions all at once.
 	\item Implementations using GPOPS-II and ADiGator are omitted. CasADi's 'opti stack' functionality is used to model the NLPs.
 	\item Integration of the dynamic equations is done using Euler integration.
+	\item We only provide implementations with muscle fiber length as state. Some changes in the formulation fixed some previous issues with the implementations with length as state compared to force as state.
+	\item We provide plot functions to easily evaluate and compare simulations results.
+
+	 
 \end{itemize}
 
 
 \section{Overview}
 \label{Overview}
 
-The provided MATLAB code can still be used to solve the muscle redundancy problem using direct collocation as described in \textit{De Groote F, Kinney AL, Rao AV, Fregly BJ. Evaluation of direct collocation optimal control problem formulations for solving the muscle redundancy problem. Annals of Biomedical Engineering (2016).} \url{http://link.springer.com/article/10.1007%2Fs10439-016-1591-9}. 
+\subsection{Purpose of the software}
+
+The original intent of the provided MATLAB code was to solve the muscle redundancy problem using direct collocation as described in \textit{De Groote F, Kinney AL, Rao AV, Fregly BJ. Evaluation of direct collocation optimal control problem formulations for solving the muscle redundancy problem. Annals of Biomedical Engineering (2016).} \url{http://link.springer.com/article/10.1007%2Fs10439-016-1591-9}. 
 \\
 
-From v3.0, there are possibilities to estimate parameters of the modelled muscle-tendon units by using collected EMG and ultrasound data. Optimal fiber length, tendon slack length and tendon stiffness can be made variables of the muscle redundancy problem. Experimentally measured fiber-lengths can be tracked (US-tracking), the tracking error is a part of the objective function. Collected EMG can either be tracked (EMG-tracking) or imposed exaclty (EMG-driven). The user can combine different trials of the same movement or from different movements to make estimation more reliable. We reckon that for solving the muscle redundancy problem OpenSim Moco might be a more user-friendly and straightforward alternative. However, our software allows the combination of different trials to estimate muscle-tendon parameters. Another difference is in that we use automatic differentiation, while this is not (yet) enabled in Moco. This software is still intended to solve inverse problems, for predictive simulations we refer to Moco our 'Antoine'. \\
+From v3.0, there are possibilities to, concurrently with solvint the muscle redundancy problem, estimate parameters of the modelled muscle-tendon units by using collected EMG and ultrasound data. Optimal fiber length, tendon slack length and tendon stiffness can be set as free variables within the muscle redundancy problem. Experimentally measured fiber-lengths can be tracked (US-tracking), the tracking error is a part of the objective function. Collected EMG can either be tracked (EMG-tracking) or imposed exactly (EMG-driven). Another important feature is that the user can estimate muscle-tendon parameters over different trials of the same movement or from different movements. This allows to make estimation more reliable. We reckon that for solving the muscle redundancy problem OpenSim Moco might be a more user-friendly and straightforward alternative. However, our software allows the combination of different trials to estimate muscle-tendon parameters. Another difference is in that we use automatic differentiation, while this is not (yet) enabled in Moco. This software is still intended to solve inverse problems, for predictive simulations we refer to Moco or 'Antoine'. \\
 
+From v2.1, CasADi can be used as an alternative to GPOPS-II and ADiGator. CasADi is an open-source tool for nonlinear optimization and algorithmic differentiation (\url{https://web.casadi.org/}). Results using CasADi and GPOPS-II are very similar (differences can be attributed to the different direct collocation formulations and scaling). We used CasADi's Opti stack, which is a collection of CasADi helper classes that provides a close correspondence between mathematical NLP notation and computer code (\url{https://web.casadi.org/docs/#document-opti}). CasADi is actively maintained and developed, and has an active forum (\url{https://groups.google.com/forum/#!forum/casadi-users}). \\
 
 From v1.1, an implicit formulation of activation dynamics can be used to solve the muscle redundancy problem. Additionally, by using the activation dynamics model proposed by Raasch et al. (1997), we could introduce a nonlinear change of variables to exactly impose activation dynamics in a continuously differentiable form, omitting the need for a smooth approximation such as described in De Groote et al. (2016). A result of this change of variables is that muscle excitations are not directly accessible during the optimization. Therefore, we replaced muscle excitations by muscle activations in the objective function. This implicit formulation is described in \textit{De Groote F, Pipeleers G, Jonkers I, Demeulenaere B, Patten C, Swevers J, De Schutter J. A physiology based inverse dynamic analysis of human gait: potential and perspectives F. Computer Methods in Biomechanics and Biomedical Engineering (2009).} \url{http://www.tandfonline.com/doi/full/10.1080/10255840902788587}. Results from both formulations are very similar (differences can be attributed to the slightly different activation dynamics models and cost functions). However, the formulation with implicit activation dynamics (De Groote et al., (2009)) is computationally faster. This can mainly be explained by the omission of a tanh function in the constraint definition, whose evaluation is computationally expensive when solving the NLP. \\
 
-Any questions? Please contact us: \href{friedl.degroote@kuleuven.be}{friedl.degroote@kuleuven.be}, \href{maarten.afschrift@kuleuven.be}{maarten.afschrift@kuleuven.be}, \href{tom.vanwouwe@kuleuven.be}{tom.vanwouwe@kuleuven.be}, and \href{antoine.falisse@kuleuven.be}{antoine.falisse@kuleuven.be}.
+\subsection{Structure of the code}
+
+The code allows to solve three optimal control problems in the following order: 
+\begin{itemize}
+	\item Generic muscle redundancy problem: Solves the muscle redundancy problem using the provided musculoskeletal model, inverse kinematics and/or inverse dynamics data. 
+	\item Muscle parameter estimation: Solves the muscle redundancy problem where the variable space can be extended with user-specified muscle tendon parameters. Depending on availability the user can provide experimental muscle fiber length data to be tracked by simulated fiber lengths and/or EMG data to be tracked by simulated muscle excitations. The problem can be made EMG-driven as well, where the excitations will match the EMG signal up to a specified tolerance.
+	\item Validation muscle redundancy problem: Solves the muscle redundancy problem using the optimized musculoskeletal model, inverse kinematics and/or inverse dynamics data. The idea of this simulation is to analyse whether the parameters (optimized by the estimation problem) predict musculoskeletal behaviour better than the generic model.
+\end{itemize}
+The user is off course free to select any of the three described problems. 
+
+Any questions? Please contact us:
+\href{maarten.afschrift@kuleuven.be}{maarten.afschrift@kuleuven.be} and \href{tom.vanwouwe@kuleuven.be}{tom.vanwouwe@kuleuven.be} for questions on the parameter optimization algorithm;  \href{friedl.degroote@kuleuven.be}{friedl.degroote@kuleuven.be},  \href{antoine.falisse@kuleuven.be}{antoine.falisse@kuleuven.be}.
 
 
 
@@ -94,12 +112,7 @@ addpath(genpath('C/......./SimTK_optcntrlmuscle'))).
 Several software packages are needed to run the program
 \begin{itemize}
 	\item The OpenSim MATLAB interface is used to generate the inputs to the optimal control problem based on a scaled OpenSim model and the solution of inverse kinematics (providing the solution of inverse dynamics is optional). To this aim, install OpenSim and set up the OpenSim MATLAB interface (OpenSim: \url{https://simtk.org/frs/?group_id=91}, OpenSim API: \url{http://simtk-confluence.stanford.edu:8080/display/OpenSim/Scripting+with+Matlab}).
-	\item Using GPOPS
-	\begin{itemize}
-	\item GPOPS-II is used to solve the optimal control problem using direct collocation (\url{http://www.gpops2.com/}). A one-time 30-day trial license is avaiable for all users who register.
-	\item ADiGator is used for automatic differentiation (\url{https://sourceforge.net/projects/adigator/}).
-	\end{itemize}
-	\item Using CasADi
+	\item CasADi
 	\begin{itemize}
 	\item CasADi is used for nonlinear optimization and algorithmic differentiation (\url{https://web.casadi.org/}).
 	\end{itemize}
@@ -107,39 +120,7 @@ Several software packages are needed to run the program
 
 \section{Main Function}
 
-SolveMuscleRedundancy is the main function of this program and is used to solve the muscle redundancy problem. There are eight variants of this function that differ based on the chosen optimization package (GPOPS or CasADi), the formulation of the contraction dynamics (normalized tendon force or normalized muscle fiber length as a state), and the formulation of the activation dynamics (explicit or implicit).
-
-\subsection{Using GPOPS}
-
-\subsubsection{With explicit activation dynamics formulation (De Groote et al. (2016))}
-
-\begin{itemize}
-\item SolveMuscleRedundancy_FtildeState_GPOPS uses the normalized tendon force as a state
-\item SolveMuscleRedundancy_lMtildeState_GPOPS uses the normalized muscle fiber length as a state
-\end{itemize}
-
-\subsubsection{With implicit activation dynamics formulation (De Groote et al. (2009))}
-
-\begin{itemize}
-\item SolveMuscleRedundancy_FtildeState_actdyn_GPOPS uses the normalized tendon force as a state
-\item SolveMuscleRedundancy_lMtildeState_actdyn_GPOPS uses the normalized muscle fiber length as a state
-\end{itemize}
-
-\subsection{Using CasADi}
-
-\subsubsection{With explicit activation dynamics formulation (De Groote et al. (2016))}
-
-\begin{itemize}
-\item SolveMuscleRedundancy_FtildeState_CasADi uses the normalized tendon force as a state
-\item SolveMuscleRedundancy_lMtildeState_CasADi uses the normalized muscle fiber length as a state
-\end{itemize}
-
-\subsubsection{With implicit activation dynamics formulation (De Groote et al. (2009))}
-
-\begin{itemize}
-\item SolveMuscleRedundancy_FtildeState_actdyn_CasADi uses the normalized tendon force as a state
-\item SolveMuscleRedundancy_lMtildeState_actdyn_CasADi uses the normalized muscle fiber length as a state
-\end{itemize}
+SolveMuscleRedundancy is the main function of this program and is used to solve up to three optimal control problems. 
 
 
 \subsection{Input Arguments}
@@ -148,8 +129,6 @@ SolveMuscleRedundancy is the main function of this program and is used to solve 
 \textbf{Required input arguments for SolveMuscleRedundancy}
 \begin{enumerate}
 	\item \textbf{model_path}: directory and filename of the scaled OpenSim model (.osim file). The code should work with any OpenSim model with valid muscle-tendon parameters for which OpenSim's Inverse Dynamics and Muscle Analysis Tools generate reliable results. Note that only the muscle-tendon parameters and not the muscle model specified in the osim-file are used (for details see Muscle model).
-	\item \textbf{IK_path}: directory and filename of the inverse kinematics solution (.mot file).
-	\item \textbf{ID_path}: directory and filename of the inverse dynamics solution  (.sto file). If left empty, the inverse dynamics solution will be computed from the external loads (see Optional input arguments).
 	\item \textbf{time}: 1 x 2 MATLAB array with the initial and final time of the analysis in seconds. Initial and final states influence the optimal controls over a period of about 50 ms at the beginning and end of the time interval over which the optimal control problem is solved. Since in practice the initial and final states are generally unknown, problems should be solved for a time interval containing five additional data points (considering a 100Hz sampling frequency) at the beginning and end of the motion cycle. Those additional data points should not be considered in further analyses. The user should thus not be surprised to observe unrealistically high muscle activation at the beginning of the motion (more details in companion paper).
 	
 	\item \textbf{Out_path}: directory where you want to store the results from the muscle analysis.
@@ -157,11 +136,45 @@ SolveMuscleRedundancy is the main function of this program and is used to solve 
 	\begin{itemize}
 		\item \textit{DofNames_Input}  is a cell array specifying for which degrees of freedom you want to solve the muscle redundancy problem. Typically the muscle redundancy problem is solved for one leg at a time (there are no muscles spanning both legs).
 		\item \textit{MuscleNames_Input} is a cell array that specifies the muscles to be included when solving the muscle redundancy problem. All muscles that actuate (i.e. have a moment arm with respect to) the degrees of freedom specified in \textit{DofNames_Input} will be selected by default if this array is left empty.
+		\item \textit{IKfile}: array of filenames of the inverse kinematics solution of different motion trials (.mot file).
+		\item \textit{IDfile}: array of filenames of the inverse dynamics solution of different motion trials (.sto file). If left empty, the inverse dynamics solution will be computed from the external loads (see Optional input arguments).
+		\item \textit{EMGfile}: array of filenames containing EMG data of different motion trials (.mot file). 
+		\item \textit{USfile}: array of filenames containing fiberlength data of different motion trials (.mot file). The fiber length data is usually measured using ultra-sound (US).
+		\item \textit{UStracking}: boolean to select whether you want to track provided muscle fiber lengths.
+		\item \textit{EMGconstr}: boolean to select whether you want to track provided EMG signals.
+		\item \textit{MRSbool}: boolean to select whether you want to solve the generic muslce redundancy problem.
+		\item \textit{ValidationBool}: boolean to select whether you want to solve the validation muslce redundancy problem.
 	\end{itemize}
 \end{enumerate}
 
 \textbf{Optional input arguments for SolveMuscleRedundancy}
 \begin{enumerate}
+	\item \textbf{Misc}.\textit{Loads_path}: directory and filename of the external loads (.xml file). The program will use the OpenSim libraries to solve the inverse dynamics problem when the required input argument ID_path is empty and Misc.\textit{Loads_path} points to an external loads file.
+	
+	\item \textbf{Misc}.\textit{Estimate_TendonStiffness}: array with names of muscle from which tendon stiffness will be estimated.
+	\item \textbf{Misc}.\textit{Coupled_TendonStiffness}: array with names of muscle from which tendon stiffness will be coupled. This means that the generic tendon stiffnesses of these muscles will be scaled with same variable.
+	\item \textbf{Misc}.\textit{lb_kT_scaling}: lower bound of the scaling factor that will scale the generic tendon stiffness into the optimized tendon stiffness.
+	\item \textbf{Misc}.\textit{ub_kT_scaling}: lower bound of the scaling factor that will scale the generic tendon stiffness into the optimized tendon stiffness.	
+	
+	\item \textbf{Misc}.\textit{Estimate_OptFL}: array with names of muscle from which optimal fiber length will be estimated.
+	\item \textbf{Misc}.\textit{Coupled_fiber_length}: array with names of muscle from which optimal fiber length will be coupled. This means that the generic fiber lengths of these muscles will be scaled with same variable.
+	\item \textbf{Misc}.\textit{lb_lMo_scaling}: lower bound of the scaling factor that will scale the generic optimal fiber length into the optimized optimal fiber length.
+	\item \textbf{Misc}.\textit{ub_lMo_scaling}: lower bound of the scaling factor that will scale the generic optimal fiber length into the optimized optimal fiber length.		
+
+	\item \textbf{Misc}.\textit{Coupled_slack_length}: For muscles from which the optimal fiber length is optimized, the tendon slack length will be optimized as well. Here you acn define an array with names of muscle from which tendon slack length will be coupled. This means that the generic fiber lengths of these muscles will be scaled with same variable.
+	\item \textbf{Misc}.\textit{lb_lTs_scaling}: lower bound of the scaling factor that will scale the generic tendon slack length into the optimized tendon slack length.
+	\item \textbf{Misc}.\textit{ub_lTs_scaling}: lower bound of the scaling factor that will scale the generic tendon slack length into the optimized tendon slack length.
+	
+	\item \textbf{Misc}.\textit{wlM}: cost function weighting factor for 'tracking fiber' lenghts term.
+
+	\item \textbf{Misc}.\textit{wEMG}: cost function weighting factor for 'tracking EMG' term.
+	
+	\item \textbf{Misc}.\textit{wA}: cost function weighting factor for minimizing effort.
+	
+	\item \textbf{Misc}.\textit{wTres}: cost function weighting factor for minimizing reserve actuator contribution.
+
+	\item \textbf{Misc}.\textit{wVm}: cost function weighting factor for minimizing muscle fiber velocities (term mainly for regularization of the optimization).
+	
 	\item \textbf{Misc}.\textit{Loads_path}: directory and filename of the external loads (.xml file). The program will use the OpenSim libraries to solve the inverse dynamics problem when the required input argument ID_path is empty and Misc.\textit{Loads_path} points to an external loads file.
 	
 	\item \textbf{Misc}.\textit{ID_ResultsPath}: directory where the inverse dynamics results will be saved when the input argument \textit{ID_path} is left empty.
@@ -189,569 +202,34 @@ SolveMuscleRedundancy is the main function of this program and is used to solve 
 \end{enumerate}
 
 \subsection{Output arguments}
-
-\subsubsection{Using GPOPS}
-\begin{enumerate}
-	\item Time: time vector.
-	\item MExcitation: optimal muscle excitation (matrix dimension: number of collocation points x number of muscles).
-	\item MActivation: optimal muscle activation (matrix dimension: number of collocation points x number of muscles).
-	\item RActivation: activation of the reserve actuators (matrix dimension: number of collocation points x number of degrees of freedom).
-	\item TForcetilde: normalized tendon force (matrix dimension: number of collocation points x number of muscles).
-	\item TForce: tendon force (matrix dimension: number of collocation points x number of muscles).
-	\item lMtilde: normalized muscle fiber length (matrix dimension: number of collocation points x number of muscles).
-	\item lM:  muscle fiber length (matrix dimension: number of collocation points x number of muscles)	.
-	\item MuscleNames: cell array that contains the names of the selected muscles (matrix dimension: number of muscles).
-	\item OptInfo: output structure created by GPOPS-II.
-	\item DatStore: data structure with input information for the optimal control problem.
-\end{enumerate}
-
-\subsubsection{Using CasADi}
-CasADi uses piecewise-constant controls in the mesh intervals. We therefore distinguish between collocation points (for the states) and mesh points (for the states and controls) in the output arguments.
+We provide all state and control trajectories for the different trials and optimal control problems in one Results structure. Trajectories for different trials and optimal control problems are divided in substructures. All trajectories are interpolated on the mesh points.
 
 \begin{enumerate}
 	\item Time: time vector
-	\begin{enumerate}
-	\item Time.meshPoints: time at mesh points
-	\item Time.collocationPoints: time at collocation points
-	\end{enumerate}
-	\item MExcitation.meshPoints: muscle excitation (matrix dimension: number of mesh points points x number of muscles).
+	\item MExcitation: muscle excitation 
 	\item MActivation: muscle activation
-	\begin{enumerate}
-	\item MActivation.meshPoints: muscle activation at mesh points (matrix dimension: number of mesh points x number of muscles).
-	\item MActivation.collocationPoints: muscle activation at collocation points (matrix dimension: number of collocation points x number of muscles). 
-	\end{enumerate}
-	\item RActivation.meshPoints: activation of the reserve actuators (matrix dimension: number of mesh points x number of degrees of freedom).
+	\item RActivation.meshPoints: activation of the reserve actuators
 	\item TForcetilde: normalized tendon force 
-	\begin{enumerate}
-	\item TForcetilde.meshPoints: normalized tendon force at mesh points (matrix dimension: number of mesh points x number of muscles).
-	\item TForcetilde.collocationPoints: normalized tendon force at collocation points (matrix dimension: number of collocation points x number of muscles). 
-	\end{enumerate}
 	\item TForce: tendon force 
-	\begin{enumerate}
-	\item TForce.meshPoints: tendon force at mesh points (matrix dimension: number of mesh points x number of muscles).
-	\item TForce.collocationPoints: tendon force at collocation points (matrix dimension: number of collocation points x number of muscles). 
-	\end{enumerate}	
-	\item lMtilde: normalized muscle fiber length 
-	\begin{enumerate}
-	\item lMtilde.meshPoints: normalized muscle fiber length at mesh points (matrix dimension: number of mesh points x number of muscles).
-	\item lMtilde.collocationPoints: normalized muscle fiber length at collocation points (matrix dimension: number of collocation points x number of muscles). 
-	\end{enumerate}	
-	\item lM: muscle fiber length
-	\begin{enumerate}
-	\item lM.meshPoints: muscle fiber length at mesh points (matrix dimension: number of mesh points x number of muscles).
-	\item lM.collocationPoints: muscle fiber length at collocation points (matrix dimension: number of collocation points x number of muscles). 
-	\end{enumerate}	
-	\item MuscleNames: cell array that contains the names of the selected muscles (matrix dimension: number of muscles).
-	\item OptInfo: output structure with settings used in CasADi.
-	\item DatStore: data structure with input information for the optimal control problem.
+	\item Fpe: passive muscle force
+	\item lMTinterp: muscle tendon length
+	\item lMtildeopt: normalized muscle fiber length
+	\item lm: muscle fiber length
+	\item MvM: normalized muscle fiber velocity
+	\item FMltilde: force-length multiplier 
+	\item FMltilde: force-velocity multiplier 
+	\item Param: scaling factors for the different optimized parameters	
+	\item Misc: for reference of the settings of the simulation we add the Misc structure to the results.	
 \end{enumerate}
-
-
-\section{GPOPS-II}
-\subsection{Setup}
-
-The GPOPS-II setup is accessible through the function SolveMuscleRedundancy_$<...>$_GPOPS.m under GPOPS setup. The user is referred to the GPOPS-II user guide for setup options. A higher accuracy can be reached by adjusting, for instance, the number of mesh intervals. This however comes at the expense of the computational time. 100 mesh intervals per second are used by default.
-
-\subsection{Output}
-
-The output variable OptInfo contains all information related to the optimal control problem solution. Convergence to an optimal solution is reached when output.result.nlpinfo is flagged 0 ("EXIT: Optimal solution found" in the command window of MATLAB). The mesh accuracy can be assessed with output.result.maxerrors. Cost functional, control, state (and costate) can be accessed in output.result.solution.phase. \\
-
-To recall, the user should consider extending the time interval by 50-100 ms at the beginning and end of the motion to limit the influence of the unknown initial and final state on the solution. Results from those additional periods should not be considered realistic and will typically result in high muscle activation.
-
-\section{CasADi}
-\subsection{Setup}
-The CasADi setup is accessible through the function SolveMuscleRedundancy_$<...>$_CasADi.m under CasADi setup. The user is referred to the CasADi user guide for setup options.
-
-\subsection{Output}
-The output variable OptInfo contains information related to the optimal control problem settings. As with GPOPS, the user should consider extending the time interval by 50-100 ms at the beginning and end of the motion to limit the influence of the unknown initial and final state on the solution. Results from those additional periods should not be considered realistic and will typically result in high muscle activation.
 
 \section{Muscle model}
 
 The musculotendon properties are fully described in the supplementary materials of the aforementioned publication. Importantly, only the tendon slack length, optimal muscle fiber length, maximal isometric muscle force, optimal pennation angle and maximal muscle fiber contraction velocity are extracted from the referred OpenSim model. Other properties are defined in the code and can be changed if desired. By default, the activation and deactivation time constants are 15 and 60 ms respectively (see tau_act and tau_deact in SolveMuscleRedundancy_$<state>$.m).
 
-\section{Tips and Tricks}
-
-\begin{enumerate}
-	\item We advise users to use the formulations with normalized tendon force as a state. They appear to have improved convergence properties as compared to formulations with normalized muscle fiber length as a state. This might be due to the more linear relationship between muscle activation and tendon force than between muscle activation and muscle length.
-	\item We advise users to use the formulations with implicit activation dynamics as they are in most cases computationally more efficient.
-	\item If you observe spiky output variables (e.g. muscle excitations), try increasing the mesh frequency. This might improve the results although it might also increase the computational time.
-	
-	\end{enumerate}	
 
 \section{Examples}
 \label{Examples}
 
-Four examples are provided in the folder examples.
-\subsection{Walking example De Groote et al. 2016}
-\begin{lstlisting}[frame=none,basicstyle=\tiny]
-clear all;close all;clc
 
-%% Choose optimization framework
-% framework = 'GPOPS';
-framework = 'CasADi';
-
-%% Choose contraction dynamics formulation
-% formulation_contdyn = 'lMtildeState';
-formulation_contdyn = 'FtildeState';
-
-%% Choose activation dynamics formulation
-% formulation_actdyn = 'DeGroote2016';
-formulation_actdyn = 'DeGroote2009';
-
-%% Example
-% Add main folder and subfolder to matlab path (installation)
-filepath=which('Walking_DeGrooteetal2016.m');
-[DirExample_Walking,~,~]=fileparts(filepath); 
-[DirExample,~]=fileparts(DirExample_Walking);
-[MainDir,~]=fileparts(DirExample);
-addpath(genpath(MainDir));
-
-% Needed Input Arguments
-IK_path=fullfile(MainDir,'Examples','Walking_DeGrooteetal2016','WalkingData','Walking_IK.mot');
-ID_path=fullfile(MainDir,'Examples','Walking_DeGrooteetal2016','WalkingData','Walking_ID.sto');
-model_path=fullfile(MainDir,'Examples','Walking_DeGrooteetal2016','WalkingData','subject1.osim');
-time=[0.516 1.95]; % Right stance phase (+50ms beginning and end of time interval, more details see manual and publication)
-Out_path=fullfile(MainDir,'Examples','Walking_DeGrooteetal2016','Results');
-
-Misc.DofNames_Input={'ankle_angle_r','knee_angle_r','hip_flexion_r','hip_rotation_r','hip_adduction_r'};
-Misc.MuscleNames_Input={}; % Selects all muscles for input DOFs when empty
-
-% Optional Input Arguments
-Misc.f_cutoff_ID = 6;     % cutoff frequency filtering ID
-Misc.f_order_ID = 4;      % order frequency filtering ID
-Misc.f_cutoff_lMT = 6;    % cutoff frequency filtering lMT
-Misc.f_order_lMT = 4;     % order frequency filtering lMT
-Misc.f_cutoff_dM= 6;      % cutoff frequency filtering MA
-Misc.f_order_dM = 4;      % order frequency filtering MA
-Misc.f_cutoff_IK= 6;      % cutoff frequency filtering IK
-Misc.f_order_IK = 4;      % order frequency filtering IK
-
-%% Solve the problem
-switch framework
-    case 'GPOPS'
-        switch formulation_actdyn
-            case 'DeGroote2016'     
-                switch formulation_contdyn
-                    case 'lMtildeState'
-                        [Time,MExcitation,MActivation,RActivation,TForcetilde,...
-                            TForce,lMtilde,lM,MuscleNames,OptInfo,DatStore]=...
-                            SolveMuscleRedundancy_lMtildeState_GPOPS(...
-                            model_path,IK_path,ID_path,time,Out_path,Misc);
-                    case 'FtildeState'   
-                        [Time,MExcitation,MActivation,RActivation,TForcetilde,...
-                            TForce,lMtilde,lM,MuscleNames,OptInfo,DatStore]=...
-                            SolveMuscleRedundancy_FtildeState_GPOPS(...
-                            model_path,IK_path,ID_path,time,Out_path,Misc);
-                end
-
-            case 'DeGroote2009' 
-                switch formulation_contdyn
-                    case 'lMtildeState'
-                        [Time_actdyn,MExcitation_actdyn,MActivation_actdyn,...
-                            RActivation_actdyn,TForcetilde_actdyn,TForce_actdyn,...
-                            lMtilde_actdyn,lM_actdyn,MuscleNames_actdyn,...
-                            OptInfo_actdyn,DatStore_actdyn]=...
-                            SolveMuscleRedundancy_lMtildeState_actdyn_GPOPS(...
-                            model_path,IK_path,ID_path,time,Out_path,Misc);
-                    case 'FtildeState'   
-                        [Time_actdyn,MExcitation_actdyn,MActivation_actdyn,...
-                            RActivation_actdyn,TForcetilde_actdyn,TForce_actdyn,...
-                            lMtilde_actdyn,lM_actdyn,MuscleNames_actdyn,...
-                            OptInfo_actdyn,DatStore_actdyn]=...
-                            SolveMuscleRedundancy_FtildeState_actdyn_GPOPS(...
-                            model_path,IK_path,ID_path,time,Out_path,Misc);
-                end
-        end
-    case 'CasADi'
-        switch formulation_actdyn
-            case 'DeGroote2016'      
-                switch formulation_contdyn
-                    case 'lMtildeState'
-                        [Time,MExcitation,MActivation,RActivation,TForcetilde,...
-                            TForce,lMtilde,lM,MuscleNames,OptInfo,DatStore]=...
-                            SolveMuscleRedundancy_lMtildeState_CasADi(...
-                            model_path,IK_path,ID_path,time,Out_path,Misc);
-                    case 'FtildeState'   
-                        [Time,MExcitation,MActivation,RActivation,TForcetilde,...
-                            TForce,lMtilde,lM,MuscleNames,OptInfo,DatStore]=...
-                            SolveMuscleRedundancy_FtildeState_CasADi(...
-                            model_path,IK_path,ID_path,time,Out_path,Misc);
-                end
-
-            case 'DeGroote2009'
-                switch formulation_contdyn
-                    case 'lMtildeState'
-                        [Time_actdyn,MExcitation_actdyn,MActivation_actdyn,...
-                            RActivation_actdyn,TForcetilde_actdyn,TForce_actdyn,...
-                            lMtilde_actdyn,lM_actdyn,MuscleNames_actdyn,...
-                            OptInfo_actdyn,DatStore_actdyn]=...
-                            SolveMuscleRedundancy_lMtildeState_actdyn_CasADi(...
-                            model_path,IK_path,ID_path,time,Out_path,Misc);
-                    case 'FtildeState'   
-                        [Time_actdyn,MExcitation_actdyn,MActivation_actdyn,...
-                            RActivation_actdyn,TForcetilde_actdyn,TForce_actdyn,...
-                            lMtilde_actdyn,lM_actdyn,MuscleNames_actdyn,...
-                            OptInfo_actdyn,DatStore_actdyn]=...
-                            SolveMuscleRedundancy_FtildeState_actdyn_CasADi(...
-                            model_path,IK_path,ID_path,time,Out_path,Misc);
-                end
-        end
-end
-
-\end{lstlisting}
-
-\subsection{Running example De Groote et al. 2016}
-\begin{lstlisting}[frame=none,basicstyle=\tiny]
-clear all;close all;clc
-
-%% Choose optimization framework
-% framework = 'GPOPS';
-framework = 'CasADi';
-
-%% Choose contraction dynamics formulation
-% formulation_contdyn = 'lMtildeState';
-formulation_contdyn = 'FtildeState';
-
-%% Choose activation dynamics formulation
-% formulation_actdyn = 'DeGroote2016';
-formulation_actdyn = 'DeGroote2009';
-
-%% Example
-% Add main folder and subfolder to matlab path (installation)
-filepath=which('Running_DeGrooteetal2016.m');
-[DirExample_Running,~,~]=fileparts(filepath); 
-[DirExample,~]=fileparts(DirExample_Running);
-[MainDir,~]=fileparts(DirExample);
-addpath(genpath(MainDir));
-
-% Needed Input Arguments
-IK_path=fullfile(MainDir,'Examples','Running_DeGrooteetal2016','RunningData','Running_IK.mot');
-ID_path=fullfile(MainDir,'Examples','Running_DeGrooteetal2016','RunningData','Running_ID.sto');
-model_path=fullfile(MainDir,'Examples','Running_DeGrooteetal2016','RunningData','subject1.osim');
-time=[0.05 0.98]; % Right stance phase (+50ms beginning and end of time interval, more details see manual and publication)
-Out_path=fullfile(MainDir,'Examples','Running_DeGrooteetal2016','Results');
-
-Misc.DofNames_Input={'ankle_angle_r','knee_angle_r','hip_flexion_r','hip_adduction_r','hip_rotation_r'};
-Misc.MuscleNames_Input={}; % Selects all muscles for input DOFs when empty
-
-% Optional Input Arguments
-Misc.f_cutoff_ID = 10;    % cutoff frequency filtering ID
-Misc.f_order_ID = 5;      % order frequency filtering ID
-Misc.f_cutoff_lMT = 10;   % cutoff frequency filtering lMT
-Misc.f_order_lMT = 5;     % order frequency filtering lMT
-Misc.f_cutoff_dM= 10;     % cutoff frequency filtering MA
-Misc.f_order_dM = 5;      % order frequency filtering MA
-Misc.f_cutoff_IK= 10;     % cutoff frequency filtering IK
-Misc.f_order_IK = 5;      % order frequency filtering IK
-
-%% Solve the problem
-switch framework
-    case 'GPOPS'
-        switch formulation_actdyn
-            case 'DeGroote2016'     
-                switch formulation_contdyn
-                    case 'lMtildeState'
-                        [Time,MExcitation,MActivation,RActivation,TForcetilde,...
-                            TForce,lMtilde,lM,MuscleNames,OptInfo,DatStore]=...
-                            SolveMuscleRedundancy_lMtildeState_GPOPS(...
-                            model_path,IK_path,ID_path,time,Out_path,Misc);
-                    case 'FtildeState'   
-                        [Time,MExcitation,MActivation,RActivation,TForcetilde,...
-                            TForce,lMtilde,lM,MuscleNames,OptInfo,DatStore]=...
-                            SolveMuscleRedundancy_FtildeState_GPOPS(...
-                            model_path,IK_path,ID_path,time,Out_path,Misc);
-                end
-
-            case 'DeGroote2009' 
-                switch formulation_contdyn
-                    case 'lMtildeState'
-                        [Time_actdyn,MExcitation_actdyn,MActivation_actdyn,...
-                            RActivation_actdyn,TForcetilde_actdyn,TForce_actdyn,...
-                            lMtilde_actdyn,lM_actdyn,MuscleNames_actdyn,...
-                            OptInfo_actdyn,DatStore_actdyn]=...
-                            SolveMuscleRedundancy_lMtildeState_actdyn_GPOPS(...
-                            model_path,IK_path,ID_path,time,Out_path,Misc);
-                    case 'FtildeState'   
-                        [Time_actdyn,MExcitation_actdyn,MActivation_actdyn,...
-                            RActivation_actdyn,TForcetilde_actdyn,TForce_actdyn,...
-                            lMtilde_actdyn,lM_actdyn,MuscleNames_actdyn,...
-                            OptInfo_actdyn,DatStore_actdyn]=...
-                            SolveMuscleRedundancy_FtildeState_actdyn_GPOPS(...
-                            model_path,IK_path,ID_path,time,Out_path,Misc);
-                end
-        end
-    case 'CasADi'
-        switch formulation_actdyn
-            case 'DeGroote2016'      
-                switch formulation_contdyn
-                    case 'lMtildeState'
-                        [Time,MExcitation,MActivation,RActivation,TForcetilde,...
-                            TForce,lMtilde,lM,MuscleNames,OptInfo,DatStore]=...
-                            SolveMuscleRedundancy_lMtildeState_CasADi(...
-                            model_path,IK_path,ID_path,time,Out_path,Misc);
-                    case 'FtildeState'   
-                        [Time,MExcitation,MActivation,RActivation,TForcetilde,...
-                            TForce,lMtilde,lM,MuscleNames,OptInfo,DatStore]=...
-                            SolveMuscleRedundancy_FtildeState_CasADi(...
-                            model_path,IK_path,ID_path,time,Out_path,Misc);
-                end
-
-            case 'DeGroote2009'
-                switch formulation_contdyn
-                    case 'lMtildeState'
-                        [Time_actdyn,MExcitation_actdyn,MActivation_actdyn,...
-                            RActivation_actdyn,TForcetilde_actdyn,TForce_actdyn,...
-                            lMtilde_actdyn,lM_actdyn,MuscleNames_actdyn,...
-                            OptInfo_actdyn,DatStore_actdyn]=...
-                            SolveMuscleRedundancy_lMtildeState_actdyn_CasADi(...
-                            model_path,IK_path,ID_path,time,Out_path,Misc);
-                    case 'FtildeState'   
-                        [Time_actdyn,MExcitation_actdyn,MActivation_actdyn,...
-                            RActivation_actdyn,TForcetilde_actdyn,TForce_actdyn,...
-                            lMtilde_actdyn,lM_actdyn,MuscleNames_actdyn,...
-                            OptInfo_actdyn,DatStore_actdyn]=...
-                            SolveMuscleRedundancy_FtildeState_actdyn_CasADi(...
-                            model_path,IK_path,ID_path,time,Out_path,Misc);
-                end
-        end
-end
-
-\end{lstlisting}
-
-\subsection{OpenSim installation example Gait10dof18m}
-\label{Example Gait10dof18m}
-
-\begin{lstlisting} [frame=none,basicstyle=\tiny]
-clear all;close all;clc
-
-%% Choose optimization framework
-% framework = 'GPOPS';
-framework = 'CasADi';
-
-%% Choose contraction dynamics formulation
-% formulation_contdyn = 'lMtildeState';
-formulation_contdyn = 'FtildeState';
-
-%% Choose activation dynamics formulation
-% formulation_actdyn = 'DeGroote2016';
-formulation_actdyn = 'DeGroote2009';
-
-%% Example
-% Add main folder and subfolder to matlab path (installation)
-filepath=which('Example_Gait10dof18m.m'); 
-[DirExample,~,~]=fileparts(filepath); 
-[DirExample2,~,~]=fileparts(DirExample); 
-[MainDir,~]=fileparts(DirExample2);
-addpath(genpath(MainDir));
-
-% Needed Input Arguments
-Datapath='C:\OpenSim 3.3\Models\Gait10dof18musc\OutputReference';
-IK_path=fullfile(Datapath,'IK','subject01_walk_IK.mot');
-ID_path=[]; % Compute ID from the external loads
-model_path=fullfile(Datapath,'subject01.osim');
-time=[0.7 1.4]; % Part of the right stance phase
-Out_path=fullfile(MainDir,'Examples','OpenSimInstallation_Gait10dof18m','Results');
-
-Misc.DofNames_Input={'ankle_angle_r','knee_angle_r','hip_flexion_r'};
-Misc.Loads_path=fullfile(Datapath,'ExperimentalData','subject01_walk_grf.xml');
-Misc.ID_ResultsPath=fullfile(Datapath,'ID','inversedynamics.sto');
-
-% Optional Input Arguments
-% Here is an example of how to adjust the Achilles tendon stiffness.
-% We first add the input argument MuscleNames_Input with ALL muscles 
-% that actuate the degrees of freedom listed in DofNames_Input.
-Misc.MuscleNames_Input={'hamstrings_r','bifemsh_r','glut_max_r',...
-    'iliopsoas_r','rect_fem_r','vasti_r','gastroc_r','soleus_r',...
-    'tib_ant_r'}; 
-% We then change the compliance of the Achilles tendon by changing the 
-% parameter Atendon of the gastrocnemius and the soleus. The default 
-% value is 35 and a lower value will result in a more compliant tendon.
-Misc.Atendon=[35,35,35,35,35,35,15,15,35];
-
-%% Solve the problem
-switch framework
-    case 'GPOPS'
-        switch formulation_actdyn
-            case 'DeGroote2016'     
-                switch formulation_contdyn
-                    case 'lMtildeState'
-                        [Time,MExcitation,MActivation,RActivation,TForcetilde,...
-                            TForce,lMtilde,lM,MuscleNames,OptInfo,DatStore]=...
-                            SolveMuscleRedundancy_lMtildeState_GPOPS(...
-                            model_path,IK_path,ID_path,time,Out_path,Misc);
-                    case 'FtildeState'   
-                        [Time,MExcitation,MActivation,RActivation,TForcetilde,...
-                            TForce,lMtilde,lM,MuscleNames,OptInfo,DatStore]=...
-                            SolveMuscleRedundancy_FtildeState_GPOPS(...
-                            model_path,IK_path,ID_path,time,Out_path,Misc);
-                end
-
-            case 'DeGroote2009' 
-                switch formulation_contdyn
-                    case 'lMtildeState'
-                        [Time_actdyn,MExcitation_actdyn,MActivation_actdyn,...
-                            RActivation_actdyn,TForcetilde_actdyn,TForce_actdyn,...
-                            lMtilde_actdyn,lM_actdyn,MuscleNames_actdyn,...
-                            OptInfo_actdyn,DatStore_actdyn]=...
-                            SolveMuscleRedundancy_lMtildeState_actdyn_GPOPS(...
-                            model_path,IK_path,ID_path,time,Out_path,Misc);
-                    case 'FtildeState'   
-                        [Time_actdyn,MExcitation_actdyn,MActivation_actdyn,...
-                            RActivation_actdyn,TForcetilde_actdyn,TForce_actdyn,...
-                            lMtilde_actdyn,lM_actdyn,MuscleNames_actdyn,...
-                            OptInfo_actdyn,DatStore_actdyn]=...
-                            SolveMuscleRedundancy_FtildeState_actdyn_GPOPS(...
-                            model_path,IK_path,ID_path,time,Out_path,Misc);
-                end
-        end
-    case 'CasADi'
-        switch formulation_actdyn
-            case 'DeGroote2016'      
-                switch formulation_contdyn
-                    case 'lMtildeState'
-                        [Time,MExcitation,MActivation,RActivation,TForcetilde,...
-                            TForce,lMtilde,lM,MuscleNames,OptInfo,DatStore]=...
-                            SolveMuscleRedundancy_lMtildeState_CasADi(...
-                            model_path,IK_path,ID_path,time,Out_path,Misc);
-                    case 'FtildeState'   
-                        [Time,MExcitation,MActivation,RActivation,TForcetilde,...
-                            TForce,lMtilde,lM,MuscleNames,OptInfo,DatStore]=...
-                            SolveMuscleRedundancy_FtildeState_CasADi(...
-                            model_path,IK_path,ID_path,time,Out_path,Misc);
-                end
-
-            case 'DeGroote2009'
-                switch formulation_contdyn
-                    case 'lMtildeState'
-                        [Time_actdyn,MExcitation_actdyn,MActivation_actdyn,...
-                            RActivation_actdyn,TForcetilde_actdyn,TForce_actdyn,...
-                            lMtilde_actdyn,lM_actdyn,MuscleNames_actdyn,...
-                            OptInfo_actdyn,DatStore_actdyn]=...
-                            SolveMuscleRedundancy_lMtildeState_actdyn_CasADi(...
-                            model_path,IK_path,ID_path,time,Out_path,Misc);
-                    case 'FtildeState'   
-                        [Time_actdyn,MExcitation_actdyn,MActivation_actdyn,...
-                            RActivation_actdyn,TForcetilde_actdyn,TForce_actdyn,...
-                            lMtilde_actdyn,lM_actdyn,MuscleNames_actdyn,...
-                            OptInfo_actdyn,DatStore_actdyn]=...
-                            SolveMuscleRedundancy_FtildeState_actdyn_CasADi(...
-                            model_path,IK_path,ID_path,time,Out_path,Misc);
-                end
-        end
-end
-
-\end{lstlisting}
-
-
-\subsection{OpenSim installation example Gait23dof54m}
-
-\begin{lstlisting}[frame=none,basicstyle=\tiny]
-clear all;close all;clc
-
-%% Choose optimization framework
-% framework = 'GPOPS';
-framework = 'CasADi';
-
-%% Choose contraction dynamics formulation
-% formulation_contdyn = 'lMtildeState';
-formulation_contdyn = 'FtildeState';
-
-%% Choose activation dynamics formulation
-% formulation_actdyn = 'DeGroote2016';
-formulation_actdyn = 'DeGroote2009';
-
-%% Example
-% add main folder and subfolder to matlab path (installation)
-filepath=which('Example_Gait23dof54m.m'); 
-[DirExample,~,~]=fileparts(filepath); 
-[DirExample2,~,~]=fileparts(DirExample); 
-[MainDir,~]=fileparts(DirExample2);
-addpath(genpath(MainDir));
-
-% Needed Input Arguments
-Datapath='C:\OpenSim 3.3\Models\Gait2354_Simbody\OutputReference';
-IK_path=fullfile(Datapath,'subject01_walk1_ik.mot');
-ID_path=fullfile(Datapath,'ResultsInverseDynamics','inverse_dynamics.sto');
-model_path=fullfile(Datapath,'subject01_scaledOnly.osim');
-time=[0.7 1.4]; % Part of the right stance phase
-Out_path=fullfile(MainDir,'Examples','OpenSimInstallation_Gait23dof54m','Results');
-
-Misc.DofNames_Input={'ankle_angle_r','knee_angle_r','hip_flexion_r'};
-Misc.MuscleNames_Input={}; % Selects all muscles for input DOFs when empty
-
-%% Solve the problem
-switch framework
-    case 'GPOPS'
-        switch formulation_actdyn
-            case 'DeGroote2016'     
-                switch formulation_contdyn
-                    case 'lMtildeState'
-                        [Time,MExcitation,MActivation,RActivation,TForcetilde,...
-                            TForce,lMtilde,lM,MuscleNames,OptInfo,DatStore]=...
-                            SolveMuscleRedundancy_lMtildeState_GPOPS(...
-                            model_path,IK_path,ID_path,time,Out_path,Misc);
-                    case 'FtildeState'   
-                        [Time,MExcitation,MActivation,RActivation,TForcetilde,...
-                            TForce,lMtilde,lM,MuscleNames,OptInfo,DatStore]=...
-                            SolveMuscleRedundancy_FtildeState_GPOPS(...
-                            model_path,IK_path,ID_path,time,Out_path,Misc);
-                end
-
-            case 'DeGroote2009' 
-                switch formulation_contdyn
-                    case 'lMtildeState'
-                        [Time_actdyn,MExcitation_actdyn,MActivation_actdyn,...
-                            RActivation_actdyn,TForcetilde_actdyn,TForce_actdyn,...
-                            lMtilde_actdyn,lM_actdyn,MuscleNames_actdyn,...
-                            OptInfo_actdyn,DatStore_actdyn]=...
-                            SolveMuscleRedundancy_lMtildeState_actdyn_GPOPS(...
-                            model_path,IK_path,ID_path,time,Out_path,Misc);
-                    case 'FtildeState'   
-                        [Time_actdyn,MExcitation_actdyn,MActivation_actdyn,...
-                            RActivation_actdyn,TForcetilde_actdyn,TForce_actdyn,...
-                            lMtilde_actdyn,lM_actdyn,MuscleNames_actdyn,...
-                            OptInfo_actdyn,DatStore_actdyn]=...
-                            SolveMuscleRedundancy_FtildeState_actdyn_GPOPS(...
-                            model_path,IK_path,ID_path,time,Out_path,Misc);
-                end
-        end
-    case 'CasADi'
-        switch formulation_actdyn
-            case 'DeGroote2016'      
-                switch formulation_contdyn
-                    case 'lMtildeState'
-                        [Time,MExcitation,MActivation,RActivation,TForcetilde,...
-                            TForce,lMtilde,lM,MuscleNames,OptInfo,DatStore]=...
-                            SolveMuscleRedundancy_lMtildeState_CasADi(...
-                            model_path,IK_path,ID_path,time,Out_path,Misc);
-                    case 'FtildeState'   
-                        [Time,MExcitation,MActivation,RActivation,TForcetilde,...
-                            TForce,lMtilde,lM,MuscleNames,OptInfo,DatStore]=...
-                            SolveMuscleRedundancy_FtildeState_CasADi(...
-                            model_path,IK_path,ID_path,time,Out_path,Misc);
-                end
-
-            case 'DeGroote2009'
-                switch formulation_contdyn
-                    case 'lMtildeState'
-                        [Time_actdyn,MExcitation_actdyn,MActivation_actdyn,...
-                            RActivation_actdyn,TForcetilde_actdyn,TForce_actdyn,...
-                            lMtilde_actdyn,lM_actdyn,MuscleNames_actdyn,...
-                            OptInfo_actdyn,DatStore_actdyn]=...
-                            SolveMuscleRedundancy_lMtildeState_actdyn_CasADi(...
-                            model_path,IK_path,ID_path,time,Out_path,Misc);
-                    case 'FtildeState'   
-                        [Time_actdyn,MExcitation_actdyn,MActivation_actdyn,...
-                            RActivation_actdyn,TForcetilde_actdyn,TForce_actdyn,...
-                            lMtilde_actdyn,lM_actdyn,MuscleNames_actdyn,...
-                            OptInfo_actdyn,DatStore_actdyn]=...
-                            SolveMuscleRedundancy_FtildeState_actdyn_CasADi(...
-                            model_path,IK_path,ID_path,time,Out_path,Misc);
-                end
-        end
-end
-
-
-\end{lstlisting}
 
 \end{document}
