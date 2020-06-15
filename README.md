@@ -3,15 +3,13 @@
 
 ## Purpose of the software
 
-The original intent of the provided MATLAB code was to solve the muscle redundancy problem using direct collocation as described in \textit{De Groote F, Kinney AL, Rao AV, Fregly BJ. Evaluation of direct collocation optimal control problem formulations for solving the muscle redundancy problem. Annals of Biomedical Engineering (2016).} \url{http://link.springer.com/article/10.1007%2Fs10439-016-1591-9}. 
-
-The original intent of the provided MATLAB code was to solve the muscle redundancy problem using direct collocation as described in *De Groote F, Kinney AL, Rao AV, Fregly BJ*. Evaluation of direct collocation optimal control problem formulations for solving the muscle redundancy problem. Annals of Biomedical Engineering (2016).} http://link.springer.com/article/10.1007%2Fs10439-016-1591-9. 
+The original intent of the provided MATLAB code was to solve the muscle redundancy problem using direct collocation as described in De Groote F, Kinney AL, Rao AV, Fregly BJ. Evaluation of direct collocation optimal control problem formulations for solving the muscle redundancy problem. Annals of Biomedical Engineering (2016). http://link.springer.com/article/10.1007%2Fs10439-016-1591-9. 
 
 From v3.0, there are possibilities to, concurrently with solvint the muscle redundancy problem, estimate parameters of the modelled muscle-tendon units by using collected EMG and ultrasound data. Optimal fiber length, tendon slack length and tendon stiffness can be set as free variables within the muscle redundancy problem. Experimentally measured fiber-lengths can be tracked (US-tracking), the tracking error is a part of the objective function. Collected EMG can either be tracked (EMG-tracking) or imposed exactly (EMG-driven). Another important feature is that the user can estimate muscle-tendon parameters over different trials of the same movement or from different movements. This allows to make estimation more reliable. We reckon that for solving the muscle redundancy problem OpenSim Moco might be a more user-friendly and straightforward alternative. However, our software allows the combination of different trials to estimate muscle-tendon parameters. Another difference is in that we use automatic differentiation, while this is not (yet) enabled in Moco. This software is still intended to solve inverse problems, for predictive simulations we refer to Moco or 'Antoine'. 
 
 From v2.1, CasADi can be used as an alternative to GPOPS-II and ADiGator. CasADi is an open-source tool for nonlinear optimization and algorithmic differentiation (https://web.casadi.org/). Results using CasADi and GPOPS-II are very similar (differences can be attributed to the different direct collocation formulations and scaling). We used CasADi's Opti stack, which is a collection of CasADi helper classes that provides a close correspondence between mathematical NLP notation and computer code (https://web.casadi.org/docs/#document-opti). CasADi is actively maintained and developed, and has an active forum (https://groups.google.com/forum/#!forum/casadi-users).
 
-From v1.1, an implicit formulation of activation dynamics can be used to solve the muscle redundancy problem. Additionally, by using the activation dynamics model proposed by Raasch et al. (1997), we could introduce a nonlinear change of variables to exactly impose activation dynamics in a continuously differentiable form, omitting the need for a smooth approximation such as described in De Groote et al. (2016). A result of this change of variables is that muscle excitations are not directly accessible during the optimization. Therefore, we replaced muscle excitations by muscle activations in the objective function. This implicit formulation is described in \textit{De Groote F, Pipeleers G, Jonkers I, Demeulenaere B, Patten C, Swevers J, De Schutter J. A physiology based inverse dynamic analysis of human gait: potential and perspectives F. Computer Methods in Biomechanics and Biomedical Engineering (2009).} http://www.tandfonline.com/doi/full/10.1080/10255840902788587. Results from both formulations are very similar (differences can be attributed to the slightly different activation dynamics models and cost functions). However, the formulation with implicit activation dynamics (De Groote et al., (2009)) is computationally faster. This can mainly be explained by the omission of a tanh function in the constraint definition, whose evaluation is computationally expensive when solving the NLP. \\
+From v1.1, an implicit formulation of activation dynamics can be used to solve the muscle redundancy problem. Additionally, by using the activation dynamics model proposed by Raasch et al. (1997), we could introduce a nonlinear change of variables to exactly impose activation dynamics in a continuously differentiable form, omitting the need for a smooth approximation such as described in De Groote et al. (2016). A result of this change of variables is that muscle excitations are not directly accessible during the optimization. Therefore, we replaced muscle excitations by muscle activations in the objective function. This implicit formulation is described in *De Groote F, Pipeleers G, Jonkers I, Demeulenaere B, Patten C, Swevers J, De Schutter J. A physiology based inverse dynamic analysis of human gait: potential and perspectives F. Computer Methods in Biomechanics and Biomedical Engineering (2009).* http://www.tandfonline.com/doi/full/10.1080/10255840902788587. Results from both formulations are very similar (differences can be attributed to the slightly different activation dynamics models and cost functions). However, the formulation with implicit activation dynamics (De Groote et al., (2009)) is computationally faster. This can mainly be explained by the omission of a tanh function in the constraint definition, whose evaluation is computationally expensive when solving the NLP. \\
 
 ## Structure of the code
 
@@ -38,8 +36,8 @@ addpath(genpath('C/......./SimTK_optcntrlmuscle'))).
 
 Several software packages are needed to run the program:
 
-- The OpenSim MATLAB interface is used to generate the inputs to the optimal control problem based on a scaled OpenSim model and the solution of inverse kinematics (providing the solution of inverse dynamics is optional). To this aim, install OpenSim and set up the OpenSim MATLAB interface (OpenSim: \url{https://simtk.org/frs/?group_id=91}, OpenSim API: \url{http://simtk-confluence.stanford.edu:8080/display/OpenSim/Scripting+with+Matlab}).
-- Casadi is used for nonlinear optimization and algorithmic differentiation (\url{https://web.casadi.org/}).
+- The OpenSim MATLAB interface is used to generate the inputs to the optimal control problem based on a scaled OpenSim model and the solution of inverse kinematics (providing the solution of inverse dynamics is optional). To this aim, install OpenSim and set up the OpenSim MATLAB interface (OpenSim: https://simtk.org/frs/?group_id=91, OpenSim API: http://simtk-confluence.stanford.edu:8080/display/OpenSim/Scripting+with+Matlab).
+- Casadi is used for nonlinear optimization and algorithmic differentiation (https://web.casadi.org/).
 
 ## Main Function
 
@@ -56,20 +54,20 @@ SolveMuscleRedundancy is the main function of this program and is used to solve 
 3. **Misc**: miscellaneous input arguments (matlab structure)
 
    - **Misc.DofNames_Input**  is a cell array specifying for which degrees of freedom you want to solve the muscle redundancy problem. Typically the muscle redundancy problem is solved for one leg at a time (there are no muscles spanning both legs).
-   - **Misc.MuscleNames_Input** is a cell array that specifies the muscles to be included when solving the muscle redundancy problem. All muscles that actuate (i.e. have a moment arm with respect to) the degrees of freedom specified in \textit{DofNames_Input} will be selected by default if this array is left empty.
+   - **Misc.MuscleNames_Input** is a cell array that specifies the muscles to be included when solving the muscle redundancy problem. All muscles that actuate (i.e. have a moment arm with respect to) the degrees of freedom specified in *DofNames_Input* will be selected by default if this array is left empty.
    - **Misc.IKfile**: array of filenames of the inverse kinematics solution of different motion trials (.mot file).
    - **Misc.IDfile**: array of filenames of the inverse dynamics solution of different motion trials (.sto file). If left empty, the inverse dynamics solution will be computed from the external loads (see Optional input arguments).
    - **Misc.EMGfile**: array of filenames containing EMG data of different motion trials (.mot file). 
    - **Misc.USfile**: array of filenames containing fiberlength data of different motion trials (.mot file). The fiber length data is usually measured using ultra-sound (US).
    - **Misc.UStracking**: boolean to select whether you want to track provided muscle fiber lengths.
    - **Misc.EMGconstr**: boolean to select whether you want to track provided EMG signals.
-     	\item \textit{MRSbool}: boolean to select whether you want to solve the generic muslce redundancy problem.
+   - **Misc.MRSbool**: boolean to select whether you want to solve the generic muslce redundancy problem.
    - **Misc.ValidationBool**: boolean to select whether you want to solve the validation muslce redundancy problem.
 
    
 
-   #### Optional input arguments for SolveMuscleRedundancy}
-   - **Misc.Loads_path**: directory and filename of the external loads (.xml file). The program will use the OpenSim libraries to solve the inverse dynamics problem when the required input argument ID_path is empty and Misc.\textit{Loads_path} points to an external loads file.
+   #### Optional input arguments for SolveMuscleRedundancy
+   - **Misc.Loads_path**: directory and filename of the external loads (.xml file). The program will use the OpenSim libraries to solve the inverse dynamics problem when the required input argument ID_path is empty and *Misc.Loads_path* points to an external loads file.
 
    - **Misc.Estimate_TendonStiffness**: array with names of muscle from which tendon stiffness will be estimated.
 
@@ -103,9 +101,9 @@ SolveMuscleRedundancy is the main function of this program and is used to solve 
 
    - **wVm**: cost function weighting factor for minimizing muscle fiber velocities (term mainly for regularization of the optimization).
 
-   - **Loads_path**: directory and filename of the external loads (.xml file). The program will use the OpenSim libraries to solve the inverse dynamics problem when the required input argument ID_path is empty and Misc.\textit{Loads_path} points to an external loads file.
+   - **Loads_path**: directory and filename of the external loads (.xml file). The program will use the OpenSim libraries to solve the inverse dynamics problem when the required input argument ID_path is empty and *Misc.Loads_path* points to an external loads file.
 
-   - **ID_ResultsPath**: directory where the inverse dynamics results will be saved when the input argument \textit{ID_path} is left empty.
+   - **ID_ResultsPath**: directory where the inverse dynamics results will be saved when the input argument *Misc.ID_path* is left empty.
 
    - **f_cutoff_ID**: cutoff frequency for the butterworth recursive low pass filter applied to the inverse dynamics data (default is 6 Hz).
 
@@ -125,7 +123,7 @@ SolveMuscleRedundancy is the main function of this program and is used to solve 
 
    - **Mesh_Frequency**: number of mesh interval per second (default is 100, but a denser mesh might be required to obtain the desired accuracy especially for faster motions).
 
-   - **Atendon**: vector with tendon stiffness for the selected muscles. The order should correspond to \textit{MuscleNames_Input}. The default value is 35 and a lower value corresponds to a more compliant tendon. The default value will be used when left empty. An example is provided in section \ref{Example Gait10dof18m} to set a different stiffness to the Achilles tendon.
+   - **Atendon**: vector with tendon stiffness for the selected muscles. The order should correspond to *Misc.MuscleNames_Input*. The default value is 35 and a lower value corresponds to a more compliant tendon. The default value will be used when left empty. An example is provided in section *Example Gait10dof18m* to set a different stiffness to the Achilles tendon.
 
      
 
