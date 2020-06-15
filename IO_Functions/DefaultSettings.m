@@ -149,7 +149,7 @@ end
 
 %% Validation
 if ~isfield(Misc,'ValidationBool')
-    Misc.ValidationBool = 1;
+    Misc.ValidationBool = 0;
 end
 
 
