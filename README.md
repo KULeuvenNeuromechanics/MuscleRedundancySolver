@@ -5,11 +5,11 @@
 
 The original intent of the provided MATLAB code was to solve the muscle redundancy problem using direct collocation as described in De Groote F, Kinney AL, Rao AV, Fregly BJ. Evaluation of direct collocation optimal control problem formulations for solving the muscle redundancy problem. Annals of Biomedical Engineering (2016). http://link.springer.com/article/10.1007%2Fs10439-016-1591-9. 
 
-From v3.0, there are possibilities to, concurrently with solvint the muscle redundancy problem, estimate parameters of the modelled muscle-tendon units by using collected EMG and ultrasound data. Optimal fiber length, tendon slack length and tendon stiffness can be set as free variables within the muscle redundancy problem. Experimentally measured fiber-lengths can be tracked (US-tracking), the tracking error is a part of the objective function. Collected EMG can either be tracked (EMG-tracking) or imposed exactly (EMG-driven). Another important feature is that the user can estimate muscle-tendon parameters over different trials of the same movement or from different movements. This allows to make estimation more reliable. We reckon that for solving the muscle redundancy problem OpenSim Moco might be a more user-friendly and straightforward alternative. However, our software allows the combination of different trials to estimate muscle-tendon parameters. Another difference is in that we use automatic differentiation, while this is not (yet) enabled in Moco. This software is still intended to solve inverse problems, for predictive simulations we refer to Moco or 'Antoine'. 
+From v3.0, there are possibilities to, concurrently with solving the muscle redundancy problem, estimate parameters of the modelled muscle-tendon units by using collected EMG and ultrasound data. Optimal fiber length, tendon slack length and tendon stiffness can be set as free variables within the muscle redundancy problem. Experimentally measured fiber-lengths can be tracked (US-tracking), the tracking error is a part of the objective function. Details on this parameter estimation problem can be found in Delabastita et al. 2020 (https://link.springer.com/article/10.1007/s10439-019-02395-x). Collected EMG can either be tracked (EMG-tracking) or imposed exactly (EMG-driven). Details on using EMG data in the parameter estimation can be found in (https://ieeexplore.ieee.org/document/7748556). Another important feature is that the user can estimate muscle-tendon parameters over different trials of the same movement or from different movements. This allows to make estimation more reliable. We reckon that for solving the muscle redundancy problem OpenSim Moco (https://www.biorxiv.org/content/10.1101/839381v1) might be a more user-friendly and straightforward alternative. However, our software allows the combination of different trials to estimate muscle-tendon parameters. Another difference is in that we use automatic differentiation, while this is not (yet) enabled in Moco. 
 
 From v2.1, CasADi can be used as an alternative to GPOPS-II and ADiGator. CasADi is an open-source tool for nonlinear optimization and algorithmic differentiation (https://web.casadi.org/). Results using CasADi and GPOPS-II are very similar (differences can be attributed to the different direct collocation formulations and scaling). We used CasADi's Opti stack, which is a collection of CasADi helper classes that provides a close correspondence between mathematical NLP notation and computer code (https://web.casadi.org/docs/#document-opti). CasADi is actively maintained and developed, and has an active forum (https://groups.google.com/forum/#!forum/casadi-users).
 
-From v1.1, an implicit formulation of activation dynamics can be used to solve the muscle redundancy problem. Additionally, by using the activation dynamics model proposed by Raasch et al. (1997), we could introduce a nonlinear change of variables to exactly impose activation dynamics in a continuously differentiable form, omitting the need for a smooth approximation such as described in De Groote et al. (2016). A result of this change of variables is that muscle excitations are not directly accessible during the optimization. Therefore, we replaced muscle excitations by muscle activations in the objective function. This implicit formulation is described in *De Groote F, Pipeleers G, Jonkers I, Demeulenaere B, Patten C, Swevers J, De Schutter J. A physiology based inverse dynamic analysis of human gait: potential and perspectives F. Computer Methods in Biomechanics and Biomedical Engineering (2009).* http://www.tandfonline.com/doi/full/10.1080/10255840902788587. Results from both formulations are very similar (differences can be attributed to the slightly different activation dynamics models and cost functions). However, the formulation with implicit activation dynamics (De Groote et al., (2009)) is computationally faster. This can mainly be explained by the omission of a tanh function in the constraint definition, whose evaluation is computationally expensive when solving the NLP. \\
+From v1.1, an implicit formulation of activation dynamics can be used to solve the muscle redundancy problem. Additionally, by using the activation dynamics model proposed by Raasch et al. (1997), we could introduce a nonlinear change of variables to exactly impose activation dynamics in a continuously differentiable form, omitting the need for a smooth approximation such as described in De Groote et al. (2016). A result of this change of variables is that muscle excitations are not directly accessible during the optimization. Therefore, we replaced muscle excitations by muscle activations in the objective function. This implicit formulation is described in *De Groote F, Pipeleers G, Jonkers I, Demeulenaere B, Patten C, Swevers J, De Schutter J. A physiology based inverse dynamic analysis of human gait: potential and perspectives F. Computer Methods in Biomechanics and Biomedical Engineering (2009).* http://www.tandfonline.com/doi/full/10.1080/10255840902788587. Results from both formulations are very similar (differences can be attributed to the slightly different activation dynamics models and cost functions). However, the formulation with implicit activation dynamics (De Groote et al., (2009)) is computationally faster. This can mainly be explained by the omission of a tanh function in the constraint definition, whose evaluation is computationally expensive when solving the NLP.
 
 ## Structure of the code
 
@@ -66,7 +66,7 @@ SolveMuscleRedundancy is the main function of this program and is used to solve 
 
    
 
-   #### Optional input arguments for SolveMuscleRedundancy
+#### Optional input arguments for SolveMuscleRedundancy
    - **Misc.Loads_path**: directory and filename of the external loads (.xml file). The program will use the OpenSim libraries to solve the inverse dynamics problem when the required input argument ID_path is empty and *Misc.Loads_path* points to an external loads file.
 
    - **Misc.Estimate_TendonStiffness**: array with names of muscle from which tendon stiffness will be estimated.
@@ -125,15 +125,10 @@ SolveMuscleRedundancy is the main function of this program and is used to solve 
 
    - **Atendon**: vector with tendon stiffness for the selected muscles. The order should correspond to *Misc.MuscleNames_Input*. The default value is 35 and a lower value corresponds to a more compliant tendon. The default value will be used when left empty. An example is provided in section *Example Gait10dof18m* to set a different stiffness to the Achilles tendon.
 
-     
-
-     
 
 ## Output arguments
 
 We provide all state and control trajectories for the different trials and optimal control problems in one Results structure. Trajectories for different trials and optimal control problems are divided in substructures. All trajectories are interpolated on the mesh points.
-
-
 
 1. Time: time vector [s]
 
@@ -165,7 +160,6 @@ We provide all state and control trajectories for the different trials and optim
 
 15. Misc: for reference of the settings of the simulation we add the Misc structure to the results. 
 
-    
 
 ## Muscle model
 
@@ -175,3 +169,49 @@ The musculotendon properties are fully described in the supplementary materials 
 
 ## Examples
 
+### Solve the muscle redundancy problem
+
+In this example, we only solve the muscle redundancy problem without parameter estimation. This means that we try to find the optimal muscle excitations (i.e. controls)  that reconstruct the measured inverse dynamic joint moments with minimal excitations and activations squared. This is similar as in DeGroote 2016 (http://link.springer.com/article/10.1007%2Fs10439-016-1591-9) and was the the main aim of v1 and v2 of this software.
+
+You have to specify the opensim model, inverse kinematic solution and inverse dynamic solution.
+
+```matlab
+model_path  = fullfile(DataPath,'subject1.osim');
+Misc.IKfile = {fullfile(DataPath,'Walking_IK.mot')};
+Misc.IDfile = {fullfile(DataPath,'Walking_ID.sto')};
+```
+You can specify the start and end time of the analysis:
+
+```matlab
+time=[0.516 1.95]; % Right stance phase (+50ms beginning and end of time interval, more details see manual and publication)
+```
+And you have to select the degrees of freedom you want to use in this analysis. Note that the muscle redundancy problem will only be solved for these degrees of freedom. For example if you want to solve only for the right ankle joint:
+```matlab
+Misc.DofNames_Input={'ankle_angle_r'};    % select the DOFs you want to include in the optimization
+```
+OR if you want to solve for all degrees of freedom in the ankle, knee and hip joint in this model
+```matlab
+Misc.DofNames_Input={'ankle_angle_r','knee_angle_r','hip_flexion_r','hip_adduction_r','hip_rotation_r'}; 
+```
+And select an output directory where you want to save the results.
+```matlab
+Out_path    = fullfile(MyResultsFolder);                    % folder to store results
+```
+
+You can also specify some of the optional input arguments to save the results with a specific outputname, plot the main results automatically in a matlab figure .
+
+```matlab
+% Plotter Bool: Boolean to select if you want to plot lots of output information of intermediate steps in the script
+Misc.PlotBool = 1;
+% name output
+Misc.OutName = 'Walking_';
+```
+As an additional optional input argument you can specify that you want to run the muscle redundancy solver. This is true by default
+```matlab
+Misc.MRSBool = 1;
+```
+
+And finally solve the muscle redundancy problem
+```matlab
+[Results,DatStore] = MuscleTendonEstimator(model_path,time,Out_path,Misc);
+```
