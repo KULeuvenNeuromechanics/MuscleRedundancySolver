@@ -239,7 +239,7 @@ And finally solve the muscle redundancy problem
 [Results,DatStore] = solveMuscleRedundancy(model_path,time,Out_path,Misc);
 ```
 
-One important thing to note is that you can select the muscles you want to include in this analysis. For exampole here, we only select calf muscles and tibialis anterior, all other muscles will be removed from the model. WHen you don't use this input argument or leave this empty, the software will select automatically all muscles that span the selected dofs (Misc.DOfNames_Input).
+One important thing to note is that you can select the muscles you want to include in this analysis. For example here, we only select calf muscles and tibialis anterior, all other muscles will be removed from the model. WHen you don't use this input argument or leave this empty, the software will select automatically all muscles that span the selected dofs (Misc.DOfNames_Input).
 ```matlab
 Misc.MuscleNames_Input = {'med_gas_l','lat_gas_l','soleus_l','tib_ant_l'}; % select muscles
 ```
