@@ -6,12 +6,12 @@ function [] = Warnings_MuscleNames(DatStore,Misc,i)
 MNames = DatStore(i).MuscleNames;
 
 % optimization parameters muscles
-[r,c] = size(Misc.Estimate_OptFL);
+[r,c] = size(Misc.Estimate_OptimalFiberLength);
 for i = 1:r
     for j = 1:c
-        if ~any(strcmp(MNames,Misc.Estimate_OptFL{i,j}))
-            warning(['Could not find muscle ' Misc.Estimate_OptFL{i,j} ' in the selected dofs of the model',...
-                ', please adapt Misc.Estimate_OptFL']);
+        if ~any(strcmp(MNames,Misc.Estimate_OptimalFiberLength{i,j}))
+            warning(['Could not find muscle ' Misc.Estimate_OptimalFiberLength{i,j} ' in the selected dofs of the model',...
+                ', please adapt Misc.Estimate_OptimalFiberLength']);
         end
     end
 end

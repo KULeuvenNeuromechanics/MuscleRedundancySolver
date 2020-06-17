@@ -63,8 +63,8 @@ if ~isfield(Misc,'EMGSelection')
 end
 
 %% Info related to parameter optimizatiEMGbounds on
-if ~isfield(Misc,'Estimate_OptFL')
-    Misc.Estimate_OptFL =[];
+if ~isfield(Misc,'Estimate_OptimalFiberLength')
+    Misc.Estimate_OptimalFiberLength =[];
 end
 if ~isfield(Misc,'Estimate_TendonStiffness')
     Misc.Estimate_TendonStiffness =[];

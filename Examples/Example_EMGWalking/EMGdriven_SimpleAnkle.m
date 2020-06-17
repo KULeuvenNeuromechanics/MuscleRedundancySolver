@@ -25,7 +25,7 @@ Misc.DofNames_Input={'ankle_angle_l'};    % select the DOFs you want to include 
 Misc.MuscleNames_Input = {'med_gas_l','lat_gas_l','soleus_l','tib_ant_l'}; % select muscles
 
 % Set the tendon stifness of all muscles
-Misc.ATendon = [];      % default way to set tendon stiffenss (default values is 35)
+Misc.kT = [];      % default way to set tendon stiffenss (default values is 35)
 
 % Settings for estimating tendon stiffness
 Misc.Estimate_TendonStiffness = {'med_gas_l';'lat_gas_l';'soleus_l'}; % Names of muscles of which tendon stifness is estimated
@@ -34,7 +34,7 @@ Misc.ub_kT_scaling = 2.2; % Upper bound for scaling generic tendon stiffness
 Misc.Coupled_TendonStiffness = {'med_gas_l';'lat_gas_l';'soleus_l'}; % Couple muscles that should have equal tendon stifness
 
 % Settings for estimating optimal fiber length
-Misc.Estimate_OptFL = {'med_gas_l';'soleus_l';'lat_gas_l';'tib_ant_l'}; % Names of muscles of which optimal fiber length is estimated - slack length is estimated for these muscles as well
+Misc.Estimate_OptimalFiberLength = {'med_gas_l';'soleus_l';'lat_gas_l';'tib_ant_l'}; % Names of muscles of which optimal fiber length is estimated - slack length is estimated for these muscles as well
 Misc.lb_lMo_scaling = 0.1; % Lower bound for scaling optimal fiber length
 Misc.ub_lMo_scaling = 2.2; % Upper bound for scaling optimal fiber length
 Misc.lb_lTs_scaling = 0.9; % Lower bound for scaling tendon slack length

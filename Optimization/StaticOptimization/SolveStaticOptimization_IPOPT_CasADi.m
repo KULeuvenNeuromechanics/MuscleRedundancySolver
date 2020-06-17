@@ -25,7 +25,7 @@ for m = 1:M
         ActiveFVParameters,PassiveFLParameters,Faparam);
     clear pp_y 
 end
-FMo = ones(size(act,1),1)*Misc.Fiso;
+FMo = ones(size(act,1),1)*Misc.FMo;
 Fpas = FMo.*Fpe.*cos_alpha;
 Fact = FMo.*FMltilde.*FMvtilde.*cos_alpha;
 

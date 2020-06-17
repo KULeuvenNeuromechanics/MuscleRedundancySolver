@@ -1,0 +1,13 @@
+Loaded model 3DGaitModel2392-scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_EMGWalking\ScaledModel.osim
+AbstractTool IK_gait loading model 'C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_EMGWalking\ScaledModel.osim'
+Loaded model 3DGaitModel2392-scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_EMGWalking\ScaledModel.osim
+No external loads will be applied (external loads file not specified).
+
+Loading coordinates from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_EMGWalking\IK_gait.mot.
+Storage: file=C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_EMGWalking\IK_gait.mot (nr=461 nc=38)
+Coordinate.setValue: WARN- coordinate pro_sup_r is locked. Unable to change its value.
+Coordinate.setValue: WARN- coordinate pro_sup_l is locked. Unable to change its value.
+Found 461 state vectors with time stamps ranging from 0.01 to 4.61.
+Executing the analyses from 1.2 to 2.3...
+Printing results of investigation IK_gait to C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_EMGWalking\Results_LowerLimb\MuscleAnalysis.
+Loaded model 3DGaitModel2392-scaled from file C:\Users\u0113530\Documents\MuscleTendonEstimator\Examples\Example_EMGWalking\ScaledModel.osim

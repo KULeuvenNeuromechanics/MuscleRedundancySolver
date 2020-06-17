@@ -48,7 +48,7 @@ Misc.Coupled_fiber_length = {'med_gas_l';'lat_gas_l'};
 Misc.Coupled_slack_length = {}; %{'med_gas_l';'lat_gas_l'};
 
 % Settings for estimating optimal fiber length
-Misc.Estimate_OptFL = {'med_gas_l';'lat_gas_l'};%;'lat_gas_l';'soleus_l'}; % Names of muscles of which optimal fiber length is estimated - slack length is estimated for these muscles as well
+Misc.Estimate_OptimalFiberLength = {'med_gas_l';'lat_gas_l'};%;'lat_gas_l';'soleus_l'}; % Names of muscles of which optimal fiber length is estimated - slack length is estimated for these muscles as well
 Misc.lb_lMo_scaling = 0.7; % Lower bound for scaling optimal fiber length
 Misc.ub_lMo_scaling = 1.5; % Upper bound for scaling optimal fiber length
 Misc.lb_lTs_scaling = 0.7; % Lower bound for scaling tendon slack length

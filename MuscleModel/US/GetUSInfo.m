@@ -45,7 +45,7 @@ if boolUS
     % verify if the muscles in the .mot files are in the model
     USheaders  = USfile(iFile).colheaders;
     for i=1:length(Misc.USSelection)
-        if ~any(strcmp(Misc.EMGSelection{i},USheaders))
+        if ~any(strcmp(Misc.USSelection{i},USheaders))
             if bool_updateheader == 0
                 disp(['Could not find ' Misc.USSelection{i} ' in the header of the US file, Updata the headers of file: ' Misc.USfile]);
             else
