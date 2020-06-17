@@ -1,7 +1,4 @@
-function [Results,DatStore,Misc] = MuscleTendonEstimator(model_path,time,OutPath,Misc)
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
-
+function [Results,DatStore,Misc] = solveMuscleRedundancy(model_path,time,OutPath,Misc)
 % -----------------------------------------------------------------------%
 % INPUTS:
 %           model_path: path to the .osim model

@@ -91,7 +91,7 @@ Misc.MRSBool = 1;
 Misc.ValidationBool = 1;
 
 %% Run muscle tendon estimator:
-[Results,DatStore,Misc] = MuscleTendonEstimator(model_path,time,Out_path,Misc);
+[Results,DatStore,Misc] = solveMuscleRedundancy(model_path,time,Out_path,Misc);
 
 % Save the results structure where you want
 save('Results.mat','Results');

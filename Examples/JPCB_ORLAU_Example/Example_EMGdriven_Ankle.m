@@ -77,7 +77,7 @@ Misc.MRSBool = 1;
 Misc.ValidationBool = 1; 	% TO DO: we should report results of EMG driven simulation as well
 
 %% Run muscle tendon estimator:
-[Results,DatStore,Misc] = MuscleTendonEstimator(model_path,time,Out_path,Misc);
+[Results,DatStore,Misc] = solveMuscleRedundancy(model_path,time,Out_path,Misc);
 
 % Save the results structure where you want
 save('Results.mat','Results');

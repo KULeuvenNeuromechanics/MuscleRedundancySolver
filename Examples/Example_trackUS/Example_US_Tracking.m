@@ -73,7 +73,7 @@ Misc.ValidationBool = 1;
 % change mesh frequency
 Misc.Mesh_Frequency = 100;
 %% Run muscle tendon estimator:
-[Results,DatStore,Misc] = MuscleTendonEstimator(model_path,time,Out_path,Misc);
+[Results,DatStore,Misc] = solveMuscleRedundancy(model_path,time,Out_path,Misc);
 
 % Save the results structure where you want
 save('Results.mat','Results');
