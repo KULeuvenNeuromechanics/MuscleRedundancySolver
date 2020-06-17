@@ -63,7 +63,7 @@ The following input arguments are required to use EMG data:
    - **Misc.EMGconstr**: boolean to select whether you want to track provided EMG signals.
    - **Misc.EMGfile**: cell array of filenames containing EMG data of different motion trials (.mot file). (can be empty )
    - **Misc.EMGSelection**: cell aray with muscles that are constrained/driven by EMG data.
-   
+
 #### Required input arguments when using Ultrasound data
 
 The following input arguments are required to use ultrasound data:
@@ -77,81 +77,78 @@ The following input arguments are required to optimize parameters:
 
    - **Misc.Estimate_TendonStiffness**: array with names of muscle from which tendon stiffness will be estimated.
 
-   - **lb_kT_scaling**: lower bound of the scaling factor that will scale the generic tendon stiffness into the optimized tendon stiffness.
+   - **Misc.lb_kT_scaling**: lower bound of the scaling factor that will scale the generic tendon stiffness into the optimized tendon stiffness.
 
-   - **ub_kT_scaling**: upper bound of the scaling factor that will scale the generic tendon stiffness into the optimized tendon stiffness.	
+   - **Misc.ub_kT_scaling**: upper bound of the scaling factor that will scale the generic tendon stiffness into the optimized tendon stiffness.	
 
-   - **Estimate_OptimalFiberLength**: array with names of muscle from which optimal fiber length will be estimated.
+   - **Misc.Estimate_OptimalFiberLength**: array with names of muscle from which optimal fiber length will be estimated.
    
-   - **lb_lMo_scaling**: lower bound of the scaling factor that will scale the generic optimal fiber length into the optimized optimal fiber length.
+   - **Misc.lb_lMo_scaling**: lower bound of the scaling factor that will scale the generic optimal fiber length into the optimized optimal fiber length.
 
-   - **ub_lMo_scaling**: upper bound of the scaling factor that will scale the generic optimal fiber length into the optimized optimal fiber length.
+   - **Misc.ub_lMo_scaling**: upper bound of the scaling factor that will scale the generic optimal fiber length into the optimized optimal fiber length.
 
-   - **lb_lTs_scaling**: lower bound of the scaling factor that will scale the generic tendon slack length into the optimized tendon slack length.
+   - **Misc.lb_lTs_scaling**: lower bound of the scaling factor that will scale the generic tendon slack length into the optimized tendon slack length.
 
-   - **ub_lTs_scaling**: upper bound of the scaling factor that will scale the generic tendon slack length into the optimized tendon slack length.
+   - **Misc.ub_lTs_scaling**: upper bound of the scaling factor that will scale the generic tendon slack length into the optimized tendon slack length.
 
 
 #### Optional input arguments for SolveMuscleRedundancy
 
 Related to flow control:
 
-   - **MRSbool**: boolean to select whether you want to solve the generic muscle redundancy problem. This will be used as initial guess in the parameter optimization (default = true).
+   - **Misc.MRSbool**: boolean to select whether you want to solve the generic muscle redundancy problem. This will be used as initial guess in the parameter optimization (default = true).
 
-   - **ValidationBool**: boolean to select whether you want to solve the validation muscle redundancy problem (default = true).
+   - **Misc.ValidationBool**: boolean to select whether you want to solve the validation muscle redundancy problem (default = true).
 
-   - **PlotBool**: boolean to select whether you want to plot lots of output information of intermediate steps in the script.
+   - **Misc.PlotBool**: boolean to select whether you want to plot lots of output information of intermediate steps in the script.
 
 Related to parameter optimization:
-   
-   - **Coupled_TendonStiffness**: array with names of muscle from which tendon stiffness will be coupled. This means that the generic tendon stiffnesses of these muscles will be scaled with same variable.
 
-   - **Coupled_fiber_length**: array with names of muscle from which optimal fiber length will be coupled. This means that the generic fiber lengths of these muscles will be scaled with same variable.  
+   - **Misc.Coupled_TendonStiffness**: array with names of muscle from which tendon stiffness will be coupled. This means that the generic tendon stiffnesses of these muscles will be scaled with same variable.
 
-   - **Coupled_slack_length**: array with names of muscle from which the optimal slack length will be coupled. This means that the generic tendon slack lengths of these muscles will be scaled with same variable.
+   - **Misc.Coupled_fiber_length**: array with names of muscle from which optimal fiber length will be coupled. This means that the generic fiber lengths of these muscles will be scaled with same variable.  
+
+   - **Misc.Coupled_slack_length**: array with names of muscle from which the optimal slack length will be coupled. This means that the generic tendon slack lengths of these muscles will be scaled with same variable.
 
 Related to weights in objective function:
 
-   - **wlM**: cost function weighting factor for 'tracking fiber lengths' term.
+   - **Misc.wlM**: cost function weighting factor for 'tracking fiber lengths' term.
 
-   - **wEMG**: cost function weighting factor for 'tracking EMG' term.
+   - **Misc.wEMG**: cost function weighting factor for 'tracking EMG' term.
 
-   - **wA**: cost function weighting factor for minimizing effort.
+   - **Misc.wA**: cost function weighting factor for minimizing effort.
 
-   - **wTres**: cost function weighting factor for minimizing reserve actuator contribution.
+   - **Misc.wTres**: cost function weighting factor for minimizing reserve actuator contribution.
 
-   - **wVm**: cost function weighting factor for minimizing muscle fiber velocities (term mainly for regularization of the optimization).
+   - **Misc.wVm**: cost function weighting factor for minimizing muscle fiber velocities (term mainly for regularization of the optimization).
 
 Related to lowpass filtering of input data:
 
-   - **f_cutoff_ID**: cutoff frequency for the butterworth recursive low pass filter applied to the inverse dynamics data (default is 6 Hz).
+   - **Misc.f_cutoff_ID**: cutoff frequency for the butterworth recursive low pass filter applied to the inverse dynamics data (default is 6 Hz).
 
-   - **f_order_ID**: order of the butterworth recursive low pass filter applied to the inverse dynamics data (default is 6).
+   - **Misc.f_order_ID**: order of the butterworth recursive low pass filter applied to the inverse dynamics data (default is 6).
 
-   - **f_cutoff_LMT**: cutoff frequency for the butterworth recursive low pass filter applied to the muscle tendon lengths from the muscle analysis (default is 6 Hz).
+   - **Misc.f_cutoff_LMT**: cutoff frequency for the butterworth recursive low pass filter applied to the muscle tendon lengths from the muscle analysis (default is 6 Hz).
 
-   - **f_order_LMT**: order of the butterworth recursive low pass filter applied to the muscle tendon lengths from the muscle analysis (default is 6).		
+   - **Misc.f_order_LMT**: order of the butterworth recursive low pass filter applied to the muscle tendon lengths from the muscle analysis (default is 6).		
 
-   - **f_cutoff_dM**: cutoff frequency for the butterworth recursive low pass filter applied to the muscle moment arms from the muscle analysis (default is 6 Hz).
+   - **Misc.f_cutoff_dM**: cutoff frequency for the butterworth recursive low pass filter applied to the muscle moment arms from the muscle analysis (default is 6 Hz).
 
-   - **f_order_dM**: order of the butterworth recursive low pass filter applied to the muscle moment arms from the muscle analysis (default is 6).
+   - **Misc.f_order_dM**: order of the butterworth recursive low pass filter applied to the muscle moment arms from the muscle analysis (default is 6).
 
-   - **f_cutoff_IK**: cutoff frequency for the butterworth recursive low pass filter applied to the inverse kinematics data (default is 6 Hz) when performing the muscle analysis to compute muscle-tendon lengths and moment arms.
+   - **Misc.f_cutoff_IK**: cutoff frequency for the butterworth recursive low pass filter applied to the inverse kinematics data (default is 6 Hz) when performing the muscle analysis to compute muscle-tendon lengths and moment arms.
 
-   - **f_order_IK**: order of the butterworth recursive low pass filter applied to the inverse kinematics data (default is 6).
+   - **Misc.f_order_IK**: order of the butterworth recursive low pass filter applied to the inverse kinematics data (default is 6).
 
 Related to transcription:
 
-   - **Mesh_Frequency**: number of mesh interval per second (default is 100, but a denser mesh might be required to obtain the desired accuracy especially for faster motions).
+   - **Misc.Mesh_Frequency**: number of mesh interval per second (default is 100, but a denser mesh might be required to obtain the desired accuracy especially for faster motions).
 
-<<<<<<< HEAD
 Related to nominal parameters model:
-   
-   - **kT**: vector with normalized tendon stiffness for the selected muscles. The order should correspond to *Misc.MuscleNames_Input*. The default value is 35 and a lower value corresponds to a more compliant tendon. The default value will be used when left empty. An example is provided in section *Example Gait10dof18m* to set a different stiffness to the Achilles tendon.
-   
-   - **Set_kT_ByName**: cell array to set the tendon stiffness. The first column is a string wit the name of the muscles, second column is the normalised tendon stiffness.
-   
->>>>>>> 05c9876f1095cd64d265a5817d5383574c2c4561
+
+   - **Misc.kT**: vector with normalized tendon stiffness for the selected muscles. The order should correspond to *Misc.MuscleNames_Input*. The default value is 35 and a lower value corresponds to a more compliant tendon. The default value will be used when left empty. An example is provided in section *Example Gait10dof18m* to set a different stiffness to the Achilles tendon.
+   - **Misc.Set_kT_ByName**: cell array to set the tendon stiffness. The first column is a string wit the name of the muscles, second column is the normalised tendon stiffness.
+
 
 ## Output arguments
 
@@ -190,7 +187,7 @@ We provide all state and control trajectories for the different trials and optim
 
 ## Muscle model
 
-The musculotendon properties are fully described in the supplementary materials of the aforementioned publication. Importantly, only the tendon slack length, optimal muscle fiber length, maximal isometric muscle force, optimal pennation angle and maximal muscle fiber contraction velocity are extracted from the referred OpenSim model. Other properties are defined in the code and can be changed if desired. By default, the activation and deactivation time constants are 15 and 60 ms respectively (see tau_act and tau_deact in SolveMuscleRedundancy_$<state>$.m).
+The musculotendon properties are fully described in the supplementary materials of the aforementioned publication. Importantly, only the tendon slack length, optimal muscle fiber length, maximal isometric muscle force, optimal pennation angle and maximal muscle fiber contraction velocity are extracted from the referred OpenSim model. Other properties are defined in the code and can be changed if desired. By default, the activation and deactivation time constants are 15 and 60 ms respectively.
 
 
 ## Examples
