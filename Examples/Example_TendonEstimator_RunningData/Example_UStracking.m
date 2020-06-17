@@ -72,11 +72,8 @@ Misc.EMG_MuscleCopies = {'med_gas_l','lat_gas_l'};       %  use gastrocnemius me
 
 % information for the EMG constraint
 Misc.EMGconstr  = 0;     		% Boolean to select EMG constrained option
-Misc.EMGbounds  = [-0.3 0.3];  	% upper and lower bound for deviation simulated and measured muscle activity
-Misc.MaxScaleEMG = 10; 			% maximal value to scale EMG
 
 % Set weights
-Misc.wEMG   = 0.001;            % weight on tracking EMG
 Misc.wlM    = 1;                % weight on tracking fiber length: note that
 % increasing this weight most likely results in "extreme" overfitting.
 % Run the validation tool to investigate this

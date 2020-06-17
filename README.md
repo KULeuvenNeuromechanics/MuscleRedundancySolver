@@ -7,19 +7,16 @@ The original intent of the provided MATLAB code was to solve the muscle redundan
 
 From v3.0, there are possibilities to, concurrently with solving the muscle redundancy problem, estimate parameters of the modelled muscle-tendon units by using collected EMG and ultrasound data. Optimal fiber length, tendon slack length and tendon stiffness can be set as free variables within the muscle redundancy problem. Experimentally measured fiber-lengths can be tracked (US-tracking), the tracking error is a part of the objective function. Details on this parameter estimation problem can be found in Delabastita et al. 2020 (https://link.springer.com/article/10.1007/s10439-019-02395-x). Collected EMG can either be tracked (EMG-tracking) or imposed exactly (EMG-driven). Details on using EMG data in the parameter estimation can be found in Falisse 2016 (https://ieeexplore.ieee.org/document/7748556). Another important feature is that the user can estimate muscle-tendon parameters over different trials of the same movement or from different movements. This allows to make estimation more reliable. We reckon that for solving the muscle redundancy problem OpenSim Moco (https://www.biorxiv.org/content/10.1101/839381v1) might be a more user-friendly and straightforward alternative. However, our software allows the combination of different trials to estimate muscle-tendon parameters. Another difference is in that we use automatic differentiation, while this is not (yet) enabled in Moco. 
 
-From v2.1, CasADi can be used as an alternative to GPOPS-II and ADiGator. CasADi is an open-source tool for nonlinear optimization and algorithmic differentiation (https://web.casadi.org/). Results using CasADi and GPOPS-II are very similar (differences can be attributed to the different direct collocation formulations and scaling). We used CasADi's Opti stack, which is a collection of CasADi helper classes that provides a close correspondence between mathematical NLP notation and computer code (https://web.casadi.org/docs/#document-opti). CasADi is actively maintained and developed, and has an active forum (https://groups.google.com/forum/#!forum/casadi-users).
-
-From v1.1, an implicit formulation of activation dynamics can be used to solve the muscle redundancy problem. Additionally, by using the activation dynamics model proposed by Raasch et al. (1997), we could introduce a nonlinear change of variables to exactly impose activation dynamics in a continuously differentiable form, omitting the need for a smooth approximation such as described in De Groote et al. (2016). A result of this change of variables is that muscle excitations are not directly accessible during the optimization. Therefore, we replaced muscle excitations by muscle activations in the objective function. This implicit formulation is described in *De Groote F, Pipeleers G, Jonkers I, Demeulenaere B, Patten C, Swevers J, De Schutter J. A physiology based inverse dynamic analysis of human gait: potential and perspectives F. Computer Methods in Biomechanics and Biomedical Engineering (2009).* http://www.tandfonline.com/doi/full/10.1080/10255840902788587. Results from both formulations are very similar (differences can be attributed to the slightly different activation dynamics models and cost functions). However, the formulation with implicit activation dynamics (De Groote et al., (2009)) is computationally faster. This can mainly be explained by the omission of a tanh function in the constraint definition, whose evaluation is computationally expensive when solving the NLP.
 
 ## Structure of the code
 
 The code allows to solve three optimal control problems in the following order: 
 
-- Generic muscle redundancy problem: Solves the muscle redundancy problem using the provided musculoskeletal model, inverse kinematics and/or inverse dynamics data. 
+1. Generic muscle redundancy problem: Solves the muscle redundancy problem using the provided musculoskeletal model, inverse kinematics and inverse dynamics data. 
 
-- Muscle parameter estimation: Solves the muscle redundancy problem where the variable space can be extended with user-specified muscle tendon parameters. Depending on availability the user can provide experimental muscle fiber length data to be tracked by simulated fiber lengths and/or EMG data to be tracked by simulated muscle excitations. The problem can be made EMG-driven as well, where the excitations will match the EMG signal up to a specified tolerance.
+2. Muscle parameter estimation: Solves the muscle redundancy problem where the variable space can be extended with user-specified muscle tendon parameters. Depending on availability the user can provide experimental muscle fiber length data to be tracked by simulated fiber lengths and/or EMG data to be tracked by simulated muscle excitations. The problem can be made EMG-driven as well, where the excitations will match the EMG signal up to a specified tolerance.
 
-- Validation muscle redundancy problem: Solves the muscle redundancy problem using the optimized musculoskeletal model, inverse kinematics and/or inverse dynamics data. The idea of this simulation is to analyse whether the parameters (optimized by the estimation problem) predict musculoskeletal behaviour better than the generic model.
+3. Validation muscle redundancy problem: Solves the muscle redundancy problem using the optimized musculoskeletal model, inverse kinematics and/or inverse dynamics data. The idea of this simulation is to analyse whether the parameters (optimized by the estimation problem) predict musculoskeletal behaviour better than the generic model.
 
 The user is off course free to select any of the three described problems. 
 
@@ -36,7 +33,7 @@ addpath(genpath('C/......./SimTK_optcntrlmuscle'))).
 
 Several software packages are needed to run the program:
 
-- The OpenSim MATLAB interface is used to generate the inputs to the optimal control problem based on a scaled OpenSim model and the solution of inverse kinematics (providing the solution of inverse dynamics is optional). To this aim, install OpenSim and set up the OpenSim MATLAB interface (OpenSim: https://simtk.org/frs/?group_id=91, OpenSim API: http://simtk-confluence.stanford.edu:8080/display/OpenSim/Scripting+with+Matlab).
+- The OpenSim MATLAB interface is used to generate the inputs to the optimal control problem based on a scaled OpenSim model and the solution of inverse kinematics. To this aim, install OpenSim and set up the OpenSim MATLAB interface (OpenSim: https://simtk.org/frs/?group_id=91, OpenSim API: http://simtk-confluence.stanford.edu:8080/display/OpenSim/Scripting+with+Matlab).
 - Casadi is used for nonlinear optimization and algorithmic differentiation (https://web.casadi.org/).
 
 ## Main Function
@@ -226,14 +223,14 @@ Misc.MuscleNames_Input = {'med_gas_l','lat_gas_l','soleus_l','tib_ant_l'}; % sel
 You can estimate the optimal fiber length, tendon slack length and tendon stiffness using EMG-data or ultrasound data. For example if you want to estimate the tendon stiffness of the calf muscles.
 
 ```matlab
-  Misc.Estimate_TendonStifness = {'med_gas_l';'lat_gas_l';'soleus_l'}; % Names of muscles of which tendon stifness is estimated
+Misc.Estimate_TendonStifness = {'med_gas_l';'lat_gas_l';'soleus_l'}; % Names of muscles of which tendon stifness is estimated
 ```
 
 You can also select bounds on maximal deviation of the estimated tendon stiffness from the nominal values (i.e. lw < KOpt/Knominal / ub)
 
 ```matlab
-  Misc.lb_kT_scaling = 0.5; % Lower bound
-  Misc.ub_kT_scaling = 2; % Upper bound 
+Misc.lb_kT_scaling = 0.5; % Lower bound
+Misc.ub_kT_scaling = 2; % Upper bound 
 ```
 
 And finally you can couple the (change in) tendon stiffness of multiple muscles. For example if you assume that the calf muscles share the same tendon
@@ -272,13 +269,13 @@ In this example (Example_EMGWalking), we use EMG-data to
 When using EMG data, you have always have to indicate that you want to use EMG data with a boolean and provide the EMG file (.mot format). This EMG file should contain the processed EMG data (filtered + linear enveloppe). 
 
 ```matlab
-   Misc.EMGconstr  = 1;          % Boolean to select EMG constrained option
-   Misc.EMGfile = {'C/Path/EMG_gait.mot'}; % path to EMG file
+Misc.EMGconstr  = 1;          % Boolean to select EMG constrained option
+Misc.EMGfile = {'C/Path/EMG_gait.mot'}; % path to EMG file
 ```
 
 You also have to select the muscles that will be driven/constrained by EMG data.
 ```matlab
-   Misc.EMGSelection = {'tib_ant_l','lat_gas_l','med_gas_l','soleus_l'};
+Misc.EMGSelection = {'tib_ant_l','lat_gas_l','med_gas_l','soleus_l'};
 ```
 
 In the preferred case, the names of the muscles in the EMG file and in the model correspond. If this is not the case, you can adapt the names in the .mot file as follows: (note that for example the header of the second collumn in the EMG file will be adapted here to 'bifemlh_r')
@@ -321,13 +318,19 @@ Misc.USSelection = {'med_gas_l'; 'soleus_l'}; % select muscles
 Finally you can set the weight for tracking ultrasound data in the objective function. 
 
 ```matlab
-   Misc.wlM    = 1;                % weight on tracking fiber length: note that
+Misc.wlM    = 1;                % weight on tracking fiber length: note that
 ```
 Note that increasing this weight most likely results in "extreme" overfitting. Run the validation tool to investigate this.
 
 ```matlab
-   Misc.ValidationBool = 1;
+Misc.ValidationBool = 1;
 ```
 
 
+## Release Notes
 
+### version 2.1
+From v2.1, CasADi can be used as an alternative to GPOPS-II and ADiGator. CasADi is an open-source tool for nonlinear optimization and algorithmic differentiation (https://web.casadi.org/). Results using CasADi and GPOPS-II are very similar (differences can be attributed to the different direct collocation formulations and scaling). We used CasADi's Opti stack, which is a collection of CasADi helper classes that provides a close correspondence between mathematical NLP notation and computer code (https://web.casadi.org/docs/#document-opti). CasADi is actively maintained and developed, and has an active forum (https://groups.google.com/forum/#!forum/casadi-users).
+
+### version 1.1
+From v1.1, an implicit formulation of activation dynamics can be used to solve the muscle redundancy problem. Additionally, by using the activation dynamics model proposed by Raasch et al. (1997), we could introduce a nonlinear change of variables to exactly impose activation dynamics in a continuously differentiable form, omitting the need for a smooth approximation such as described in De Groote et al. (2016). A result of this change of variables is that muscle excitations are not directly accessible during the optimization. Therefore, we replaced muscle excitations by muscle activations in the objective function. This implicit formulation is described in *De Groote F, Pipeleers G, Jonkers I, Demeulenaere B, Patten C, Swevers J, De Schutter J. A physiology based inverse dynamic analysis of human gait: potential and perspectives F. Computer Methods in Biomechanics and Biomedical Engineering (2009).* http://www.tandfonline.com/doi/full/10.1080/10255840902788587. Results from both formulations are very similar (differences can be attributed to the slightly different activation dynamics models and cost functions). However, the formulation with implicit activation dynamics (De Groote et al., (2009)) is computationally faster. This can mainly be explained by the omission of a tanh function in the constraint definition, whose evaluation is computationally expensive when solving the NLP.
