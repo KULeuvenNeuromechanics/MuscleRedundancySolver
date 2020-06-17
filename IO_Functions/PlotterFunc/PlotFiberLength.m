@@ -1,6 +1,6 @@
 function [h] = PlotFiberLength(Results,DatStore)
-%UNTITLED3 Summary of this function goes here
-%   Detailed explanation goes here
+% Plot results regarding tracking of provided US signals.
+
 
 
 lw = 2;
@@ -40,7 +40,7 @@ for trial = 1:nPhases
             plot(tSim,lMSim,'Color',Cs(2,:),'LineWidth',lw);  hold on;
        end 
        % generic MRS results
-       if Misc.UStracking
+       if Misc.UStracking && Misc.MRSBool
             lMSim = Results.lM(trial).genericMRS(Minds(j),:);
             tSim = Results.Time(trial).genericMRS;
             plot(tSim,lMSim,'Color',Cs(3,:),'LineWidth',lw);hold on;

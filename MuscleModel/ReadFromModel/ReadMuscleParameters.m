@@ -1,7 +1,7 @@
-function [params,lOpt,L_TendonSlack,Fiso,PennationAngle]=ReadMuscleParameters(ModelPath,names)
+function [params,lMo,lTs,FMo,alphao]=ReadMuscleParameters(ModelPath,names)
 % input= path to model and cell array with muscle names
 % output= params (5xNMuscles) with  row: (1)  IsomForce (2)OptFiberLength
-% 			(3) TendonSlackLength (4) PennationAngle (5) MaxFiberVelocity
+% 			(3) TendonSlackLength (4) alphao (5) MaxFiberVelocity
 
 % read the model
 import org.opensim.modeling.*;
@@ -18,13 +18,13 @@ for i = 1:nNames
    params(2,i) = muscle.getOptimalFiberLength(); 	
    params(1,i) = muscle.getMaxIsometricForce();  	
    params(4,i) = muscle.getPennationAngleAtOptimalFiberLength(); 
-   params(5,i) = muscle.getMaxContractionVelocity()*params(2,i);
+   params(5,i) = muscle.getMaxContractionVelocity();
 end
 
 
 % create additional variables with the same information
-Fiso=params(1,:);
-lOpt=params(2,:);
-L_TendonSlack=params(3,:);
-PennationAngle=params(4,:);
+FMo=params(1,:);
+lMo=params(2,:);
+lTs=params(3,:);
+alphao=params(4,:);
 end
