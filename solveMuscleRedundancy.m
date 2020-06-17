@@ -349,7 +349,7 @@ if Misc.MRSBool == 1
         Results.OptInfo = output;
         % Tendon force
         Results.lMTinterp(trial).genericMRS = DatStore(trial).LMTinterp';
-        [TForcetilde_,TForce_] = TendonForce_lMtilde(Results.lMtildeopt(trial).genericMRS',Misc.params,Results.lMTinterp(trial).genericMRS,Misc.kT,Misc.shift);    
+        [TForcetilde_,TForce_] = TendonForce_lMtilde(Results.lMtildeopt(trial).genericMRS',Misc.params,Results.lMTinterp(trial).genericMRS',Misc.kT,Misc.shift);    
         Results.TForcetilde(trial).genericMRS = TForcetilde_';
         Results.TForce(trial).genericMRS = TForce_';
         % get information F/l and F/v properties
@@ -582,7 +582,7 @@ if BoolParamOpt == 1
     % more difficult (see below).
     
     %sol = opti_MTE.solve();
-    [w_opt,stats] = solve_NLPSOL(opti_MTE,optionssol);
+    [w_opt] = solve_NLPSOL(opti_MTE,optionssol);
     dt = toc;
     disp(['Computation time solving OCP: ' num2str(dt) ' s'])
     diary off
@@ -665,7 +665,7 @@ if BoolParamOpt == 1
         paramsOpt(3,:) = paramsOpt(3,:).*lTs_scaling_param_opt';  % updated tendon slack length       
         Results.lMTinterp(trial).MTE = DatStore(trial).LMTinterp';
         % get force from muscle state
-        [TForcetilde_,TForce_] = TendonForce_lMtilde(Results.lMtildeopt(trial).MTE',paramsOpt,Results.lMTinterp(trial).MTE,kTOpt,shiftOpt);
+        [TForcetilde_,TForce_] = TendonForce_lMtilde(Results.lMtildeopt(trial).MTE',paramsOpt,Results.lMTinterp(trial).MTE',kTOpt,shiftOpt);
         Results.TForcetilde(trial).MTE = TForcetilde_';
         Results.TForce(trial).MTE = TForce_';
         [Fpe_,FMltilde_,FMvtilde_] = getForceLengthVelocityProperties(Results.lMtildeopt(trial).MTE',Results.vMtilde(trial).MTE',Misc.params(5,:));
@@ -786,12 +786,7 @@ if Misc.ValidationBool == true && BoolParamOpt
             opti_validation.subject_to(eulerIntegrator(Xk,Zk,Uk,h) == 0);
             
             % Impose that auxilary variable lM_projected behaves as defined
-            [Hilldiffk,FTk] = ForceEquilibrium_lMtildeState(ak,lMtildek,vMtildek,lM_projectedk,DatStore(trial).LMTinterp(k,:)',optimized_params,optimized_kT,optimized_shift);            
-            lMo = optimized_params(:,2);
-            alphao = optimized_params(:,4);
-            lMk = lMtildek.*lMo;
-            w = lMo.*sin(alphao);
-            opti_validation.subject_to(lMk.^2 - w.^2 == lM_projectedk.^2);           
+            [Hilldiffk,FTk] = ForceEquilibrium_lMtildeState(ak,lMtildek,vMtildek,lM_projectedk,DatStore(trial).LMTinterp(k,:)',optimized_params,optimized_kT,optimized_shift);                  
             
             % Add path constraints
             % Moment constraints
@@ -854,7 +849,7 @@ if Misc.ValidationBool == true && BoolParamOpt
         Results.RActivation(trial).validationMRS = aT_opt(:,Ntot + 1:Ntot + N)*Misc.Topt;
         % Tendon forces from lMtilde
         Results.lMTinterp(trial).validationMRS = DatStore(trial).LMTinterp';
-        [TForcetilde_,TForce_] = TendonForce_lMtilde(Results.lMtildeopt(trial).validationMRS',optimized_params',Results.lMTinterp(trial).validationMRS,optimized_kT',optimized_shift');
+        [TForcetilde_,TForce_] = TendonForce_lMtilde(Results.lMtildeopt(trial).validationMRS',optimized_params',Results.lMTinterp(trial).validationMRS',optimized_kT',optimized_shift');
         Results.TForcetilde(trial).validationMRS = TForcetilde_';
         Results.TForce(trial).validationMRS = TForce_';
         [Fpe_,FMltilde_,FMvtilde_] = getForceLengthVelocityProperties(Results.lMtildeopt(trial).MTE',Results.vMtilde(trial).MTE',Misc.params(5,:));
