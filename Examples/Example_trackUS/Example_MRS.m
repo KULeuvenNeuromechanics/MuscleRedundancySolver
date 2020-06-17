@@ -1,4 +1,4 @@
-%% Example solve muscle redundancy with an MRI model
+%% Example solve muscle redundancy without parameter estimation
 
 clear all;
 

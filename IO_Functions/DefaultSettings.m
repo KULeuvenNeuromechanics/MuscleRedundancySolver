@@ -149,9 +149,12 @@ end
 
 %% Validation
 if ~isfield(Misc,'ValidationBool')
-    Misc.ValidationBool = 0;
+    Misc.ValidationBool = 1;
 end
 
-
+%% Solve muscle redundancy
+if ~isfield(Misc,'MRSbool')
+    Misc.MRSbool = 1;
+end
 end
 

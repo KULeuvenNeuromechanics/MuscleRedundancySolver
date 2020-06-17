@@ -6,7 +6,7 @@ for i=1:nit
     kT = Misc.Set_kT_ByName{i,2};
     IndMus = strcmp(NameSel,DatStore.MuscleNames);
     if any(IndMus)
-        Misc.kT(IndMus)= k;
+        Misc.kT(IndMus)= kT;
     else
         disp(['Cannot set stiffness of ' NameSel ' because this muscle in not used']);
     end

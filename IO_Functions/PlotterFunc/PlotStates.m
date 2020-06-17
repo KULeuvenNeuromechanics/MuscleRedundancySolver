@@ -4,6 +4,10 @@ function [ h ] = PlotStates( Results,DatStore,Misc )
 % Allows for comparison between the solution of the different solved
 % redundancy problems.
 
+BoolParamOpt = 0;
+if Misc.UStracking == 1 || Misc.EMGconstr == 1
+    BoolParamOpt = 1;
+end
 
 h = figure('Name','Optimal states and controls');
 hTabGroup = uitabgroup;
@@ -25,7 +29,7 @@ for trial = 1:length(Results.MActivation(:))
                 legend_title = [legend_title,'Parameter Estimation'];
             end
         end
-        if Misc.ValidationBool==1
+        if Misc.ValidationBool==1 && BoolParamOpt
             plot(Results.Time(trial).validationMRS,Results.MActivation(trial).validationMRS(i,:),'Color',Cs(2,:),'LineWidth',lw./2);  hold on;
             if i == 1
                 legend_title = [legend_title;'Validation MRS'];
@@ -54,7 +58,7 @@ for trial = 1:length(Results.MActivation(:))
                 legend_title = [legend_title,'Parameter Estimation'];
             end
         end
-        if Misc.ValidationBool==1
+        if Misc.ValidationBool==1 && BoolParamOpt
             plot(Results.Time(trial).validationMRS,Results.lMtildeopt(trial).validationMRS(i,:),'Color',Cs(2,:),'LineWidth',lw/2); hold on;
             if i == 1
                 legend_title = [legend_title;'Validation MRS'];
@@ -85,7 +89,7 @@ for trial = 1:length(Results.MActivation(:))
                 legend_title = [legend_title,'Parameter Estimation'];
             end
         end
-        if Misc.ValidationBool==1
+        if Misc.ValidationBool==1 && BoolParamOpt
             plot(Results.Time(trial).validationMRS,Results.lM(trial).validationMRS(i,:),'Color',Cs(2,:),'LineWidth',lw/2);  hold on;
             if i == 1
                 legend_title = [legend_title;'Validation MRS'];
@@ -118,7 +122,7 @@ for trial = 1:length(Results.MActivation(:))
                 legend_title = [legend_title,'Parameter Estimation'];
             end
         end
-        if Misc.ValidationBool==1
+        if Misc.ValidationBool==1 && BoolParamOpt
             plot(Results.Time(trial).validationMRS(1:end-1),Results.RActivation(trial).validationMRS(i,:),'Color',Cs(2,:),'LineWidth',lw/2);  hold on;
             if i == 1
                 legend_title = [legend_title;'Validation MRS'];

@@ -3,18 +3,9 @@
 clear all;
 
 %% Input information
-% Install instructions:
-%   Add the main path ...\solvemuscleredundancy_dev to your matlab folder,
-%   using the following command (in my case)
+% path to datafiles
 ExamplePath = pwd;
 DataPath = [pwd '\Data'];
-% Path up 2 folders is main path
-idcs   = strfind(ExamplePath,'\');
-newdir = ExamplePath(1:idcs(end)-1);
-idcs   = strfind(newdir,'\');
-MainPath = newdir(1:idcs(end)-1);
-% Add all folders under main path
-addpath(genpath(MainPath));
 
 % Add here the paths of IK, ID , US and EMG data trials you want to work with
 % As example we use trial 1 2 & 4 
@@ -66,14 +57,16 @@ Misc.wlM    = 1;          	% weight on tracking fiber length
 
 % Plotter Bool: Boolean to select if you want to plot lots of output information of intermediate steps in the script
 Misc.PlotBool = 1;
+
 % MRS Bool: Select if you want to run the generic muscle redundancy solver
-Misc.MRSBool = 0;
+Misc.MRSBool = 1;
+
 % Validation Bool: Select if you want to run the muscle redundancy solver with the optimized parameters
 Misc.ValidationBool = 1;
-% change mesh frequency
-Misc.Mesh_Frequency = 100;
-%% Run muscle tendon estimator:
-[Results,DatStore,Misc] = solveMuscleRedundancy(model_path,time,Out_path,Misc);
 
-% Save the results structure where you want
-save('Results.mat','Results');
+% set mesh frequency
+Misc.Mesh_Frequency = 100;
+
+%% Run the muscle redundancy problem
+
+[Results,DatStore,Misc] = solveMuscleRedundancy(model_path,time,Out_path,Misc);
