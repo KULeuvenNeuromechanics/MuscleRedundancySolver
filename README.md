@@ -1,5 +1,4 @@
-# MuscleTendonEstimator
-
+# solveMuscleRedundancy
 
 ## Purpose of the software
 
@@ -28,7 +27,7 @@ maarten.afschrift@kuleuven.be and tom.vanwouwe@kuleuven.be for questions on the 
 Add the main folder and subfolder to your MATLAB path 
 
 ```matlab
-addpath(genpath('C/......./SimTK_optcntrlmuscle'))).
+addpath(genpath('C/......./solveMuscleRedundancy'))).
 ```
 
 Several software packages are needed to run the program:
@@ -50,43 +49,68 @@ SolveMuscleRedundancy is the main function of this program and is used to solve 
 
 3. **Misc**: miscellaneous input arguments (matlab structure)
 
+Related to the musculoskeletal model
    - **Misc.DofNames_Input**  is a cell array specifying for which degrees of freedom you want to solve the muscle redundancy problem. Typically the muscle redundancy problem is solved for one leg at a time (there are no muscles spanning both legs).
    - **Misc.MuscleNames_Input** is a cell array that specifies the muscles to be included when solving the muscle redundancy problem. All muscles that actuate (i.e. have a moment arm with respect to) the degrees of freedom specified in *DofNames_Input* will be selected by default if this array is left empty.
-   - **Misc.IKfile**: array of filenames of the inverse kinematics solution of different motion trials (.mot file).
-   - **Misc.IDfile**: array of filenames of the inverse dynamics solution of different motion trials (.sto file). If left empty, the inverse dynamics solution will be computed from the external loads (see Optional input arguments).
-   - **Misc.EMGfile**: array of filenames containing EMG data of different motion trials (.mot file). 
-   - **Misc.USfile**: array of filenames containing fiberlength data of different motion trials (.mot file). The fiber length data is usually measured using ultra-sound (US).
-   - **Misc.UStracking**: boolean to select whether you want to track provided muscle fiber lengths.
+
+Related to the required input files:
+   - **Misc.IKfile**: cell array of filenames of the inverse kinematics solution of different motion trials (.mot file).
+   - **Misc.IDfile**: cell array of filenames of the inverse dynamics solution of different motion trials (.sto file).
+
+#### Required input arguments when using EMG data
+
+The following input arguments are required to use EMG data:
    - **Misc.EMGconstr**: boolean to select whether you want to track provided EMG signals.
-   - **Misc.MRSbool**: boolean to select whether you want to solve the generic muslce redundancy problem.
-   - **Misc.ValidationBool**: boolean to select whether you want to solve the validation muslce redundancy problem.
-
+   - **Misc.EMGfile**: cell array of filenames containing EMG data of different motion trials (.mot file). (can be empty )
+   - **Misc.EMGSelection**: cell aray with muscles that are constrained/driven by EMG data.
    
+#### Required input arguments when using Ultrasound data
 
-#### Optional input arguments for SolveMuscleRedundancy
-   - **Misc.Loads_path**: directory and filename of the external loads (.xml file). The program will use the OpenSim libraries to solve the inverse dynamics problem when the required input argument ID_path is empty and *Misc.Loads_path* points to an external loads file.
+The following input arguments are required to use ultrasound data:
+   - **Misc.UStracking**: boolean to select whether you want to track provided muscle fiber lengths.
+   - **Misc.USfile**: cell array of filenames containing fiberlength data of different motion trials (.mot file). The fiber length data is usually measured using ultra-sound (US).
+   - **Misc.USSelection**: cell array with muscles used in fiber length tracking.
+
+#### Required input arguments for parameter optimization
+
+The following input arguments are required to optimize parameters:
 
    - **Misc.Estimate_TendonStiffness**: array with names of muscle from which tendon stiffness will be estimated.
 
-   - **Misc.Coupled_TendonStiffness**: array with names of muscle from which tendon stiffness will be coupled. This means that the generic tendon stiffnesses of these muscles will be scaled with same variable.
-
    - **lb_kT_scaling**: lower bound of the scaling factor that will scale the generic tendon stiffness into the optimized tendon stiffness.
 
-   - **ub_kT_scaling**: lower bound of the scaling factor that will scale the generic tendon stiffness into the optimized tendon stiffness.	
+   - **ub_kT_scaling**: lower bound of the scaling factor that will scale the generic tendon stiffness into the optimized tendon stiffness.  
 
    - **Estimate_OptFL**: array with names of muscle from which optimal fiber length will be estimated.
-
-   - **Coupled_fiber_length**: array with names of muscle from which optimal fiber length will be coupled. This means that the generic fiber lengths of these muscles will be scaled with same variable.
-
+   
    - **lb_lMo_scaling**: lower bound of the scaling factor that will scale the generic optimal fiber length into the optimized optimal fiber length.
 
    - **ub_lMo_scaling**: lower bound of the scaling factor that will scale the generic optimal fiber length into the optimized optimal fiber length.
 
-   - **Coupled_slack_length**: For muscles from which the optimal fiber length is optimized, the tendon slack length will be optimized as well. Here you acn define an array with names of muscle from which tendon slack length will be coupled. This means that the generic fiber lengths of these muscles will be scaled with same variable.
-
-   - **lb_lTs_scaling**: lower bound of the scaling factor that will scale the generic tendon slack length into the optimized tendon slack length.
+    - **lb_lTs_scaling**: lower bound of the scaling factor that will scale the generic tendon slack length into the optimized tendon slack length.
 
    - **ub_lTs_scaling**: lower bound of the scaling factor that will scale the generic tendon slack length into the optimized tendon slack length.
+
+
+#### Optional input arguments for SolveMuscleRedundancy
+
+Related to flow control:
+
+   - **MRSbool**: boolean to select whether you want to solve the generic muslce redundancy problem. This will be used as initial guess in the parameter optimization (default = true).
+
+   - **ValidationBool**: boolean to select whether you want to solve the validation muslce redundancy problem (default = true).
+
+   - **PlotBool**: boolean to select whether you want to plot lots of output information of intermediate steps in the script.
+
+Related to parameter optimization:
+   
+   - **Misc.Coupled_TendonStiffness**: array with names of muscle from which tendon stiffness will be coupled. This means that the generic tendon stiffnesses of these muscles will be scaled with same variable.
+
+   - **Coupled_fiber_length**: array with names of muscle from which optimal fiber length will be coupled. This means that the generic fiber lengths of these muscles will be scaled with same variable.  
+
+   - **Coupled_slack_length**: For muscles from which the optimal fiber length is optimized, the tendon slack length will be optimized as well. Here you acn define an array with names of muscle from which tendon slack length will be coupled. This means that the generic fiber lengths of these muscles will be scaled with same variable.
+
+Related to weights in objective function:
 
    - **wlM**: cost function weighting factor for 'tracking fiber' lenghts term.
 
@@ -98,9 +122,7 @@ SolveMuscleRedundancy is the main function of this program and is used to solve 
 
    - **wVm**: cost function weighting factor for minimizing muscle fiber velocities (term mainly for regularization of the optimization).
 
-   - **Loads_path**: directory and filename of the external loads (.xml file). The program will use the OpenSim libraries to solve the inverse dynamics problem when the required input argument ID_path is empty and *Misc.Loads_path* points to an external loads file.
-
-   - **ID_ResultsPath**: directory where the inverse dynamics results will be saved when the input argument *Misc.ID_path* is left empty.
+Related to lowpass filtering of input data:
 
    - **f_cutoff_ID**: cutoff frequency for the butterworth recursive low pass filter applied to the inverse dynamics data (default is 6 Hz).
 
@@ -118,10 +140,14 @@ SolveMuscleRedundancy is the main function of this program and is used to solve 
 
    - **f_order_IK**: order of the butterworth recursive low pass filter applied to the inverse kinematics data (default is 6).
 
+Related to transcription:
+
    - **Mesh_Frequency**: number of mesh interval per second (default is 100, but a denser mesh might be required to obtain the desired accuracy especially for faster motions).
 
+Related to nominal parameters model:
    - **Atendon**: vector with tendon stiffness for the selected muscles. The order should correspond to *Misc.MuscleNames_Input*. The default value is 35 and a lower value corresponds to a more compliant tendon. The default value will be used when left empty. An example is provided in section *Example Gait10dof18m* to set a different stiffness to the Achilles tendon.
-
+   
+   - **Set_kT_ByName**: cell array to set the tendon stiffness. The first column is a string wit the name of the muscles, second column is the normalised tendon stiffness.
 
 ## Output arguments
 
@@ -210,7 +236,7 @@ Misc.MRSBool = 1;
 
 And finally solve the muscle redundancy problem
 ```matlab
-[Results,DatStore] = MuscleTendonEstimator(model_path,time,Out_path,Misc);
+[Results,DatStore] = solveMuscleRedundancy(model_path,time,Out_path,Misc);
 ```
 
 One important thing to note is that you can select the muscles you want to include in this analysis. For exampole here, we only select calf muscles and tibialis anterior, all other muscles will be removed from the model. WHen you don't use this input argument or leave this empty, the software will select automatically all muscles that span the selected dofs (Misc.DOfNames_Input).
