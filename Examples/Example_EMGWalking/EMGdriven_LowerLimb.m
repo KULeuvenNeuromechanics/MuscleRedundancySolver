@@ -58,7 +58,7 @@ Misc.UStracking  = 0;            % Boolean to select US tracking option
 
 % information for the EMG constraint
 Misc.EMGconstr  = 1;     		% Boolean to select EMG constrained option
-Misc.EMGbounds  = [-0.01 0.01];  	% upper and lower bound for difference between simulated and measured muscle activity
+Misc.EMGbounds  = 0;  	% upper and lower bound for difference between simulated and measured muscle activity
 Misc.BoundsScaleEMG = [0.01 3];  % maximal value to scale EMG
 
 % Set weights
