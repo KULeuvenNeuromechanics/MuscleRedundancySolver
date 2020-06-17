@@ -5,7 +5,7 @@
 
 The original intent of the provided MATLAB code was to solve the muscle redundancy problem using direct collocation as described in De Groote F, Kinney AL, Rao AV, Fregly BJ. Evaluation of direct collocation optimal control problem formulations for solving the muscle redundancy problem. Annals of Biomedical Engineering (2016). http://link.springer.com/article/10.1007%2Fs10439-016-1591-9. 
 
-From v3.0, there are possibilities to, concurrently with solving the muscle redundancy problem, estimate parameters of the modelled muscle-tendon units by using collected EMG and ultrasound data. Optimal fiber length, tendon slack length and tendon stiffness can be set as free variables within the muscle redundancy problem. Experimentally measured fiber-lengths can be tracked (US-tracking), the tracking error is a part of the objective function. Details on this parameter estimation problem can be found in Delabastita et al. 2020 (https://link.springer.com/article/10.1007/s10439-019-02395-x). Collected EMG can either be tracked (EMG-tracking) or imposed exactly (EMG-driven). Details on using EMG data in the parameter estimation can be found in Falisse 2016 (https://ieeexplore.ieee.org/document/7748556). Another important feature is that the user can estimate muscle-tendon parameters over different trials of the same movement or from different movements. This allows to make estimation more reliable. We reckon that for solving the muscle redundancy problem OpenSim Moco (https://www.biorxiv.org/content/10.1101/839381v1) might be a more user-friendly and straightforward alternative. However, our software allows the combination of different trials to estimate muscle-tendon parameters. Another difference is in that we use automatic differentiation, while this is not (yet) enabled in Moco. 
+From v3.0, there are possibilities to, concurrently with solving the muscle redundancy problem, estimate parameters of the modelled muscle-tendon units by using collected EMG and ultrasound data. Optimal fiber length, tendon slack length and tendon stiffness can be set as free variables within the muscle redundancy problem. Experimentally measured fiber lengths can be tracked (US-tracking), the tracking error is a part of the objective function. Details on this parameter estimation problem can be found in Delabastita et al. 2020 (https://link.springer.com/article/10.1007/s10439-019-02395-x). Collected EMG can either be tracked (EMG-tracking) or imposed exactly (EMG-driven). Details on using EMG data in the parameter estimation can be found in Falisse 2016 (https://ieeexplore.ieee.org/document/7748556). Another important feature is that the user can estimate muscle-tendon parameters over different trials of the same movement or from different movements. This allows to make estimation more reliable. We reckon that for solving the muscle redundancy problem OpenSim Moco (https://www.biorxiv.org/content/10.1101/839381v1) might be a more user-friendly and straightforward alternative. However, our software allows the combination of different trials to estimate muscle-tendon parameters. Another difference is in that we use automatic differentiation, while this is not (yet) enabled in Moco. 
 
 
 ## Structure of the code
@@ -21,7 +21,7 @@ The code allows to solve three optimal control problems in the following order:
 The user is off course free to select any of the three described problems. 
 
 Any questions? Please contact us:
-maarten.afschrift@kuleuven.be and tom.vanwouwe@kuleuven.be for questions on the parameter optimization algorithm;  friedl.degroote@kuleuven.beantoine.falisse@kuleuven.be.
+maarten.afschrift@kuleuven.be and tom.vanwouwe@kuleuven.be for questions on the parameter optimization algorithm;  friedl.degroote@kuleuven.be; antoine.falisse@kuleuven.be.
 
 ## Installation Instruction
 
@@ -55,7 +55,7 @@ SolveMuscleRedundancy is the main function of this program and is used to solve 
    - **Misc.IKfile**: array of filenames of the inverse kinematics solution of different motion trials (.mot file).
    - **Misc.IDfile**: array of filenames of the inverse dynamics solution of different motion trials (.sto file). If left empty, the inverse dynamics solution will be computed from the external loads (see Optional input arguments).
    - **Misc.EMGfile**: array of filenames containing EMG data of different motion trials (.mot file). 
-   - **Misc.USfile**: array of filenames containing fiberlength data of different motion trials (.mot file). The fiber length data is usually measured using ultra-sound (US).
+   - **Misc.USfile**: array of filenames containing fiber length data of different motion trials (.mot file). The fiber length data is usually measured using ultrasound (US).
    - **Misc.UStracking**: boolean to select whether you want to track provided muscle fiber lengths.
    - **Misc.EMGconstr**: boolean to select whether you want to track provided EMG signals.
    - **Misc.MRSbool**: boolean to select whether you want to solve the generic muslce redundancy problem.
@@ -72,7 +72,7 @@ SolveMuscleRedundancy is the main function of this program and is used to solve 
 
    - **lb_kT_scaling**: lower bound of the scaling factor that will scale the generic tendon stiffness into the optimized tendon stiffness.
 
-   - **ub_kT_scaling**: lower bound of the scaling factor that will scale the generic tendon stiffness into the optimized tendon stiffness.	
+   - **ub_kT_scaling**: upper bound of the scaling factor that will scale the generic tendon stiffness into the optimized tendon stiffness.	
 
    - **Estimate_OptFL**: array with names of muscle from which optimal fiber length will be estimated.
 
@@ -80,15 +80,15 @@ SolveMuscleRedundancy is the main function of this program and is used to solve 
 
    - **lb_lMo_scaling**: lower bound of the scaling factor that will scale the generic optimal fiber length into the optimized optimal fiber length.
 
-   - **ub_lMo_scaling**: lower bound of the scaling factor that will scale the generic optimal fiber length into the optimized optimal fiber length.
+   - **ub_lMo_scaling**: upper bound of the scaling factor that will scale the generic optimal fiber length into the optimized optimal fiber length.
 
-   - **Coupled_slack_length**: For muscles from which the optimal fiber length is optimized, the tendon slack length will be optimized as well. Here you acn define an array with names of muscle from which tendon slack length will be coupled. This means that the generic fiber lengths of these muscles will be scaled with same variable.
+   - **Coupled_slack_length**: For muscles from which the optimal fiber length is optimized, the tendon slack length will be optimized as well. Here you can define an array with names of muscles for which tendon slack length will be coupled. This means that the generic tendon slack lengths of these muscles will be scaled with same variable.
 
    - **lb_lTs_scaling**: lower bound of the scaling factor that will scale the generic tendon slack length into the optimized tendon slack length.
 
-   - **ub_lTs_scaling**: lower bound of the scaling factor that will scale the generic tendon slack length into the optimized tendon slack length.
+   - **ub_lTs_scaling**: upper bound of the scaling factor that will scale the generic tendon slack length into the optimized tendon slack length.
 
-   - **wlM**: cost function weighting factor for 'tracking fiber' lenghts term.
+   - **wlM**: cost function weighting factor for 'tracking fiber lengths' term.
 
    - **wEMG**: cost function weighting factor for 'tracking EMG' term.
 
@@ -120,7 +120,7 @@ SolveMuscleRedundancy is the main function of this program and is used to solve 
 
    - **Mesh_Frequency**: number of mesh interval per second (default is 100, but a denser mesh might be required to obtain the desired accuracy especially for faster motions).
 
-   - **Atendon**: vector with tendon stiffness for the selected muscles. The order should correspond to *Misc.MuscleNames_Input*. The default value is 35 and a lower value corresponds to a more compliant tendon. The default value will be used when left empty. An example is provided in section *Example Gait10dof18m* to set a different stiffness to the Achilles tendon.
+   - **Atendon**: vector with normalized tendon stiffness for the selected muscles. The order should correspond to *Misc.MuscleNames_Input*. The default value is 35 and a lower value corresponds to a more compliant tendon. The default value will be used when left empty. An example is provided in section *Example Gait10dof18m* to set a different stiffness to the Achilles tendon.
 
 
 ## Output arguments
@@ -147,11 +147,11 @@ We provide all state and control trajectories for the different trials and optim
 
 10. lm: muscle fiber length [m]
 
-11. MvM: normalized muscle fiber velocity [-]
+11. MvMtilde: normalized muscle fiber velocity [-]
 
 12. FMltilde: force-length multiplier [-]
 
-13. FMltilde: force-velocity multiplier [-]
+13. FMvtilde: force-velocity multiplier [-]
 
 14. Param: scaling factors for the different optimized parameters [-]	
 
@@ -293,7 +293,7 @@ Second, you can select bounds on the deviation between meausred EMG data and sim
 ```matlab
 Misc.EMGbounds  = [-0.01 0.01];     % upper and lower bound for difference between simulated and measured muscle activity
 ```
-As additional settings, you can also drive/contrain multiple muscles based on one signal. For example you can use the signal of the medial gastrocnemius in the excitation of the lateral gastrocnemius.
+As additional settings, you can also drive/constrain multiple muscles based on one signal. For example you can use the signal of the medial gastrocnemius in the excitation of the lateral gastrocnemius.
 ```matlab
 Misc.EMG_MuscleCopies = {'med_gas_l','lat_gas_l'};       %  use gastrocnemius medialis EMG to constrain activity of the lateral gastrocn
 ```
