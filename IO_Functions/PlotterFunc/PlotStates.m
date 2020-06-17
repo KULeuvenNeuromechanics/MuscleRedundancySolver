@@ -1,5 +1,8 @@
 function [ h ] = PlotStates( Results,DatStore,Misc )
-% PlotStates: plots the states of all the hill-type muscles in the model
+
+% PlotStates: plots the states of all the hill-type muscles in the model.
+% Allows for comparison between the solution of the different solved
+% redundancy problems.
 
 
 h = figure('Name','Optimal states and controls');

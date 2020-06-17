@@ -1,6 +1,6 @@
 function [Misc] = DefaultSettings(Misc)
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
+% If user does not specify values for specific Misc fields, these are
+% filled out with default values.
 
 %% Filters
 if ~isfield(Misc,'f_cutoff_ID') || isempty(Misc.f_cutoff_ID)
@@ -63,8 +63,8 @@ if ~isfield(Misc,'EMGSelection')
 end
 
 %% Info related to parameter optimizatiEMGbounds on
-if ~isfield(Misc,'Estimate_OptFL')
-    Misc.Estimate_OptFL =[];
+if ~isfield(Misc,'Estimate_OptimalFiberLength')
+    Misc.Estimate_OptimalFiberLength =[];
 end
 if ~isfield(Misc,'Estimate_TendonStiffness')
     Misc.Estimate_TendonStiffness =[];

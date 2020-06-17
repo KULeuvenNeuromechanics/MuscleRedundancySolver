@@ -37,4 +37,4 @@ Misc.MRSBool = 1;
 Misc.OutName = 'Walking_';
 
 %% Run muscle tendon estimator:
-[Results,DatStore] = MuscleTendonEstimator(model_path,time,Out_path,Misc);
+[Results,DatStore] = solveMuscleRedundancy(model_path,time,Out_path,Misc);

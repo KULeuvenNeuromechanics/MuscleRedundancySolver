@@ -1,6 +1,5 @@
 function [h] = PlotEMGTracking(Results,DatStore)
-%UNTITLED2 Summary of this function goes here
-%   Detailed explanation goes here
+% Plot results regarding tracking of provided EMG signals.
 
 lw = 2; % linewidth
 

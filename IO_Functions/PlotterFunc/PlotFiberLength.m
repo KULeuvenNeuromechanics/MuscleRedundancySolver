@@ -1,6 +1,6 @@
 function [h] = PlotFiberLength(Results,DatStore)
-%UNTITLED3 Summary of this function goes here
-%   Detailed explanation goes here
+% Plot results regarding tracking of provided US signals.
+
 
 
 lw = 2;

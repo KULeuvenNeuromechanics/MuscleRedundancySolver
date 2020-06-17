@@ -1,20 +1,19 @@
 function [DatStore] = GetIndices_US(DatStore,Misc,i)
-%UNTITLED4 Summary of this function goes here
-%   Detailed explanation goes here
-
+% Add to DatStore the information on the indices of which muscles parameters will be
+% estimated.
 if Misc.UStracking == 1 || Misc.EMGconstr == 1 
-    DatStore(i).free_lMo = zeros(length(Misc.Estimate_OptFL),1);
+    DatStore(i).free_lMo = zeros(length(Misc.Estimate_OptimalFiberLength),1);
     DatStore(i).free_kT = zeros(length(Misc.Estimate_TendonStiffness),1);
     DatStore(i).coupled_kT = zeros(size(Misc.Coupled_TendonStiffness))';
     DatStore(i).coupled_lMo = zeros(size(Misc.Coupled_fiber_length))';
     DatStore(i).coupled_lTs = zeros(size(Misc.Coupled_slack_length))';
     
     for j = 1:length(DatStore(i).free_lMo)
-        IndsSel = find(strcmp(DatStore(i).MuscleNames,Misc.Estimate_OptFL{j}));
+        IndsSel = find(strcmp(DatStore(i).MuscleNames,Misc.Estimate_OptimalFiberLength{j}));
         if ~isempty(IndsSel)
             DatStore(i).free_lMo(j) = IndsSel;
         else
-            warning(['Cannot optimize optimal fiber length of muscle ' Misc.Estimate_OptFL{j},...
+            warning(['Cannot optimize optimal fiber length of muscle ' Misc.Estimate_OptimalFiberLength{j},...
                 ' because this muscle is not included in the model']);
         end
     end    

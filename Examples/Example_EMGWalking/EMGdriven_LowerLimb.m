@@ -22,7 +22,7 @@ Misc.OutName ='gait_';
 Misc.DofNames_Input={'ankle_angle_l','knee_angle_l','hip_flexion_l'};    % select the DOFs you want to include in the optimization
 
 % Set the tendon stifness of all muscles
-Misc.ATendon = [];      % default way to set tendon stiffenss (default values is 35)
+Misc.kT = [];      % default way to set tendon stiffenss (default values is 35)
 
 % Provide the correct headers int case you EMG file has not the same
 % headers as the muscle names in OpenSim (leave empty when you don't want
@@ -45,7 +45,7 @@ Misc.ub_kT_scaling = 2.2; % Upper bound for scaling generic tendon stiffness
 Misc.Coupled_TendonStiffness = Misc.EMGSelection; % Couple muscles that should have equal tendon stifness
 
 % Settings for estimating optimal fiber length
-Misc.Estimate_OptFL = Misc.EMGSelection; % Names of muscles of which optimal fiber length is estimated - slack length is estimated for these muscles as well
+Misc.Estimate_OptimalFiberLength = Misc.EMGSelection; % Names of muscles of which optimal fiber length is estimated - slack length is estimated for these muscles as well
 Misc.lb_lMo_scaling = 0.1; % Lower bound for scaling optimal fiber length
 Misc.ub_lMo_scaling = 2.2; % Upper bound for scaling optimal fiber length
 Misc.lb_lTs_scaling = 0.9; % Lower bound for scaling tendon slack length
@@ -75,4 +75,4 @@ Misc.MRSBool = 1;
 Misc.ValidationBool = 1; 	% TO DO: we should report results of EMG driven simulation as well
 
 %% Run muscle tendon estimator:
-[Results,DatStore,Misc] = MuscleTendonEstimator(model_path,time,Out_path,Misc);
+[Results,DatStore,Misc] = solveMuscleRedundancy(model_path,time,Out_path,Misc);

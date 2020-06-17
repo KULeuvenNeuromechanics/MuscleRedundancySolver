@@ -29,7 +29,7 @@ Misc.MuscleNames_Input = {'med_gas_r','lat_gas_r','soleus_r','tib_ant_r'}; % sel
 
 
 % Set the tendon stifness of all muscles
-Misc.ATendon = [];      % default way to set tendon stiffenss (default values is 35)
+Misc.kT = [];      % default way to set tendon stiffenss (default values is 35)
 
 % Settings for estimating tendon stiffness
 Misc.Estimate_TendonStifness = {'med_gas_r';'lat_gas_r';'soleus_r'}; % Names of muscles of which tendon stifness is estimated
@@ -38,7 +38,7 @@ Misc.ub_kT_scaling = 2.2; % Upper bound for scaling generic tendon stiffness
 Misc.Coupled_TendonStifness = {'med_gas_r';'lat_gas_r';'soleus_r'}; % Couple muscles that should have equal tendon stifness
 
 % Settings for estimating optimal fiber length
-Misc.Estimate_OptFL = {'med_gas_r';'soleus_r';'lat_gas_r'}; % Names of muscles of which optimal fiber length is estimated - slack length is estimated for these muscles as well
+Misc.Estimate_OptimalFiberLength = {'med_gas_r';'soleus_r';'lat_gas_r'}; % Names of muscles of which optimal fiber length is estimated - slack length is estimated for these muscles as well
 Misc.lb_lMo_scaling = 0.1; % Lower bound for scaling optimal fiber length
 Misc.ub_lMo_scaling = 2.2; % Upper bound for scaling optimal fiber length
 Misc.lb_lTs_scaling = 0.9; % Lower bound for scaling tendon slack length
@@ -77,7 +77,7 @@ Misc.MRSBool = 1;
 Misc.ValidationBool = 1; 	% TO DO: we should report results of EMG driven simulation as well
 
 %% Run muscle tendon estimator:
-[Results,DatStore,Misc] = MuscleTendonEstimator(model_path,time,Out_path,Misc);
+[Results,DatStore,Misc] = solveMuscleRedundancy(model_path,time,Out_path,Misc);
 
 % Save the results structure where you want
 save('Results.mat','Results');

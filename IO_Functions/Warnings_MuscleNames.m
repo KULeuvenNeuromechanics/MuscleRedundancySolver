@@ -1,17 +1,17 @@
 function [] = Warnings_MuscleNames(DatStore,Misc,i)
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
+% Generate warnings should there be inconsistensies in the user-provided
+% muscle names.
 
 % get muscle names
 MNames = DatStore(i).MuscleNames;
 
 % optimization parameters muscles
-[r,c] = size(Misc.Estimate_OptFL);
+[r,c] = size(Misc.Estimate_OptimalFiberLength);
 for i = 1:r
     for j = 1:c
-        if ~any(strcmp(MNames,Misc.Estimate_OptFL{i,j}))
-            warning(['Could not find muscle ' Misc.Estimate_OptFL{i,j} ' in the selected dofs of the model',...
-                ', please adapt Misc.Estimate_OptFL']);
+        if ~any(strcmp(MNames,Misc.Estimate_OptimalFiberLength{i,j}))
+            warning(['Could not find muscle ' Misc.Estimate_OptimalFiberLength{i,j} ' in the selected dofs of the model',...
+                ', please adapt Misc.Estimate_OptimalFiberLength']);
         end
     end
 end

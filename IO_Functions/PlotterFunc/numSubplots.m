@@ -1,5 +1,6 @@
 function [p,n]=numSubplots(n)
-   
+% Compute how many subplots are necessary and determine the distribution of the
+% subplots.
     
 while isprime(n) & n>4 
     n=n+1;

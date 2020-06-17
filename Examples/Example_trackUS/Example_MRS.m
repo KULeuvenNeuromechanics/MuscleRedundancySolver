@@ -34,4 +34,4 @@ Misc.DofNames_Input={'ankle_angle_l','knee_angle_l','hip_flexion_l','hip_adducti
 Misc.MRSBool = 1;
 
 % Run muscle tendon estimator:
-[Results,DatStore,Misc] = MuscleTendonEstimator(model_path,time,Out_path,Misc);
+[Results,DatStore,Misc] = solveMuscleRedundancy(model_path,time,Out_path,Misc);
