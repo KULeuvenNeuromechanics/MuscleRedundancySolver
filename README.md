@@ -5,7 +5,7 @@
 
 The original intent of the provided MATLAB code was to solve the muscle redundancy problem using direct collocation as described in De Groote F, Kinney AL, Rao AV, Fregly BJ. Evaluation of direct collocation optimal control problem formulations for solving the muscle redundancy problem. Annals of Biomedical Engineering (2016). http://link.springer.com/article/10.1007%2Fs10439-016-1591-9. 
 
-From v3.0, there are possibilities to, concurrently with solving the muscle redundancy problem, estimate parameters of the modelled muscle-tendon units by using collected EMG and ultrasound data. Optimal fiber length, tendon slack length and tendon stiffness can be set as free variables within the muscle redundancy problem. Experimentally measured fiber-lengths can be tracked (US-tracking), the tracking error is a part of the objective function. Details on this parameter estimation problem can be found in Delabastita et al. 2020 (https://link.springer.com/article/10.1007/s10439-019-02395-x). Collected EMG can either be tracked (EMG-tracking) or imposed exactly (EMG-driven). Details on using EMG data in the parameter estimation can be found in (https://ieeexplore.ieee.org/document/7748556). Another important feature is that the user can estimate muscle-tendon parameters over different trials of the same movement or from different movements. This allows to make estimation more reliable. We reckon that for solving the muscle redundancy problem OpenSim Moco (https://www.biorxiv.org/content/10.1101/839381v1) might be a more user-friendly and straightforward alternative. However, our software allows the combination of different trials to estimate muscle-tendon parameters. Another difference is in that we use automatic differentiation, while this is not (yet) enabled in Moco. 
+From v3.0, there are possibilities to, concurrently with solving the muscle redundancy problem, estimate parameters of the modelled muscle-tendon units by using collected EMG and ultrasound data. Optimal fiber length, tendon slack length and tendon stiffness can be set as free variables within the muscle redundancy problem. Experimentally measured fiber-lengths can be tracked (US-tracking), the tracking error is a part of the objective function. Details on this parameter estimation problem can be found in Delabastita et al. 2020 (https://link.springer.com/article/10.1007/s10439-019-02395-x). Collected EMG can either be tracked (EMG-tracking) or imposed exactly (EMG-driven). Details on using EMG data in the parameter estimation can be found in Falisse 2016 (https://ieeexplore.ieee.org/document/7748556). Another important feature is that the user can estimate muscle-tendon parameters over different trials of the same movement or from different movements. This allows to make estimation more reliable. We reckon that for solving the muscle redundancy problem OpenSim Moco (https://www.biorxiv.org/content/10.1101/839381v1) might be a more user-friendly and straightforward alternative. However, our software allows the combination of different trials to estimate muscle-tendon parameters. Another difference is in that we use automatic differentiation, while this is not (yet) enabled in Moco. 
 
 From v2.1, CasADi can be used as an alternative to GPOPS-II and ADiGator. CasADi is an open-source tool for nonlinear optimization and algorithmic differentiation (https://web.casadi.org/). Results using CasADi and GPOPS-II are very similar (differences can be attributed to the different direct collocation formulations and scaling). We used CasADi's Opti stack, which is a collection of CasADi helper classes that provides a close correspondence between mathematical NLP notation and computer code (https://web.casadi.org/docs/#document-opti). CasADi is actively maintained and developed, and has an active forum (https://groups.google.com/forum/#!forum/casadi-users).
 
@@ -171,16 +171,16 @@ The musculotendon properties are fully described in the supplementary materials 
 
 ### Solve the muscle redundancy problem
 
-In this example, we only solve the muscle redundancy problem without parameter estimation. This means that we try to find the optimal muscle excitations (i.e. controls)  that reconstruct the measured inverse dynamic joint moments with minimal excitations and activations squared. This is similar as in DeGroote 2016 (http://link.springer.com/article/10.1007%2Fs10439-016-1591-9) and was the the main aim of v1 and v2 of this software.
+In this example (Walking_DeGrooteetal2016), we only solve the muscle redundancy problem without parameter estimation. This means that we try to find the optimal muscle excitations (i.e. controls)  that reconstruct the measured inverse dynamic joint moments with minimal excitations and activations squared. This is similar as in DeGroote 2016 (http://link.springer.com/article/10.1007%2Fs10439-016-1591-9) and was the the main aim of v1 and v2 of this software.
 
-You have to specify the opensim model, inverse kinematic solution and inverse dynamic solution.
+You have to select the opensim model, inverse kinematic solution and inverse dynamic solution.
 
 ```matlab
 model_path  = fullfile(DataPath,'subject1.osim');
 Misc.IKfile = {fullfile(DataPath,'Walking_IK.mot')};
 Misc.IDfile = {fullfile(DataPath,'Walking_ID.sto')};
 ```
-You can specify the start and end time of the analysis:
+You can also select the start and end time of the analysis:
 
 ```matlab
 time=[0.516 1.95]; % Right stance phase (+50ms beginning and end of time interval, more details see manual and publication)
@@ -215,3 +215,119 @@ And finally solve the muscle redundancy problem
 ```matlab
 [Results,DatStore] = MuscleTendonEstimator(model_path,time,Out_path,Misc);
 ```
+
+One important thing to note is that you can select the muscles you want to include in this analysis. For exampole here, we only select calf muscles and tibialis anterior, all other muscles will be removed from the model. WHen you don't use this input argument or leave this empty, the software will select automatically all muscles that span the selected dofs (Misc.DOfNames_Input).
+```matlab
+Misc.MuscleNames_Input = {'med_gas_l','lat_gas_l','soleus_l','tib_ant_l'}; % select muscles
+```
+
+### Info on parameter estimation
+
+You can estimate the optimal fiber length, tendon slack length and tendon stiffness using EMG-data or ultrasound data. For example if you want to estimate the tendon stiffness of the calf muscles.
+
+```matlab
+  Misc.Estimate_TendonStifness = {'med_gas_l';'lat_gas_l';'soleus_l'}; % Names of muscles of which tendon stifness is estimated
+```
+
+You can also select bounds on maximal deviation of the estimated tendon stiffness from the nominal values (i.e. lw < KOpt/Knominal / ub)
+
+```matlab
+  Misc.lb_kT_scaling = 0.5; % Lower bound
+  Misc.ub_kT_scaling = 2; % Upper bound 
+```
+
+And finally you can couple the (change in) tendon stiffness of multiple muscles. For example if you assume that the calf muscles share the same tendon
+
+```matlab
+Misc.Coupled_TendonStifness = {'med_gas_l';'lat_gas_l';'soleus_l'}; % Couple muscles that should have equal tendon stiffness
+```
+
+The same approach is used to estimate optimal fiber length and tendon slack length. Note that that when you want to optimize optimal fiber length, by default you also optimize tendon slack length. Selection of muscles:
+
+```matlab
+Misc.Estimate_OptFL = {'med_gas_l';'soleus_l';'lat_gas_l';'tib_ant_l'}; % Names of muscles of which optimal fiber length is estimated - slack length is estimated for these muscles as well
+```
+Bounds on the ratio between estimated values and nomimal values
+```matlab
+
+Misc.lb_lMo_scaling = 0.1; % Lower bound for scaling optimal fiber length
+Misc.ub_lMo_scaling = 2.2; % Upper bound for scaling optimal fiber length
+Misc.lb_lTs_scaling = 0.9; % Lower bound for scaling tendon slack length
+Misc.ub_lTs_scaling = 1.1; % Upper bound for scaling tendon slack length
+```
+And coupling of muscles (i.e. equal ratio of change in estimated and nominal muscle properties)
+
+```matlab
+Misc.Coupled_fiber_length = {'med_gas_l';'lat_gas_l'}; % Couple muscles that should have equal optimal fiber length
+Misc.Coupled_slack_length = {'med_gas_l';'lat_gas_l'}; % Couple muscles that should have equal tendon slack length
+```
+
+
+### EMG-information
+
+In this example (Example_EMGWalking), we use EMG-data to
+   1) Constrain the simulated muscle activity based on EMG data in the muscle redundancy problem (Add this)
+   2) Estimate muscle-tendon parameters (tendon stiffness, tendon slack length and optimal fiber length) of the calf muscles (EMGDriven_simpleAnkle.m) or multiple lower limb muscles (EMGdriven_LowerLimb.m) using an EMG driven approach. This approach is based on Falisse 2016 (https://ieeexplore.ieee.org/document/7748556).
+
+When using EMG data, you have always have to indicate that you want to use EMG data with a boolean and provide the EMG file (.mot format). This EMG file should contain the processed EMG data (filtered + linear enveloppe). 
+
+```matlab
+   Misc.EMGconstr  = 1;          % Boolean to select EMG constrained option
+   Misc.EMGfile = {'C/Path/EMG_gait.mot'}; % path to EMG file
+```
+
+You also have to select the muscles that will be driven/constrained by EMG data.
+```matlab
+   Misc.EMGSelection = {'tib_ant_l','lat_gas_l','med_gas_l','soleus_l'};
+```
+
+In the preferred case, the names of the muscles in the EMG file and in the model correspond. If this is not the case, you can adapt the names in the .mot file as follows: (note that for example the header of the second collumn in the EMG file will be adapted here to 'bifemlh_r')
+```matlab
+Misc.EMGheaders = {'Time','bifemlh_r','tib_ant_r','per_long_r','lat_gas_r','bifemsh_r','soleus_r','vas_lat_r','vas_med_r','per_brev_l','tib_ant_l','per_long_l','lat_gas_l','med_gas_l','soleus_l','vas_lat_l','vas_med_l','add_long_l','rect_fem_l','tfl_l','glut_med2_l','bifemsh_l','bifemlh_l','glut_med2_r','rect_fem_r'};
+```
+
+The relation between EMG data and simulated muscle excitations can be constrained in two ways. First, you can constrain the optimization variable (s) that scales EMG data to simulated muscle activity. (i.e. S EMG = SimExcitation). In case you normalised your EMG data to MVC measurements, this scale factor should be close to 1.
+```matlab
+Misc.BoundsScaleEMG = [0.9 1.1];  % maximal value to scale EMG
+```
+
+Second, you can select bounds on the deviation between meausred EMG data and simulated muscle excitations (i.e. lower bound <  S EMG - SimExcitation < Upper bound). For example in an EMG driven approach the lower and upper bound are zero.
+
+```matlab
+Misc.EMGbounds  = [-0.01 0.01];     % upper and lower bound for difference between simulated and measured muscle activity
+```
+As additional settings, you can also drive/contrain multiple muscles based on one signal. For example you can use the signal of the medial gastrocnemius in the excitation of the lateral gastrocnemius.
+```matlab
+Misc.EMG_MuscleCopies = {'med_gas_l','lat_gas_l'};       %  use gastrocnemius medialis EMG to constrain activity of the lateral gastrocn
+```
+See "Info on parameter estimation" to combine EMG information with parameter estimation.
+
+### Ultrasound-information
+
+You can use ultrasound information to estimate muscle-tendon properties by tracking fiber lengths in the muscle redundancy problem. We provided an example in the folder "Example_UStracking" based on Delabastita et al. 2020 (https://link.springer.com/article/10.1007/s10439-019-02395-x).
+
+You can input ultrasound data by selecting the right motion file. This file should contain fiber length (in m). Note muscle names in the header of this file should be the same as in the OpenSim model.
+
+```matlab
+Misc.USfile = {fullfile(DataPath,'PSF_US_stride2.mot');fullfile(DataPath,'+8_US_stride2.mot');fullfile(DataPath,'+15_US_stride2.mot')};
+```
+You have to set the boolean for ultrasound tracking and select the muscles you want to use in the tracking.
+
+```matlab
+Misc.UStracking  = 1;            % Boolean to select US tracking option
+Misc.USSelection = {'med_gas_l'; 'soleus_l'}; % select muscles
+```
+
+Finally you can set the weight for tracking ultrasound data in the objective function. 
+
+```matlab
+   Misc.wlM    = 1;                % weight on tracking fiber length: note that
+```
+Note that increasing this weight most likely results in "extreme" overfitting. Run the validation tool to investigate this.
+
+```matlab
+   Misc.ValidationBool = 1;
+```
+
+
+
