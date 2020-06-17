@@ -2,7 +2,7 @@
 % All muscle-tendon characteristics are fully described in the publication
 % and its online supplement
 
-function [err, FT] = ForceEquilibrium_lMtildeState_lMoFree_lTsFree_kTFree(a,lMtilde,vMtilde,aux,lMT,lMo_lTs_kT_scaling,params,kT)
+function [err, FT] = ForceEquilibrium_lMtildeState_lMoFree_lTsFree_kTFree(a,lMtilde,vMtilde,lM_projected,lMT,lMo_lTs_kT_scaling,params,kT)
 
 FMo = params(:,1);
 lMo = lMo_lTs_kT_scaling(:,1).*params(:,2);
@@ -18,8 +18,8 @@ shift = getShift(kT);
 lM = lMtilde.*lMo;
 w = lMo.*sin(alphao);
 % lT = lMT - sqrt((lM.^2 - w.^2));
-% lT = lMT - sqrt(aux);
-lT = lMT - aux;
+% lT = lMT - sqrt(lM_projected);
+lT = lMT - lM_projected;
 lTtilde = lT./lTs;
 
 % Tendon force-length characteristic

@@ -1,7 +1,7 @@
-% This function computes the tendon force from the normalized muscle fiber
-% length
 
 function [Ftilde,F] = TendonForce_lMtilde(lMtilde,params,lMT,kT,shift)
+% This function computes the tendon force from the normalized muscle fiber
+% length
 
 FMo = ones(size(lMtilde,1),1)*params(1,:);
 lMo = ones(size(lMtilde,1),1)*params(2,:);

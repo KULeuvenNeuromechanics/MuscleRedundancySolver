@@ -1,7 +1,6 @@
 function [time] = Check_TimeIndices(Misc,time)
-%UNTITLED2 Summary of this function goes here
-%   Detailed explanation goes here
-
+% Adapt user-provided time window to match closest time points in the IK
+% solution
 for i = 1: Misc.nTrials
     IK = importdata(Misc.IKfile{i});
     tIK = IK.data(:,1);

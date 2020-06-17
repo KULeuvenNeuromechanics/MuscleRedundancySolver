@@ -1,6 +1,6 @@
 function [] = Warnings_MuscleNames(DatStore,Misc,i)
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
+% Generate warnings should there be inconsistensies in the user-provided
+% muscle names.
 
 % get muscle names
 MNames = DatStore(i).MuscleNames;

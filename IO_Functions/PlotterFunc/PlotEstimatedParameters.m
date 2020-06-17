@@ -1,6 +1,6 @@
 function [h] = PlotEstimatedParameters(Results,DatStore,Misc)
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
+% Plot optimized muscle-tendon parameters relative to their generic value
+% and provided bounds.
 
 
 h = figure('Name','Opt Param');

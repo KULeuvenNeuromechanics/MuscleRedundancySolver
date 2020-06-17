@@ -1,4 +1,6 @@
 function [FM, lMtilde, FMactFL, FMactFV, FMpas, cos_alpha] = HillModel_RigidTendon(a,lMT,vMT,Parameters,ActiveFVParameters,PassiveFLParameters,Faparam)
+% Returns muscle forces depending on muscle state assuming a rigid tendon.
+
 
 Fmax = Parameters(1,:);
 lMopt = Parameters(2,:);

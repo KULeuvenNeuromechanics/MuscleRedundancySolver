@@ -1,6 +1,6 @@
 function [Misc] = DefaultSettings(Misc)
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
+% If user does not specify values for specific Misc fields, these are
+% filled out with default values.
 
 %% Filters
 if ~isfield(Misc,'f_cutoff_ID') || isempty(Misc.f_cutoff_ID)

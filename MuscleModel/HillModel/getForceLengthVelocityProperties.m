@@ -1,5 +1,9 @@
 function [Fpe,FMltilde,FMvtilde] = getForceLengthVelocityProperties(lMtilde,vMtilde,vMtildemax,varargin)
-% gets the force-length and force-velocity properties of DeGroote 2016 muscle model 
+% Gets the force-length and force-velocity properties of DeGroote 2016 muscle model 
+% OUTPUT:
+% Fpe: normalized passive muscle force
+% FMltilde: normalized force-length multiplier
+% FMvtilde: normalized force-velocity multiplier
 
 % Make plot with the F/L and F/v relation ?
 boolPlot= 0;

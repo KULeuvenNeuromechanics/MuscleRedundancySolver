@@ -1,7 +1,6 @@
 function [DatStore] = GetIndices_US(DatStore,Misc,i)
-%UNTITLED4 Summary of this function goes here
-%   Detailed explanation goes here
-
+% Add to DatStore the information on the indices of which muscles parameters will be
+% estimated.
 if Misc.UStracking == 1 || Misc.EMGconstr == 1 
     DatStore(i).free_lMo = zeros(length(Misc.Estimate_OptimalFiberLength),1);
     DatStore(i).free_kT = zeros(length(Misc.Estimate_TendonStiffness),1);
