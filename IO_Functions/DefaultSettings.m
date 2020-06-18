@@ -88,7 +88,7 @@ if ~isfield(Misc,'lb_kT_scaling')
 end
 
 if ~isfield(Misc,'ub_kT_scaling')
-    Misc.lb_kT_scaling = 1.2;
+    Misc.ub_kT_scaling = 1.2;
 end
 
 if ~isfield(Misc,'Misc.lb_lMo_scaling')

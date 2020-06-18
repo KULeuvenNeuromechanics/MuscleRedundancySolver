@@ -229,17 +229,12 @@ Misc.PlotBool = 1;
 % name output
 Misc.OutName = 'Walking_';
 ```
-As an additional optional input argument you can specify that you want to run the muscle redundancy solver. This is true by default
-```matlab
-Misc.MRSBool = 1;
-```
-
 And finally solve the muscle redundancy problem
 ```matlab
 [Results,DatStore] = solveMuscleRedundancy(model_path,time,Out_path,Misc);
 ```
 
-One important thing to note is that you can select the muscles you want to include in this analysis. For example here, we only select calf muscles and tibialis anterior, all other muscles will be removed from the model. WHen you don't use this input argument or leave this empty, the software will select automatically all muscles that span the selected dofs (Misc.DOfNames_Input).
+One important thing to note is that you can select the muscles you want to include in this analysis. For example here, we only select calf muscles and tibialis anterior, all other muscles will be removed from the model. When you don't use this input argument or leave this empty, the software will select automatically all muscles that span the selected dofs (Misc.DOfNames_Input).
 ```matlab
 Misc.MuscleNames_Input = {'med_gas_l','lat_gas_l','soleus_l','tib_ant_l'}; % select muscles
 ```
@@ -252,7 +247,7 @@ You can estimate the optimal fiber length, tendon slack length and tendon stiffn
 Misc.Estimate_TendonStifness = {'med_gas_l';'lat_gas_l';'soleus_l'}; % Names of muscles of which tendon stifness is estimated
 ```
 
-You can also select bounds on maximal deviation of the estimated tendon stiffness from the nominal values (i.e. lw < KOpt/Knominal / ub)
+You can also select bounds on maximal deviation of the estimated tendon stiffness from the nominal values (i.e. lw < KOpt/Knominal < ub)
 
 ```matlab
 Misc.lb_kT_scaling = 0.5; % Lower bound
@@ -288,8 +283,8 @@ Misc.Coupled_slack_length = {'med_gas_l';'lat_gas_l'}; % Couple muscles that sho
 
 ### EMG-information
 
-In this example (Example_EMGWalking), we use EMG-data to
-   1) Constrain the simulated muscle activity based on EMG data in the muscle redundancy problem (Add this)
+In this example (Example_EMGWalking), we use EMG-data to:
+   1) Constrain the simulated muscle activity based on EMG data in the muscle redundancy problem (EMGConstraint_LowerLimb.m) without estimating muscle-tendon parameters.
    2) Estimate muscle-tendon parameters (tendon stiffness, tendon slack length and optimal fiber length) of the calf muscles (EMGDriven_simpleAnkle.m) or multiple lower limb muscles (EMGdriven_LowerLimb.m) using an EMG driven approach. This approach is based on Falisse 2016 (https://ieeexplore.ieee.org/document/7748556).
 
 When using EMG data, you have always have to indicate that you want to use EMG data with a boolean and provide the EMG file (.mot format). This EMG file should contain the processed EMG data (filtered + linear enveloppe). 
@@ -309,7 +304,7 @@ In the preferred case, the names of the muscles in the EMG file and in the model
 Misc.EMGheaders = {'Time','bifemlh_r','tib_ant_r','per_long_r','lat_gas_r','bifemsh_r','soleus_r','vas_lat_r','vas_med_r','per_brev_l','tib_ant_l','per_long_l','lat_gas_l','med_gas_l','soleus_l','vas_lat_l','vas_med_l','add_long_l','rect_fem_l','tfl_l','glut_med2_l','bifemsh_l','bifemlh_l','glut_med2_r','rect_fem_r'};
 ```
 
-The relation between EMG data and simulated muscle excitations can be constrained in two ways. First, you can constrain the optimization variable (s) that scales EMG data to simulated muscle activity. (i.e. S EMG = SimExcitation). In case you normalised your EMG data to MVC measurements, this scale factor should be close to 1.
+The relation between EMG data and simulated muscle excitations can be constrained in two ways. First, you can constrain the optimization variable (s) that scales EMG data to simulated muscle activity. (i.e. S*EMG = SimExcitation). In case you normalised your EMG data to MVC measurements, this scale factor should be close to 1.
 ```matlab
 Misc.BoundsScaleEMG = [0.9 1.1];  % maximal value to scale EMG
 ```
@@ -320,18 +315,34 @@ Second, you can select bounds on the deviation between meausred EMG data and sim
 Misc.EMGbounds  = [-0.1 0.1];     % upper and lower bound for difference between simulated and measured muscle activity
 ```
 
-Or in the special case of EMG-driven, you can impose this as an equality constraint (S EMG - SimExcitation == 0)
+Or in the special case of EMG-driven, you can impose this as an equality constraint (S EMG - SimExcitation == 0). Note that you can find the error in the joint moment equilibrium in the reserve actuators. 
 
 ```matlab
 Misc.EMGbounds  = 0;     % upper and lower bound for difference between simulated and measured muscle activity
 ```
 
-
+Also note that in this case, you might want to select only muscles that are driven by EMG signals in this case. You can do this using the input argument "Misc.MuscleNames_Input" (as described above in the example on "Solve the muscle redundancy problem").
+```matlab
+Misc.MuscleNames_Input = Misc.EMGSelection; % only select muscles from the model that are actuated by EMG signals
+```
 As additional settings, you can also drive/constrain multiple muscles based on one signal. For example you can use the signal of the medial gastrocnemius in the excitation of the lateral gastrocnemius.
+
 ```matlab
 Misc.EMG_MuscleCopies = {'med_gas_l','lat_gas_l'};       %  use gastrocnemius medialis EMG to constrain activity of the lateral gastrocn
 ```
+Finally you can set the weight for tracking ultrasound data in the objective function. 
+
+```matlab
+Misc.wEMG    = 1;                % weight on tracking fiber length: note that
+```
+Note that increasing this weight most likely results in "extreme" overfitting. Run the validation tool to investigate this.
+
+```matlab
+Misc.ValidationBool = 1;
+```
 See "Info on parameter estimation" to combine EMG information with parameter estimation.
+
+
 
 ### Ultrasound-information
 
@@ -359,6 +370,7 @@ Note that increasing this weight most likely results in "extreme" overfitting. R
 ```matlab
 Misc.ValidationBool = 1;
 ```
+See "Info on parameter estimation" to combine ultrasound data with parameter estimation.
 
 ## Release Notes
 

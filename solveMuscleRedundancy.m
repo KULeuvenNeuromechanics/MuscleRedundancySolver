@@ -405,23 +405,35 @@ if BoolParamOpt == 1
     lb_lMo_scaling     = ones(NMuscles,1);   % default upper and lower bound is one (equality constraint)
     ub_lMo_scaling     = ones(NMuscles,1);   % default upper and lower bound is one (equality constraint)
     iM                 = DatStore(1).free_lMo(:);        % index muscles with parameter estimation
-    lb_lMo_scaling(iM) = Misc.lb_lMo_scaling;            % update lower bound for these muscles
-    ub_lMo_scaling(iM) = Misc.ub_lMo_scaling;            % update uppder bound for these muscles
+    if ~isempty(iM)
+        lb_lMo_scaling(iM) = Misc.lb_lMo_scaling;            % update lower bound for these muscles
+        ub_lMo_scaling(iM) = Misc.ub_lMo_scaling;            % update uppder bound for these muscles
+    end
     opti_MTE.subject_to(lb_lMo_scaling < lMo_scaling_param < ub_lMo_scaling); % update the upper and lower bounds
     
     % Free slack length
-    lTs_scaling_param = opti_MTE.variable(NMuscles,1);
-    lb_lTs_scaling = ones(NMuscles,1); ub_lTs_scaling = ones(NMuscles,1);
-    lb_lTs_scaling(DatStore(1).free_lMo(:)) = Misc.lb_lTs_scaling*lb_lTs_scaling(DatStore(1).free_lMo(:));
-    ub_lTs_scaling(DatStore(1).free_lMo(:)) = Misc.ub_lTs_scaling*ub_lTs_scaling(DatStore(1).free_lMo(:));
+    lTs_scaling_param = opti_MTE.variable(NMuscles,1);    
+    lb_lTs_scaling = ones(NMuscles,1); 
+    ub_lTs_scaling = ones(NMuscles,1);
+    iM             = DatStore(1).free_lMo(:);        % index muscles with parameter estimation
+    if ~isempty(iM)
+        lb_lTs_scaling(iM) =  Misc.lb_lTs_scaling;
+        ub_lTs_scaling(iM) =  Misc.ub_lTs_scaling;
+    end
     opti_MTE.subject_to(lb_lTs_scaling < lTs_scaling_param < ub_lTs_scaling);
     
     % Free tendon stifness
     kT_scaling_param = opti_MTE.variable(NMuscles,1);
-    lb_kT_scaling_param = ones(NMuscles,1); ub_kT_scaling_param = ones(NMuscles,1);
-    lb_kT_scaling_param(DatStore(1).free_kT(:)) = Misc.lb_kT_scaling*lb_kT_scaling_param(DatStore(1).free_kT(:));
-    ub_kT_scaling_param(DatStore(1).free_kT(:)) = Misc.ub_kT_scaling*ub_kT_scaling_param(DatStore(1).free_kT(:));
+    lb_kT_scaling_param = ones(NMuscles,1); 
+    ub_kT_scaling_param = ones(NMuscles,1);
+    iM = DatStore(1).free_kT(:);
+    if ~isempty(iM)
+        lb_kT_scaling_param(iM) = Misc.lb_kT_scaling;
+        ub_kT_scaling_param(iM) = Misc.ub_kT_scaling;
+    end
     opti_MTE.subject_to(lb_kT_scaling_param < kT_scaling_param < ub_kT_scaling_param);
+    
+    % added tendon stiffness coupling
     for k = 1:size(DatStore(1).coupled_kT,1)
         for j = 1:size(DatStore(1).coupled_kT,2)-1
             opti_MTE.subject_to(kT_scaling_param(DatStore(1).coupled_kT(k,j)) - kT_scaling_param(DatStore(1).coupled_kT(k,j+1)) == 0);
