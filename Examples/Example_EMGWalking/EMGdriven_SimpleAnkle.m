@@ -1,6 +1,9 @@
-%% Example solve muscle redundancy with an MRI model
+%% Example EMG driven simulation for the ankle joint
 
-% clear variables and commond window
+% In this example we estimate parameters of the calf muscles and tibialis
+% anterior using an EMG driven simulation for the ankle joint only.
+
+% clear variables and command window
 clear all; clc;
 
 %% Input information
@@ -21,9 +24,9 @@ Misc.OutName ='gait_';
 Misc.DofNames_Input={'ankle_angle_l'};    % select the DOFs you want to include in the optimization
 
 % select muscles
-Misc.MuscleNames_Input = {'med_gas_l','lat_gas_l','soleus_l','tib_ant_l'}; % select muscles
+Misc.MuscleNames_Input = {'med_gas_l','lat_gas_l','soleus_l','tib_ant_l'};
 
-% Set the tendon stifness of all muscles
+% Set the tendon stiffness of all muscles
 Misc.kT = [];      % default way to set tendon stiffenss (default values is 35)
 
 % Settings for estimating tendon stiffness
@@ -44,7 +47,7 @@ Misc.Coupled_slack_length = {'med_gas_l';'lat_gas_l'}; % Couple muscles that sho
 % Select muscle for which you want the fiberlengths to track the US data
 Misc.UStracking  = 0;            % Boolean to select US tracking option
 
-% Provide the correct headers int case you EMG file has not the same
+% Provide the correct headers in case you EMG file has not the same
 % headers as the muscle names in OpenSim (leave empty when you don't want
 % to use this)
 Misc.EMGheaders = {'Time','bifemlh_r','tib_ant_r','per_long_r','lat_gas_r','bifemsh_r','soleus_r','vas_lat_r','vas_med_r','per_brev_l','tib_ant_l','per_long_l',...

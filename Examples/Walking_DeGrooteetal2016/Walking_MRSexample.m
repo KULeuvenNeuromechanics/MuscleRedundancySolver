@@ -14,8 +14,7 @@ Misc.IDfile = {fullfile(DataPath,'Walking_ID.sto')};
 model_path  = fullfile(DataPath,'subject1.osim');
 Out_path    = fullfile(ExamplePath,'Results');                    % folder to store results
 
-% Get start and end time of the different files (you can also specify this
-% manually)
+% Get start and end time of the different files
 time=[0.516 1.95]; % Right stance phase (+50ms beginning and end of time interval, more details see manual and publication)
 
 % Settings

@@ -1,5 +1,5 @@
 % Activation Dynamics
-% See publication, equations 1-2, for more details
+% See publication (DeGroote2016), equations 1-2, for more details
 
 function dadt = ActivationDynamics(e,a,tact,tdeact,b)
 

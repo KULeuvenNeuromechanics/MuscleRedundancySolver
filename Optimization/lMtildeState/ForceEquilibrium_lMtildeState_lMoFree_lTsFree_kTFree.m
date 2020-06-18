@@ -7,7 +7,6 @@ function [err, FT] = ForceEquilibrium_lMtildeState_lMoFree_lTsFree_kTFree(a,lMti
 FMo = params(:,1);
 lMo = lMo_lTs_kT_scaling(:,1).*params(:,2);
 lTs = lMo_lTs_kT_scaling(:,2).*params(:,3);
-alphao = params(:,4);
 kT = lMo_lTs_kT_scaling(:,3).*kT;
 vMtildemax = params(:,5);
 
@@ -16,7 +15,6 @@ shift = getShift(kT);
 
 % Hill-type muscle model: geometric relationships
 lM = lMtilde.*lMo;
-w = lMo.*sin(alphao);
 % lT = lMT - sqrt((lM.^2 - w.^2));
 % lT = lMT - sqrt(lM_projected);
 lT = lMT - lM_projected;
