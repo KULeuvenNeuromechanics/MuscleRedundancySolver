@@ -1,11 +1,13 @@
-%% Example solve muscle redundancy with an MRI model
+%% Example EMG driven simulation for ankle, knee and hip in the sagital plane
 
-% clear variables and commond window
+% In this example we estimate parameters of multiple lower-limb muscles
+% using an EMG driven simulation of the ankle-knee and hip.
+
+% clear variables and command window
 clear all; clc;
 
 %% Input information
 % Add here the paths of IK, ID , US and EMG data trials you want to work with
-% As example we use trial 1 2 & 4 
 Misc.IKfile  = {fullfile(pwd,'IK_gait.mot')};
 Misc.IDfile  = {fullfile(pwd,'ID_gait.sto')};
 Misc.EMGfile = {fullfile(pwd,'EMG_gait.mot')};
@@ -15,7 +17,7 @@ time = [1.2 2.3];
 
 %% Settings
 
-% name of the resuls file
+% name of the results file
 Misc.OutName ='gait_';
 
 % select degrees of freedom
@@ -32,8 +34,6 @@ Misc.EMGheaders = {'Time','bifemlh_r','tib_ant_r','per_long_r','lat_gas_r','bife
 
 % channels you want to use for EMG constraints
 Misc.EMGSelection = {'per_brev_l','tib_ant_l','per_long_l','lat_gas_l','med_gas_l','soleus_l','vas_lat_l','vas_med_l','add_long_l','rect_fem_l','tfl_l','glut_med2_l','bifemsh_l','bifemlh_l'};
-
-Misc.EMG_MuscleCopies = {};       %  use gastrocnemius medialis EMG to constrain activity of the lateral gastrocn
 
 % select muscles
 Misc.MuscleNames_Input = Misc.EMGSelection; % select muscles
@@ -58,14 +58,14 @@ Misc.UStracking  = 0;            % Boolean to select US tracking option
 
 % information for the EMG constraint
 Misc.EMGconstr  = 1;     		% Boolean to select EMG constrained option
-Misc.EMGbounds  = 0;  	% upper and lower bound for difference between simulated and measured muscle activity
-Misc.BoundsScaleEMG = [0.01 3];  % maximal value to scale EMG
+Misc.EMGbounds  = [-0.001 0.001];  	% upper and lower bound for difference between simulated and measured muscle activity
+Misc.BoundsScaleEMG = [0.01 5];  % maximal value to scale EMG
 
 % Set weights
-Misc.wEMG   = 0.1;   % weight on tracking EMG
-Misc.wAct   = 0.1;
-Misc.wTres  = 1000;
-Misc.wVm    = 0.001;
+Misc.wEMG   = 0.001;   % weight on tracking EMG
+Misc.wAct   = 0.001;
+Misc.wTres  = 10;
+Misc.wVm    = 0.00001;
 
 % Plotter Bool: Boolean to select if you want to plot lots of output information of intermediate steps in the script
 Misc.PlotBool = 1;

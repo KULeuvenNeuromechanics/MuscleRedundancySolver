@@ -1,4 +1,4 @@
-%% Example solve muscle redundancy with an MRI model
+%% Example parameter estimation based on ultrasound data
 
 clear all;
 
