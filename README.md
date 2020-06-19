@@ -2,9 +2,9 @@
 
 ## Purpose of the software
 
-The original intent of the provided MATLAB code was to solve the muscle redundancy problem using direct collocation as described in De Groote F, Kinney AL, Rao AV, Fregly BJ. Evaluation of direct collocation optimal control problem formulations for solving the muscle redundancy problem. Annals of Biomedical Engineering (2016). http://link.springer.com/article/10.1007%2Fs10439-016-1591-9. 
+The original purpose of the provided MATLAB code was to solve the muscle redundancy problem while accounting for muscle dynamics using direct collocation as described in De Groote F, Kinney AL, Rao AV, Fregly BJ. Evaluation of direct collocation optimal control problem formulations for solving the muscle redundancy problem. Annals of Biomedical Engineering (2016). http://link.springer.com/article/10.1007%2Fs10439-016-1591-9. 
 
-From v3.0, there are possibilities to, concurrently with solving the muscle redundancy problem, estimate parameters of the modelled muscle-tendon units by using collected EMG and ultrasound data. Optimal fiber length, tendon slack length and tendon stiffness can be set as free variables within the muscle redundancy problem. Experimentally measured fiber lengths can be tracked (US-tracking), the tracking error is a part of the objective function. Details on this parameter estimation problem can be found in Delabastita et al. 2020 (https://link.springer.com/article/10.1007/s10439-019-02395-x). Collected EMG can either be tracked (EMG-tracking) or imposed exactly (EMG-driven). Details on using EMG data in the parameter estimation can be found in Falisse 2016 (https://ieeexplore.ieee.org/document/7748556). Another important feature is that the user can estimate muscle-tendon parameters over different trials of the same movement or from different movements. This allows to make estimation more reliable. We reckon that for solving the muscle redundancy problem OpenSim Moco (https://www.biorxiv.org/content/10.1101/839381v1) might be a more user-friendly and straightforward alternative. However, our software allows the combination of different trials to estimate muscle-tendon parameters. Another difference is in that we use automatic differentiation, while this is not (yet) enabled in Moco. 
+In v3.0, we added two additional functionalities. First, it is possible to constrain the estimated muscle activations based on experimental EMG. Second, there is the possibility to, concurrently with solving the muscle redundancy problem, estimate parameters of the modelled muscle-tendon units by using experimental data, i.e. EMG and ultrasound data. Optimal fiber length, tendon slack length and tendon stiffness can be set as free variables within the muscle redundancy problem. Experimentally measured fiber lengths can be tracked (US-tracking), the tracking error is a part of the objective function. Details on this parameter estimation problem can be found in Delabastita et al. 2020 (https://link.springer.com/article/10.1007/s10439-019-02395-x). Collected EMG can either be tracked (EMG-tracking) or imposed exactly (EMG-driven). Details on using EMG data in the parameter estimation can be found in Falisse 2016 (https://ieeexplore.ieee.org/document/7748556). Another important feature is that the user can estimate muscle-tendon parameters over different trials of the same movement or from different movements. This allows for more reliable parameter estimation. We reckon that for solving the muscle redundancy problem OpenSim Moco (https://www.biorxiv.org/content/10.1101/839381v1) might be a more user-friendly and straightforward alternative. However, our software allows the combination of different trials to estimate muscle-tendon parameters. Another difference is in that we use automatic differentiation, which drastically reduces the computation time, while this is not (yet) enabled in Moco. 
 
 
 ## Structure of the code
@@ -13,14 +13,13 @@ The code allows to solve three optimal control problems in the following order:
 
 1. Generic muscle redundancy problem: Solves the muscle redundancy problem using the provided musculoskeletal model, inverse kinematics and inverse dynamics data. 
 
-2. Muscle parameter estimation: Solves the muscle redundancy problem where the variable space can be extended with user-specified muscle tendon parameters. Depending on availability the user can provide experimental muscle fiber length data to be tracked by simulated fiber lengths and/or EMG data to be tracked by simulated muscle excitations. The problem can be made EMG-driven as well, where the excitations will match the EMG signal up to a specified tolerance.
+2. Muscle parameter estimation: Solves the muscle redundancy problem where the variable space can be extended with user-specified muscle tendon parameters. Depending on availability, the user can provide experimental muscle fiber length data to be tracked by simulated fiber lengths and/or EMG data to be tracked by simulated muscle excitations. The problem can be made EMG-driven as well, where the excitations will match the EMG signal up to a specified tolerance.
 
-3. Validation muscle redundancy problem: Solves the muscle redundancy problem using the optimized musculoskeletal model, inverse kinematics and/or inverse dynamics data. The idea of this simulation is to analyse whether the parameters (optimized by the estimation problem) predict musculoskeletal behaviour better than the generic model.
+3. Validation muscle redundancy problem: Solves the muscle redundancy problem using the optimized musculoskeletal model, inverse kinematics and/or inverse dynamics data. The idea of this simulation is to analyse whether the parameters (outcome of the muscle parameter estimation problem) predict musculoskeletal behaviour better than the generic model. If this is not the case, there might be a problem of overfitting and it should be verified whether the provided input data contains sufficient information to estimate all variable parameters. Reducing the the weighting factors of the tracking terms might also help in this case (to avoid that possible experimental data is tracked at the cost of unrealistically high muscle activations). Note that for a full validation, separate validation movements should be used (see also publications for details).
 
 The user is off course free to select any of the three described problems. 
 
-Any questions? Please contact us:
-maarten.afschrift@kuleuven.be and tom.vanwouwe@kuleuven.be for questions on the parameter optimization algorithm;  friedl.degroote@kuleuven.be; antoine.falisse@kuleuven.be.
+Any questions? Contact: maarten.afschrift@kuleuven.be, tom.vanwouwe@kuleuven.be, antoine.falisse@kuleuven.be or friedl.degroote@kuleuven.be.
 
 ## Installation Instruction
 
@@ -37,7 +36,7 @@ Several software packages are needed to run the program:
 
 ## Main Function
 
-SolveMuscleRedundancy is the main function of this program and is used to solve up to three optimal control problems. 
+SolveMuscleRedundancy is the main function of this program and is used to solve the three optimal control problems described above. 
 
 ### Input arguments
 
