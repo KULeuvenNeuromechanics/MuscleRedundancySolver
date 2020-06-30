@@ -15,7 +15,7 @@ The code allows to solve three optimal control problems in the following order:
 
 2. Muscle parameter estimation: Solves the muscle redundancy problem where the variable space can be extended with user-specified muscle tendon parameters. Depending on availability, the user can provide experimental muscle fiber length data to be tracked by simulated fiber lengths and/or EMG data to be tracked by simulated muscle excitations. The problem can be made EMG-driven as well, where the excitations will match the EMG signal up to a specified tolerance.
 
-3. Validation muscle redundancy problem: Solves the muscle redundancy problem using the optimized musculoskeletal model, inverse kinematics and/or inverse dynamics data. The idea of this simulation is to analyse whether the parameters (outcome of the muscle parameter estimation problem) predict musculoskeletal behaviour better than the generic model. If this is not the case, there might be a problem of overfitting and it should be verified whether the provided input data contains sufficient information to estimate all variable parameters. Reducing the the weighting factors of the tracking terms might also help in this case (to avoid that possible experimental data is tracked at the cost of unrealistically high muscle activations). Note that for a full validation, separate validation movements should be used (see also publications for details).
+3. Validation muscle redundancy problem: Solves the muscle redundancy problem using the optimized musculoskeletal model, inverse kinematics and/or inverse dynamics data. The idea of this simulation is to analyse whether the parameters (outcome of the muscle parameter estimation problem) predict musculoskeletal behaviour better than the generic model. If this is not the case, there might be a problem of overfitting and it should be verified whether the provided input data contains sufficient information to estimate all variable parameters. Reducing the weighting factors of the tracking terms might also help in this case (to avoid that possible experimental data is tracked at the cost of unrealistically high muscle activations). Note that for a full validation, separate validation movements should be used (see also publications for details).
 
 The user is off course free to select any of the three described problems. 
 
@@ -60,14 +60,14 @@ Related to the required input files:
 
 The following input arguments are required to use EMG data:
    - **Misc.EMGconstr**: boolean to select whether you want to track provided EMG signals.
-   - **Misc.EMGfile**: cell array of filenames containing EMG data of different motion trials (.mot file). (can be empty )
-   - **Misc.EMGSelection**: cell aray with muscles that are constrained/driven by EMG data.
+   - **Misc.EMGfile**: cell array of filenames containing EMG data of different motion trials (.mot file). (can be empty)
+   - **Misc.EMGSelection**: cell array with muscles that are constrained/driven by EMG data.
 
 #### Required input arguments when using Ultrasound data
 
 The following input arguments are required to use ultrasound data:
    - **Misc.UStracking**: boolean to select whether you want to track provided muscle fiber lengths.
-   - **Misc.USfile**: cell array of filenames containing fiberlength data of different motion trials (.mot file). The fiber length data is usually measured using ultra-sound (US).
+   - **Misc.USfile**: cell array of filenames containing fiber length data of different motion trials (.mot file). The fiber length data is usually measured using ultra-sound (US).
    - **Misc.USSelection**: cell array with muscles used in fiber length tracking.
 
 #### Required input arguments for parameter optimization
@@ -146,7 +146,7 @@ Related to transcription:
 Related to nominal parameters model:
 
    - **Misc.kT**: vector with normalized tendon stiffness for the selected muscles. The order should correspond to *Misc.MuscleNames_Input*. The default value is 35 and a lower value corresponds to a more compliant tendon. The default value will be used when left empty. An example is provided in section *Example Gait10dof18m* to set a different stiffness to the Achilles tendon.
-   - **Misc.Set_kT_ByName**: cell array to set the tendon stiffness. The first column is a string wit the name of the muscles, second column is the normalised tendon stiffness.
+   - **Misc.Set_kT_ByName**: cell array to set the tendon stiffness. The first column is a string with the name of the muscles, second column is the normalised tendon stiffness.
 
 
 ## Output arguments
@@ -264,7 +264,7 @@ The same approach is used to estimate optimal fiber length and tendon slack leng
 ```matlab
 Estimate_OptimalFiberLength = {'med_gas_l';'soleus_l';'lat_gas_l';'tib_ant_l'}; % Names of muscles of which optimal fiber length is estimated - slack length is estimated for these muscles as well
 ```
-Bounds on the ratio between estimated values and nomimal values
+Bounds on the ratio between estimated values and nominal values
 ```matlab
 
 Misc.lb_lMo_scaling = 0.1; % Lower bound for scaling optimal fiber length
@@ -298,7 +298,7 @@ You also have to select the muscles that will be driven/constrained by EMG data.
 Misc.EMGSelection = {'tib_ant_l','lat_gas_l','med_gas_l','soleus_l'};
 ```
 
-In the preferred case, the names of the muscles in the EMG file and in the model correspond. If this is not the case, you can adapt the names in the .mot file as follows: (note that for example the header of the second collumn in the EMG file will be adapted here to 'bifemlh_r')
+In the preferred case, the names of the muscles in the EMG file and in the model correspond. If this is not the case, you can adapt the names in the .mot file as follows: (note that for example the header of the second column in the EMG file will be adapted here to 'bifemlh_r')
 ```matlab
 Misc.EMGheaders = {'Time','bifemlh_r','tib_ant_r','per_long_r','lat_gas_r','bifemsh_r','soleus_r','vas_lat_r','vas_med_r','per_brev_l','tib_ant_l','per_long_l','lat_gas_l','med_gas_l','soleus_l','vas_lat_l','vas_med_l','add_long_l','rect_fem_l','tfl_l','glut_med2_l','bifemsh_l','bifemlh_l','glut_med2_r','rect_fem_r'};
 ```
@@ -308,7 +308,7 @@ The relation between EMG data and simulated muscle excitations can be constraine
 Misc.BoundsScaleEMG = [0.9 1.1];  % maximal value to scale EMG
 ```
 
-Second, you can select bounds on the deviation between meausred EMG data and simulated muscle excitations (i.e. lower bound <  S EMG - SimExcitation < Upper bound). For example if you want a deviation of 0.1 muscle excitations
+Second, you can select bounds on the deviation between measured EMG data and simulated muscle excitations (i.e. lower bound <  S EMG - SimExcitation < Upper bound). For example if you want a deviation of 0.1 muscle excitations
 
 ```matlab
 Misc.EMGbounds  = [-0.1 0.1];     % upper and lower bound for difference between simulated and measured muscle activity
