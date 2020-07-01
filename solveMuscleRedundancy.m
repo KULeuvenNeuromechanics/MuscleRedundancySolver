@@ -493,7 +493,6 @@ if BoolParamOpt == 1
     if ~isempty(Misc.USfile)
         for trial = 1:Misc.nTrials
             DatStore(trial).boolUS = 1;
-            USTracking(trial).data = interp1(DatStore(trial).US.time,DatStore(trial).US.USsel,Mesh(trial).t(1:end));
             DatStore(trial).USTracking = interp1(DatStore(trial).US.time,DatStore(trial).US.USsel,Mesh(trial).t(1:end));
         end
     end
