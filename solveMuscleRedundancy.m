@@ -1,19 +1,15 @@
 function [Results,DatStore,Misc] = solveMuscleRedundancy(model_path,time,OutPath,Misc)
 % -----------------------------------------------------------------------%
 % INPUTS:
-%           model_path: path to the .osim model
-%           IK_path: path to the inverse kinematics results
-%           ID_path: path to the inverse dynamics results
+%           model_path: path to the .osim model        
 %           time: time window
-%           Bounds: structure with bounds on states, controls, static param
 %           OutPath: path to folder where results will be saved
-%           Misc: structure of input data (see manual for more details)
+%           Misc: structure with general input data (see manual for more details)
 %
 % OUTPUTS:
 %           Results:    structure with outputs (states, controls, ...)
-%           Parameters: structure with static parameters
-%           DatStore:   structure with data used for solving the optimal
-%           control problem
+%           DatStore:   structure with data used for solving the optimal control problem
+%           Misc:       structure with general input data (see manual for more details)
 % -----------------------------------------------------------------------%
 
 
