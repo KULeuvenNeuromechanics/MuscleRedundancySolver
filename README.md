@@ -1,6 +1,6 @@
 # Muscle redundancy solver
 
-<img src="Info/LogoMRS.png" width="48">
+<img src="Info/LogoMRS.png" width="400">
 
 ## Purpose of the software
 
