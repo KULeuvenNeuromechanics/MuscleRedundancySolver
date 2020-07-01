@@ -1,4 +1,6 @@
-# solveMuscleRedundancy
+# Muscle redundancy solver
+
+<img src="Info/LogoMRS.png" width="600" class="center">
 
 ## Purpose of the software
 
