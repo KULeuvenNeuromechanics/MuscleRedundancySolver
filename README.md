@@ -1,6 +1,6 @@
-# solveMuscleRedundancy
+# Muscle redundancy solver
 
-![Muscle redundancy solver](Info/LogoMRS.png?raw=true "Title")
+![Muscle redundancy solver](Info/LogoMRS.png?raw=true "Title" =250x)
 
 ## Purpose of the software
 
