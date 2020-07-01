@@ -64,7 +64,9 @@ The following input arguments are required to use EMG data:
    - **Misc.EMGconstr**: boolean to select whether you want to track provided EMG signals.
    - **Misc.EMGfile**: cell array of filenames containing EMG data of different motion trials (.mot file). (can be empty)
    - **Misc.EMGSelection**: cell array with muscles that are constrained/driven by EMG data.
-
+   - **Misc.BoundsScaleEMG**: 1 x 2 matlab array with lower and upper bound on optimization variable (s) that scales EMG data to simulated muscle excitation. (i.e. s*EMG = SimExcitation). In case you normalised your EMG data to MVC measurements, this scale factor should be close to 1.
+   - **Misc.EMGbounds**: 1 x 2 matlab array with lower and upper bound on the deviation between measured EMG data and simulated muscle excitations (i.e. lower bound <  S EMG - SimExcitation < Upper bound).   
+   
 #### Required input arguments when using Ultrasound data
 
 The following input arguments are required to use ultrasound data:
