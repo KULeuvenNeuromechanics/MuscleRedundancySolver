@@ -17,12 +17,12 @@ function [Results,DatStore,Misc] = solveMuscleRedundancy(model_path,time,OutPath
 Misc = DefaultSettings(Misc);
 
 % number of motion trials
-Misc.nTrials = size(Misc.IKfile,1);
+Misc.nTrials = length(Misc.IKfile);
 
 %check if we have to adapt the start and end time so that it corresponds to
 %time frames in the IK solution
 [time] = Check_TimeIndices(Misc,time);
-
+Misc.time=time;
 
 %% Extract muscle information
 % ----------------------------------------------------------------------- %
@@ -32,8 +32,7 @@ for i = 1:Misc.nTrials
     % select the IK and ID file
     IK_path_trial = Misc.IKfile{i};
     ID_path_trial = Misc.IDfile{i};
-    % Run muscle analysis
-    Misc.time=time;
+    % Run muscle analysis    
     MuscleAnalysisPath=fullfile(OutPath,'MuscleAnalysis'); if ~exist(MuscleAnalysisPath,'dir'); mkdir(MuscleAnalysisPath); end
     if Misc.RunAnalysis
         disp('MuscleAnalysis Running .....');
@@ -418,7 +417,7 @@ if BoolParamOpt == 1
     end
     opti_MTE.subject_to(lb_lTs_scaling < lTs_scaling_param < ub_lTs_scaling);
     
-    % Free tendon stifness
+    % Free tendon stiffness
     kT_scaling_param = opti_MTE.variable(NMuscles,1);
     lb_kT_scaling_param = ones(NMuscles,1); 
     ub_kT_scaling_param = ones(NMuscles,1);
@@ -494,7 +493,6 @@ if BoolParamOpt == 1
     if ~isempty(Misc.USfile)
         for trial = 1:Misc.nTrials
             DatStore(trial).boolUS = 1;
-            USdata =  importdata(Misc.USfile{trial});
             USTracking(trial).data = interp1(DatStore(trial).US.time,DatStore(trial).US.USsel,Mesh(trial).t(1:end));
             DatStore(trial).USTracking = interp1(DatStore(trial).US.time,DatStore(trial).US.USsel,Mesh(trial).t(1:end));
         end
@@ -544,8 +542,8 @@ if BoolParamOpt == 1
         % tracking lMtilde
         if DatStore(trial).US.boolUS
             lMo = lMo_scaling_param(DatStore(trial).USsel)'.*Misc.params(2,DatStore(trial).USsel(:));
-            lMo = ones(size(USTracking(trial).data,1),1)*lMo;
-            lMtilde_tracking = USTracking(trial).data./lMo/1000; % US data expected in mm in the input file.
+            lMo = ones(size(DatStore(trial).USTracking,1),1)*lMo;
+            lMtilde_tracking = DatStore(trial).USTracking./lMo/1000; % US data expected in mm in the input file.
             lMtilde_simulated = lMtilde(DatStore(trial).US.USindices,(N_acc+trial:N_acc+trial+N));
             if size(lMtilde_simulated,1) ~= size(lMtilde_tracking,1)
                 lMtilde_simulated = lMtilde_simulated';
