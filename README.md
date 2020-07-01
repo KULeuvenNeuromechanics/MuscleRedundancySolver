@@ -1,5 +1,7 @@
 # solveMuscleRedundancy
 
+![Muscle redundancy solver](Info/LogoMRS.png?raw=true "Title")
+
 ## Purpose of the software
 
 The original purpose of the provided MATLAB code was to solve the muscle redundancy problem while accounting for muscle dynamics using direct collocation as described in De Groote F, Kinney AL, Rao AV, Fregly BJ. Evaluation of direct collocation optimal control problem formulations for solving the muscle redundancy problem. Annals of Biomedical Engineering (2016). http://link.springer.com/article/10.1007%2Fs10439-016-1591-9. 
