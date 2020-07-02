@@ -11,7 +11,7 @@ DataPath = [pwd '\Data'];
 % As example we use trial 1 2 & 4 
 Misc.IKfile = {fullfile(DataPath,'trial_1_IK.mot'); fullfile(DataPath,'trial_2_IK.mot'); fullfile(DataPath,'trial_4_IK.mot')};
 Misc.IDfile = {fullfile(DataPath,'trial_1_ID.mot'); fullfile(DataPath,'trial_2_ID.mot'); fullfile(DataPath,'trial_4_ID.mot')};
-Misc.USfile = {fullfile(DataPath,'trial_1_US.mot'); fullfile(DataPath,'trial_2_US.mot'); fullfile(DataPath,'trial_4_US.mot')}; %
+Misc.USfile = {fullfile(DataPath,'trial_1_US.mot'); fullfile(DataPath,'trial_2_US.mot'); fullfile(DataPath,'trial_4_US.mot')}; % in mm
 model_path  = fullfile(DataPath,'model.osim');
 Out_path    = fullfile(ExamplePath,'Results');                    % folder to store results
 

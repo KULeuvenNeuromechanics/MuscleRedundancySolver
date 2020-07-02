@@ -72,7 +72,7 @@ if boolEMG
     
     %% Process the data 
     for iF = 1:nF
-        EMGdat              = EMGFile(iF).data;        
+        EMGdat    = EMGFile(iF).data;        
         [nfr, nc] = size(EMGdat);  
         % get the EMG data
         nIn = length(Misc.EMGSelection);

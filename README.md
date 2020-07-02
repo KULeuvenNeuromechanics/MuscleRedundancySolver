@@ -71,7 +71,7 @@ The following input arguments are required to use EMG data:
 
 The following input arguments are required to use ultrasound data:
    - **Misc.UStracking**: boolean to select whether you want to track provided muscle fiber lengths.
-   - **Misc.USfile**: cell array of filenames containing fiber length data of different motion trials (.mot file). The fiber length data is usually measured using ultra-sound (US).
+   - **Misc.USfile**: cell array of filenames containing fiber length data of different motion trials (.mot file). The fiber length data is usually measured using ultra-sound (US) [expects fiber lengths in mm].
    - **Misc.USSelection**: cell array with muscles used in fiber length tracking.
 
 #### Required input arguments for parameter optimization
@@ -351,7 +351,7 @@ See "Info on parameter estimation" to combine EMG information with parameter est
 
 You can use ultrasound information to estimate muscle-tendon properties by tracking fiber lengths in the muscle redundancy problem. We provided an example in the folder "Example_UStracking" based on Delabastita et al. 2020 (https://link.springer.com/article/10.1007/s10439-019-02395-x).
 
-You can input ultrasound data by selecting the right motion file. This file should contain fiber length (in m). Note muscle names in the header of this file should be the same as in the OpenSim model.
+You can input ultrasound data by selecting the right motion file. This file should contain fiber length (in mm). Note muscle names in the header of this file should be the same as in the OpenSim model.
 
 ```matlab
 Misc.USfile = {fullfile(DataPath,'PSF_US_stride2.mot');fullfile(DataPath,'+8_US_stride2.mot');fullfile(DataPath,'+15_US_stride2.mot')};

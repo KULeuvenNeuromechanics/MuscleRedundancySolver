@@ -16,7 +16,7 @@ model_path  = fullfile(DataPath,'model.osim');
 Out_path    = fullfile(ExamplePath,'Results');                    % folder to store results
 
 % Get start and end time of the different files
-time = [0 9999];  % (select all time frames between 0 and 9999) 
+time = [0 9999; 0 9999; 0 9999];  % select all time frames between 0 and 9999 for the three trials
 
 % degrees of freedom
 Misc.DofNames_Input={'ankle_angle_l','knee_angle_l','hip_flexion_l','hip_adduction_l','hip_rotation_l'};    % select the DOFs you want to include in the optimization
