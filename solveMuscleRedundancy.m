@@ -866,9 +866,10 @@ if Misc.ValidationBool == true && BoolParamOpt
     end
     clear opti_validation a lMtilde e vMtilde aT
 end
+% add selected muscle names to the output structure
+Results.MuscleNames = DatStore.MuscleNames;
 
 %% Plot Output
-
 % plot EMG tracking
 if Misc.PlotBool && Misc.EMGconstr == 1
     h = PlotEMGTracking(Results,DatStore);
