@@ -1,4 +1,4 @@
-function [Energy] = GetMetabFromMRS(Results,Misc)
+function [Energy] = GetMetabFromMRS(Results,Misc,modelmass)
 % GetMetabFromMR Computes metabolic energy consumption from the muscle
 % redundancy solver results.
 % input arguments:
@@ -30,7 +30,7 @@ for n = 1:length(Names)
     
     
     % force contractile element (F/l * F/v * a * Fiso)
-    Fce     = Results.FMltilde.(Names{n})(:,iSel).*Results.FMvtilde.(Names{n})(:,iSel).*act.*Fiso;       % act * F/L * F/v* Fiso
+    Fce     = Results.FMltilde.(Names{n})(:,iSel).*Results.FMvtilde.(Names{n})(:,iSel).*act.*Fiso;
     
     % passive muscle forces
     Fpass   = Results.Fpe.(Names{n})(:,iSel);
@@ -45,10 +45,7 @@ for n = 1:length(Names)
     
     % multiplier F/l curve
     FL_mult = Results.FMltilde.(Names{n})(:,iSel);
-    
-    % model mass
-    modelmass = 72;
-    
+        
     % scale factor for tanh smoothing (can be very high here)
     b = 1000;
     
