@@ -7,7 +7,6 @@ function [Energy] = GetMetabFromMRS(Results,Misc)
 % output arguments:
 %   Energy 	... Edot: metabolic power without basal rate for each muscle [W]
 %           ... Edot_model: sum of metabolic power of all selected muscles with basal rate [W]
-%           ... W: total metabolic work (without basal rate) in selected time window [J]
 
 Names = fieldnames(Results.MActivation);
 for n = 1:length(Names)
@@ -106,12 +105,6 @@ for n = 1:length(Names)
     Energy.(Names{n}).Uch2016.Edot = E_Uch2016;
     Energy.(Names{n}).Uch2016.Edot_model= E_Uch2016_model;
     
-    % compute the metabolic work
-    t = Results.Time.(Names{n})(1:end-1);
-    Energy.(Names{n}).Bargh2004.W = trapz(t,sum(E_Bargh));
-    Energy.(Names{n}).Umb2003.W = trapz(t,sum(E_Umb2003));
-    Energy.(Names{n}).Umb2010.W = trapz(t,sum(E_Umb2010));
-    Energy.(Names{n}).Uch2016.W = trapz(t,sum(E_Uch2016));
 end
 
 end
