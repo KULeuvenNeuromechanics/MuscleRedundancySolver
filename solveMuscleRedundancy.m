@@ -186,7 +186,7 @@ optionssol.ipopt.max_iter = output.setup.nlp.ipoptoptions.maxiterations;
 e_min = 0; e_max = 1;                   % bounds on muscle excitation
 a_min = 0; a_max = 1;                   % bounds on muscle activation
 vMtilde_min = -10; vMtilde_max = 10;    % bounds on normalized muscle fiber velocity
-lMtilde_min = 0.2; lMtilde_max = 1.5;   % bounds on normalized muscle fiber length
+lMtilde_min = 0.1; lMtilde_max = 1.7;   % bounds on normalized muscle fiber length
 
 % CasADi setup
 import casadi.*
