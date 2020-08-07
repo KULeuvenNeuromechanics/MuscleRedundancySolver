@@ -108,10 +108,10 @@ for n = 1:length(Names)
     
     % compute the metabolic work
     t = Results.Time.(Names{n})(1:end-1);
-    Energy.(Names{n}).Bargh2004.W = trapz(t,E_Barh_model);
-    Energy.(Names{n}).Umb2003.W = trapz(t,E_Umb2003_model);
-    Energy.(Names{n}).Umb2010.W = trapz(t,E_Umb2010_model);
-    Energy.(Names{n}).Uch2016.W = trapz(t,E_Uch2016_model);
+    Energy.(Names{n}).Bargh2004.W = trapz(t,sum(E_Bargh));
+    Energy.(Names{n}).Umb2003.W = trapz(t,sum(E_Umb2003));
+    Energy.(Names{n}).Umb2010.W = trapz(t,sum(E_Umb2010));
+    Energy.(Names{n}).Uch2016.W = trapz(t,sum(E_Uch2016));
 end
 
 end

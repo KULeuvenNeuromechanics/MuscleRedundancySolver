@@ -30,9 +30,9 @@ Misc.MRSBool = 1;
 Misc.OutName = 'Walking3_';
 
 % adapt the stiffness of the achilles tendon (optional input argument)
-% Misc.Set_kT_ByName = {'soleus_r',20;
-%     'med_gas_r',20;
-%     'lat_gas_r',20};
+Misc.Set_kT_ByName = {'soleus_r',20;
+    'med_gas_r',20;
+    'lat_gas_r',20};
 
 %% Run muscle tendon estimator:
 [Results,DatStore] = solveMuscleRedundancy(model_path,time,Out_path,Misc);
