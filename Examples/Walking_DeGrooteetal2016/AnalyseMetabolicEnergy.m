@@ -5,7 +5,7 @@
 % Load solution (run Walking_MRSexample.m first)
 R = load(fullfile(pwd,'Results','Walking3_Results.mat'));
 
-modelmass = 70; % mass of the muscoloskeletal model
+modelmass = 72.6; %mass of the subject [kg]
 
 % use the post processing function to compute the metabolic energy consumption
 E = GetMetabFromMRS(R.Results,R.Misc,modelmass);
