@@ -1,5 +1,5 @@
 function [DatStore] = GetEMGInfo(Misc,DatStore)
-%GetEMGInfo Reads the file with EMG information (.sto)., runs activation
+%GetEMGInfo Reads the file with EMG information (.mot)., runs activation
 %dynamics on the EMG data when asked and puts the EMG data in the right
 %format (handles copies and so on).
 
