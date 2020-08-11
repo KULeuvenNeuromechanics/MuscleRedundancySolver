@@ -3,7 +3,7 @@
 % In this example we estimate parameters of multiple lower-limb muscles
 % using an EMG driven simulation of the ankle-knee and hip.
 
-% clear variables and command window
+% Clear variables and command window
 clear all; clc;
 
 %% Input information
@@ -17,25 +17,24 @@ time = [1.2 2.3];
 
 %% Settings
 
-% name of the results file
+% Name of the results file
 Misc.OutName ='gait_';
 
-% select degrees of freedom
+% Select degrees of freedom
 Misc.DofNames_Input={'ankle_angle_l','knee_angle_l','hip_flexion_l'};    % select the DOFs you want to include in the optimization
 
 % Set the tendon stifness of all muscles
 Misc.kT = [];      % default way to set tendon stiffenss (default values is 35)
 
-% Provide the correct headers int case you EMG file has not the same
-% headers as the muscle names in OpenSim (leave empty when you don't want
-% to use this)
+% In case the headers in your EMG file differ from the muscle names in your OpenSim model, 
+% assign here the correct names to your EMG file (leave empty when you don't want to use this)
 Misc.EMGheaders = {'Time','bifemlh_r','tib_ant_r','per_long_r','lat_gas_r','bifemsh_r','soleus_r','vas_lat_r','vas_med_r','per_brev_l','tib_ant_l','per_long_l',...
     'lat_gas_l','med_gas_l','soleus_l','vas_lat_l','vas_med_l','add_long_l','rect_fem_l','tfl_l','glut_med2_l','bifemsh_l','bifemlh_l','glut_med2_r','rect_fem_r'};
 
-% channels you want to use for EMG constraints
+% Channels you want to use for EMG constraints
 Misc.EMGSelection = {'per_brev_l','tib_ant_l','per_long_l','lat_gas_l','med_gas_l','soleus_l','vas_lat_l','vas_med_l','add_long_l','rect_fem_l','tfl_l','glut_med2_l','bifemsh_l','bifemlh_l'};
 
-% select muscles
+% Select muscles
 Misc.MuscleNames_Input = Misc.EMGSelection; % select muscles
 
 % Settings for estimating tendon stiffness
@@ -56,7 +55,7 @@ Misc.Coupled_slack_length = {'med_gas_l';'lat_gas_l'}; % Couple muscles that sho
 % Select muscle for which you want the fiberlengths to track the US data
 Misc.UStracking  = 0;            % Boolean to select US tracking option
 
-% information for the EMG constraint
+% Information for the EMG constraint
 Misc.EMGconstr  = 1;     		% Boolean to select EMG constrained option
 Misc.EMGbounds  = [-0.001 0.001];  	% upper and lower bound for difference between simulated and measured muscle activity
 Misc.BoundsScaleEMG = [0.01 5];  % maximal value to scale EMG
