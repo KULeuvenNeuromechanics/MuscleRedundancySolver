@@ -91,10 +91,10 @@ if ~isfield(Misc,'ub_kT_scaling')
     Misc.ub_kT_scaling = 1.2;
 end
 
-if ~isfield(Misc,'Misc.lb_lMo_scaling')
+if ~isfield(Misc,'lb_lMo_scaling')
     Misc.lb_lMo_scaling = 0.7; % Lower bound for scaling optimal fiber length
 end
-if ~isfield(Misc,'Misc.ub_lMo_scaling')
+if ~isfield(Misc,'ub_lMo_scaling')
     Misc.ub_lMo_scaling = 1.5; % Upper bound for scaling optimal fiber length
 end
 if ~isfield(Misc,'lb_lTs_scaling')
