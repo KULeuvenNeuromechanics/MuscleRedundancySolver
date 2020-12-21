@@ -24,6 +24,9 @@ Misc.nTrials = length(Misc.IKfile);
 [time] = Check_TimeIndices(Misc,time);
 Misc.time=time;
 
+% add the model name to the misc structure (mainly for post processing)
+Misc.model_path = model_path;
+
 %% Extract muscle information
 % ----------------------------------------------------------------------- %
 % Perform muscle analysis for the different selected trials

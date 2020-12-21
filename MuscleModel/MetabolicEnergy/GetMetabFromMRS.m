@@ -4,6 +4,7 @@ function [Energy] = GetMetabFromMRS(Results,Misc,modelmass)
 % input arguments:
 %   Results: matlab structure "Results" (output argument of the MRS)
 %   Misc: matlab structure "Misc" (output argument of the MRS)
+%   modelmass: mass of the musculoskeltal model (in kg)
 % output arguments:
 %   Energy 	... Edot: metabolic power without basal rate for each muscle [W]
 %           ... Edot_model: sum of metabolic power of all selected muscles with basal rate [W]
@@ -25,7 +26,8 @@ for n = 1:length(Names)
         lMtilde = Results.lMtildeopt(tr).(Names{n})(:,iSel);
         
         % contraction velocity of the muscle fibers
-        % vMtilde is in the redudnancy solver the time derivative of lMtilde.
+        % vMtilde is in the redudnancy solver the time derivative of
+        % lMtilde. (note that this might be confusing !)
         vMtilde = Results.vMtilde(tr).(Names{n})(:,iSel);
         vM 		= Results.vMtilde(tr).(Names{n})(:,iSel).*lMo;        
         
@@ -47,7 +49,9 @@ for n = 1:length(Names)
         FL_mult = Results.FMltilde(tr).(Names{n})(:,iSel);
             
         % scale factor for tanh smoothing (can be very high here)
-        b = 1000;   % remove tanh implementation here? Is not needed because not in optimization
+        % remove tanh implementation here? Is not needed because the metabolic
+        % energy equations are not used in the objective function here.
+        b = 1000;   
         
         % Barghava 2004
         E_Bargh = nan(size(act));
