@@ -26,7 +26,7 @@ for n = 1:length(Names)
         
         % contraction velocity of the muscle fibers
         % vMtilde is in the redudnancy solver the time derivative of lMtilde.
-        vMtilde = Results.vMtilde.(tr)(Names{n})(:,iSel);
+        vMtilde = Results.vMtilde(tr).(Names{n})(:,iSel);
         vM 		= Results.vMtilde(tr).(Names{n})(:,iSel).*lMo;        
         
         % force contractile element (F/l * F/v * a * Fiso)
