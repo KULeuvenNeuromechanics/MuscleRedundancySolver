@@ -76,7 +76,7 @@ sol = opti.solve();
 %% extract results
 
 DatStore(trial).SoAct = sol.value(a);
-DatStore(trial).SoRAct = sol.value(ar).*(Topt*ones(N,1));;
+DatStore(trial).SoRAct = sol.value(ar).*(Topt*ones(N,1));
 DatStore(trial).SoForce = FMo.*(DatStore(trial).SoAct.*FMltilde.*FMvtilde + Fpe); 
 DatStore(trial).cos_alpha = cos_alpha;
 
