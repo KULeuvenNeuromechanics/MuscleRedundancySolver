@@ -18,7 +18,8 @@ Fvparam(1) = 1.475*ActiveFVParameters(1); Fvparam(2) = 0.25*ActiveFVParameters(2
 Fvparam(3) = ActiveFVParameters(3) + 0.75; Fvparam(4) = ActiveFVParameters(4) - 0.027;
 
 % Parameters of active muscle force-length characteristic
-Faparam = [0.814483478343008;1.05503342897057;0.162384573599574;0.0633034484654646;0.433004984392647;0.716775413397760;-0.0299471169706956;0.200356847296188];
+Faparam = [0.814483478343008;1.05503342897057;0.162384573599574;0.0633034484654646; ...
+    0.433004984392647;0.716775413397760;-0.0299471169706956;0.200356847296188];
 
 % Parameters of passive muscle force-length characteristic
 e0 = 0.6; kpe = 4; t50 = exp(kpe * (0.2 - 0.10e1) / e0);
