@@ -91,6 +91,9 @@ for trial = 1:Misc.nTrials
     DatStore = SolveStaticOptimization_IPOPT_CasADi(DatStore,Misc,trial);
 end
 
+% display muscle names with remarkably high or low lengths
+Warnings_FiberLength_RigidTendon(DatStore.SO.lMtilde,DatStore.MuscleNames);
+
 %% Input activation and contraction dynamics
 % ----------------------------------------------------------------------- %
 tau_act = 0.015;    Misc.tauAct = tau_act * ones(NMuscles, 1);       % activation time constant (activation dynamics)
@@ -189,7 +192,7 @@ optionssol.ipopt.max_iter = output.setup.nlp.ipoptoptions.maxiterations;
 e_min = 0; e_max = 1;                   % bounds on muscle excitation
 a_min = 0; a_max = 1;                   % bounds on muscle activation
 vMtilde_min = -10; vMtilde_max = 10;    % bounds on normalized muscle fiber velocity
-lMtilde_min = 0.1; lMtilde_max = 1.7;   % bounds on normalized muscle fiber length
+lMtilde_min = 0.1; lMtilde_max = 1.8;   % bounds on normalized muscle fiber length
 
 % CasADi setup
 import casadi.*
@@ -234,7 +237,7 @@ if Misc.MRSBool == 1
     opti.set_initial(e, SoExcGuess);
     %   - Reserve actuators
     aT = opti.variable(DatStore(trial).nDOF,N_tot);
-    opti.subject_to(-1 < aT <1);
+    opti.subject_to(-2 < aT < 2);
     %   - Time derivative of muscle-tendon forces (states)
     vMtilde = opti.variable(NMuscles,N_tot);
     opti.subject_to(vMtilde_min < vMtilde < vMtilde_max);

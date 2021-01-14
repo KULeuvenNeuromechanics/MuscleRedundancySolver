@@ -17,7 +17,8 @@ MuscleNames=dm_Data_temp.colheaders(2:end);
 [~, nm]=size(dM_store);
 ct=1;
 for i=1:nm
-    if any(abs(dM_store(:,i))>0.0001)
+    if any(abs(dM_store(:,i))>0.0001) &&...
+            (~any(strcmp(Misc.MusclesExcluded,MuscleNames{i})))
         Misc.MuscleNames_Input{ct}=MuscleNames{i}; ct=ct+1;
     end    
 end

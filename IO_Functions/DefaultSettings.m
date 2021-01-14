@@ -62,6 +62,11 @@ if ~isfield(Misc,'EMGSelection')
     Misc.EMGSelection = [];
 end
 
+% muscles excluded
+if ~isfield(Misc,'MusclesExcluded')
+    Misc.MusclesExcluded = {};
+end
+
 %% Info related to parameter optimizatiEMGbounds on
 if ~isfield(Misc,'Estimate_OptimalFiberLength')
     Misc.Estimate_OptimalFiberLength =[];

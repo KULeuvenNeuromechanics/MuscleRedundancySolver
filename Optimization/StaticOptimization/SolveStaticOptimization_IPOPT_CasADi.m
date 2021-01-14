@@ -11,6 +11,8 @@ nDOF = DatStore(trial).nDOF;
 
 % get current position on F/L and F/V curves (assuming rigid tendons)
 act = ones(N,M);
+lMtilde = ones(N,M);
+vMTtilde = ones(N,M);
 FMltilde = ones(N,M);
 FMvtilde = ones(N,M);
 Fpe = ones(N,M);
@@ -18,7 +20,7 @@ cos_alpha = ones(N,M);
 for m = 1:M
     pp_y = spline(time,DatStore(trial).LMT(:,m));
     [LMTg,vMTg,~] = SplineEval_ppuval(pp_y,time,1);
-    [~, ~, FMltilde(:,m), FMvtilde(:,m), Fpe(:,m), cos_alpha(:,m)] = ...
+    [~, lMtilde(:,m) , FMltilde(:,m), FMvtilde(:,m), Fpe(:,m), cos_alpha(:,m), vMTtilde(:,m)] = ...
         HillModel_RigidTendon(act(:,m),LMTg,vMTg,Misc.params(:,m));
     clear pp_y 
 end
@@ -79,7 +81,10 @@ DatStore(trial).SoAct = sol.value(a);
 DatStore(trial).SoRAct = sol.value(ar).*(Topt*ones(N,1));
 DatStore(trial).SoForce = FMo.*(DatStore(trial).SoAct.*FMltilde.*FMvtilde + Fpe); 
 DatStore(trial).cos_alpha = cos_alpha;
-
+DatStore(trial).SO.FMvtilde = FMvtilde;
+DatStore(trial).SO.FMltilde = FMltilde;
+DatStore(trial).SO.lMtilde = lMtilde;
+DatStore(trial).SO.vMTtilde = vMTtilde;
 
 
 
