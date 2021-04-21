@@ -152,7 +152,10 @@ Related to nominal parameters model:
    - **Misc.kT**: vector with normalized tendon stiffness for the selected muscles. The order should correspond to *Misc.MuscleNames_Input*. The default value is 35 and a lower value corresponds to a more compliant tendon. The default value will be used when left empty. An example is provided in section *Example Gait10dof18m* to set a different stiffness to the Achilles tendon.
    - **Misc.Set_kT_ByName**: cell array to set the tendon stiffness. The first column is a string with the name of the muscles, second column is the normalised tendon stiffness.
 
+Other
 
+   - **Misc.EMG_MuscleCopies**: array with names of muscle from which input EMG-data will be coupled. The second muscle will be driven with the EMG-data from the first one.
+   
 ## Output arguments
 
 We provide all state and control trajectories for the different trials and optimal control problems in one Results structure. Trajectories for different trials and optimal control problems are divided in substructures. All trajectories are interpolated on the mesh points.
@@ -331,7 +334,7 @@ Misc.MuscleNames_Input = Misc.EMGSelection; % only select muscles from the model
 As additional settings, you can also drive/constrain multiple muscles based on one signal. For example you can use the signal of the medial gastrocnemius in the excitation of the lateral gastrocnemius.
 
 ```matlab
-Misc.EMG_MuscleCopies = {'med_gas_l','lat_gas_l'};       %  use gastrocnemius medialis EMG to constrain activity of the lateral gastrocn
+Misc.EMG_MuscleCopies = {'med_gas_l','lat_gas_l'};       %  use gastrocnemius medialis EMG to constrain activity of the lateral gastrocnemius
 ```
 Finally you can set the weight for tracking ultrasound data in the objective function. 
 

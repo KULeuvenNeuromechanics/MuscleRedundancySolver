@@ -49,6 +49,7 @@ if boolEMG
         end
     end
     % verify if the muscles in the .mot files are in the model
+    % verify if the muscles in Misc.EMGSelection are in the .mot file 
     EMGheaders  = EMGFile(iF).colheaders;
     if bool_updateheader
        EMGheaders      = Misc.EMGheaders; 
@@ -56,7 +57,7 @@ if boolEMG
     for i=1:length(Misc.EMGSelection)
         if ~any(strcmp(Misc.EMGSelection{i},EMGheaders))
             if bool_updateheader == 0
-                disp(['Could not find ' Misc.EMGSelection{i} ' in the header of the EMG file, Updata the headers of file: ' Misc.EMGfile]);
+                disp(['Could not find ' Misc.EMGSelection{i} ' in the header of the EMG file, Update the headers of file: ' Misc.EMGfile]);
             else
                 disp(['Could not find ' Misc.EMGSelection{i} ' in the header of the EMG file, Update the headers in:  Misc.EMGheaders']);
             end
@@ -90,9 +91,11 @@ if boolEMG
                 NameSel = Misc.EMG_MuscleCopies{j,1};
                 NameCopy =  Misc.EMG_MuscleCopies{j,2};
                 Ind_ColCopy = strcmp(Misc.EMGSelection,NameSel);
-                Ind_ColOut = strcmp(Misc.EMGSelection,NameCopy);
-                if any(Ind_ColCopy) && any(Ind_ColOut) % only if both muscles are selected
-                    EMGindices = [EMGindices find(strcmp(NameCopy,DatStore(iF).MuscleNames))];
+				Ind_ColOut = strcmp(Misc.EMGSelection,NameCopy);
+				if any(Ind_ColCopy) && any(Ind_ColOut) % when the muscle you want to couple already has EMG-data, its data is replaced by the muscle twin's data					
+					EMGsel(:,Ind_ColOut) = EMGsel(:,Ind_ColCopy);
+                elseif any(Ind_ColCopy) && ~any(Ind_ColOut) % when the muscle you want to couple does not already have EMG-data, the muscle twin's data is appended to the existing data array
+                    EMGindices = [EMGindices; find(strcmp(NameCopy,DatStore(iF).MuscleNames))];
                     EMGsel = [EMGsel EMGsel(:,Ind_ColCopy)];
                     EMGselection = [EMGselection {NameCopy}];
                 end
