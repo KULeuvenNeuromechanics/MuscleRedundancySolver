@@ -90,14 +90,22 @@ if boolEMG
             for j=1:nCopy
                 NameSel = Misc.EMG_MuscleCopies{j,1};
                 NameCopy =  Misc.EMG_MuscleCopies{j,2};
+                % check if EMG signals we want to copy exists
                 Ind_ColCopy = strcmp(Misc.EMGSelection,NameSel);
-				Ind_ColOut = strcmp(Misc.EMGSelection,NameCopy);
-				if any(Ind_ColCopy) && any(Ind_ColOut) % when the muscle you want to couple already has EMG-data, its data is replaced by the muscle twin's data					
-					EMGsel(:,Ind_ColOut) = EMGsel(:,Ind_ColCopy);
-                elseif any(Ind_ColCopy) && ~any(Ind_ColOut) % when the muscle you want to couple does not already have EMG-data, the muscle twin's data is appended to the existing data array
+                % check if twin muscle is in the model
+                Ind_ColOut = strcmp(DatStore(iF).MuscleNames,NameCopy);
+                % check if twin muscle has EMG data
+                BoolTwinHasEMG = strcmp(EMGselection,NameCopy);
+                if any(Ind_ColCopy) && any(Ind_ColOut) && ~any(BoolTwinHasEMG) % only if both muscles are selected
                     EMGindices = [EMGindices; find(strcmp(NameCopy,DatStore(iF).MuscleNames))];
                     EMGsel = [EMGsel EMGsel(:,Ind_ColCopy)];
                     EMGselection = [EMGselection {NameCopy}];
+                elseif ~any(Ind_ColOut)
+                    disp([' Cannot copy EMG muscle ' NameSel ' to twin ',...
+                        NameCopy ' because ' NameCopy ' is not selected in the model']);
+                elseif any(BoolTwinHasEMG)
+                    disp([' twin muscle ' NameCopy ' has EMG data as input, we therefore did', ... 
+                        ' not constrain this activity based on ' NameSel]);
                 end
             end
         end    
