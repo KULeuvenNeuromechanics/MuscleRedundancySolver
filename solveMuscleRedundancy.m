@@ -913,6 +913,14 @@ end
 % plot states and variables from parameter estimation simulation
 save(fullfile(OutPath,[Misc.OutName 'Results.mat']),'Results','DatStore','Misc');
 
+% write estimated parameters to new duplicate osim model
+if BoolParamOpt
+    muscleParams = Results.Param.Estimated;
+    muscleNames  = DatStore.MuscleNames;
+    modelPath    = char(model_path);
+
+    ParamsToOsim(muscleParams,muscleNames,modelPath); 
+end
 
 end
 
