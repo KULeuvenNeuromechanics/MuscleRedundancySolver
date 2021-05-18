@@ -156,6 +156,8 @@ Other
 
    - **Misc.EMG_MuscleCopies**: array with names of muscle from which input EMG-data will be coupled. The second muscle will be driven with the EMG-data from the first one.
    
+   - **Misc.newModelFile**: character array with the name you want to give to the OpenSim model with estimated parameters.
+   
 ## Output arguments
 
 We provide all state and control trajectories for the different trials and optimal control problems in one Results structure. Trajectories for different trials and optimal control problems are divided in substructures. All trajectories are interpolated on the mesh points.

@@ -1,4 +1,4 @@
-function ParamsToOsim(muscleParams,muscleNames,modelPath,outPath)
+function ParamsToOsim(muscleParams,muscleNames,modelPath,outPath,newModelFile)
 %---------------------------------------------------------------------------
 %ParamsToOsim
 %   This function writes muscle parameters to a new osim model, based on a
@@ -22,6 +22,9 @@ function ParamsToOsim(muscleParams,muscleNames,modelPath,outPath)
 %   -outPath-
 %   * output file path
 % 
+%   -newModelFile- 
+%   * name of the new osim model
+% 
 % OUTPUT:
 %   * new osim model based on loaded model, saved in the specified folder
 %
@@ -42,7 +45,6 @@ alphao = muscleParams.alphao;
 listing       = dir(modelPath);
 modelFilePath = listing.folder;
 modelFile     = listing.name;
-newModelFile  = 'newParams.osim'; % name of the new osim model, you can change this as you like 
 
 % load the original model and initialize
 model = Model(fullfile(modelFilePath, modelFile));

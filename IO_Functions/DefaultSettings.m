@@ -108,6 +108,12 @@ end
 if ~isfield(Misc,'OutName') || isempty(Misc.OutName)
     Misc.OutName = '';
 end
+% filename of the osim model with updated parameters
+if ~isfield(Misc,'newModelFile')
+    file_path = char(Misc.model_path);
+    [~,oldModelFile,~] = fileparts(file_path);
+    Misc.newModelFile = [oldModelFile '_newParams.osim']; 
+end
 
 %% weights
 if ~isfield(Misc,'wlM') || isempty(Misc.wlM)
