@@ -918,8 +918,9 @@ if BoolParamOpt
     muscleParams = Results.Param.Estimated;
     muscleNames  = DatStore.MuscleNames;
     modelPath    = char(model_path);
-
-    ParamsToOsim(muscleParams,muscleNames,modelPath); 
+    outPath      = OutPath;
+    
+    ParamsToOsim(muscleParams,muscleNames,modelPath,outPath); 
 end
 
 end

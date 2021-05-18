@@ -190,6 +190,8 @@ We provide all state and control trajectories for the different trials and optim
 
 15. Misc: for reference of the settings of the simulation we add the Misc structure to the results. 
 
+16. New OpenSim model with updated parameters is saved at the output path.
+
 
 ## Muscle model
 
