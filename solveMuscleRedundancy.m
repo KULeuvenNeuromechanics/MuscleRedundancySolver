@@ -12,6 +12,8 @@ function [Results,DatStore,Misc] = solveMuscleRedundancy(model_path,time,OutPath
 %           Misc:       structure with general input data (see manual for more details)
 % -----------------------------------------------------------------------%
 
+% add the model name to the misc structure (mainly for post processing)
+Misc.model_path = model_path;
 
 % update default settings
 Misc = DefaultSettings(Misc);
@@ -24,8 +26,7 @@ Misc.nTrials = length(Misc.IKfile);
 [time] = Check_TimeIndices(Misc,time);
 Misc.time=time;
 
-% add the model name to the misc structure (mainly for post processing)
-Misc.model_path = model_path;
+
 
 %% Extract muscle information
 % ----------------------------------------------------------------------- %
@@ -913,6 +914,16 @@ end
 % plot states and variables from parameter estimation simulation
 save(fullfile(OutPath,[Misc.OutName 'Results.mat']),'Results','DatStore','Misc');
 
+% write estimated parameters to new duplicate osim model
+if BoolParamOpt
+    muscleParams = Results.Param.Estimated;
+    muscleNames  = DatStore.MuscleNames;
+    modelPath    = char(model_path);
+    outPath      = OutPath;
+    newModelFile = Misc.newModelFile;
+    
+    ParamsToOsim(muscleParams,muscleNames,modelPath,outPath,newModelFile); 
+end
 
 end
 
