@@ -24,14 +24,8 @@ if boolEMG
     % Load the data and check for errors
     for iF = 1:nF        
         % get information for the EMG constraints
-        EMGFile(iF)      = importdata(Misc.EMGfile{iF});        
+        EMGFile(iF)      = ReadMotFile(Misc.EMGfile{iF});        
     end    
-    % prevent errors with the headers
-    for iF = 1:nF
-        if ~isfield(EMGFile(iF),'colheaders')
-            EMGFile(iF).colheaders = strsplit(EMGFile(1).textdata{end});
-        end
-    end
     % check if we have to update the headers based on user input
     bool_updateheader   = 0;
     if isfield(Misc,'EMGheaders') && ~isempty(Misc.EMGheaders)        
@@ -50,7 +44,7 @@ if boolEMG
     end
     % verify if the muscles in the .mot files are in the model
     % verify if the muscles in Misc.EMGSelection are in the .mot file 
-    EMGheaders  = EMGFile(iF).colheaders;
+    EMGheaders  = EMGFile(iF).names;
     if bool_updateheader
        EMGheaders      = Misc.EMGheaders; 
     end

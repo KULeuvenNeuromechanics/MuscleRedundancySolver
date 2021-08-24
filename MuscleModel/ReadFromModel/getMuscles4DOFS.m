@@ -3,17 +3,26 @@ function Misc=getMuscles4DOFS(Misc)
 %   Maarten Afschrift, 15 July 2016
 
 
-% Loop over each DOF in the model
+% Loop over each DOF in the model to evaluate if moment arms is above
+% 0.0001mm (i.e. if muscle spans that joint)
+
 for i=1:length(Misc.DofNames_Input)
     
     % Get the moment arms from the muscle analysis results
-    dm_Data_temp=importdata(fullfile(Misc.MuscleAnalysisPath,[Misc.trialName '_MuscleAnalysis_MomentArm_' Misc.DofNames_Input{i} '.sto']));    
+    dm_Data_temp=ReadMotFile(fullfile(Misc.MuscleAnalysisPath,[Misc.trialName '_MuscleAnalysis_MomentArm_' Misc.DofNames_Input{i} '.sto']));    
+    
+    % pre-allocate matrix
+    if i ==1
+        dM_store = nan(length(Misc.DofNames_Input),length(dm_Data_temp.data(1,:))-1);
+    end
+    
+    % store moment arms at first frame
     dM=dm_Data_temp.data(1,2:end);    
     dM_store(i,:)=dM;
 end
 
 % get the muscles that actuate the selected DOFS (moment arms > 0.001)
-MuscleNames=dm_Data_temp.colheaders(2:end);
+MuscleNames=dm_Data_temp.names(2:end);
 [~, nm]=size(dM_store);
 ct=1;
 for i=1:nm

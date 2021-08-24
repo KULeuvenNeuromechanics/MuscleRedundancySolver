@@ -14,7 +14,7 @@ for i=1:length(Misc.DofNames_Input)
     % read the Muscle Analysis Result
     MA_FileName=fullfile(Misc.MuscleAnalysisPath,[Misc.trialName '_MuscleAnalysis_MomentArm_' Misc.DofNames_Input{i} '.sto']);
     if exist(MA_FileName,'file')
-        dm_Data_temp=importdata(fullfile(Misc.MuscleAnalysisPath,[Misc.trialName '_MuscleAnalysis_MomentArm_' Misc.DofNames_Input{i} '.sto']));
+        dm_Data_temp=ReadMotFile(fullfile(Misc.MuscleAnalysisPath,[Misc.trialName '_MuscleAnalysis_MomentArm_' Misc.DofNames_Input{i} '.sto']));
     else
         error(['Cannot open muscle analysis results for: ' Misc.DofNames_Input{i}])
     end
@@ -22,20 +22,22 @@ for i=1:length(Misc.DofNames_Input)
     % get the indexes for the selected MuscleNames (only needed in first iteration)
     if i==1
         nfr = length(dm_Data_temp.data(:,1));
-        headers=dm_Data_temp.colheaders;
-        Inds_muscles=nan(length(Misc.MuscleNames_Input),1);
+        headers=dm_Data_temp.names;
+        Inds_muscles=nan(length(Misc.MuscleNames_Input),1); % index of muscles in input vector
+        IndsNames_sel=nan(length(Misc.MuscleNames_Input),1); % index of muscles in opensim model
         ctm=1;
         for j=1:length(Misc.MuscleNames_Input)
             ind_sel=find(strcmp(Misc.MuscleNames_Input{j},headers));
             if ~isempty(ind_sel)
-                Inds_muscles(ctm)=ind_sel; IndsNames_sel(ctm)=j;
+                Inds_muscles(ctm)=ind_sel; 
+                IndsNames_sel(ctm)=j;
                 ctm=ctm+1;
             else
                 disp(['Warning: The selected muscle ' Misc.MuscleNames_Input{j} ' does not exist in the selected model. This muscles is removed from the program']);
             end
         end
         Misc.MuscleNames=Misc.MuscleNames_Input(IndsNames_sel);
-        Inds_muscles(isnan(Inds_muscles))=[];                               % Delete the muscles names that are not selected by the user
+        Inds_muscles(isnan(Inds_muscles))=[];                               % Delete the muscles names that are not selected by the user        
         dM_temp=nan(nfr,length(Misc.DofNames_Input),length(Misc.MuscleNames));    % pre-allocate moment arms
     end
     
@@ -76,7 +78,7 @@ fs=1/mean(diff(t_dM));
 DatStore(trial).dM = filtfilt(B,A,dM_raw);
 
 % filter Muscle-tendon lengths and store them in DatStore.LMT
-LMT_dat=importdata(fullfile(Misc.MuscleAnalysisPath,[Misc.trialName '_MuscleAnalysis_Length.sto']));
+LMT_dat=ReadMotFile(fullfile(Misc.MuscleAnalysisPath,[Misc.trialName '_MuscleAnalysis_Length.sto']));
 LMT_raw=LMT_dat.data(:,Inds_muscles);
 t_lMT = LMT_dat.data(:,1);
 fs=1/mean(diff(t_lMT));             % sampling frequency
@@ -93,10 +95,7 @@ DatStore(trial).nDOF        = length(Misc.DofNames);
 
 % load joint kinematics
 [~,Misc.trialName,~]=fileparts(IK_path);
-IK_data=importdata(IK_path);
-if ~isfield(IK_data,'colheaders')
-    IK_data.colheaders=strsplit(IK_data.textdata{end});
-end
+IK_data=ReadMotFile(IK_path);
 
 % select the IK information between the selected time frames
 t_IK=IK_data.data(:,1);
@@ -113,15 +112,14 @@ end
 
 %% Filter ID
 % Get the ID data
-ID_data=importdata(ID_path);
+ID_data=ReadMotFile(ID_path);
 t_ID=ID_data.data(:,1);
 
 % get the ID index
-if ~isfield(ID_data,'colheaders')
-    ID_data.colheaders=strsplit(ID_data.textdata{end});
-end
-ID_header=ID_data.colheaders;     IK_header = IK_data.colheaders;
-ID_Header_inds=zeros(size(DOF_inds));  IK_Header_inds = zeros(size(DOF_inds));
+ID_header=ID_data.names;     
+IK_header = IK_data.names;
+ID_Header_inds=zeros(size(DOF_inds));  
+IK_Header_inds = zeros(size(DOF_inds));
 for i=1:length(Misc.DofNames)
    ID_Header_inds(i)=find(strcmp([Misc.DofNames{i} '_moment'],ID_header));
    IK_Header_inds(i)=find(strcmp(Misc.DofNames{i},IK_header)); 
@@ -138,14 +136,14 @@ end
 % select ID data between start and end
 ID_data_int = interp1(ID_data.data(:,1),ID_data.data,IK_data.data(:,1));       % interpolate data for IK sampling frequency
 t_ID = IK_data.data(:,1);
-ind0 = find(t_ID>=Misc.time(trial,1),1,'first'); ind_end=find(t_ID<=Misc.time(trial,2),1,'last');
+ind0 = find(t_ID>=Misc.time(trial,1),1,'first'); 
+ind_end=find(t_ID<=Misc.time(trial,2),1,'last');
 ID_inds=ind0:ind_end;
 
 %% store the data
 DatStore(trial).T_exp = ID_data_int(ID_inds,ID_Header_inds);
 DatStore(trial).q_exp = IK_data.data(IK_inds,IK_Header_inds); 
 DatStore(trial).time = t_IK(IK_inds);
-
 
 % check if size of IK and ID matrices are equal
 if length(ID_inds) ~= length(IK_inds)    
