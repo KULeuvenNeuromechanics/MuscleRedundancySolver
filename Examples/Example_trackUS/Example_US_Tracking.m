@@ -33,8 +33,8 @@ Misc.ATendon = [];      % default way to set tendon stiffenss (default values is
 Misc.Estimate_TendonStiffness = {'med_gas_l';'lat_gas_l';'soleus_l'}; % Names of muscles of which tendon stifness is estimated
 Misc.lb_kT_scaling = 0.2; % Lower bound for scaling generic tendon stiffness
 Misc.ub_kT_scaling = 1.2; % Upper bound for scaling generic tendon stiffness
-Misc.Coupled_TendonStiffness = {'med_gas_l';'lat_gas_l';'soleus_l'}; % Couple muscles that should have equal tendon stifness
-Misc.Coupled_fiber_length = {'med_gas_l';'lat_gas_l'};
+Misc.Coupled_TendonStiffness = {'med_gas_l','lat_gas_l','soleus_l'}; % Couple muscles that should have equal tendon stifness
+Misc.Coupled_fiber_length = {'med_gas_l','lat_gas_l'};
 Misc.Coupled_slack_length = {}; %{'med_gas_l';'lat_gas_l'};
 
 % Settings for estimating optimal fiber length
@@ -55,7 +55,7 @@ Misc.EMGconstr  = 0;     		% Boolean to select EMG constrained option
 Misc.wlM    = 1;          	% weight on tracking fiber length
 
 % Plotter Bool: Boolean to select if you want to plot lots of output information of intermediate steps in the script
-Misc.PlotBool = 1;
+Misc.PlotBool = 0;
 
 % MRS Bool: Select if you want to run the generic muscle redundancy solver
 Misc.MRSBool = 1;

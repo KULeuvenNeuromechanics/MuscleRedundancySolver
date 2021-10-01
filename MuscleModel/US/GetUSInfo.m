@@ -16,7 +16,8 @@ if isfield(Misc,'UStracking') && Misc.UStracking == 1
     end
 end
 
-if boolUS    
+if boolUS 
+    
     % file information
     nFiles = length(Misc.USfile);
     % Load the data and check for errors

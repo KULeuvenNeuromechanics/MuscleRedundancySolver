@@ -62,10 +62,10 @@ for i = 1:Misc.nTrials
     
     % display warnings in muscle selection
     Warnings_MuscleNames(DatStore,Misc,i);
-    
-    % get indexes of the muscles for which optimal fiber length, tendon stiffness are estimated
-    [DatStore] = GetIndices_US(DatStore,Misc,i);
 end
+
+% get indexes of the muscles for which optimal fiber length, tendon stiffness are estimated
+[DatStore] = GetIndices_OptMuscleParams(DatStore,Misc);
 
 % set the default value of the tendon stiffness
 if isfield(Misc,'Set_kT_ByName') && ~isempty(Misc.Set_kT_ByName)
@@ -368,10 +368,10 @@ end
 
 % Parameter optimization selected if EMG information or ultrasound
 % information is active
-BoolParamOpt = 0;
-if Misc.UStracking == 1 || Misc.EMGconstr == 1
-    BoolParamOpt = 1;
-end
+BoolParamOpt = true;
+% if Misc.UStracking == 1 || Misc.EMGconstr == 1
+%     BoolParamOpt = 1;
+% end
 
 if BoolParamOpt == 1
     % Estimate parameters
@@ -544,7 +544,7 @@ if BoolParamOpt == 1
         end        
         % tracking lMtilde
         if DatStore(trial).US.boolUS
-            lMo = lMo_scaling_param(DatStore(trial).USsel)'.*Misc.params(2,DatStore(trial).USsel(:));
+            lMo = lMo_scaling_param(DatStore(trial).US.USindices)'.*Misc.params(2,DatStore(trial).US.USindices);
             lMo = ones(size(DatStore(trial).USTracking,1),1)*lMo;
             lMtilde_tracking = DatStore(trial).USTracking./lMo/1000; % US data expected in mm in the input file.
             lMtilde_simulated = lMtilde(DatStore(trial).US.USindices,(N_acc+trial:N_acc+trial+N));

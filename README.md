@@ -66,7 +66,7 @@ The following input arguments are required to use EMG data:
    - **Misc.EMGSelection**: cell array with muscles that are constrained/driven by EMG data.
    - **Misc.BoundsScaleEMG**: 1 x 2 matlab array with lower and upper bound on optimization variable (s) that scales EMG data to simulated muscle excitation. (i.e. s*EMG = SimExcitation). In case you normalised your EMG data to MVC measurements, this scale factor should be close to 1.
    - **Misc.EMGbounds**: 1 x 2 matlab array with lower and upper bound on the deviation between measured EMG data and simulated muscle excitations (i.e. lower bound <  S EMG - SimExcitation < Upper bound).   
-   
+
 #### Required input arguments when using Ultrasound data
 
 The following input arguments are required to use ultrasound data:
@@ -107,11 +107,19 @@ Related to flow control:
 
 Related to parameter optimization:
 
-   - **Misc.Coupled_TendonStiffness**: array with names of muscle from which tendon stiffness will be coupled. This means that the generic tendon stiffnesses of these muscles will be scaled with same variable.
+   - **Misc.Coupled_TendonStiffness**: cell array [n x m] with names of muscle from which tendon stiffness will be coupled. Muscles on the same row [n] will be coupled. This means that the generic tendon stiffnesses of these muscles will be scaled with same variable.
 
-   - **Misc.Coupled_fiber_length**: array with names of muscle from which optimal fiber length will be coupled. This means that the generic fiber lengths of these muscles will be scaled with same variable.  
+   - **Misc.Coupled_fiber_length**: cell array [n x m] with names of muscle from which optimal fiber length will be coupled. Muscles on the same row [n] will be coupled. This means that the generic fiber lengths of these muscles will be scaled with same variable.  
 
-   - **Misc.Coupled_slack_length**: array with names of muscle from which the optimal slack length will be coupled. This means that the generic tendon slack lengths of these muscles will be scaled with same variable.
+   - **Misc.Coupled_slack_length**: cell array [n x m] with names of muscle from which the optimal slack length will be coupled.Muscles on the same row [n] will be coupled.  This means that the generic tendon slack lengths of these muscles will be scaled with same variable.
+
+   - example: this command will couple the estimated tendon stiffness of the calf muscles (gastrocnemius and soleus) on the left and right leg separately.
+
+     ```
+     Misc.Coupled_TendonStiffness = {'med_gas_l','lat_gas_l','soleus_l'; 'med_gas_r','lat_gas_r','soleus_r'};
+     ```
+
+     
 
 Related to weights in objective function:
 
@@ -157,7 +165,7 @@ Other
    - **Misc.EMG_MuscleCopies**: array with names of muscle from which input EMG-data will be coupled. The second muscle will be driven with the EMG-data from the first one.
    
    - **Misc.newModelFile**: character array with the name you want to give to the OpenSim model with estimated parameters.
-   
+
 ## Output arguments
 
 We provide all state and control trajectories for the different trials and optimal control problems in one Results structure. Trajectories for different trials and optimal control problems are divided in substructures. All trajectories are interpolated on the mesh points.
