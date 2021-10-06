@@ -26,8 +26,6 @@ Misc.nTrials = length(Misc.IKfile);
 [time] = Check_TimeIndices(Misc,time);
 Misc.time=time;
 
-
-
 %% Extract muscle information
 % ----------------------------------------------------------------------- %
 % Perform muscle analysis for the different selected trials
@@ -58,6 +56,8 @@ for i = 1:Misc.nTrials
     end
     % Shift tendon force-length curve as a function of the tendon stiffness
     Misc.shift = getShift(Misc.kT);
+    
+    % Spline moment arms and muscle tendon lengths
     [DatStore] = getMuscleInfo(IK_path_trial,ID_path_trial,Misc,DatStore,i);
     
     % display warnings in muscle selection
@@ -72,8 +72,10 @@ if isfield(Misc,'Set_kT_ByName') && ~isempty(Misc.Set_kT_ByName)
     [Misc,DatStore] = set_kT_ByName(Misc,DatStore);
 end
 
-% get the EMG information
+% Structure EMG data & select corresponding muscles in model
 [DatStore] = GetEMGInfo(Misc,DatStore);
+
+% Structure ultrasound data & select corresponding muscles in model
 [DatStore] = GetUSInfo(Misc,DatStore);
 
 % get the number of muscles
@@ -81,9 +83,11 @@ NMuscles = length(DatStore(1).MuscleNames);
 
 %% Static optimization
 % ----------------------------------------------------------------------- %
+
 % Solve the muscle redundancy problem using static optimization
 % NOTE: We do not estimate any parameters here, but these results can serve as
 % decent initial guess for the later dynamic optimization
+
 % Extract the muscle-tendon properties
 [Misc.params,Misc.lMo,Misc.lTs,Misc.FMo,Misc.alphao]=ReadMuscleParameters(model_path,DatStore(1).MuscleNames);
 
@@ -94,16 +98,16 @@ end
 
 %% Input activation and contraction dynamics
 % ----------------------------------------------------------------------- %
-tau_act = 0.015;    Misc.tauAct = tau_act * ones(NMuscles, 1);       % activation time constant (activation dynamics)
+tau_act = 0.015;    Misc.tauAct = tau_act * ones(NMuscles, 1);     % activation time constant (activation dynamics)
 tau_deact = 0.06;   Misc.tauDeact = tau_deact * ones(NMuscles,1);  % deactivation time constant (activation dynamics)
 Misc.b = 0.1;       % tanh coefficient for smooth activation dynamics
 
 Misc.kT=Misc.kT;
 Misc.shift=Misc.shift;
 
-%% Descretisation
+%% Discretisation
 
-% mesh descretisation
+% mesh Discretisation
 for trial = 1:Misc.nTrials
     t0 = DatStore(trial).time(1); tf = DatStore(trial).time(end);
     Mesh(trial).N = round((tf-t0)*Misc.Mesh_Frequency);
@@ -181,7 +185,6 @@ optionssol.ipopt.linear_solver = output.setup.nlp.ipoptoptions.linear_solver;
 optionssol.ipopt.tol = output.setup.nlp.ipoptoptions.tolerance;
 optionssol.ipopt.max_iter = output.setup.nlp.ipoptoptions.maxiterations;
 
-
 %% Dynamic Optimization - Default parameters
 % ----------------------------------------------------------------------- %
 % Solve muscle redundancy problem with default parameters
@@ -200,7 +203,7 @@ opti    = casadi.Opti();    % create opti structure
 nTrials = Misc.nTrials;
 N_tot = sum([Mesh().N]);
 
-% set intial guess based on static opt data
+% set intial guess based on static optimization data
 SoActGuess = zeros(NMuscles,N_tot);
 SoExcGuess = zeros(NMuscles,N_tot-nTrials);
 lMtildeGuess = zeros(NMuscles,N_tot);
@@ -261,8 +264,6 @@ if Misc.MRSBool == 1
     N_acc = 0; % Index that keeps track of trials that are accumulated         
     % Loop over trials --> one simulation for each trial
     for trial = 1:Misc.nTrials
-        % Time bounds
-        t0 = DatStore(trial).time(1); tf = DatStore(trial).time(end);
         % Discretization
         N = Mesh(trial).N;
         h = Mesh(trial).step;
@@ -309,10 +310,7 @@ if Misc.MRSBool == 1
     
     % Solve
     diary(fullfile(OutPath,[Misc.OutName 'GenericMRS.txt']));
-    tic
     sol = opti.solve();
-    dt = toc;
-    disp(['Computation time solving OCP: ' num2str(dt) ' s'])
     diary off
     
     % Extract results
@@ -359,8 +357,7 @@ if Misc.MRSBool == 1
         Results.FMvtilde(trial).genericMRS = FMvtilde_';
         Ntot = Ntot + N;
     end
-    clear opti a lMtilde e vMtilde aT
-    
+    clear opti a lMtilde e vMtilde aT    
 end
 
 %% Dynamic Optimization - Parameter estimation

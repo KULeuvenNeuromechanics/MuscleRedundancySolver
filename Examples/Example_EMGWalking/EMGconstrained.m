@@ -12,7 +12,7 @@ Misc.IKfile  = {fullfile(pwd,'IK_gait.mot')};
 Misc.IDfile  = {fullfile(pwd,'ID_gait.sto')};
 Misc.EMGfile = {fullfile(pwd,'EMG_gait.mot')};
 model_path   = {fullfile(pwd,'ScaledModel.osim')};
-Out_path     = fullfile(pwd,'Results_LowerLimb');                    % folder to store results
+Out_path     = fullfile(pwd,'Results_LowerLimb_EMGconstrained');                    % folder to store results
 time = [1.2 2.3]; 
 
 %% Settings
@@ -44,8 +44,8 @@ Misc.EMG_MuscleCopies = {'vas_lat_l','vas_int_l'};
 
 % parameter estimation
 Misc.Estimate_TendonStiffness = {'med_gas_l';'lat_gas_l';'soleus_l';'per_brev_l';'per_long_l'}; % Names of muscles of which tendon stifness is estimated
-Misc.lb_kT_scaling = 0.2; % Lower bound for scaling generic tendon stiffness
-Misc.ub_kT_scaling = 2; % Upper bound for scaling generic tendon stiffness
+Misc.lb_kT_scaling = 1; % Lower bound for scaling generic tendon stiffness
+Misc.ub_kT_scaling = 1; % Upper bound for scaling generic tendon stiffness
 Misc.Coupled_TendonStiffness = {'med_gas_l','lat_gas_l';...
     'med_gas_l','soleus_l';...
     'per_brev_l','per_long_l'}; % Couple muscles that should have equal tendons stiffness
@@ -72,7 +72,13 @@ Misc.PlotBool = 1;
 % MRS Bool: Select if you want to run the generic muscle redundancy solver
 Misc.MRSBool = 1;
 % Validation Bool: Select if you want to run the muscle redundancy solver with the optimized parameters
-Misc.ValidationBool = 0; 	% TO DO: we should report results of EMG driven simulation as well
+Misc.ValidationBool = 1; 	% TO DO: we should report results of EMG driven simulation as well
 
 %% Run muscle tendon estimator:
 [Results,DatStore,Misc] = solveMuscleRedundancy(model_path,time,Out_path,Misc);
+
+
+figure();
+plot(Results.MActivation.genericMRS(10,:),'b'); hold on;
+plot(Results.MActivation.validationMRS(10,:),'--r'); hold on;
+
