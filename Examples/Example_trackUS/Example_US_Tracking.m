@@ -35,7 +35,7 @@ Misc.lb_kT_scaling = 0.2; % Lower bound for scaling generic tendon stiffness
 Misc.ub_kT_scaling = 1.2; % Upper bound for scaling generic tendon stiffness
 Misc.Coupled_TendonStiffness = {'med_gas_l','lat_gas_l','soleus_l'}; % Couple muscles that should have equal tendon stifness
 Misc.Coupled_fiber_length = {'med_gas_l','lat_gas_l'};
-Misc.Coupled_slack_length = {}; %{'med_gas_l';'lat_gas_l'};
+Misc.Coupled_slack_length = {}; %{'med_gas_l','lat_gas_l'};
 
 % Settings for estimating optimal fiber length
 Misc.Estimate_OptimalFiberLength = {'med_gas_l';'lat_gas_l'};%;'lat_gas_l';'soleus_l'}; % Names of muscles of which optimal fiber length is estimated - slack length is estimated for these muscles as well

@@ -68,7 +68,7 @@ Misc.wTres  = 10000;
 Misc.wVm    = 0.001;
 
 % Plotter Bool: Boolean to select if you want to plot lots of output information of intermediate steps in the script
-Misc.PlotBool = 1;
+Misc.PlotBool = 0;
 % MRS Bool: Select if you want to run the generic muscle redundancy solver
 Misc.MRSBool = 1;
 % Validation Bool: Select if you want to run the muscle redundancy solver with the optimized parameters
