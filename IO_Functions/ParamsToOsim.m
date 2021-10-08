@@ -52,7 +52,6 @@ model.initSystem();
 
 muscles  = model.getMuscles(); % get the muscles of the original model
 nMuscles = length(muscleNames); % count the muscles with new parameters
-disp(['Number of muscles with new parameters: ' num2str(nMuscles)]);
 
 % loop through muscles with new parameters
 for i = 1:nMuscles 

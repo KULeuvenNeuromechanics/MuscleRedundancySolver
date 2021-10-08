@@ -58,7 +58,7 @@ Misc.EMGSelection = {'tib_ant_l','lat_gas_l','med_gas_l','soleus_l'};
 
 % information for the EMG constraint
 Misc.EMGconstr  = 1;     		% Boolean to select EMG constrained option
-Misc.EMGbounds  = 0;  	% upper and lower bound for difference between simulated and measured muscle activity
+Misc.EMGbounds  = [-0.001 0.001];  	% upper and lower bound for difference between simulated and measured muscle activity
 Misc.BoundsScaleEMG = [0.2 1.5];  % maximal value to scale EMG
 
 % Set weights
@@ -68,7 +68,7 @@ Misc.wTres  = 10000;
 Misc.wVm    = 0.001;
 
 % Plotter Bool: Boolean to select if you want to plot lots of output information of intermediate steps in the script
-Misc.PlotBool = 1;
+Misc.PlotBool = 0;
 % MRS Bool: Select if you want to run the generic muscle redundancy solver
 Misc.MRSBool = 1;
 % Validation Bool: Select if you want to run the muscle redundancy solver with the optimized parameters
