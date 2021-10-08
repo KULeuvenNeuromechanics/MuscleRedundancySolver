@@ -44,11 +44,19 @@ Misc.EMG_MuscleCopies = {'vas_lat_l','vas_int_l'};
 
 % parameter estimation
 Misc.Estimate_TendonStiffness = {'med_gas_l';'lat_gas_l';'soleus_l';'per_brev_l';'per_long_l'}; % Names of muscles of which tendon stifness is estimated
-Misc.lb_kT_scaling = 1; % Lower bound for scaling generic tendon stiffness
-Misc.ub_kT_scaling = 1; % Upper bound for scaling generic tendon stiffness
+Misc.lb_kT_scaling = 0.8; % Lower bound for scaling generic tendon stiffness
+Misc.ub_kT_scaling = 1.2; % Upper bound for scaling generic tendon stiffness
 Misc.Coupled_TendonStiffness = {'med_gas_l','lat_gas_l';...
     'med_gas_l','soleus_l';...
     'per_brev_l','per_long_l'}; % Couple muscles that should have equal tendons stiffness
+
+Misc.Estimate_OptimalFiberLength= {'med_gas_l';'lat_gas_l';'soleus_l';'per_brev_l';'per_long_l'}; % Names of muscles of which tendon stifness is estimated
+Misc.lb_lMo_scaling= 0.8; % Lower bound for scaling generic tendon stiffness
+Misc.ub_lMo_scaling = 1.2; % Upper bound for scaling generic tendon stiffness
+Misc.Coupled_fiber_length = {'med_gas_l','lat_gas_l';...
+    'med_gas_l','soleus_l';...
+    'per_brev_l','per_long_l'}; % Couple muscles that should have equal tendons stiffness
+
 
 % select muscles
 Misc.MuscleNames_Input = []; % select muscles

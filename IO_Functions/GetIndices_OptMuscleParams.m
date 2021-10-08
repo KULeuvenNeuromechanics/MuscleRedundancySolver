@@ -6,7 +6,7 @@ function [DatStore] = GetIndices_OptMuscleParams(DatStore,Misc)
 % same for all trials
 if Misc.UStracking == 1 || Misc.EMGconstr == 1
     
-   % pre allocate indices
+    % pre allocate indices
     free_lMo = zeros(length(Misc.Estimate_OptimalFiberLength),1);
     free_kT = zeros(length(Misc.Estimate_TendonStiffness),1);
     coupled_kT = zeros(size(Misc.Coupled_TendonStiffness));
@@ -52,7 +52,7 @@ if Misc.UStracking == 1 || Misc.EMGconstr == 1
             if ~isempty(Inds)
                 coupled_lMo(k,j) = Inds;
             else
-                warning(['Could not couple fiber length of muscle ' Misc.Coupled_TendonStiffness{k,j},...
+                warning(['Could not couple fiber length of muscle ' Misc.Coupled_fiber_length{k,j},...
                     'because this muscle in not included in the model']);
             end
         end
@@ -69,6 +69,12 @@ if Misc.UStracking == 1 || Misc.EMGconstr == 1
             end
         end
     end
+else
+    free_lMo = [];
+    free_kT = [];
+    coupled_kT = [];
+    coupled_lMo = [];
+    coupled_lTs = [];
 end
 
 % add to DatStore
@@ -79,5 +85,6 @@ for i=1:length(DatStore)
     DatStore(i).coupled_lMo = coupled_lMo;
     DatStore(i).coupled_lTs = coupled_lTs;
 end
+
 end
 

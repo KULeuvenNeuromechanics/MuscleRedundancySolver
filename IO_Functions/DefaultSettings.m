@@ -109,7 +109,7 @@ if ~isfield(Misc,'OutName') || isempty(Misc.OutName)
     Misc.OutName = '';
 end
 % filename of the osim model with updated parameters
-if ~isfield(Misc,'newModelFile')
+if ~isfield(Misc,'newModelFile') && isfield(Misc,'model_path');
     file_path = char(Misc.model_path);
     [~,oldModelFile,~] = fileparts(file_path);
     Misc.newModelFile = [oldModelFile '_newParams.osim']; 
@@ -172,10 +172,6 @@ if size(Misc.Coupled_TendonStiffness,2) == 1 && size(Misc.Coupled_TendonStiffnes
 end
 if size(Misc.Coupled_fiber_length,2) == 1 && size(Misc.Coupled_fiber_length,1)> 1
     Misc.Coupled_fiber_length = Misc.Coupled_fiber_length';
-    disp('Transposed vector with optimal fiber lengths, expects a row vector and not a col vector');
-end
-if size(Misc.Estimate_OptimalFiberLength,2) == 1 && size(Misc.Estimate_OptimalFiberLength,1)> 1
-    Misc.Coupled_slack_length = Misc.Coupled_slack_length';
     disp('Transposed vector with optimal fiber lengths, expects a row vector and not a col vector');
 end
 end
