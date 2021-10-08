@@ -39,7 +39,7 @@ Misc.EMGSelection = {'per_brev_l','tib_ant_l','per_long_l','lat_gas_l',...
     'med_gas_l','soleus_l','vas_lat_l','vas_med_l','add_long_l',...
     'rect_fem_l','tfl_l','glut_med2_l','bifemsh_l','bifemlh_l'};
 
-%  use gastrocnemius medialis EMG to constrain activity of the lateral gastrocn
+%  use vastus lateralis EMG to constrain activity of the vastus intermedius
 Misc.EMG_MuscleCopies = {'vas_lat_l','vas_int_l'};       
 
 % parameter estimation
