@@ -38,7 +38,7 @@ if boolUS
         IndError=zeros(length(USselection),1);
         for i=1:length(Misc.USSelection)
             if ~any(strcmp(Misc.USSelection{i},DatStore(iFile).MuscleNames))
-                disp(['Could not find ' USselection{i} ' in the model, update the Misc.USSelection structure']);
+                disp(['Could not find ' Misc.USSelection{i} ' in the model, update the Misc.USSelection structure']);
                 bool_error=1;
                 IndError(i)=1;
             end
@@ -72,7 +72,6 @@ if boolUS
         nIn = length(Misc.USSelection(iF,:));
         USsel = nan(nfr,nIn);   USindices = nan(nIn,1);
         USselection = Misc.USSelection(iF,:);
-        USheaders  = USfile(iF).colheaders;
         for i=1:length(USselection)
             ind = strcmp(USselection{i},USheaders);
             USsel(:,i) = USdat(:,ind);
