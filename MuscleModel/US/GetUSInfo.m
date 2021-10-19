@@ -74,7 +74,7 @@ if boolUS
         USselection = Misc.USSelection(iF,:);
         USheaders  = USfile(iF).colheaders;
         for i=1:length(USselection)
-            ind = strcmp(USselection{i},USheaders);
+            ind = strcmp(USselection{i},USheaders)+1;
             USsel(:,i) = USdat(:,ind);
             USindices(i) = find(strcmp(USselection{i},DatStore(iF).MuscleNames));
         end 
