@@ -72,7 +72,7 @@ The following input arguments are required to use EMG data:
 The following input arguments are required to use ultrasound data:
    - **Misc.UStracking**: boolean to select whether you want to track provided muscle fiber lengths.
    - **Misc.USfile**: cell array of filenames containing fiber length data of different motion trials (.mot file). The fiber length data is usually measured using ultra-sound (US) [expects fiber lengths in mm].
-   - **Misc.USSelection**: cell array with muscles used in fiber length tracking.
+   - **Misc.USSelection**: cell array with muscles used in fiber length tracking. Provide for every trial a row within the cell array where every element in the row is a muscle to be tracked for that trial. 
 
 #### Required input arguments for parameter optimization
 
