@@ -27,9 +27,9 @@ if boolUS
     end    
     % prevent errors with the headers
     for iFile = 1:nF
-        if ~isfield(USfile(iFile),'colheaders')
-            USfile(iFile).colheaders = strsplit(USfile(1).textdata{end});
-        end
+%         if ~isfield(USfile(iFile),'colheaders')
+            USfile(iFile).colheaders = strsplit(USfile(iFile).textdata{end});
+%         end
     end
     % verify if the selected muscles are in the model
     for iFile = 1:nF 

@@ -46,7 +46,9 @@ Misc.ub_lTs_scaling = 1.5; % Upper bound for scaling tendon slack length
 
 % Select muscle for which you want the fiberlengths to track the US data
 Misc.UStracking  = 1;            % Boolean to select US tracking option
-Misc.USSelection = {'med_gas_l'};
+Misc.USSelection = {'med_gas_l'; ...
+                    'med_gas_l'; ...
+                    'med_gas_l'};
 
 % information for the EMG constraint
 Misc.EMGconstr  = 0;     		% Boolean to select EMG constrained option
