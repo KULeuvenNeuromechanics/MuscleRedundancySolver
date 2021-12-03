@@ -299,7 +299,7 @@ if Misc.MRSBool == 1
         N_acc = N_acc + N;
     end
     % Cost function
-    J = 0.5*(sumsqr(e)/N/NMuscles + sumsqr(a)/N/NMuscles) + ...
+    J = Misc.wAct*0.5*(sumsqr(e)/N/NMuscles + sumsqr(a)/N/NMuscles) + ...
         Misc.wTres*sumsqr(aT)/N/DatStore(trial).nDOF + ...
         Misc.wVm*sumsqr(vMtilde)/N/NMuscles;
     
@@ -772,7 +772,6 @@ if Misc.ValidationBool == true && BoolParamOpt
     
     
     % Loop over mesh points formulating NLP
-    J = 0; % Initialize cost function
     N_acc = 0;
     for trial = 1:Misc.nTrials
         % Time bounds
@@ -805,14 +804,14 @@ if Misc.ValidationBool == true && BoolParamOpt
             % Hill-equilibrium constraint
             opti_validation.subject_to(Hilldiffk == 0);
             
-        end
-        % Cost function
-        J = J + ...
-            0.5*(sumsqr(e)/N/NMuscles + sumsqr(a)/N/NMuscles) + ...
-            Misc.wTres*sumsqr(aT)/N/DatStore(trial).nDOF + ...
-            Misc.wVm*sumsqr(vMtilde)/N/NMuscles;
+        end        
         N_acc = N_acc + N;
     end
+    % Cost function
+    J = Misc.wAct*0.5*(sumsqr(e)/N/NMuscles + sumsqr(a)/N/NMuscles) + ...
+        Misc.wTres*sumsqr(aT)/N/DatStore(trial).nDOF + ...
+        Misc.wVm*sumsqr(vMtilde)/N/NMuscles;
+
     opti_validation.minimize(J); % Define cost function in opti
     
     % Create an NLP solver
