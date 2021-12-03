@@ -21,7 +21,7 @@ for trial = 1:nPhases
     end
     
     % get the number muscles with fiber length tracking
-    Minds = DatStore(trial).USsel(:);
+    Minds = DatStore(trial).US.USindices(:);
     nMus  = length(Minds);
     p     = numSubplots(nMus);
     
@@ -48,9 +48,9 @@ for trial = 1:nPhases
        % measured fiber length
        if Misc.UStracking
            if nMus == 1
-             plot(Results.Time(trial).MTE,DatStore(trial).USTracking(j,:)/1000,'--k','LineWidth',lw);hold on;
+             plot(DatStore(trial).US.time,DatStore(trial).US.USsel(:,j)/1000,'--k','LineWidth',lw);hold on;
            else
-             plot(Results.Time(trial).MTE,DatStore(trial).USTracking(:,j)/1000,'--k','LineWidth',lw);hold on;
+             plot(DatStore(trial).US.time,DatStore(trial).US.USsel(:,j)/1000,'--k','LineWidth',lw);hold on;
            end
        end
        title(DatStore(trial).MuscleNames{Minds(j)});

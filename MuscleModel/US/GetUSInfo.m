@@ -27,52 +27,56 @@ if boolUS
     end    
     % prevent errors with the headers
     for iFile = 1:nF
-        if ~isfield(USfile(iFile),'colheaders')
-            USfile(iFile).colheaders = strsplit(USfile(1).textdata{end});
-        end
+%         if ~isfield(USfile(iFile),'colheaders')
+            USfile(iFile).colheaders = strsplit(USfile(iFile).textdata{end});
+%         end
     end
     % verify if the selected muscles are in the model
-    iFile       = 1;    
-    bool_error  = 0;
-    IndError=zeros(length(Misc.USSelection),1);
-    for i=1:length(Misc.USSelection)
-        if ~any(strcmp(Misc.USSelection{i},DatStore(iFile).MuscleNames))
-            disp(['Could not find ' Misc.USSelection{i} ' in the model, update the Misc.USSelection structure']);
-            bool_error=1;
-            IndError(i)=1;
-        end
-    end
-    % verify if the muscles in the .mot files are in the model
-    USheaders  = USfile(iFile).colheaders;
-    for i=1:length(Misc.USSelection)
-        if ~any(strcmp(Misc.USSelection{i},USheaders))
-            if bool_updateheader == 0
-                disp(['Could not find ' Misc.USSelection{i} ' in the header of the US file, Updata the headers of file: ' Misc.USfile]);
-            else
-                disp(['Could not find ' Misc.USSelection{i} ' in the header of the US file, Update the headers in:  Misc.USheaders']);
+    for iFile = 1:nF 
+        bool_error  = 0;
+        USselection = Misc.USSelection(iFile,:);
+        IndError=zeros(length(USselection),1);
+        for i=1:length(Misc.USSelection)
+            if ~any(strcmp(Misc.USSelection{i},DatStore(iFile).MuscleNames))
+                disp(['Could not find ' USselection{i} ' in the model, update the Misc.USSelection structure']);
+                bool_error=1;
+                IndError(i)=1;
             end
-            bool_error=1;
-            IndError(i)=1;
         end
+        % verify if the muscles in the .mot files are in the model
+        USheaders  = USfile(iFile).colheaders;
+        
+        for i=1:length(USselection)
+            if ~any(strcmp(USselection{i},USheaders))
+                if bool_updateheader == 0
+                    disp(['Could not find ' USselection{i} ' in the header of the US file, Updata the headers of file: ' Misc.USfile(iFile)]);
+                else
+                    disp(['Could not find ' USselection{i} ' in the header of the US file, Update the headers in:  Misc.USheaders']);
+                end
+                bool_error=1;
+                IndError(i)=1;
+            end
+        end
+        if bool_error ==1
+            warning(['Removed several muscles with US information from the',...
+                ' analysis because these muscles are not in the model, or do not span the selected DOFs (see above)']);
+            Misc.USSelection(find(IndError)) = [];
+        end    
     end
-    if bool_error ==1
-        warning(['Removed several muscles with US information from the',...
-            ' analysis because these muscles are not in the model, or do not span the selected DOFs (see above)']);
-        Misc.USSelection(find(IndError)) = [];
-    end    
     
     %% Process the data    
     for iF = 1:nF
         USdat              = USfile(iF).data;        
         [nfr, nc] = size(USdat);  
         % get the US data
-        nIn = length(Misc.USSelection);
+        nIn = length(Misc.USSelection(iF,:));
         USsel = nan(nfr,nIn);   USindices = nan(nIn,1);
-        USselection = Misc.USSelection;
-        for i=1:length(Misc.USSelection)
-            ind = strcmp(Misc.USSelection{i},USheaders);
+        USselection = Misc.USSelection(iF,:);
+        USheaders  = USfile(iF).colheaders;
+        for i=1:length(USselection)
+            ind = strcmp(USselection{i},USheaders)+1;
             USsel(:,i) = USdat(:,ind);
-            USindices(i) = find(strcmp(Misc.USSelection{i},DatStore(iF).MuscleNames));
+            USindices(i) = find(strcmp(USselection{i},DatStore(iF).MuscleNames));
         end 
         DatStore(iF).US.nUS           = length(USindices);
         DatStore(iF).US.USindices     = USindices;

@@ -79,7 +79,10 @@ end
 [DatStore] = GetUSInfo(Misc,DatStore);
 
 % get the number of muscles
-NMuscles = length(DatStore(1).MuscleNames);
+NMuscles = length(DatStore(1).MuscleNames); Misc.NMuscles = NMuscles;
+
+% get the number of DOFs
+nDOF = length(DatStore(1).DOFNames); Misc.nDOF = nDOF;
 
 %% Static optimization
 % ----------------------------------------------------------------------- %
@@ -185,6 +188,10 @@ optionssol.ipopt.linear_solver = output.setup.nlp.ipoptoptions.linear_solver;
 optionssol.ipopt.tol = output.setup.nlp.ipoptoptions.tolerance;
 optionssol.ipopt.max_iter = output.setup.nlp.ipoptoptions.maxiterations;
 
+
+%% Pre-build CasADi functions
+functions = generateCasADiFunctions(Misc);
+
 %% Dynamic Optimization - Default parameters
 % ----------------------------------------------------------------------- %
 % Solve muscle redundancy problem with default parameters
@@ -278,21 +285,19 @@ if Misc.MRSBool == 1
             % Euler integration  Uk = (X_(k+1) - X_k)/*dt
             Xk = [ak; lMtildek];
             Zk = [a(:,(N_acc+trial-1) + k + 1);lMtilde(:,(N_acc+trial-1) + k + 1)];
-            Uk = [ActivationDynamics(ek,ak,Misc.tauAct,Misc.tauDeact,Misc.b); vMtildek];
-            opti.subject_to(eulerIntegrator(Xk,Zk,Uk,h) == 0);
+            Uk = [functions.f_ActivationDynamics(ek,ak); vMtildek];
+            opti.subject_to(functions.f_eulerIntegrator(Xk,Zk,Uk) == 0);
             
             % Get muscle-tendon forces and derive Hill-equilibrium
-            [Hilldiffk,FTk] = ForceEquilibrium_lMtildeState(ak,lMtildek,vMtildek,lM_projectedk,...
+            [Hilldiffk,FTk] = functions.f_ForceEquilibrium_lMtildeState(ak,lMtildek,vMtildek,lM_projectedk,...
                 DatStore(trial).LMTinterp(k,:)',Misc.params',Misc.kT',Misc.shift');
             
             % Add path constraints
             % Moment constraints
-            for dof = 1:DatStore(trial).nDOF
-                T_exp = DatStore(trial).IDinterp(k,dof);
-                index_sel = (dof-1)*(NMuscles)+1:(dof*NMuscles); % moment is a vector with the different dofs "below" each other
-                T_sim = DatStore(trial).MAinterp(k,index_sel)*FTk + Misc.Topt*aTk(dof);
-                opti.subject_to(T_exp - T_sim == 0);
-            end
+            T_exp = DatStore(trial).IDinterp(k,:);
+            T_sim = functions.f_compute_T_sim(FTk,aTk,DatStore(trial).MAinterp(k,:));
+            opti.subject_to(T_exp' - T_sim == 0);
+
             % Hill-equilibrium constraint
             opti.subject_to(Hilldiffk == 0);
         end
@@ -310,7 +315,9 @@ if Misc.MRSBool == 1
     
     % Solve
     diary(fullfile(OutPath,[Misc.OutName 'GenericMRS.txt']));
+    tic;
     sol = opti.solve();
+    toc
     diary off
     
     % Extract results
@@ -521,21 +528,19 @@ if BoolParamOpt == 1
             % Euler integration  Uk = (X_(k+1) - X_k)/*dt
             Xk = [ak; lMtildek];
             Zk = [a(:,(N_acc+trial-1) + k + 1);lMtilde(:,(N_acc+trial-1) + k + 1)];
-            Uk = [ActivationDynamics(ek,ak,Misc.tauAct,Misc.tauDeact,Misc.b); vMtildek];
-            opti_MTE.subject_to(eulerIntegrator(Xk,Zk,Uk,h) == 0);
+            Uk = [functions.f_ActivationDynamics(ek,ak); vMtildek];
+            opti_MTE.subject_to(functions.f_eulerIntegrator(Xk,Zk,Uk) == 0);
             
             % Get muscle-tendon forces and derive Hill-equilibrium
-            [Hilldiffk,FTk] = ForceEquilibrium_lMtildeState_lMoFree_lTsFree_kTFree(ak,lMtildek,vMtildek,lM_projectedk,...
-                DatStore(trial).LMTinterp(k,:)',[lMo_scaling_param lTs_scaling_param kT_scaling_param],Misc.params',Misc.kT');
+            [Hilldiffk,FTk] = functions.f_ForceEquilibrium_lMtildeState_lMoFree_lTsFree_kTFree(ak,lMtildek,vMtildek,lM_projectedk,...
+                DatStore(trial).LMTinterp(k,:)',[lMo_scaling_param lTs_scaling_param kT_scaling_param]);
                                    
             % Add path constraints
             % Moment constraints
-            for dof = 1:DatStore(trial).nDOF
-                T_exp = DatStore(trial).IDinterp(k,dof);
-                index_sel = (dof-1)*(NMuscles)+1:dof*NMuscles;
-                T_sim = FTk'*DatStore(trial).MAinterp(k,index_sel)' + Misc.Topt*aTk(dof);
-                opti_MTE.subject_to(T_exp - T_sim == 0);
-            end
+            T_exp = DatStore(trial).IDinterp(k,:);
+            T_sim = functions.f_compute_T_sim(FTk,aTk,DatStore(trial).MAinterp(k,:));
+            opti_MTE.subject_to(T_exp' - T_sim == 0);
+            
             % Hill-equilibrium constraint
             opti_MTE.subject_to(Hilldiffk == 0);
         end        
@@ -787,20 +792,18 @@ if Misc.ValidationBool == true && BoolParamOpt
             % Integration   Uk = (X_(k+1) - X_k)/*dt
             Xk = [ak; lMtildek];
             Zk = [a(:,(N_acc+trial-1) + k + 1);lMtilde(:,(N_acc+trial-1) + k + 1)];
-            Uk = [ActivationDynamics(ek,ak,Misc.tauAct,Misc.tauDeact,Misc.b); vMtildek];
-            opti_validation.subject_to(eulerIntegrator(Xk,Zk,Uk,h) == 0);
+            Uk = [functions.f_ActivationDynamics(ek,ak); vMtildek];
+            opti_validation.subject_to(functions.f_eulerIntegrator(Xk,Zk,Uk) == 0);
             
             % Impose that auxilary variable lM_projected behaves as defined
-            [Hilldiffk,FTk] = ForceEquilibrium_lMtildeState(ak,lMtildek,vMtildek,lM_projectedk,DatStore(trial).LMTinterp(k,:)',optimized_params,optimized_kT,optimized_shift);                  
+            [Hilldiffk,FTk] = functions.f_ForceEquilibrium_lMtildeState(ak,lMtildek,vMtildek,lM_projectedk,DatStore(trial).LMTinterp(k,:)',optimized_params,optimized_kT,optimized_shift);                  
             
             % Add path constraints
             % Moment constraints
-            for dof = 1:DatStore(trial).nDOF
-                T_exp = DatStore(trial).IDinterp(k,dof);
-                index_sel = (dof-1)*(NMuscles)+1:dof*NMuscles;
-                T_sim = FTk'*DatStore(trial).MAinterp(k,index_sel)' + Misc.Topt*aTk(dof);
-                opti_validation.subject_to(T_exp - T_sim == 0);
-            end
+            T_exp = DatStore(trial).IDinterp(k,:);
+            T_sim = functions.f_compute_T_sim(FTk,aTk,DatStore(trial).MAinterp(k,:));
+            opti_validation.subject_to(T_exp' - T_sim == 0);
+            
             % Hill-equilibrium constraint
             opti_validation.subject_to(Hilldiffk == 0);
             
