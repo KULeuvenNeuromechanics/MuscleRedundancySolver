@@ -1,4 +1,4 @@
-function [DatStore] = GetUSInfo(Misc,DatStore)
+function [Misc,DatStore] = GetUSInfo(Misc,DatStore)
 %GetUSInfo Reads the file with US information (.sto)., stores data in the right
 %format.
 
@@ -6,53 +6,53 @@ function [DatStore] = GetUSInfo(Misc,DatStore)
 
 % Author: Maarten Afschrift
 
-boolUS = 0;
-% check if the input is correct
-if isfield(Misc,'UStracking') && Misc.UStracking == 1
-    boolUS = 1;
-    nF = length(Misc.USfile);
-    if nF ~=length(DatStore)
-        disp('Warning: number of US files is not equal to the number of IK or ID files.');
+if Misc.UStracking
+    for trial = Misc.trials_sel
+        if isempty(Misc.USfile{trial}) || isempty(Misc.IKfile{trial}) || isempty(Misc.IDfile{trial})
+            warning(['US or IK or ID file for trial ' Misc.trialName{trial} 'has not been defined. Please update Misc.USfile, Misc.IKfile or Misc.IDfile']);
+        end
     end
 end
+Misc.boolUS = Misc.UStracking;
 
-if boolUS 
-    
+if Misc.boolUS    
     % file information
     nFiles = length(Misc.USfile);
-    % Load the data and check for errors
-    for iFile = 1:nF        
-        % get information for the EMG constraints
-        USfile(iFile)      = importdata(Misc.USfile{iFile});        
-    end    
-    % prevent errors with the headers
-    for iFile = 1:nF
-        if ~isfield(USfile(iFile),'colheaders')
-            USfile(iFile).colheaders = strsplit(USfile(1).textdata{end});
-        end
-    end
-    % verify if the selected muscles are in the model
-    iFile       = 1;    
     bool_error  = 0;
     IndError=zeros(length(Misc.USSelection),1);
-    for i=1:length(Misc.USSelection)
-        if ~any(strcmp(Misc.USSelection{i},DatStore(iFile).MuscleNames))
-            disp(['Could not find ' Misc.USSelection{i} ' in the model, update the Misc.USSelection structure']);
-            bool_error=1;
-            IndError(i)=1;
+    % Load the data and check for errors
+    for iF = Misc.trials_sel      
+        % get information for the US constraints
+        USfile(iF)      = importdata(Misc.USfile{iF});        
+        % prevent errors with the headers
+        if ~isfield(USfile(iF),'colheaders')
+            USfile(iF).colheaders = strsplit(USfile(iF).textdata{end});
         end
-    end
-    % verify if the muscles in the .mot files are in the model
-    USheaders  = USfile(iFile).colheaders;
-    for i=1:length(Misc.USSelection)
-        if ~any(strcmp(Misc.USSelection{i},USheaders))
-            if bool_updateheader == 0
-                disp(['Could not find ' Misc.USSelection{i} ' in the header of the US file, Updata the headers of file: ' Misc.USfile]);
+        USheaders{iF}  = USfile(iF).colheaders;
+        % verify if the selected muscles are in the model
+        % verify if the muscles in the .mot files are in the model
+        ct = 0;
+        for i=1:length(Misc.USSelection)
+            if any(ismember(DatStore(iF).MuscleNames,Misc.USSelection{i}))
+                if any(ismember(USheaders{iF},Misc.USSelection{i}))
+                    ct = ct +1;
+                    % First column corresponds to index in allMuscleList
+                    % Second column corresponds to index in USheaders
+                    % Third column corresponds to index in MuscleNames of that trial                    
+                    Misc.idx_USsel{iF}(ct,1) = find(ismember(Misc.allMuscleList,Misc.USSelection{i}));
+                    Misc.idx_USsel{iF}(ct,2) = find(ismember(USheaders{iF},Misc.USSelection{i}));
+                    Misc.idx_USsel{iF}(ct,3) = find(ismember(DatStore(iF).MuscleNames,Misc.USSelection{i}));
+                    Misc.USsel{iF}{ct} = Misc.USSelection{i};
+                else
+                    disp(['Could not find ' Misc.USSelection{i} ' in the header of the US file, Update the headers of file: ' Misc.USfile{iF}]);
+                    bool_error=1;
+                    IndError(i)=1;
+                end
             else
-                disp(['Could not find ' Misc.USSelection{i} ' in the header of the US file, Update the headers in:  Misc.USheaders']);
+                disp(['Could not find ' Misc.USSelection{i} ' in the model for trial ' Misc.USfile{iF} ', update the Misc.USSelection structure']);
+                bool_error=1;
+                IndError(i)=1;
             end
-            bool_error=1;
-            IndError(i)=1;
         end
     end
     if bool_error ==1
@@ -60,36 +60,28 @@ if boolUS
             ' analysis because these muscles are not in the model, or do not span the selected DOFs (see above)']);
         Misc.USSelection(find(IndError)) = [];
     end    
-    
     %% Process the data    
-    for iF = 1:nF
+    for iF = Misc.trials_sel
         USdat              = USfile(iF).data;        
-        [nfr, nc] = size(USdat);  
         % get the US data
-        nIn = length(Misc.USSelection);
-        USsel = nan(nfr,nIn);   USindices = nan(nIn,1);
-        USselection = Misc.USSelection;
-        for i=1:length(Misc.USSelection)
-            ind = strcmp(Misc.USSelection{i},USheaders);
-            USsel(:,i) = USdat(:,ind);
-            USindices(i) = find(strcmp(Misc.USSelection{i},DatStore(iF).MuscleNames));
-        end 
-        DatStore(iF).US.nUS           = length(USindices);
-        DatStore(iF).US.USindices     = USindices;
+        USsel = USdat(:,Misc.idx_USsel{iF}(:,2));
+        DatStore(iF).US.nUS           = length(Misc.USsel{iF});
+%         DatStore(iF).US.USindices     = USindices;
+        DatStore(iF).US.idx_USsel     = Misc.idx_USsel{iF};
         DatStore(iF).US.USsel         = USsel;
-        DatStore(iF).US.USselection   = USselection;
-        DatStore(iF).US.time           = USdat(:,1);
-        DatStore(iF).US.boolUS         = boolUS;
+        DatStore(iF).US.USselection   = Misc.USsel{iF};
+        DatStore(iF).US.time          = USdat(:,1);
+        DatStore(iF).US.boolUS        = Misc.boolUS;
         DatStore(iF).US.USspline      = spline(DatStore(iF).US.time',DatStore(iF).US.USsel');        
     end   
 else
-    for iF = 1:length(DatStore)
+    for iF = Misc.trials_sel
         % Boolean in DatStore that US info is not used ?       
         DatStore(iF).US.nUS           = [];
         DatStore(iF).US.USindices     = [];
         DatStore(iF).US.USsel         = [];
         DatStore(iF).US.USselection   = [];
-        DatStore(iF).US.boolUS         = boolUS;
+        DatStore(iF).US.boolUS        = Misc.boolUS;
     end    
 end
 

@@ -1,4 +1,4 @@
-function [ h ] = PlotStates( Results,DatStore,Misc )
+function [ h ] = PlotStates(Results,DatStore,Misc)
 
 % PlotStates: plots the states of all the hill-type muscles in the model.
 % Allows for comparison between the solution of the different solved
@@ -13,9 +13,9 @@ h = figure('Name','Optimal states and controls');
 hTabGroup = uitabgroup;
 % colors for different simulations
 Cs = linspecer(3);
-for trial = 1:length(Results.MActivation(:))
+for trial = Misc.trials_sel
     % plot optimal activations
-    tab = uitab(hTabGroup, 'Title', ['Trial ' num2str(trial) ': activation']);
+    tab = uitab(hTabGroup, 'Title', [Misc.trialName{trial} ': activation']);
     axes('parent',tab);
     nMus = length(DatStore(trial).MuscleNames);
     lw   = 4;
@@ -41,13 +41,13 @@ for trial = 1:length(Results.MActivation(:))
                 legend_title = [legend_title;'Generic MRS'];
             end
         end        
-        title(DatStore(1).MuscleNames{i},'interpreter','none');
+        title(DatStore(trial).MuscleNames{i},'interpreter','none');
         xlim([DatStore(trial).time(1) DatStore(trial).time(end)])
     end
     legend(legend_title)
     
     % plot optimal lMtilde
-    tab = uitab(hTabGroup, 'Title', ['Trial ' num2str(trial) ': normalized FL']);
+    tab = uitab(hTabGroup, 'Title', [Misc.trialName{trial} ': normalized FL']);
     axes('parent',tab);
     legend_title = {};
     for i=1:nMus
@@ -71,13 +71,13 @@ for trial = 1:length(Results.MActivation(:))
             end
         end
         
-        title(DatStore(1).MuscleNames{i},'interpreter','none');
+        title(DatStore(trial).MuscleNames{i},'interpreter','none');
         xlim([DatStore(trial).time(1) DatStore(trial).time(end)])
     end
     legend(legend_title)
     
     % plot optimal lM
-    tab = uitab(hTabGroup, 'Title', ['Trial ' num2str(trial) ': FL']);
+    tab = uitab(hTabGroup, 'Title', [Misc.trialName{trial} ': FL']);
     axes('parent',tab);
     lw = 2;
     legend_title = {};
@@ -102,16 +102,16 @@ for trial = 1:length(Results.MActivation(:))
             end
         end
         
-        title(DatStore(1).MuscleNames{i},'interpreter','none');
+        title(DatStore(trial).MuscleNames{i},'interpreter','none');
         xlim([DatStore(trial).time(1) DatStore(trial).time(end)])
     end
     legend(legend_title)
     
     
     % plot residual actuators
-    tab = uitab(hTabGroup, 'Title', ['Trial ' num2str(trial) ': Residual actuators']);
+    tab = uitab(hTabGroup, 'Title', [Misc.trialName{trial} ': Residual actuators']);
     axes('parent',tab);
-    nDOF = DatStore.nDOF;
+    nDOF = DatStore(trial).nDOF;
     p    = numSubplots(nDOF);    
     legend_title = {};
     for i=1:nDOF
@@ -134,7 +134,7 @@ for trial = 1:length(Results.MActivation(:))
                 legend_title = [legend_title;'Generic MRS'];
             end
         end        
-        title(DatStore(1).DOFNames{i},'interpreter','none');
+        title(DatStore(trial).DOFNames{i},'interpreter','none');
         xlim([DatStore(trial).time(1) DatStore(trial).time(end)])
     end
     legend(legend_title);    

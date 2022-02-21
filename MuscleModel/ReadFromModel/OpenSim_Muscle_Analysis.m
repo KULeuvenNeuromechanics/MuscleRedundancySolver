@@ -40,12 +40,12 @@ tool.setModelFilename(model_sel);
 tool.setCoordinatesFileName(motion_file);
 out_path_xml=fullfile(output_path,['muscle_analysis_' name '.xml']);
 tool.print(out_path_xml);
-% tool.run();
 
-% run the tool (needed to apply changes)
+% run the tool
 tool2 = AnalyzeTool(out_path_xml);
 tool2.print([out_path_xml(1:end-4) '_final.xml']);
 tool2.run();
+
 
 end
 

@@ -19,10 +19,10 @@ for m = 1:M
     pp_y = spline(time,DatStore(trial).LMT(:,m));
     [LMTg,vMTg,~] = SplineEval_ppuval(pp_y,time,1);
     [~, ~, FMltilde(:,m), FMvtilde(:,m), Fpe(:,m), cos_alpha(:,m)] = ...
-        HillModel_RigidTendon(act(:,m),LMTg,vMTg,Misc.params(:,m));
+        HillModel_RigidTendon(act(:,m),LMTg,vMTg,Misc.params(:,Misc.idx_allMuscleList{trial}(m)));
     clear pp_y 
 end
-FMo = ones(size(act,1),1)*Misc.FMo;
+FMo = ones(size(act,1),1)*Misc.FMo(:,Misc.idx_allMuscleList{trial});
 Fpas = FMo.*Fpe.*cos_alpha;
 Fact = FMo.*FMltilde.*FMvtilde.*cos_alpha;
 

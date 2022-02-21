@@ -44,7 +44,12 @@ end
 %% EMG
 if ~isfield(Misc,'EMGconstr') || isempty(Misc.EMGconstr)
     Misc.EMGconstr  = 0;
+    boolEMG = 0;
+elseif isfield(Misc,'EMGconstr') && Misc.EMGconstr == 1
+    boolEMG = 1;
 end
+Misc.boolEMG = boolEMG;
+
 % bounds on scaling EMG
 if ~isfield(Misc,'BoundsScaleEMG') || isempty(Misc.BoundsScaleEMG)
     Misc.BoundsScaleEMG = [0.9 1.1];
@@ -79,10 +84,6 @@ if ~isfield(Misc,'Coupled_TendonStiffness')
     Misc.Coupled_TendonStiffness =[];
 end
 
-if ~isfield(Misc,'Estimate_TendonStiffness')
-    Misc.Estimate_TendonStiffness = {};
-end
-
 if ~isfield(Misc,'lb_kT_scaling')
     Misc.lb_kT_scaling = 0.2;
 end
@@ -109,7 +110,7 @@ if ~isfield(Misc,'OutName') || isempty(Misc.OutName)
     Misc.OutName = '';
 end
 % filename of the osim model with updated parameters
-if ~isfield(Misc,'newModelFile') && isfield(Misc,'model_path');
+if ~isfield(Misc,'newModelFile')
     file_path = char(Misc.model_path);
     [~,oldModelFile,~] = fileparts(file_path);
     Misc.newModelFile = [oldModelFile '_newParams.osim']; 
@@ -141,7 +142,7 @@ if ~isfield(Misc,'USSelection')
 end
 
 %% ultrasound
-if ~isfield(Misc,'UStracking')
+if ~isfield(Misc,'UStracking') || isempty(Misc.UStracking)
     Misc.UStracking = 0;
 end
 if ~isfield(Misc,'USfile')
@@ -163,16 +164,9 @@ if ~isfield(Misc,'MRSbool')
     Misc.MRSbool = 1;
 end
 
-
-%% Prevent errors with row of col vectors for muscle pairs
-% prevent error when using a single col vector instead of row vector
-if size(Misc.Coupled_TendonStiffness,2) == 1 && size(Misc.Coupled_TendonStiffness,1)> 1
-    Misc.Coupled_TendonStiffness = Misc.Coupled_TendonStiffness';
-    disp('Transposed vector with coupled tendon stiffness, expects a row vector and not a col vector');
-end
-if size(Misc.Coupled_fiber_length,2) == 1 && size(Misc.Coupled_fiber_length,1)> 1
-    Misc.Coupled_fiber_length = Misc.Coupled_fiber_length';
-    disp('Transposed vector with optimal fiber lengths, expects a row vector and not a col vector');
-end
+%% Muscle parameters
+if ~isfield(Misc,'MuscleNames_Input')
+    Misc.MuscleNames_Input = cell(1,length(Misc.IKfile));
 end
 
+end

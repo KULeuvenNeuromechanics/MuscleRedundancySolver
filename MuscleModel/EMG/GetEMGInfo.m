@@ -1,4 +1,4 @@
-function [DatStore] = GetEMGInfo(Misc,DatStore)
+function [Misc,DatStore] = GetEMGInfo(Misc,DatStore)
 %GetEMGInfo Reads the file with EMG information (.sto)., runs activation
 %dynamics on the EMG data when asked and puts the EMG data in the right
 %format (handles copies and so on).
@@ -7,122 +7,121 @@ function [DatStore] = GetEMGInfo(Misc,DatStore)
 
 % Author: Maarten Afschrift
 
-boolEMG = 0;
-% check if the input is correct
-if isfield(Misc,'EMGconstr') && Misc.EMGconstr == 1
-    boolEMG = 1;
-    nF = length(Misc.EMGfile);
-    if nF ~=length(DatStore)
-        disp('Warning: number of EMG files is not equal to the number of IK or ID files.');
+if Misc.boolEMG
+    for trial = Misc.trials_sel
+        if isempty(Misc.EMGfile{trial}) || isempty(Misc.IKfile{trial}) || isempty(Misc.IDfile{trial})
+            warning(['EMG or IK or ID file for trial ' Misc.trialName{trial} 'has not been defined. Please update Misc.EMGfile, Misc.IKfile or Misc.IDfile']);
+        end
     end
 end
 
-
-if boolEMG    
+if Misc.boolEMG    
     % file information
-    nF = length(Misc.EMGfile);
-    % Load the data and check for errors
-    for iF = 1:nF        
-        % get information for the EMG constraints
-        EMGFile(iF)      = ReadMotFile(Misc.EMGfile{iF});        
-    end    
-    % check if we have to update the headers based on user input
-    bool_updateheader   = 0;
-    if isfield(Misc,'EMGheaders') && ~isempty(Misc.EMGheaders)        
-        bool_updateheader=1;
-    end
-    % verify if the selected muscles are in the model
-    iF       = 1;    
     bool_error  = 0;
     IndError=zeros(length(Misc.EMGSelection),1);
-    for i=1:length(Misc.EMGSelection)
-        if ~any(strcmp(Misc.EMGSelection{i},DatStore(iF).MuscleNames))
-            disp(['Could not find ' Misc.EMGSelection{i} ' in the model, Update the Misc.EMGSelection structure']);
-            bool_error=1;
-            IndError(i)=1;
+    % Load the data and check for errors
+    for iF = Misc.trials_sel
+        % get information for the EMG constraints
+        EMGFile(iF)      = importdata(Misc.EMGfile{iF});        
+        % prevent errors with the headers
+        if ~isfield(EMGFile(iF),'colheaders')
+            EMGFile(iF).colheaders = strsplit(EMGFile(iF).textdata{end});
         end
-    end
-    % verify if the muscles in the .mot files are in the model
-    % verify if the muscles in Misc.EMGSelection are in the .mot file 
-    EMGheaders  = EMGFile(iF).names;
-    if bool_updateheader
-       EMGheaders      = Misc.EMGheaders; 
-    end
-    for i=1:length(Misc.EMGSelection)
-        if ~any(strcmp(Misc.EMGSelection{i},EMGheaders))
-            if bool_updateheader == 0
-                disp(['Could not find ' Misc.EMGSelection{i} ' in the header of the EMG file, Update the headers of file: ' Misc.EMGfile]);
+        if isfield(Misc,'EMGFileHeaderCorrespondence')
+            for c=1:length(EMGFile(iF).colheaders)
+                idx_col_c1 = find(ismember(Misc.EMGFileHeaderCorrespondence(:,1),EMGFile(iF).colheaders{c}));
+                EMGFile(iF).colheaders{c} = Misc.EMGFileHeaderCorrespondence{idx_col_c1,2};
+            end                
+        end
+        % check if we have to update the headers based on user input
+        bool_updateheader   = 0;
+        if ~isempty(Misc.EMGheaders{iF})        
+            bool_updateheader=1;
+        end
+        % verify if the selected muscles are in the model
+        % verify if the muscles in the .mot files are in the model
+        % verify if the muscles in Misc.EMGSelection are in the .mot file 
+        EMGheaders{iF}  = EMGFile(iF).colheaders;
+        if bool_updateheader
+            EMGheaders{iF} = Misc.EMGheaders{iF};
+        end
+        
+        ct = 0;
+        for i=1:length(Misc.EMGSelection)
+            if any(ismember(DatStore(iF).MuscleNames,Misc.EMGSelection{i}))
+                if any(ismember(EMGheaders{iF},Misc.EMGSelection{i}))
+                    ct = ct +1;
+                    % First column corresponds to index in allMuscleList
+                    % Second column corresponds to index in EMGheaders
+                    % Third column corresponds to index in MuscleNames of that trial                    
+                    Misc.idx_EMGsel{iF}(ct,1) = find(ismember(Misc.allMuscleList,Misc.EMGSelection{i}));
+                    Misc.idx_EMGsel{iF}(ct,2) = find(ismember(EMGheaders{iF},Misc.EMGSelection{i}));
+                    Misc.idx_EMGsel{iF}(ct,3) = find(ismember(DatStore(iF).MuscleNames,Misc.EMGSelection{i}));
+                    Misc.EMGsel{iF}{ct} = Misc.EMGSelection{i};
+                else
+                    if bool_updateheader == 0
+                        disp(['Could not find ' Misc.EMGSelection{i} ' in the header of the EMG file, Update the headers of file: ' Misc.EMGfile{iF}]);
+                    else
+                        disp(['Could not find ' Misc.EMGSelection{i} ' in the header of the EMG file, Update the headers in:  Misc.EMGheaders{' num2str(iF) '}']);
+                    end
+                    bool_error=1;
+                    IndError(i)=1;
+                end
             else
-                disp(['Could not find ' Misc.EMGSelection{i} ' in the header of the EMG file, Update the headers in:  Misc.EMGheaders']);
+                if strcmp(Misc.EMGSelection{i}(end),Misc.side{iF}) % All muscles end with 'l' or 'r'
+                    disp(['Could not find ' Misc.EMGSelection{i} ' in the model for trial ' Misc.EMGfile{iF} ', Update the Misc.EMGSelection structure']);
+                    bool_error=1;
+                    IndError(i)=1;
+                end
             end
-            bool_error=1;
-            IndError(i)=1;
         end
     end
     if bool_error ==1
         warning(['Removed several muscles with EMG information from the',...
-            ' analysis because these muscles are not in the model, or do not span the selected DOFs (see above)']);
+            ' analysis because these muscles are not in the model, or do not span the selected DOFs for any trial (see above)']);
         Misc.EMGSelection(find(IndError)) = [];
     end    
-    
+   
     %% Process the data 
-    for iF = 1:nF
+    for iF = Misc.trials_sel
         EMGdat    = EMGFile(iF).data;        
-        [nfr, nc] = size(EMGdat);  
         % get the EMG data
-        nIn = length(Misc.EMGSelection);
-        EMGsel = nan(nfr,nIn);   EMGindices = nan(nIn,1);
-        EMGselection = Misc.EMGSelection;
-        for i=1:length(Misc.EMGSelection)
-            ind = strcmp(Misc.EMGSelection{i},EMGheaders);
-            EMGsel(:,i) = EMGdat(:,ind);
-            EMGindices(i) = find(strcmp(Misc.EMGSelection{i},DatStore(iF).MuscleNames));
-        end        
+        EMGselection = Misc.EMGsel{iF};
+        EMGsel = EMGdat(:,Misc.idx_EMGsel{iF}(:,2));
+        
         % add twins
         if  ~isempty(Misc.EMG_MuscleCopies)            
-            nCopy = length(Misc.EMG_MuscleCopies(:,1));
+            nCopy = size(Misc.EMG_MuscleCopies,1);
             for j=1:nCopy
                 NameSel = Misc.EMG_MuscleCopies{j,1};
                 NameCopy =  Misc.EMG_MuscleCopies{j,2};
-                % check if EMG signals we want to copy exists
-                Ind_ColCopy = strcmp(Misc.EMGSelection,NameSel);
-                % check if twin muscle is in the model
-                Ind_ColOut = strcmp(DatStore(iF).MuscleNames,NameCopy);
-                % check if twin muscle has EMG data
-                BoolTwinHasEMG = strcmp(EMGselection,NameCopy);
-                if any(Ind_ColCopy) && any(Ind_ColOut) && ~any(BoolTwinHasEMG) % only if both muscles are selected
-                    EMGindices = [EMGindices; find(strcmp(NameCopy,DatStore(iF).MuscleNames))];
-                    EMGsel = [EMGsel EMGsel(:,Ind_ColCopy)];
-                    EMGselection = [EMGselection {NameCopy}];
-                elseif ~any(Ind_ColOut)
-                    disp([' Cannot copy EMG muscle ' NameSel ' to twin ',...
-                        NameCopy ' because ' NameCopy ' is not selected in the model']);
-                elseif any(BoolTwinHasEMG)
-                    disp([' twin muscle ' NameCopy ' has EMG data as input, we therefore did', ... 
-                        ' not constrain this activity based on ' NameSel]);
-                end
+                [EMGselection,EMGsel,Misc] = addEMGtwins(EMGselection,EMGsel,EMGdat,Misc,NameSel,NameCopy,DatStore,EMGheaders,iF);
+                NameSel = Misc.EMG_MuscleCopies{j,2};
+                NameCopy =  Misc.EMG_MuscleCopies{j,1};
+                [EMGselection,EMGsel,Misc] = addEMGtwins(EMGselection,EMGsel,EMGdat,Misc,NameSel,NameCopy,DatStore,EMGheaders,iF);
             end
         end    
         DatStore(iF).EMG.BoundsScaleEMG = Misc.BoundsScaleEMG;
         DatStore(iF).EMG.EMGbounds      = Misc.EMGbounds;
-        DatStore(iF).EMG.nEMG           = length(EMGindices);
-        DatStore(iF).EMG.EMGindices     = EMGindices;
+        DatStore(iF).EMG.nEMG           = length(EMGselection);
+%         DatStore(iF).EMG.EMGindices     = EMGindices;
+        DatStore(iF).EMG.idx_EMGsel     = Misc.idx_EMGsel{iF};
         DatStore(iF).EMG.EMGsel         = EMGsel;
         DatStore(iF).EMG.EMGselection   = EMGselection;
         DatStore(iF).EMG.time           = EMGdat(:,1);
-        DatStore(iF).EMG.boolEMG        = boolEMG;
+        DatStore(iF).EMG.boolEMG        = Misc.boolEMG;
         DatStore(iF).EMG.EMGspline      = spline(DatStore(iF).EMG.time',DatStore(iF).EMG.EMGsel');        
     end   
 else
-    for iF = 1:length(DatStore)
+    for iF = Misc.trials_sel
         % Boolean in DatStore that EMG info is not used ?
-        DatStore(iF).EMG.BoundsScaleEMG       = [];
+        DatStore(iF).EMG.BoundsScaleEMG = [];
         DatStore(iF).EMG.EMGbounds      = [];
         DatStore(iF).EMG.nEMG           = [];
         DatStore(iF).EMG.EMGindices     = [];
         DatStore(iF).EMG.EMGsel         = [];
         DatStore(iF).EMG.EMGselection   = [];
-        DatStore(iF).EMG.boolEMG         = boolEMG;
+        DatStore(iF).EMG.boolEMG        = Misc.boolEMG;
     end    
 end
 
