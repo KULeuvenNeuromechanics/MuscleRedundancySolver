@@ -72,7 +72,7 @@ Misc.scaledEMGmusc = scaledEMGmusc;
 opti_MTE.set_initial(lMo_scaling_param,1);
 opti_MTE.set_initial(lTs_scaling_param,1);
 opti_MTE.set_initial(kT_scaling_param,1);
-% opti_MTE.set_initial(EMGscale,1);
+opti_MTE.set_initial(EMGscale,1);
 %%
 ct = 0;
 for trial = Misc.trials_sel

@@ -190,26 +190,36 @@ if Misc.MRSBool == 1
 end
 
 %% Normalize EMG
-maxDO = nan(Misc.nAllMuscList,1);
-maxEMG = nan(Misc.nAllMuscList,1);
-for t = Misc.trials_sel
-    for m=1:NMuscles(t)
-        idx_m = Misc.idx_allMuscleList{t}(m);
-        maxDO(idx_m,1) = max(maxDO(idx_m,1),max(Results.MActivation(t).genericMRS(m,:)));
+if Misc.boolEMG
+    maxEMG = nan(Misc.nAllMuscList,1);
+    for t = Misc.trials_sel
+        for m=1:DatStore(t).EMG.nEMG
+            idx_m = Misc.idx_EMGsel{t}(m,1);
+            maxEMG(idx_m,1) = max(maxEMG(idx_m,1),max(DatStore(t).EMG.EMGsel(:,m)));
+        end
     end
-end
-for t = Misc.trials_sel
-    for m=1:DatStore(t).EMG.nEMG
-        idx_m = Misc.idx_EMGsel{t}(m,1);
-        maxEMG(idx_m,1) = max(maxEMG(idx_m,1),max(DatStore(t).EMG.EMGsel(:,m)));
-    end
-end
-
-for t = Misc.trials_sel
-    for m=1:DatStore(t).EMG.nEMG
-        idx_m = Misc.idx_EMGsel{t}(m,1);
-        DatStore(t).EMG.EMGsel(:,m) = DatStore(t).EMG.EMGsel(:,m)/(maxEMG(idx_m,1)/maxDO(idx_m,1));
-    end
+    if Misc.normalizeToMRS
+        maxMRS = nan(Misc.nAllMuscList,1);
+        for t = Misc.trials_sel
+            for m=1:NMuscles(t)
+                idx_m = Misc.idx_allMuscleList{t}(m);
+                maxMRS(idx_m,1) = max(maxMRS(idx_m,1),max(Results.MActivation(t).genericMRS(m,:)));
+            end
+        end
+        for t = Misc.trials_sel
+            for m=1:DatStore(t).EMG.nEMG
+                idx_m = Misc.idx_EMGsel{t}(m,1);
+                DatStore(t).EMG.EMGsel(:,m) = DatStore(t).EMG.EMGsel(:,m)./(maxEMG(idx_m,1)/maxMRS(idx_m,1));
+            end
+        end
+    else
+        for t = Misc.trials_sel
+            for m=1:DatStore(t).EMG.nEMG
+                idx_m = Misc.idx_EMGsel{t}(m,1);
+                DatStore(t).EMG.EMGsel(:,m) = DatStore(t).EMG.EMGsel(:,m)./maxEMG(idx_m,1);
+            end
+        end
+    end    
 end
 
 %% Dynamic Optimization - Parameter estimation
