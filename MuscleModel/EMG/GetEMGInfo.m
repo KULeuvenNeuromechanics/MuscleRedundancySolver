@@ -18,19 +18,27 @@ end
 if Misc.boolEMG    
     % file information
     bool_error  = 0;
-    IndError=zeros(length(Misc.EMGSelection),1);
+    IndError=zeros(length(Misc.EMGSelection),length(Misc.trials_sel));
     % Load the data and check for errors
-    for iF = Misc.trials_sel
+    EMGFile = struct;
+    for t = 1:length(Misc.trials_sel)
+        iF = Misc.trials_sel(t);
         % get information for the EMG constraints
-        EMGFile(iF)      = importdata(Misc.EMGfile{iF});        
+        clear emgFile
+        emgFile = read_motionFile_v40(Misc.EMGfile{iF}); 
         % prevent errors with the headers
-        if ~isfield(EMGFile(iF),'colheaders')
-            EMGFile(iF).colheaders = strsplit(EMGFile(iF).textdata{end});
-        end
+        EMGFile(iF).colheaders_EMGfile = emgFile.labels;
+        ct = 0;
         if isfield(Misc,'EMGFileHeaderCorrespondence')
-            for c=1:length(EMGFile(iF).colheaders)
-                idx_col_c1 = find(ismember(Misc.EMGFileHeaderCorrespondence(:,1),EMGFile(iF).colheaders{c}));
-                EMGFile(iF).colheaders{c} = Misc.EMGFileHeaderCorrespondence{idx_col_c1,2};
+            for c=1:length(EMGFile(iF).colheaders_EMGfile)
+                idx_col_c1 = find(ismember(Misc.EMGFileHeaderCorrespondence(:,1),EMGFile(iF).colheaders_EMGfile{c}));
+                if isempty(idx_col_c1)
+                    warning(['Muscle corresponding to ' EMGFile(iF).colheaders_EMGfile{c} ' in file ' Misc.EMGfile{iF} ' is not defined in Misc.EMGFileHeaderCorrespondence. Update Misc.EMGFileHeaderCorrespondence. Removing EMG column ' EMGFile(iF).colheaders_EMGfile{c} ' from analyses'])
+                else
+                    ct = ct + 1;
+                    EMGFile(iF).colheaders{ct} = Misc.EMGFileHeaderCorrespondence{idx_col_c1,2};
+                    EMGFile(iF).data(:,ct) = emgFile.data(:,c);
+                end
             end                
         end
         % check if we have to update the headers based on user input
@@ -44,6 +52,8 @@ if Misc.boolEMG
         EMGheaders{iF}  = EMGFile(iF).colheaders;
         if bool_updateheader
             EMGheaders{iF} = Misc.EMGheaders{iF};
+        else
+            Misc.EMGheaders{iF} = EMGheaders{iF};
         end
         
         ct = 0;
@@ -52,7 +62,7 @@ if Misc.boolEMG
                 if any(ismember(EMGheaders{iF},Misc.EMGSelection{i}))
                     ct = ct +1;
                     % First column corresponds to index in allMuscleList
-                    % Second column corresponds to index in EMGheaders
+                    % Second column corresponds to index in Misc.EMGheaders
                     % Third column corresponds to index in MuscleNames of that trial                    
                     Misc.idx_EMGsel{iF}(ct,1) = find(ismember(Misc.allMuscleList,Misc.EMGSelection{i}));
                     Misc.idx_EMGsel{iF}(ct,2) = find(ismember(EMGheaders{iF},Misc.EMGSelection{i}));
@@ -64,20 +74,25 @@ if Misc.boolEMG
                     else
                         disp(['Could not find ' Misc.EMGSelection{i} ' in the header of the EMG file, Update the headers in:  Misc.EMGheaders{' num2str(iF) '}']);
                     end
-                    bool_error=1;
-                    IndError(i)=1;
+                    IndError(i,t)=1;
                 end
             else
                 if strcmp(Misc.EMGSelection{i}(end),Misc.side{iF}) % All muscles end with 'l' or 'r'
                     disp(['Could not find ' Misc.EMGSelection{i} ' in the model for trial ' Misc.EMGfile{iF} ', Update the Misc.EMGSelection structure']);
-                    bool_error=1;
-                    IndError(i)=1;
+                    IndError(i,t)=1;
                 end
             end
         end
     end
+    IndErr = zeros(length(Misc.EMGSelection),1);
+    for i = 1:length(Misc.EMGSelection)
+        if sum(IndError(i,:)) == length(Misc.trials_sel)
+            bool_error = 1;
+            IndErr(i) = 1;
+        end
+    end
     if bool_error ==1
-        warning(['Removed several muscles with EMG information from the',...
+        warning(['Removed muscles with EMG information from the',...
             ' analysis because these muscles are not in the model, or do not span the selected DOFs for any trial (see above)']);
         Misc.EMGSelection(find(IndError)) = [];
     end    

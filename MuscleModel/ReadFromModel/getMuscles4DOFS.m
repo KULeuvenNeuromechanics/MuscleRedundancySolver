@@ -3,6 +3,7 @@ function Misc=getMuscles4DOFS(Misc)
 %   Maarten Afschrift, 15 July 2016
 
 for t = Misc.trials_sel
+    clear dM_store
     if isempty(Misc.MuscleNames_Input{t})
         % Loop over each DOF in the model
         for i=1:length(Misc.DofNames_Input{t})

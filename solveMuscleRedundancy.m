@@ -32,7 +32,7 @@ MuscleAnalysisPath=fullfile(Misc.OutPath,'MuscleAnalysis');
 Misc.MuscleAnalysisPath=MuscleAnalysisPath;
 if ~exist(MuscleAnalysisPath,'dir')
     mkdir(MuscleAnalysisPath);
-    for i = 1:Misc.nTrials
+    for i = 19:Misc.nTrials
         % select the IK and ID file
         IK_path_trial = Misc.IKfile{i};
         % Run muscle analysis    
@@ -175,7 +175,6 @@ optionssol.ipopt.linear_solver = output.setup.nlp.ipoptoptions.linear_solver;
 optionssol.ipopt.tol = output.setup.nlp.ipoptoptions.tolerance;
 optionssol.ipopt.max_iter = output.setup.nlp.ipoptoptions.maxiterations;
 
-
 %% Dynamic Optimization - Default parameters
 % ----------------------------------------------------------------------- %
 % Solve muscle redundancy problem with default parameters
@@ -187,6 +186,29 @@ if Misc.MRSBool == 1
         for trial = Misc.trials_sel
             [Results] = runMRS(Misc,DatStore,Mesh,trial,output,optionssol,Results,NMuscles);
         end
+    end
+end
+
+%% Normalize EMG
+maxDO = nan(Misc.nAllMuscList,1);
+maxEMG = nan(Misc.nAllMuscList,1);
+for t = Misc.trials_sel
+    for m=1:NMuscles(t)
+        idx_m = Misc.idx_allMuscleList{t}(m);
+        maxDO(idx_m,1) = max(maxDO(idx_m,1),max(Results.MActivation(t).genericMRS(m,:)));
+    end
+end
+for t = Misc.trials_sel
+    for m=1:DatStore(t).EMG.nEMG
+        idx_m = Misc.idx_EMGsel{t}(m,1);
+        maxEMG(idx_m,1) = max(maxEMG(idx_m,1),max(DatStore(t).EMG.EMGsel(:,m)));
+    end
+end
+
+for t = Misc.trials_sel
+    for m=1:DatStore(t).EMG.nEMG
+        idx_m = Misc.idx_EMGsel{t}(m,1);
+        DatStore(t).EMG.EMGsel(:,m) = DatStore(t).EMG.EMGsel(:,m)/(maxEMG(idx_m,1)/maxDO(idx_m,1));
     end
 end
 

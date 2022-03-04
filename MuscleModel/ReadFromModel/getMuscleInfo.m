@@ -28,6 +28,7 @@ for t = Misc.trials_sel
             nfr = length(dm_Data_temp.data(:,1));
             headers=dm_Data_temp.colheaders;
             Inds_muscles=nan(length(Misc.MuscleNames_Input{t}),1);
+            IndsNames_sel=nan(length(Misc.MuscleNames_Input{t}),1);
             ctm=1;
             for j=1:length(Misc.MuscleNames_Input{t})
                 ind_sel=find(strcmp(Misc.MuscleNames_Input{t}{j},headers));
@@ -124,7 +125,7 @@ for t = Misc.trials_sel
     if ~isfield(ID_data,'colheaders')
         ID_data.colheaders=strsplit(ID_data.textdata{end});
     end
-    ID_header=ID_data.colheaders;     IK_header = IK_data.colheaders;
+    ID_header=ID_data.colheaders;     IK_header = strtrim(IK_data.colheaders);
     ID_Header_inds=zeros(size(DOF_inds));  IK_Header_inds = zeros(size(DOF_inds));
     for i=1:length(Misc.DofNames{t})
        ID_Header_inds(i)=find(strcmp([Misc.DofNames{t}{i} '_moment'],ID_header));
