@@ -169,4 +169,16 @@ if ~isfield(Misc,'MuscleNames_Input')
     Misc.MuscleNames_Input = cell(1,length(Misc.IKfile));
 end
 
+%% Activation and contraction dynamics
+% ----------------------------------------------------------------------- %
+if ~isfield(Misc,'tau_act')
+    Misc.tau_act = 0.015;
+end
+if ~isfield(Misc,'tau_deact')
+    Misc.tau_deact = 0.06;
+end
+if ~isfield(Misc,'b') % tanh coefficient for smooth activation dynamics
+    Misc.b = 0.1;
+end
+
 end

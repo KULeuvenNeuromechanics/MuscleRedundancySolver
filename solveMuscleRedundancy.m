@@ -84,15 +84,6 @@ for i=Misc.trials_sel
     DatStore = SolveStaticOptimization_IPOPT_CasADi(DatStore,Misc,i);
 end
 
-%% Input activation and contraction dynamics
-% ----------------------------------------------------------------------- %
-Misc.tau_act = 0.015;    
-Misc.tau_deact = 0.06;   
-Misc.b = 0.1;       % tanh coefficient for smooth activation dynamics
-
-% Misc.kT=Misc.kT;
-% Misc.shift=Misc.shift;
-
 %% Descretisation
 
 % mesh descretisation
