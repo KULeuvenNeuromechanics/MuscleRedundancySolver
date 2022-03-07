@@ -118,12 +118,12 @@ for t = Misc.trials_sel
 
     %% Filter ID
     % Get the ID data
-    ID_data=importdata(ID_path);
+    ID_data=ReadMotFile(ID_path);
     t_ID=ID_data.data(:,1);
 
     % get the ID index
     if ~isfield(ID_data,'colheaders')
-        ID_data.colheaders=strsplit(ID_data.textdata{end});
+        ID_data.colheaders=ID_data.names;
     end
     ID_header=ID_data.colheaders;     IK_header = strtrim(IK_data.colheaders);
     ID_Header_inds=zeros(size(DOF_inds));  IK_Header_inds = zeros(size(DOF_inds));

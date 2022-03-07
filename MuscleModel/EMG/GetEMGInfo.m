@@ -25,9 +25,9 @@ if Misc.boolEMG
         iF = Misc.trials_sel(t);
         % get information for the EMG constraints
         clear emgFile
-        emgFile = read_motionFile_v40(Misc.EMGfile{iF}); 
+        emgFile = ReadMotFile(Misc.EMGfile{iF}); 
         % prevent errors with the headers
-        EMGFile(iF).colheaders_EMGfile = emgFile.labels;
+        EMGFile(iF).colheaders_EMGfile = emgFile.names;
         ct = 0;
         if isfield(Misc,'EMGFileHeaderCorrespondence')
             for c=1:length(EMGFile(iF).colheaders_EMGfile)
