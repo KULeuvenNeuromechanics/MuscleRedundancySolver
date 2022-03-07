@@ -47,7 +47,7 @@ for t = Misc.trials_sel
 
         % Evaluate if one of the muscles spans this DOF (when moment arms > 0.001)
         dM=dm_Data_temp.data(:,Inds_muscles);    
-        if any(any(abs(dM)>0.001))
+        if any(any(abs(dM)>0.0001))
             Misc.DofNames_muscles{t}{ct}=Misc.DofNames_Input{t}{i};
             dM_temp(:,i,:)=dM;
             DOF_inds(ct)=i;
