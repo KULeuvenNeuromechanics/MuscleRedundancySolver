@@ -25,14 +25,13 @@ Misc.nTrials = length(Misc.IKfile);
 [time] = Check_TimeIndices(Misc,time);
 Misc.time=time;
 
-% ----------------------------------------------------------------------- %
 %% Perform muscle analysis for all trials
 DatStore = struct;
 MuscleAnalysisPath=fullfile(Misc.OutPath,'MuscleAnalysis');
 Misc.MuscleAnalysisPath=MuscleAnalysisPath;
 if ~exist(MuscleAnalysisPath,'dir')
     mkdir(MuscleAnalysisPath);
-    for i = 19:Misc.nTrials
+    for i = 1:Misc.nTrials
         % select the IK and ID file
         IK_path_trial = Misc.IKfile{i};
         % Run muscle analysis    
@@ -44,17 +43,17 @@ if ~exist(MuscleAnalysisPath,'dir')
     end
 end
 
-%% From here only use the trails selected
-% ----------------------------------------------------------------------- %
-% Extract muscle information -------------------------------------------- %
+%% Extract muscle information
 % Get number of degrees of freedom (dofs), muscle-tendon lengths, moment
 % arms, stiffness and shift for the selected muscles.
 for trial = Misc.trials_sel
     [~,Misc.MAtrialName{trial},~]=fileparts(Misc.IKfile{trial});
 end
 
+% select muscles with a moment arm for the input dofs
 Misc = getMuscles4DOFS(Misc);
 
+% get IK, ID, muscle analysis data
 [Misc,DatStore] = getMuscleInfo(Misc,DatStore);
     
 % display warnings in muscle selection
@@ -63,12 +62,12 @@ Misc = getMuscles4DOFS(Misc);
 % get indexes of the muscles for which optimal fiber length, tendon stiffness are estimated
 [DatStore,Misc] = GetIndices(DatStore,Misc);
 
-% get the EMG information
+% get the EMG and ultrasound information
 [Misc,DatStore] = GetEMGInfo(Misc,DatStore);
-% [DatStore] = GetEMGInfo_DG(Misc,DatStore);
 [Misc,DatStore] = GetUSInfo(Misc,DatStore);
 
 % get the number of muscles
+NMuscles = zeros( Misc.trials_sel,1);
 for trial = Misc.trials_sel
     NMuscles(trial) = DatStore(trial).nMuscles;
 end
@@ -88,9 +87,6 @@ end
 
 % mesh descretisation
 for trial = Misc.trials_sel
-    Misc.tauAct{trial} = Misc.tau_act * ones(NMuscles(trial), 1);       % activation time constant (activation dynamics)
-    Misc.tauDeact{trial} = Misc.tau_deact * ones(NMuscles(trial),1);  % deactivation time constant (activation dynamics)
-    
     t0 = DatStore(trial).time(1); tf = DatStore(trial).time(end);
     Mesh(trial).N = round((tf-t0)*Misc.Mesh_Frequency);
     Mesh(trial).step = (tf-t0)/Mesh(trial).N;
@@ -103,7 +99,6 @@ end
 
 for trial = Misc.trials_sel
     % Discretization
-    N = Mesh(trial).N;
     time_opt = Mesh(trial).t;    
     % Spline approximation of muscle-tendon length (LMT), moment arms (MA) and inverse dynamic torques (ID)
     for dof = 1:DatStore(trial).nDOF
@@ -148,73 +143,60 @@ end
 %% setup options for the solver
 % Create an NLP solver
 % output.setup.lM_projecteddata = lM_projecteddata;
-output.setup.nlp.solver = 'ipopt';
-output.setup.nlp.ipoptoptions.linear_solver = 'mumps';
+SolverSetup.nlp.solver = 'ipopt';
+SolverSetup.nlp.ipoptoptions.linear_solver = 'mumps';
 % Set derivativelevel to 'first' for approximating the Hessian
-output.setup.derivatives.derivativelevel = 'second';
-output.setup.nlp.ipoptoptions.tolerance = 1e-6;
-output.setup.nlp.ipoptoptions.maxiterations = 10000;
-if strcmp(output.setup.derivatives.derivativelevel, 'first')
-    optionssol.ipopt.hessian_approximation = 'limited-memory';
+SolverSetup.derivatives.derivativelevel = 'second';
+SolverSetup.nlp.ipoptoptions.tolerance = 1e-6;
+SolverSetup.nlp.ipoptoptions.maxiterations = 10000;
+if strcmp(SolverSetup.derivatives.derivativelevel, 'first')
+    SolverSetup.optionssol.ipopt.hessian_approximation = 'limited-memory';
 end
 % By default, the barrier parameter update strategy is monotone.
 % https://www.coin-or.org/Ipopt/documentation/node46.html#SECTION000116020000000000000
 % Uncomment the following line to use an adaptive strategy
 % optionssol.ipopt.mu_strategy = 'adaptive';
-optionssol.ipopt.nlp_scaling_method = 'gradient-based';
-optionssol.ipopt.linear_solver = output.setup.nlp.ipoptoptions.linear_solver;
-optionssol.ipopt.tol = output.setup.nlp.ipoptoptions.tolerance;
-optionssol.ipopt.max_iter = output.setup.nlp.ipoptoptions.maxiterations;
+SolverSetup.optionssol.ipopt.nlp_scaling_method = 'gradient-based';
+SolverSetup.optionssol.ipopt.linear_solver = output.setup.nlp.ipoptoptions.linear_solver;
+SolverSetup.optionssol.ipopt.tol = output.setup.nlp.ipoptoptions.tolerance;
+SolverSetup.optionssol.ipopt.max_iter = output.setup.nlp.ipoptoptions.maxiterations;
 
 %% Dynamic Optimization - Default parameters
 % ----------------------------------------------------------------------- %
 % Solve muscle redundancy problem with default parameters
 Results = struct;
 if Misc.MRSBool == 1
-    for trial = Misc.trials_sel
-        SoActGuess = zeros(NMuscles(trial),Mesh(trial).N+1);
-        SoExcGuess = zeros(NMuscles(trial),Mesh(trial).N);
-        lMtildeGuess = zeros(NMuscles(trial),Mesh(trial).N+1);
-        vMtildeGuess = zeros(NMuscles(trial),Mesh(trial).N);
-        SoRActGuess = zeros(DatStore(trial).nDOF,Mesh(trial).N);
-
-        SoActGuess = DatStore(trial).SoActInterp';
-        SoExcGuess = DatStore(trial).SoActInterp(1:end-1,:)';
-        lMtildeGuess = DatStore(trial).lMtildeInterp';
-        vMtildeGuess = DatStore(trial).vMtildeinterp(1:end-1,:)';
-        SoRActGuess = DatStore(trial).SoRActInterp(1:end-1,:)';
-        
+    for trial = Misc.trials_sel    
+        % initial guess based on static optimization and rigid tendon
+        % assumption for lM
+        IG = struct();
+        IG.a  = DatStore(trial).SoActInterp';
+        IG.e = DatStore(trial).SoActInterp(1:end-1,:)';
+        IG.lMtilde = DatStore(trial).lMtildeInterp';
+        IG.vMtilde = DatStore(trial).vMtildeinterp(1:end-1,:)';
+        IG.aT  = DatStore(trial).SoRActInterp(1:end-1,:)';
+        % get length of fiber length projected on line tendon
         lMo = Misc.params(2,Misc.idx_allMuscleList{trial})';
         alphao = Misc.params(4,Misc.idx_allMuscleList{trial})';
-        lMGuess = lMtildeGuess.*lMo;
+        lMGuess = IG.lMtilde.*lMo;
         w = lMo.*sin(alphao);
-        lM_projectedGuess = sqrt((lMGuess.^2 - w.^2));
-
-        clear IG
-        IG.a = SoActGuess;
-        IG.lMtilde = lMtildeGuess;
-        IG.e = SoExcGuess;
-        IG.vMtilde = vMtildeGuess;
-        IG.aT = SoRActGuess;
-        IG.lM_projected
-        
+        IG.lM_projected = sqrt((lMGuess.^2 - w.^2));
+        % add muscle properties to a structure
         MuscProperties.params = Misc.params';
         MuscProperties.kT = Misc.kT';
         MuscProperties.shift = Misc.shift';
-        [Results] = runMRS_Validation(Misc,DatStore,Mesh,trial,output,optionssol,Results,NMuscles,IG,'MRS',MuscProperties);
+        % formulate and solve the optimal control problem
+        [Results] = FormulateAndSolveMRS(Misc,DatStore,Mesh,trial,SolverSetup,Results,...
+            NMuscles,IG,MuscProperties,'genericMRS');
     end
 end
 
-%% Normalize EMG
-if Misc.boolEMG
-    maxEMG = nan(Misc.nAllMuscList,1);
-    for t = Misc.trials_sel
-        for m=1:DatStore(t).EMG.nEMG
-            idx_m = Misc.idx_EMGsel{t}(m,1);
-            maxEMG(idx_m,1) = max(maxEMG(idx_m,1),max(DatStore(t).EMG.EMGsel(:,m)));
-        end
-    end
+%% Normalize EMG data based on the MRS solution without EMG constraints
+
+if Misc.boolEMG    
     if Misc.normalizeToMRS
+        % compute the maximal activation in the MRS solution without EMG
+        % constraints
         maxMRS = nan(Misc.nAllMuscList,1);
         for t = Misc.trials_sel
             for m=1:NMuscles(t)
@@ -222,19 +204,13 @@ if Misc.boolEMG
                 maxMRS(idx_m,1) = max(maxMRS(idx_m,1),max(Results.MActivation(t).genericMRS(m,:)));
             end
         end
+        % loop over all trials to mutliple the EMG values with maxRMS
         for t = Misc.trials_sel
             for m=1:DatStore(t).EMG.nEMG
                 idx_m = Misc.idx_EMGsel{t}(m,1);
-                DatStore(t).EMG.EMGsel(:,m) = DatStore(t).EMG.EMGsel(:,m)./(maxEMG(idx_m,1)/maxMRS(idx_m,1));
+                DatStore(t).EMG.EMGsel(:,m) = DatStore(t).EMG.EMGsel(:,m).*maxMRS(idx_m,1);
             end
-        end
-    else
-        for t = Misc.trials_sel
-            for m=1:DatStore(t).EMG.nEMG
-                idx_m = Misc.idx_EMGsel{t}(m,1);
-                DatStore(t).EMG.EMGsel(:,m) = DatStore(t).EMG.EMGsel(:,m)./maxEMG(idx_m,1);
-            end
-        end
+        end  
     end    
 end
 
@@ -249,16 +225,17 @@ if Misc.UStracking == 1 || Misc.EMGconstr == 1
 end
 
 if BoolParamOpt == 1
+    % Run the parameter estimation
     [Results,Misc,DatStore,lMo_scaling_param_opt,lTs_scaling_param_opt,...
         kT_scaling_param_opt,EMGscale_opt] = runParameterEstimation(Misc,...
-        DatStore,Mesh,output,optionssol,Results,NMuscles);
+        DatStore,Mesh,SolverSetup,Results,NMuscles);
 else
     lMo_scaling_param_opt = ones(NMuscles,1);
     lTs_scaling_param_opt = ones(NMuscles,1);
     kT_scaling_param_opt = ones(NMuscles,1);
 end
 
-%% Store Results
+%% Update estimated muscle-tendon parameters
 
 % save original and estimated parameters (and the bounds)
 Results.Param.lMo_scaling_paramopt  = lMo_scaling_param_opt;
@@ -269,6 +246,7 @@ Results.Param.Original.lMo      = Misc.params(2,:);
 Results.Param.Original.lTs   = Misc.params(3,:);
 Results.Param.Original.alphao = Misc.params(4,:);
 Results.Param.Original.kT   = Misc.kT;
+% save estimated parameters
 if BoolParamOpt
     Results.Param.Estimated.FMo    = Results.Param.Original.FMo;
     Results.Param.Estimated.lMo    = Results.Param.Original.lMo .* Results.Param.lMo_scaling_paramopt';
@@ -288,7 +266,7 @@ if BoolParamOpt
     end
 end
 
-%% Validate results parameter estimation 
+%% Run the MRS problem with estimated paramters (without EMG or US data)
 
 if Misc.ValidationBool == true && BoolParamOpt
     for trial = Misc.trials_sel
@@ -306,7 +284,8 @@ if Misc.ValidationBool == true && BoolParamOpt
         MuscProperties.kT = kT_scaling_param_opt.*Misc.kT';
         MuscProperties.shift = getShift(MuscProperties.kT);
 
-        [Results] = runMRS_Validation(Misc,DatStore,Mesh,trial,output,optionssol,Results,NMuscles,IG,'Validation',MuscProperties);
+        [Results] = FormulateAndSolveMRS(Misc,DatStore,Mesh,trial,SolverSetup,...
+            Results,NMuscles,IG,MuscProperties,'validationMRS');
     end
 end
 % add selected muscle names to the output structure

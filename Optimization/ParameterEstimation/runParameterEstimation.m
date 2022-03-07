@@ -1,4 +1,4 @@
-function [Results,Misc,DatStore,lMo_scaling_param_opt,lTs_scaling_param_opt,kT_scaling_param_opt,EMGscale_opt] = runParameterEstimation(Misc,DatStore,Mesh,output,optionssol,Results,NMuscles)
+function [Results,Misc,DatStore,lMo_scaling_param_opt,lTs_scaling_param_opt,kT_scaling_param_opt,EMGscale_opt] = runParameterEstimation(Misc,DatStore,Mesh,SolverSetup,optionssol,Results,NMuscles)
 %%
 % Problem bounds
 e_min = 0; e_max = 1;                   % bounds on muscle excitation
@@ -153,13 +153,16 @@ for trial = Misc.trials_sel
     h = Mesh(trial).step;
     for k=1:N
         % Variables within current mesh interval
-        ak = a{ct}(:, k); lMtildek = lMtilde{ct}(:, k);
-        vMtildek = vMtilde{ct}(:, k); aTk = aT{ct}(:, k); ek = e{ct}(:, k);
+        ak = a{ct}(:, k); 
+        lMtildek = lMtilde{ct}(:, k);
+        vMtildek = vMtilde{ct}(:, k); 
+        aTk = aT{ct}(:, k); 
+        ek = e{ct}(:, k);
         lM_projectedk = lM_projected{ct}(:, k);
 
         % Euler integration  Uk = (X_(k+1) - X_k)/*dt
         Xk = [ak; lMtildek];
-        Zk = [a{ct}(:,k + 1);lMtilde{ct}(:,k + 1)];
+        Zk = [a{ct}(:,k + 1); lMtilde{ct}(:,k + 1)];
         Uk = [ActivationDynamics(ek,ak,Misc.tau_act,Misc.tau_deact,Misc.b); vMtildek];
         opti_MTE.subject_to(eulerIntegrator(Xk,Zk,Uk,h) == 0);
 
@@ -217,7 +220,7 @@ for trial = Misc.trials_sel
 end
 %%
 opti_MTE.minimize(J); % Define cost function in opti
-opti_MTE.solver(output.setup.nlp.solver,optionssol);
+opti_MTE.solver(SolverSetup.nlp.solver,optionssol);
 diary(fullfile(Misc.OutPath,[Misc.subjectName '_MTE.txt']));
 tic
     
