@@ -302,6 +302,7 @@ for trial = Misc.trials_sel
     [TForcetilde,TForce] = TendonForce_lMtilde(Results.lMtildeopt(trial).MTE',paramsOpt(:,Misc.idx_allMuscleList{trial}),Results.lMTinterp(trial).MTE',kTOpt(1,Misc.idx_allMuscleList{trial}),shiftOpt(1,Misc.idx_allMuscleList{trial}));
     Results.TForcetilde(trial).MTE = TForcetilde';
     Results.TForce(trial).MTE = TForce';
+    % vMtildeMax muscle property is not optimized
     [Fpe,FMltilde,FMvtilde] = getForceLengthVelocityProperties(Results.lMtildeopt(trial).MTE',Results.vMtilde(trial).MTE',Misc.params(5,Misc.idx_allMuscleList{trial}));
     FMo = ones(N+1,1)*Misc.params(1,Misc.idx_allMuscleList{trial});
     Results.Fpe(trial).MTE = (Fpe.*FMo)';
