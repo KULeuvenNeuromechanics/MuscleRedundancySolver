@@ -130,13 +130,15 @@ for trial = Misc.trials_sel
     
     % get EMG at optimization mesh
     if DatStore(trial).EMG.boolEMG
-        EMGTracking(trial).data = interp1(DatStore(trial).EMG.time,DatStore(trial).EMG.EMGsel,Mesh(trial).t(1:end-1));
+        EMGTracking(trial).data = interp1(DatStore(trial).EMG.time,DatStore(trial).EMG.EMGsel,...
+            Mesh(trial).t(1:end-1));
     end
     
     % get US data at optimization mesh
     if ~isempty(Misc.USfile)
         DatStore(trial).boolUS = 1;
-        DatStore(trial).USTracking = interp1(DatStore(trial).US.time,DatStore(trial).US.USsel,Mesh(trial).t(1:end));
+        DatStore(trial).USTracking = interp1(DatStore(trial).US.time,DatStore(trial).US.USsel,...
+            Mesh(trial).t(1:end));
     end
     
     % constraint on projected fiber length
@@ -214,11 +216,13 @@ for trial = Misc.trials_sel
     end
     
     J = J + ...
-        Misc.wAct*0.5*(sumsqr(e{ct})/Mesh(trial).N/NMuscles(trial) + sumsqr(a{ct})/Mesh(trial).N/NMuscles(trial)) + ...
-        Misc.wTres*sumsqr(aT{ct})/Mesh(trial).N/DatStore(trial).nDOF + ...
-        Misc.wVm*sumsqr(vMtilde{ct})/Mesh(trial).N/NMuscles(trial);
+        Misc.wAct*0.5*(sumsqr(e{ct})/Mesh(trial).N/NMuscles(trial) + ...
+            sumsqr(a{ct})/Mesh(trial).N/NMuscles(trial)) + ...
+            Misc.wTres*sumsqr(aT{ct})/Mesh(trial).N/DatStore(trial).nDOF + ...
+            Misc.wVm*sumsqr(vMtilde{ct})/Mesh(trial).N/NMuscles(trial);
 end
-%%
+
+% add objective function and solver
 opti_MTE.minimize(J); % Define cost function in opti
 opti_MTE.solver(SolverSetup.nlp.solver,optionssol);
 diary(fullfile(Misc.OutPath,[Misc.subjectName '_MTE.txt']));

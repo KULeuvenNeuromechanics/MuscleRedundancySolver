@@ -31,15 +31,15 @@ MuscleAnalysisPath=fullfile(Misc.OutPath,'MuscleAnalysis');
 Misc.MuscleAnalysisPath=MuscleAnalysisPath;
 if ~exist(MuscleAnalysisPath,'dir')
     mkdir(MuscleAnalysisPath);
-    for i = 1:Misc.nTrials
-        % select the IK and ID file
-        IK_path_trial = Misc.IKfile{i};
-        % Run muscle analysis    
-        if Misc.RunAnalysis
-            disp('MuscleAnalysis Running .....');
-            OpenSim_Muscle_Analysis(IK_path_trial,Misc.model_path,MuscleAnalysisPath,[time(i,1) time(i,end)],Misc.DofNames_Input{i})
-            disp('MuscleAnalysis Finished');
-        end
+end
+for i = 1:Misc.nTrials
+    % select the IK and ID file
+    IK_path_trial = Misc.IKfile{i};
+    % Run muscle analysis
+    if Misc.RunAnalysis
+        disp('MuscleAnalysis Running .....');
+        OpenSim_Muscle_Analysis(IK_path_trial,Misc.model_path,MuscleAnalysisPath,[time(i,1) time(i,end)],Misc.DofNames_Input)
+        disp('MuscleAnalysis Finished');
     end
 end
 
@@ -84,7 +84,7 @@ for i=Misc.trials_sel
 end
 
 %% Descretisation
-
+%------------------------------------------------------------------------ %
 % mesh descretisation
 for trial = Misc.trials_sel
     t0 = DatStore(trial).time(1); tf = DatStore(trial).time(end);
@@ -96,7 +96,6 @@ end
 %% Evaluate splines at Mesh Points
 % ----------------------------------------------------------------------- %
 % Get IK, ID, muscle analysis and static opt information at mesh points
-
 for trial = Misc.trials_sel
     % Discretization
     time_opt = Mesh(trial).t;    
@@ -142,7 +141,6 @@ end
 
 %% setup options for the solver
 % Create an NLP solver
-% output.setup.lM_projecteddata = lM_projecteddata;
 SolverSetup.nlp.solver = 'ipopt';
 SolverSetup.nlp.ipoptoptions.linear_solver = 'mumps';
 % Set derivativelevel to 'first' for approximating the Hessian
@@ -155,7 +153,7 @@ end
 % By default, the barrier parameter update strategy is monotone.
 % https://www.coin-or.org/Ipopt/documentation/node46.html#SECTION000116020000000000000
 % Uncomment the following line to use an adaptive strategy
-% optionssol.ipopt.mu_strategy = 'adaptive';
+% SolverSetup.optionssol.ipopt.mu_strategy = 'adaptive';
 SolverSetup.optionssol.ipopt.nlp_scaling_method = 'gradient-based';
 SolverSetup.optionssol.ipopt.linear_solver = output.setup.nlp.ipoptoptions.linear_solver;
 SolverSetup.optionssol.ipopt.tol = output.setup.nlp.ipoptoptions.tolerance;
@@ -192,7 +190,6 @@ if Misc.MRSBool == 1
 end
 
 %% Normalize EMG data based on the MRS solution without EMG constraints
-
 if Misc.boolEMG    
     if Misc.normalizeToMRS
         % compute the maximal activation in the MRS solution without EMG

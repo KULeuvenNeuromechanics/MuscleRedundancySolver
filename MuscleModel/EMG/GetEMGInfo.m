@@ -3,10 +3,6 @@ function [Misc,DatStore] = GetEMGInfo(Misc,DatStore)
 %dynamics on the EMG data when asked and puts the EMG data in the right
 %format (handles copies and so on).
 
-
-
-% Author: Maarten Afschrift
-
 if Misc.boolEMG
     for trial = Misc.trials_sel
         if isempty(Misc.EMGfile{trial}) || isempty(Misc.IKfile{trial}) || isempty(Misc.IDfile{trial})
@@ -116,27 +112,26 @@ if Misc.boolEMG
                 [EMGselection,EMGsel,Misc] = addEMGtwins(EMGselection,EMGsel,EMGdat,Misc,NameSel,NameCopy,DatStore,EMGheaders,iF);
             end
         end    
-        DatStore(iF).EMG.BoundsScaleEMG = Misc.BoundsScaleEMG;
-        DatStore(iF).EMG.EMGbounds      = Misc.EMGbounds;
-        DatStore(iF).EMG.nEMG           = length(EMGselection);
-%         DatStore(iF).EMG.EMGindices     = EMGindices;
-        DatStore(iF).EMG.idx_EMGsel     = Misc.idx_EMGsel{iF};
-        DatStore(iF).EMG.EMGsel         = EMGsel;
-        DatStore(iF).EMG.EMGselection   = EMGselection;
+        DatStore(iF).EMG.BoundsScaleEMG = Misc.BoundsScaleEMG; % bounds on scale factors
+        DatStore(iF).EMG.EMGbounds      = Misc.EMGbounds; % bounds on EMG tracking
+        DatStore(iF).EMG.nEMG           = length(EMGselection); % number of EMG signals
+        DatStore(iF).EMG.idx_EMGsel     = Misc.idx_EMGsel{iF}; % indices of EMG in modelled muscles
+        DatStore(iF).EMG.EMGsel         = EMGsel; % selected EMG data from .mot file
+        %DatStore(iF).EMG.EMGselection   = EMGselection;
         DatStore(iF).EMG.time           = EMGdat(:,1);
-        DatStore(iF).EMG.boolEMG        = Misc.boolEMG;
-        DatStore(iF).EMG.EMGspline      = spline(DatStore(iF).EMG.time',DatStore(iF).EMG.EMGsel');        
+        DatStore(iF).EMG.boolEMG        = Misc.boolEMG; % boolean if EMG data is used
+        %DatStore(iF).EMG.EMGspline      = spline(DatStore(iF).EMG.time',DatStore(iF).EMG.EMGsel');        
     end   
 else
     for iF = Misc.trials_sel
         % Boolean in DatStore that EMG info is not used ?
-        DatStore(iF).EMG.BoundsScaleEMG = [];
-        DatStore(iF).EMG.EMGbounds      = [];
-        DatStore(iF).EMG.nEMG           = [];
-        DatStore(iF).EMG.EMGindices     = [];
-        DatStore(iF).EMG.EMGsel         = [];
-        DatStore(iF).EMG.EMGselection   = [];
-        DatStore(iF).EMG.boolEMG        = Misc.boolEMG;
+        DatStore(iF).EMG.BoundsScaleEMG = []; % bounds on scale factors
+        DatStore(iF).EMG.EMGbounds      = []; % bounds on EMG tracking
+        DatStore(iF).EMG.nEMG           = []; % number of EMG signals
+        DatStore(iF).EMG.idx_EMGsel     = []; % indices of EMG in modelled muscles
+        DatStore(iF).EMG.EMGsel         = []; % selected EMG data from .mot file
+        %DatStore(iF).EMG.EMGselection   = [];
+        DatStore(iF).EMG.boolEMG        = Misc.boolEMG; % boolean if EMG data is used
     end    
 end
 
