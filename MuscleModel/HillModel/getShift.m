@@ -1,5 +1,3 @@
-
-
 function shift = getShift(kT)
 % This script returns the value used to shift the tendon force-length curve
 % when changing the tendon stiffness. 

@@ -19,7 +19,7 @@ Out_path    = fullfile(ExamplePath,'Results');                    % folder to st
 % manually)
 time = zeros(size(Misc.IKfile,1),2);
 for i = 1:size(Misc.IKfile,1)
-    IK = importdata(Misc.IKfile{i});
+    IK = ReadMotFile(Misc.IKfile{i});
     time(i,:) = [IK.data(1,1) IK.data(end,1)];
 end
 

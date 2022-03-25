@@ -1,4 +1,3 @@
-
 function [Ftilde,F] = TendonForce_lMtilde(lMtilde,params,lMT,kT,shift)
 % This function computes the tendon force from the normalized muscle fiber
 % length

@@ -71,6 +71,9 @@ end
 if ~isfield(Misc,'Estimate_OptimalFiberLength')
     Misc.Estimate_OptimalFiberLength =[];
 end
+if ~isfield(Misc,'Estimate_TendonSlackLength')
+    Misc.Estimate_TendonSlackLength =[];
+end
 if ~isfield(Misc,'Estimate_TendonStiffness')
     Misc.Estimate_TendonStiffness =[];
 end

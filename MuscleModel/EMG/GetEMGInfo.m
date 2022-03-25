@@ -23,7 +23,7 @@ if Misc.boolEMG
         clear emgFile
         emgFile = ReadMotFile(Misc.EMGfile{iF}); 
         % prevent errors with the headers
-        EMGFile(iF).colheaders_EMGfile = emgFile.names;
+        EMGFile(iF).colheaders_EMGfile = emgFile.names';
         ct = 0;
         if isfield(Misc,'EMGFileHeaderCorrespondence')
             for c=1:length(EMGFile(iF).colheaders_EMGfile)
@@ -90,7 +90,7 @@ if Misc.boolEMG
     if bool_error ==1
         warning(['Removed muscles with EMG information from the',...
             ' analysis because these muscles are not in the model, or do not span the selected DOFs for any trial (see above)']);
-        Misc.EMGSelection(find(IndError)) = [];
+        Misc.EMGSelection(find(IndErr)) = [];
     end    
    
     %% Process the data 

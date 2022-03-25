@@ -23,10 +23,10 @@ if Misc.boolUS
     % Load the data and check for errors
     for iF = Misc.trials_sel      
         % get information for the US constraints
-        USfile(iF)      = importdata(Misc.USfile{iF});        
+        USfile(iF)      = ReadMotFile(Misc.USfile{iF});        
         % prevent errors with the headers
         if ~isfield(USfile(iF),'colheaders')
-            USfile(iF).colheaders = strsplit(USfile(iF).textdata{end});
+            USfile(iF).colheaders = USfile(iF).names';
         end
         USheaders{iF}  = USfile(iF).colheaders;
         % verify if the selected muscles are in the model
