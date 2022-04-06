@@ -1,5 +1,5 @@
 function [Results,Misc,DatStore,lMo_scaling_param_opt,lTs_scaling_param_opt,kT_scaling_param_opt,EMGscale_opt] = ...
-    runParameterEstimation(Misc,DatStore,Mesh,SolverSetup,optionssol,Results,NMuscles)
+    runParameterEstimation(Misc,DatStore,Mesh,SolverSetup,Results,NMuscles)
 %%
 % Problem bounds
 e_min = 0; e_max = 1;                   % bounds on muscle excitation
@@ -63,7 +63,7 @@ end
 
 % Scale factor for EMG
 if Misc.boolEMG
-    [DatStore,scaledEMGmusc] = getEMG_scaleIndecies(DatStore,Misc.trials_sel);
+    [DatStore,scaledEMGmusc] = getEMG_scaleIndecies(DatStore,Misc.nTrials);
     EMGscale    = opti_MTE.variable(length(scaledEMGmusc),1);
     opti_MTE.subject_to(Misc.BoundsScaleEMG(1) < EMGscale < Misc.BoundsScaleEMG(2));
 end
@@ -76,7 +76,7 @@ opti_MTE.set_initial(kT_scaling_param,1);
 opti_MTE.set_initial(EMGscale,1);
 %%
 ct = 0;
-for trial = Misc.trials_sel
+for trial = 1:Misc.nTrials
     ct = ct + 1;
     % States
     %   - Muscle activations
@@ -225,8 +225,8 @@ end
 
 % add objective function and solver
 opti_MTE.minimize(J); % Define cost function in opti
-opti_MTE.solver(SolverSetup.nlp.solver,optionssol);
-diary(fullfile(Misc.OutPath,[Misc.subjectName '_MTE.txt']));
+opti_MTE.solver(SolverSetup.nlp.solver,SolverSetup.optionssol);
+diary(fullfile(Misc.OutPath,[Misc.OutName '_MTE.txt']));
 tic
     
 % Note: we don't use opti.solve() here because opti does not
@@ -236,7 +236,7 @@ tic
 % more difficult (see below).
 
 %sol = opti_MTE.solve();
-[w_opt] = solve_NLPSOL(opti_MTE,optionssol);
+[w_opt] = solve_NLPSOL(opti_MTE,SolverSetup.optionssol);
 dt = toc;
 disp(['Computation time solving OCP: ' num2str(dt) ' s'])
 diary off
@@ -272,7 +272,7 @@ else
     EMGscale_opt = [];
 end
 
-for trial = Misc.trials_sel
+for trial = 1:Misc.nTrials
     a_opt{trial} = reshape(w_opt(iStart+1:iStart+(NMuscles(trial)*(Mesh(trial).N+1)),1), NMuscles(trial),Mesh(trial).N+1);
     iStart = iStart + (NMuscles(trial)*(Mesh(trial).N+1));
     

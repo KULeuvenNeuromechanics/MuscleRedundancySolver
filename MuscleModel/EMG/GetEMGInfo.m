@@ -58,18 +58,7 @@ if Misc.boolEMG
             end
         end
     end
-    IndErr = zeros(length(Misc.EMGSelection),1);
-    for i = 1:length(Misc.EMGSelection)
-        if sum(IndError(i,:)) == Misc.nTrials
-            bool_error = 1;
-            IndErr(i) = 1;
-        end
-    end
-    if bool_error ==1
-        warning(['Removed muscles with EMG information from the',...
-            ' analysis because these muscles are not in the model, or do not span the selected DOFs for any trial (see above)']);
-        Misc.EMGSelection(find(IndErr)) = [];
-    end    
+        
    
     %% Process the data 
     for iF = 1:Misc.nTrials
@@ -97,7 +86,7 @@ if Misc.boolEMG
         DatStore(iF).EMG.nEMG           = length(EMGselection); % number of EMG signals
         DatStore(iF).EMG.idx_EMGsel     = Misc.idx_EMGsel{iF}; % indices of EMG in modelled muscles
         DatStore(iF).EMG.EMGsel         = EMGsel; % selected EMG data from .mot file
-        %DatStore(iF).EMG.EMGselection   = EMGselection;
+        DatStore(iF).EMG.EMGselection   = EMGselection;
         DatStore(iF).EMG.time           = EMGdat(:,1);
         DatStore(iF).EMG.boolEMG        = Misc.boolEMG; % boolean if EMG data is used
         %DatStore(iF).EMG.EMGspline      = spline(DatStore(iF).EMG.time',DatStore(iF).EMG.EMGsel');        
@@ -110,7 +99,7 @@ else
         DatStore(iF).EMG.nEMG           = []; % number of EMG signals
         DatStore(iF).EMG.idx_EMGsel     = []; % indices of EMG in modelled muscles
         DatStore(iF).EMG.EMGsel         = []; % selected EMG data from .mot file
-        %DatStore(iF).EMG.EMGselection   = [];
+        DatStore(iF).EMG.EMGselection   = [];
         DatStore(iF).EMG.boolEMG        = Misc.boolEMG; % boolean if EMG data is used
     end    
 end

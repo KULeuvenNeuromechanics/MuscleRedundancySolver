@@ -15,9 +15,7 @@ Misc.model_path  = fullfile(DataPath,'subject1.osim');
 Misc.OutPath     = fullfile(ExamplePath,'Results');                    % folder to store results
 
 % Get start and end time of the different files
-time=[0.516 1.95;
-    0.516 1.95;
-    0.516 1.95]; % Right stance phase (+50ms beginning and end of time interval, more details see manual and publication)
+time=[0.516 1.95]; % Right stance phase (+50ms beginning and end of time interval, more details see manual and publication)
 
 % Settings
 Misc.DofNames_Input={'ankle_angle_r','knee_angle_r','hip_flexion_r','hip_adduction_r','hip_rotation_r'};    % select the DOFs you want to include in the optimization

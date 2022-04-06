@@ -264,7 +264,7 @@ end
 %% Run the MRS problem with estimated paramters (without EMG or US data)
 
 if Misc.ValidationBool == true && BoolParamOpt
-    for trial = Misc.trials_sel
+    for trial = 1:Misc.nTrials
         clear IG
         IG.a = Results.MActivation(trial).MTE;
         IG.lMtilde = Results.lMtildeopt(trial).MTE;
