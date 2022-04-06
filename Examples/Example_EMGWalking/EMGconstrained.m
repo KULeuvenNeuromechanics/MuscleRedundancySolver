@@ -76,11 +76,11 @@ Misc.wTres  = 10;
 Misc.wVm    = 0.00001;
 
 % Plotter Bool: Boolean to select if you want to plot lots of output information of intermediate steps in the script
-Misc.PlotBool = 0;
+Misc.PlotBool = 1;
 % MRS Bool: Select if you want to run the generic muscle redundancy solver
 Misc.MRSBool = 1;
 % Validation Bool: Select if you want to run the muscle redundancy solver with the optimized parameters
-Misc.ValidationBool = 1; 	% TO DO: we should report results of EMG driven simulation as well
+Misc.ValidationBool = 0; 	% TO DO: we should report results of EMG driven simulation as well
 
 %% Run muscle tendon estimator:
 [Results,DatStore,Misc] = solveMuscleRedundancy(time,Misc);

@@ -4,12 +4,12 @@ function [h] = PlotEMGTracking(Results,DatStore,Misc)
 lw = 2; % linewidth
 
 h = figure('Name','Tracking EMG');
-nPhases = length(Misc.trials_sel);
-if nPhases > 1
+nPhases = Misc.nTrials;
+if Misc.nTrials > 1
     hTabGroup = uitabgroup;
 end
 Cs = linspecer(3);
-for i=Misc.trials_sel
+for i=1:Misc.nTrials
     % set the name of the tab
     if nPhases>1
         [path,file,ext]=fileparts(Misc.IKfile{i});

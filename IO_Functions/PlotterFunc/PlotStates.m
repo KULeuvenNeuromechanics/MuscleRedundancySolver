@@ -13,7 +13,7 @@ h = figure('Name','Optimal states and controls');
 hTabGroup = uitabgroup;
 % colors for different simulations
 Cs = linspecer(3);
-for trial = Misc.trials_sel
+for trial = 1:Misc.nTrials
     % plot optimal activations
     tab = uitab(hTabGroup, 'Title', [Misc.trialName{trial} ': activation']);
     axes('parent',tab);

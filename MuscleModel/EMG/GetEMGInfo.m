@@ -89,7 +89,7 @@ if Misc.boolEMG
         DatStore(iF).EMG.EMGselection   = EMGselection;
         DatStore(iF).EMG.time           = EMGdat(:,1);
         DatStore(iF).EMG.boolEMG        = Misc.boolEMG; % boolean if EMG data is used
-        %DatStore(iF).EMG.EMGspline      = spline(DatStore(iF).EMG.time',DatStore(iF).EMG.EMGsel');        
+        DatStore(iF).EMG.EMGspline      = spline(DatStore(iF).EMG.time',DatStore(iF).EMG.EMGsel');        
     end   
 else
     for iF = 1:Misc.nTrials
