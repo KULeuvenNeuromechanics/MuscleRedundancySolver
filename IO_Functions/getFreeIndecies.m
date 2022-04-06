@@ -1,6 +1,6 @@
-function [free_lMo,free_lTs,free_kT] = getFreeIndecies(Misc,DatStore,trials_sel)
+function [free_lMo,free_lTs,free_kT] = getFreeIndecies(Misc,DatStore,ntrials)
 mNames = [];
-for t=trials_sel
+for t=1:ntrials
     mNames = [mNames DatStore(t).MuscleNames];
 end
 mNamesUnique = unique(mNames);

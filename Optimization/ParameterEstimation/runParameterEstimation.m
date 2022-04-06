@@ -1,4 +1,5 @@
-function [Results,Misc,DatStore,lMo_scaling_param_opt,lTs_scaling_param_opt,kT_scaling_param_opt,EMGscale_opt] = runParameterEstimation(Misc,DatStore,Mesh,SolverSetup,optionssol,Results,NMuscles)
+function [Results,Misc,DatStore,lMo_scaling_param_opt,lTs_scaling_param_opt,kT_scaling_param_opt,EMGscale_opt] = ...
+    runParameterEstimation(Misc,DatStore,Mesh,SolverSetup,optionssol,Results,NMuscles)
 %%
 % Problem bounds
 e_min = 0; e_max = 1;                   % bounds on muscle excitation
@@ -6,7 +7,7 @@ a_min = 0; a_max = 1;                   % bounds on muscle activation
 vMtilde_min = -10; vMtilde_max = 10;    % bounds on normalized muscle fiber velocity
 lMtilde_min = 0.1; lMtilde_max = 1.7;   % bounds on normalized muscle fiber length
 
-[free_lMo,free_lTs,free_kT] = getFreeIndecies(Misc,DatStore,Misc.trials_sel);
+[free_lMo,free_lTs,free_kT] = getFreeIndecies(Misc,DatStore,Misc.nTrials);
 
 % Estimate parameters
 % CasADi setup

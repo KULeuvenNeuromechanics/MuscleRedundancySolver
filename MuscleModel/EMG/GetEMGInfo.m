@@ -17,8 +17,7 @@ if Misc.boolEMG
     IndError=zeros(length(Misc.EMGSelection),length(Misc.trials_sel));
     % Load the data and check for errors
     EMGFile = struct;
-    for t = 1:length(Misc.trials_sel)
-        iF = Misc.trials_sel(t);
+    for iF = 1:Misc.nTrials
         % get information for the EMG constraints
         clear emgFile
         emgFile = ReadMotFile(Misc.EMGfile{iF}); 
@@ -70,19 +69,19 @@ if Misc.boolEMG
                     else
                         disp(['Could not find ' Misc.EMGSelection{i} ' in the header of the EMG file, Update the headers in:  Misc.EMGheaders{' num2str(iF) '}']);
                     end
-                    IndError(i,t)=1;
+                    IndError(i,iF)=1;
                 end
             else
                 if strcmp(Misc.EMGSelection{i}(end),Misc.side{iF}) % All muscles end with 'l' or 'r'
                     disp(['Could not find ' Misc.EMGSelection{i} ' in the model for trial ' Misc.EMGfile{iF} ', Update the Misc.EMGSelection structure']);
-                    IndError(i,t)=1;
+                    IndError(i,iF)=1;
                 end
             end
         end
     end
     IndErr = zeros(length(Misc.EMGSelection),1);
     for i = 1:length(Misc.EMGSelection)
-        if sum(IndError(i,:)) == length(Misc.trials_sel)
+        if sum(IndError(i,:)) == Misc.nTrials
             bool_error = 1;
             IndErr(i) = 1;
         end
@@ -123,7 +122,7 @@ if Misc.boolEMG
         %DatStore(iF).EMG.EMGspline      = spline(DatStore(iF).EMG.time',DatStore(iF).EMG.EMGsel');        
     end   
 else
-    for iF = Misc.trials_sel
+    for iF = 1:Misc.nTrials
         % Boolean in DatStore that EMG info is not used ?
         DatStore(iF).EMG.BoundsScaleEMG = []; % bounds on scale factors
         DatStore(iF).EMG.EMGbounds      = []; % bounds on EMG tracking

@@ -169,7 +169,17 @@ end
 
 %% Muscle parameters
 if ~isfield(Misc,'MuscleNames_Input')
-    Misc.MuscleNames_Input = cell(1,length(Misc.IKfile));
+    Misc.MuscleNames_Input = cell(length(Misc.IKfile),1);
+else
+    [ntr_muscles, nmuscles] = size(Misc.MuscleNames_Input);
+    if ntr_muscles == 1 || ntr_muscles~=length(Misc.IKfile)
+        % select the same input dofs for all trials
+        Misc.MuscleNames_Input_copy = Misc.MuscleNames_Input;
+        Misc.MuscleNames_Input =cell(0);
+        for t = 1:length(Misc.IKfile)
+            Misc.MuscleNames_Input{t} = Misc.MuscleNames_Input_copy;
+        end
+    end
 end
 
 %% Activation and contraction dynamics
@@ -184,4 +194,27 @@ if ~isfield(Misc,'b') % tanh coefficient for smooth activation dynamics
     Misc.b = 0.1;
 end
 
+%% Input Dofs
+
+[ntr_dof, ndofs] = size(Misc.DofNames_Input);
+if ntr_dof == 1 || ntr_dof~=length(Misc.IKfile)
+    % select the same input dofs for all trials
+    Misc.DofNames_Input_copy = Misc.DofNames_Input;
+    Misc.DofNames_Input =cell(0);
+    for t = 1:length(Misc.IKfile)
+        Misc.DofNames_Input{t} = Misc.DofNames_Input_copy;
+    end
 end
+
+%% output names
+
+% [ntr_out] = length(Misc.OutName);
+% if ntr_out == 1 || ntr_out~=length(Misc.IKfile)
+%     outTemp = Misc.OutName;
+%     Misc.OutName = [];
+%     for t = 1:length(Misc.IKfile)
+%         Misc.OutName{t} = [outTemp '_' num2str(t)];
+%     end
+% end
+
+

@@ -21,7 +21,7 @@ if Misc.boolUS
     bool_error  = 0;
     IndError=zeros(length(Misc.USSelection),1);
     % Load the data and check for errors
-    for iF = Misc.trials_sel      
+    for iF = 1:Misc.nTrials      
         % get information for the US constraints
         USfile(iF)      = ReadMotFile(Misc.USfile{iF});        
         % prevent errors with the headers
@@ -75,7 +75,7 @@ if Misc.boolUS
         DatStore(iF).US.USspline      = spline(DatStore(iF).US.time',DatStore(iF).US.USsel');        
     end   
 else
-    for iF = Misc.trials_sel
+    for iF = Misc.nTrials
         % Boolean in DatStore that US info is not used ?       
         DatStore(iF).US.nUS           = [];
         DatStore(iF).US.USindices     = [];

@@ -11,8 +11,8 @@ clear all; clc;
 Misc.IKfile  = {fullfile(pwd,'IK_gait.mot')};
 Misc.IDfile  = {fullfile(pwd,'ID_gait.sto')};
 Misc.EMGfile = {fullfile(pwd,'EMG_gait.mot')};
-model_path   = {fullfile(pwd,'ScaledModel.osim')};
-Out_path     = fullfile(pwd,'Results_LowerLimb_EMGconstrained');                    % folder to store results
+Misc.model_path   = {fullfile(pwd,'ScaledModel.osim')};
+Misc.OutPath      = fullfile(pwd,'Results_LowerLimb_EMGconstrained');                    % folder to store results
 time = [1.2 2.3]; 
 
 %% Settings
@@ -83,5 +83,5 @@ Misc.MRSBool = 1;
 Misc.ValidationBool = 1; 	% TO DO: we should report results of EMG driven simulation as well
 
 %% Run muscle tendon estimator:
-[Results,DatStore,Misc] = solveMuscleRedundancy(model_path,time,Out_path,Misc);
+[Results,DatStore,Misc] = solveMuscleRedundancy(time,Misc);
 

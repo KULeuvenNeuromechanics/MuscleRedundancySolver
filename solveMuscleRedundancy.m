@@ -17,6 +17,9 @@ if isfield(Misc,'EMGconstr') && Misc.EMGconstr == 1
 end
 Misc = DefaultSettings(Misc);
 
+% read the muscle properties
+[Misc] = getMuscleProperties(Misc.model_path,Misc);
+
 % number of motion trials
 Misc.nTrials = length(Misc.IKfile);
 
@@ -38,7 +41,7 @@ for i = 1:Misc.nTrials
     % Run muscle analysis
     if Misc.RunAnalysis
         disp('MuscleAnalysis Running .....');
-        OpenSim_Muscle_Analysis(IK_path_trial,Misc.model_path,MuscleAnalysisPath,[time(i,1) time(i,end)],Misc.DofNames_Input)
+        OpenSim_Muscle_Analysis(IK_path_trial,Misc.model_path,MuscleAnalysisPath,[time(i,1) time(i,end)],Misc.DofNames_Input{i})
         disp('MuscleAnalysis Finished');
     end
 end
@@ -46,7 +49,7 @@ end
 %% Extract muscle information
 % Get number of degrees of freedom (dofs), muscle-tendon lengths, moment
 % arms, stiffness and shift for the selected muscles.
-for trial = Misc.trials_sel
+for trial = 1:Misc.nTrials
     [~,Misc.MAtrialName{trial},~]=fileparts(Misc.IKfile{trial});
 end
 
@@ -66,9 +69,9 @@ Misc = getMuscles4DOFS(Misc);
 [Misc,DatStore] = GetEMGInfo(Misc,DatStore);
 [Misc,DatStore] = GetUSInfo(Misc,DatStore);
 
-% get the number of muscles
-NMuscles = zeros( Misc.trials_sel,1);
-for trial = Misc.trials_sel
+% get the number of muscles in a vector
+NMuscles = zeros(Misc.nTrials,1);
+for trial = 1:Misc.nTrials
     NMuscles(trial) = DatStore(trial).nMuscles;
 end
 
@@ -78,7 +81,7 @@ end
 % NOTE: We do not estimate any parameters here, but these results can serve as
 % decent initial guess for the later dynamic optimization
 % Extract the muscle-tendon properties
-for i=Misc.trials_sel
+for i=1:Misc.nTrials
     % Static optimization using IPOPT solver (used as an initial guess)
     DatStore = SolveStaticOptimization_IPOPT_CasADi(DatStore,Misc,i);
 end
@@ -86,7 +89,7 @@ end
 %% Descretisation
 %------------------------------------------------------------------------ %
 % mesh descretisation
-for trial = Misc.trials_sel
+for trial = 1:Misc.nTrials
     t0 = DatStore(trial).time(1); tf = DatStore(trial).time(end);
     Mesh(trial).N = round((tf-t0)*Misc.Mesh_Frequency);
     Mesh(trial).step = (tf-t0)/Mesh(trial).N;
@@ -96,7 +99,7 @@ end
 %% Evaluate splines at Mesh Points
 % ----------------------------------------------------------------------- %
 % Get IK, ID, muscle analysis and static opt information at mesh points
-for trial = Misc.trials_sel
+for trial = 1:Misc.nTrials
     % Discretization
     time_opt = Mesh(trial).t;    
     % Spline approximation of muscle-tendon length (LMT), moment arms (MA) and inverse dynamic torques (ID)
@@ -130,7 +133,9 @@ for trial = Misc.trials_sel
     DatStore(trial).SoActInterp = interp1(DatStore(trial).time,DatStore(trial).SoAct,time_opt');
     DatStore(trial).SoRActInterp = interp1(DatStore(trial).time,DatStore(trial).SoRAct,time_opt');
     DatStore(trial).SoForceInterp = interp1(DatStore(trial).time,DatStore(trial).SoForce.*DatStore(trial).cos_alpha./Misc.FMo(:,Misc.idx_allMuscleList{trial}),time_opt);
-    [~,DatStore(trial).lMtildeInterp ] = FiberLength_Ftilde(DatStore(trial).SoForceInterp,Misc.params(:,Misc.idx_allMuscleList{trial}),DatStore(trial).LMTinterp,Misc.kT(:,Misc.idx_allMuscleList{trial}),Misc.shift(:,Misc.idx_allMuscleList{trial}));
+    [~,DatStore(trial).lMtildeInterp ] = FiberLength_Ftilde(DatStore(trial).SoForceInterp,...
+        Misc.params(:,Misc.idx_allMuscleList{trial}),DatStore(trial).LMTinterp,Misc.kT(:,Misc.idx_allMuscleList{trial}),...
+        Misc.shift(:,Misc.idx_allMuscleList{trial}));
     DatStore(trial).vMtildeinterp = zeros(size(DatStore(trial).lMtildeInterp));
     for m = 1:NMuscles(trial)
         DatStore(trial).lMtildeSpline = spline(time_opt,DatStore(trial).lMtildeInterp(:,m));
@@ -142,11 +147,8 @@ end
 %% setup options for the solver
 % Create an NLP solver
 SolverSetup.nlp.solver = 'ipopt';
-SolverSetup.nlp.ipoptoptions.linear_solver = 'mumps';
 % Set derivativelevel to 'first' for approximating the Hessian
 SolverSetup.derivatives.derivativelevel = 'second';
-SolverSetup.nlp.ipoptoptions.tolerance = 1e-6;
-SolverSetup.nlp.ipoptoptions.maxiterations = 10000;
 if strcmp(SolverSetup.derivatives.derivativelevel, 'first')
     SolverSetup.optionssol.ipopt.hessian_approximation = 'limited-memory';
 end
@@ -155,16 +157,16 @@ end
 % Uncomment the following line to use an adaptive strategy
 % SolverSetup.optionssol.ipopt.mu_strategy = 'adaptive';
 SolverSetup.optionssol.ipopt.nlp_scaling_method = 'gradient-based';
-SolverSetup.optionssol.ipopt.linear_solver = output.setup.nlp.ipoptoptions.linear_solver;
-SolverSetup.optionssol.ipopt.tol = output.setup.nlp.ipoptoptions.tolerance;
-SolverSetup.optionssol.ipopt.max_iter = output.setup.nlp.ipoptoptions.maxiterations;
+SolverSetup.optionssol.ipopt.linear_solver = 'mumps';
+SolverSetup.optionssol.ipopt.tol = 1e-6;
+SolverSetup.optionssol.ipopt.max_iter = 10000;
 
 %% Dynamic Optimization - Default parameters
 % ----------------------------------------------------------------------- %
 % Solve muscle redundancy problem with default parameters
 Results = struct;
 if Misc.MRSBool == 1
-    for trial = Misc.trials_sel    
+    for trial = 1:Misc.nTrials  
         % initial guess based on static optimization and rigid tendon
         % assumption for lM
         IG = struct();
@@ -227,9 +229,9 @@ if BoolParamOpt == 1
         kT_scaling_param_opt,EMGscale_opt] = runParameterEstimation(Misc,...
         DatStore,Mesh,SolverSetup,Results,NMuscles);
 else
-    lMo_scaling_param_opt = ones(NMuscles,1);
-    lTs_scaling_param_opt = ones(NMuscles,1);
-    kT_scaling_param_opt = ones(NMuscles,1);
+    lMo_scaling_param_opt = ones(Misc.nAllMuscList,1);
+    lTs_scaling_param_opt = ones(Misc.nAllMuscList,1);
+    kT_scaling_param_opt = ones(Misc.nAllMuscList,1);
 end
 
 %% Update estimated muscle-tendon parameters
@@ -327,7 +329,7 @@ end
 
 %% save the results
 % plot states and variables from parameter estimation simulation
-save(fullfile(Misc.OutPath,[Misc.analysisName 'Results.mat']),'Results','DatStore','Misc');
+save(fullfile(Misc.OutPath,[Misc.OutName 'Results.mat']),'Results','DatStore','Misc');
 
 % write estimated parameters to new duplicate osim model
 if BoolParamOpt

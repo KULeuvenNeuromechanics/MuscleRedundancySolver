@@ -1,4 +1,5 @@
-function [Results] = FormulateAndSolveMRS(Misc,DatStore,Mesh,trial,SolverSetup,Results,NMuscles,IG,MuscProperties,PrefixOutFile)
+function [Results] = FormulateAndSolveMRS(Misc,DatStore,Mesh,trial,SolverSetup,...
+    Results,NMuscles,IG,MuscProperties,PrefixOutFile)
 % Problem bounds
 e_min = 0; e_max = 1;                   % bounds on muscle excitation
 a_min = 0; a_max = 1;                   % bounds on muscle activation
@@ -90,7 +91,7 @@ opti.minimize(J); % Define cost function in opti
 opti.solver(SolverSetup.nlp.solver,SolverSetup.optionssol);
     
 % Solve
-diary(fullfile(Misc.OutPath,[Misc.OutName{trial} '_' PrefixOutFile '.txt']));
+diary(fullfile(Misc.OutPath,[Misc.OutName '_' PrefixOutFile '.txt']));
 tic
 sol = opti.solve();
 dt = toc;
@@ -132,11 +133,14 @@ Results.MuscleNames{trial} = DatStore(trial).MuscleNames;
 Results.OptInfo = SolverSetup;
 % Tendon force
 Results.lMTinterp(trial).(saveName) = DatStore(trial).LMTinterp';
-[TForcetilde,TForce] = TendonForce_lMtilde(Results.lMtildeopt(trial).(saveName)',MuscProperties.params(Misc.idx_allMuscleList{trial},:)',Results.lMTinterp(trial).(saveName)',MuscProperties.kT(Misc.idx_allMuscleList{trial},1)',Muscproperties.shift(Misc.idx_allMuscleList{trial},1)');    
+[TForcetilde,TForce] = TendonForce_lMtilde(Results.lMtildeopt(trial).(saveName)',...
+    MuscProperties.params(Misc.idx_allMuscleList{trial},:)',Results.lMTinterp(trial).(saveName)',...
+    MuscProperties.kT(Misc.idx_allMuscleList{trial},1)',MuscProperties.shift(Misc.idx_allMuscleList{trial},1)');    
 Results.TForcetilde(trial).(saveName) = TForcetilde';
 Results.TForce(trial).(saveName) = TForce';
 % get information F/l and F/v properties
-[Fpe,FMltilde,FMvtilde] = getForceLengthVelocityProperties(Results.lMtildeopt(trial).(saveName)',Results.vMtilde(trial).(saveName)',MuscProperties.params(Misc.idx_allMuscleList{trial},5)');
+[Fpe,FMltilde,FMvtilde] = getForceLengthVelocityProperties(Results.lMtildeopt(trial).(saveName)',...
+    Results.vMtilde(trial).(saveName)',MuscProperties.params(Misc.idx_allMuscleList{trial},5)');
 FMo = ones(N+1,1)*Misc.params(1,Misc.idx_allMuscleList{trial});
 Results.Fpe(trial).(saveName) = (Fpe.*FMo)';
 Results.FMltilde(trial).(saveName) = FMltilde';

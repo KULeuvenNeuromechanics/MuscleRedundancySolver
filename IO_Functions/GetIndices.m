@@ -56,7 +56,7 @@ if Misc.UStracking == 1 || Misc.EMGconstr == 1
         end
     end
     
-    for i=Misc.trials_sel
+    for i=1:Misc.nTrials
         DatStore(i).free_lMo = zeros(length(Misc.Estimate_OptimalFiberLength),3);
         DatStore(i).free_lTs = zeros(length(Misc.Estimate_TendonSlackLength),3);
         DatStore(i).free_kT = zeros(length(Misc.Estimate_TendonStiffness),3);

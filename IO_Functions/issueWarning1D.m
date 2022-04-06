@@ -1,7 +1,7 @@
 function [Misc] = issueWarning1D(struct2check,structName,DatStore,Misc)
 c = length(struct2check);
 err_check = ones(1,c);
-for t = Misc.trials_sel
+for t = 1:Misc.nTrials
     % get muscle names
     MNames = DatStore(t).MuscleNames;
 

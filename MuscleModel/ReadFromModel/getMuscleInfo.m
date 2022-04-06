@@ -4,7 +4,7 @@ function [Misc,DatStore] = getMuscleInfo(Misc,DatStore)
 %   Last Update: 29 Januari 2019
 
 %% Read muscle analysis
-for t = Misc.trials_sel
+for t = 1:Misc.nTrials
     trial = t;
     IK_path = Misc.IKfile{t};
     ID_path = Misc.IDfile{t};
@@ -18,7 +18,8 @@ for t = Misc.trials_sel
         % read the Muscle Analysis Result
         MA_FileName=fullfile(Misc.MuscleAnalysisPath,[Misc.MAtrialName{t} '_MuscleAnalysis_MomentArm_' Misc.DofNames_Input{t}{i} '.sto']);
         if exist(MA_FileName,'file')
-            dm_Data_temp=importdata(fullfile(Misc.MuscleAnalysisPath,[Misc.MAtrialName{t} '_MuscleAnalysis_MomentArm_' Misc.DofNames_Input{t}{i} '.sto']));
+            dm_Data_temp=ReadMotFile(fullfile(Misc.MuscleAnalysisPath,...
+                [Misc.MAtrialName{t} '_MuscleAnalysis_MomentArm_' Misc.DofNames_Input{t}{i} '.sto']));
         else
             error(['Cannot open muscle analysis results for: ' Misc.DofNames_Input{t}{i}])
         end
@@ -26,7 +27,7 @@ for t = Misc.trials_sel
         % get the indexes for the selected MuscleNames (only needed in first iteration)
         if i==1
             nfr = length(dm_Data_temp.data(:,1));
-            headers=dm_Data_temp.colheaders;
+            headers=dm_Data_temp.names;
             Inds_muscles=nan(length(Misc.MuscleNames_Input{t}),1);
             IndsNames_sel=nan(length(Misc.MuscleNames_Input{t}),1);
             ctm=1;
@@ -82,7 +83,7 @@ for t = Misc.trials_sel
     DatStore(trial).dM = filtfilt(B,A,dM_raw);
 
     % filter Muscle-tendon lengths and store them in DatStore.LMT
-    LMT_dat=importdata(fullfile(Misc.MuscleAnalysisPath,[Misc.MAtrialName{t} '_MuscleAnalysis_Length.sto']));
+    LMT_dat=ReadMotFile(fullfile(Misc.MuscleAnalysisPath,[Misc.MAtrialName{t} '_MuscleAnalysis_Length.sto']));
     LMT_raw=LMT_dat.data(:,Inds_muscles);
     t_lMT = LMT_dat.data(:,1);
     fs=1/mean(diff(t_lMT));             % sampling frequency
@@ -98,10 +99,7 @@ for t = Misc.trials_sel
     %% Filter IK
 
     % load joint kinematics
-    IK_data=importdata(IK_path);
-    if ~isfield(IK_data,'colheaders')
-        IK_data.colheaders=strsplit(IK_data.textdata{end});
-    end
+    IK_data=ReadMotFile(IK_path);
 
     % select the IK information between the selected time frames
     t_IK=IK_data.data(:,1);
@@ -122,10 +120,7 @@ for t = Misc.trials_sel
     t_ID=ID_data.data(:,1);
 
     % get the ID index
-    if ~isfield(ID_data,'colheaders')
-        ID_data.colheaders=ID_data.names;
-    end
-    ID_header=ID_data.colheaders;     IK_header = strtrim(IK_data.colheaders);
+    ID_header=ID_data.names;     IK_header = strtrim(IK_data.names);
     ID_Header_inds=zeros(size(DOF_inds));  IK_Header_inds = zeros(size(DOF_inds));
     for i=1:length(Misc.DofNames{t})
        ID_Header_inds(i)=find(strcmp([Misc.DofNames{t}{i} '_moment'],ID_header));
