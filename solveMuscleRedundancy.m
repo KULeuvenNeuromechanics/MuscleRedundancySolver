@@ -11,10 +11,6 @@ function [Results,DatStore,Misc] = solveMuscleRedundancy(time,Misc)
 % -----------------------------------------------------------------------%
 
 % update default settings
-if isfield(Misc,'EMGconstr') && Misc.EMGconstr == 1
-    % initialize certain settings
-    Misc.EMGheaders = cell(1,length(Misc.IKfile));
-end
 Misc = DefaultSettings(Misc);
 
 % read the muscle properties

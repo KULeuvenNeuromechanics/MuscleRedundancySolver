@@ -4,7 +4,7 @@ function [Misc,DatStore] = GetEMGInfo(Misc,DatStore)
 %format (handles copies and so on).
 
 if Misc.boolEMG
-    for trial = Misc.trials_sel
+    for trial = 1:Misc.nTrials
         if isempty(Misc.EMGfile{trial}) || isempty(Misc.IKfile{trial}) || isempty(Misc.IDfile{trial})
             warning(['EMG or IK or ID file for trial ' Misc.trialName{trial} 'has not been defined. Please update Misc.EMGfile, Misc.IKfile or Misc.IDfile']);
         end
@@ -14,28 +14,13 @@ end
 if Misc.boolEMG    
     % file information
     bool_error  = 0;
-    IndError=zeros(length(Misc.EMGSelection),length(Misc.trials_sel));
+    IndError=zeros(length(Misc.EMGSelection),Misc.nTrials);
     % Load the data and check for errors
     EMGFile = struct;
     for iF = 1:Misc.nTrials
         % get information for the EMG constraints
         clear emgFile
-        emgFile = ReadMotFile(Misc.EMGfile{iF}); 
-        % prevent errors with the headers
-        EMGFile(iF).colheaders_EMGfile = emgFile.names';
-        ct = 0;
-        if isfield(Misc,'EMGFileHeaderCorrespondence')
-            for c=1:length(EMGFile(iF).colheaders_EMGfile)
-                idx_col_c1 = find(ismember(Misc.EMGFileHeaderCorrespondence(:,1),EMGFile(iF).colheaders_EMGfile{c}));
-                if isempty(idx_col_c1)
-                    warning(['Muscle corresponding to ' EMGFile(iF).colheaders_EMGfile{c} ' in file ' Misc.EMGfile{iF} ' is not defined in Misc.EMGFileHeaderCorrespondence. Update Misc.EMGFileHeaderCorrespondence. Removing EMG column ' EMGFile(iF).colheaders_EMGfile{c} ' from analyses'])
-                else
-                    ct = ct + 1;
-                    EMGFile(iF).colheaders{ct} = Misc.EMGFileHeaderCorrespondence{idx_col_c1,2};
-                    EMGFile(iF).data(:,ct) = emgFile.data(:,c);
-                end
-            end                
-        end
+        EMGFile = ReadMotFile(Misc.EMGfile{iF});         
         % check if we have to update the headers based on user input
         bool_updateheader   = 0;
         if ~isempty(Misc.EMGheaders{iF})        
@@ -44,36 +29,30 @@ if Misc.boolEMG
         % verify if the selected muscles are in the model
         % verify if the muscles in the .mot files are in the model
         % verify if the muscles in Misc.EMGSelection are in the .mot file 
-        EMGheaders{iF}  = EMGFile(iF).colheaders;
+        EMGheaders{iF}  = EMGFile(iF).names;
         if bool_updateheader
-            EMGheaders{iF} = Misc.EMGheaders{iF};
-        else
-            Misc.EMGheaders{iF} = EMGheaders{iF};
+            EMGheaders{iF} = Misc.EMGheaders;
         end
         
         ct = 0;
-        for i=1:length(Misc.EMGSelection)
-            if any(ismember(DatStore(iF).MuscleNames,Misc.EMGSelection{i}))
-                if any(ismember(EMGheaders{iF},Misc.EMGSelection{i}))
+        EMGSel = Misc.EMGSelection{iF};
+        for i=1:length(EMGSel)
+            if any(ismember(DatStore(iF).MuscleNames,EMGSel{i}))
+                if any(ismember(EMGheaders{iF},EMGSel{i}))
                     ct = ct +1;
                     % First column corresponds to index in allMuscleList
                     % Second column corresponds to index in Misc.EMGheaders
                     % Third column corresponds to index in MuscleNames of that trial                    
-                    Misc.idx_EMGsel{iF}(ct,1) = find(ismember(Misc.allMuscleList,Misc.EMGSelection{i}));
-                    Misc.idx_EMGsel{iF}(ct,2) = find(ismember(EMGheaders{iF},Misc.EMGSelection{i}));
-                    Misc.idx_EMGsel{iF}(ct,3) = find(ismember(DatStore(iF).MuscleNames,Misc.EMGSelection{i}));
-                    Misc.EMGsel{iF}{ct} = Misc.EMGSelection{i};
+                    Misc.idx_EMGsel{iF}(ct,1) = find(ismember(Misc.allMuscleList,EMGSel{i}));
+                    Misc.idx_EMGsel{iF}(ct,2) = find(ismember(EMGheaders{iF},EMGSel{i}));
+                    Misc.idx_EMGsel{iF}(ct,3) = find(ismember(DatStore(iF).MuscleNames,EMGSel{i}));
+                    Misc.EMGsel{iF}{ct} = EMGSel{i};
                 else
                     if bool_updateheader == 0
                         disp(['Could not find ' Misc.EMGSelection{i} ' in the header of the EMG file, Update the headers of file: ' Misc.EMGfile{iF}]);
                     else
                         disp(['Could not find ' Misc.EMGSelection{i} ' in the header of the EMG file, Update the headers in:  Misc.EMGheaders{' num2str(iF) '}']);
                     end
-                    IndError(i,iF)=1;
-                end
-            else
-                if strcmp(Misc.EMGSelection{i}(end),Misc.side{iF}) % All muscles end with 'l' or 'r'
-                    disp(['Could not find ' Misc.EMGSelection{i} ' in the model for trial ' Misc.EMGfile{iF} ', Update the Misc.EMGSelection structure']);
                     IndError(i,iF)=1;
                 end
             end
@@ -93,10 +72,10 @@ if Misc.boolEMG
     end    
    
     %% Process the data 
-    for iF = Misc.trials_sel
+    for iF = 1:Misc.nTrials
         EMGdat    = EMGFile(iF).data;        
         % get the EMG data
-        EMGselection = Misc.EMGsel{iF};
+        EMGselection = Misc.EMGSelection{iF};
         EMGsel = EMGdat(:,Misc.idx_EMGsel{iF}(:,2));
         
         % add twins
@@ -105,10 +84,12 @@ if Misc.boolEMG
             for j=1:nCopy
                 NameSel = Misc.EMG_MuscleCopies{j,1};
                 NameCopy =  Misc.EMG_MuscleCopies{j,2};
-                [EMGselection,EMGsel,Misc] = addEMGtwins(EMGselection,EMGsel,EMGdat,Misc,NameSel,NameCopy,DatStore,EMGheaders,iF);
+                [EMGselection,EMGsel,Misc] = addEMGtwins(EMGselection,EMGsel,EMGdat,...
+                    Misc,NameSel,NameCopy,DatStore,EMGheaders,iF);
                 NameSel = Misc.EMG_MuscleCopies{j,2};
                 NameCopy =  Misc.EMG_MuscleCopies{j,1};
-                [EMGselection,EMGsel,Misc] = addEMGtwins(EMGselection,EMGsel,EMGdat,Misc,NameSel,NameCopy,DatStore,EMGheaders,iF);
+                [EMGselection,EMGsel,Misc] = addEMGtwins(EMGselection,EMGsel,EMGdat,...
+                    Misc,NameSel,NameCopy,DatStore,EMGheaders,iF);
             end
         end    
         DatStore(iF).EMG.BoundsScaleEMG = Misc.BoundsScaleEMG; % bounds on scale factors

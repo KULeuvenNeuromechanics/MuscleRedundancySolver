@@ -7,7 +7,7 @@ if c>0
             ', please adapt Misc.' structName])
     else
         err_cfl = ones(size(struct2check));
-        for t = Misc.trials_sel
+        for t = 1:Misc.nTrials
             % get muscle names
             MNames = DatStore(t).MuscleNames;
 
