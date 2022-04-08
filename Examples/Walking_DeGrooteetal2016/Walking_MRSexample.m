@@ -21,7 +21,7 @@ time=[0.516 1.95]; % Right stance phase (+50ms beginning and end of time interva
 Misc.DofNames_Input={'ankle_angle_r','knee_angle_r','hip_flexion_r','hip_adduction_r','hip_rotation_r'};    % select the DOFs you want to include in the optimization
 
 % Plotter Bool: Boolean to select if you want to plot lots of output information of intermediate steps in the script
-Misc.PlotBool = false;
+Misc.PlotBool = true;
 
 % MRS Bool: Select if you want to run the generic muscle redundancy solver
 Misc.MRSBool = 1;

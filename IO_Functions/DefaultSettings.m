@@ -207,33 +207,7 @@ if ntr_dof == 1 || ntr_dof~=length(Misc.IKfile)
 end
 
 %% update size EMG headers if needed
-
-[ntr_dof, ndofs] = size(Misc.EMGSelection);
-if ntr_dof == 1 || ntr_dof~=length(Misc.IKfile)
-    % select the same input dofs for all trials
-    Misc.EMGSelection_copy = Misc.EMGSelection;
-    Misc.EMGSelection =cell(0);
-    for t = 1:length(Misc.IKfile)
-        Misc.EMGSelection{t} = Misc.EMGSelection_copy;
-    end
-end
-
-%% normalise to MRS
-
 if ~isfield(Misc,'normalizeToMRS')
     Misc.normalizeToMRS = false;
 end
-
-
-%% output names
-
-% [ntr_out] = length(Misc.OutName);
-% if ntr_out == 1 || ntr_out~=length(Misc.IKfile)
-%     outTemp = Misc.OutName;
-%     Misc.OutName = [];
-%     for t = 1:length(Misc.IKfile)
-%         Misc.OutName{t} = [outTemp '_' num2str(t)];
-%     end
-% end
-
 

@@ -15,7 +15,7 @@ hTabGroup = uitabgroup;
 Cs = linspecer(3);
 for trial = 1:Misc.nTrials
     % plot optimal activations
-    tab = uitab(hTabGroup, 'Title', [Misc.trialName{trial} ': activation']);
+    tab = uitab(hTabGroup, 'Title', [Misc.MAtrialName{trial} ': activation']);
     axes('parent',tab);
     nMus = length(DatStore(trial).MuscleNames);
     lw   = 4;
@@ -47,7 +47,7 @@ for trial = 1:Misc.nTrials
     legend(legend_title)
     
     % plot optimal lMtilde
-    tab = uitab(hTabGroup, 'Title', [Misc.trialName{trial} ': normalized FL']);
+    tab = uitab(hTabGroup, 'Title', [Misc.MAtrialName{trial} ': normalized FL']);
     axes('parent',tab);
     legend_title = {};
     for i=1:nMus
@@ -77,7 +77,7 @@ for trial = 1:Misc.nTrials
     legend(legend_title)
     
     % plot optimal lM
-    tab = uitab(hTabGroup, 'Title', [Misc.trialName{trial} ': FL']);
+    tab = uitab(hTabGroup, 'Title', [Misc.MAtrialName{trial} ': FL']);
     axes('parent',tab);
     lw = 2;
     legend_title = {};
@@ -109,7 +109,7 @@ for trial = 1:Misc.nTrials
     
     
     % plot residual actuators
-    tab = uitab(hTabGroup, 'Title', [Misc.trialName{trial} ': Residual actuators']);
+    tab = uitab(hTabGroup, 'Title', [Misc.MAtrialName{trial} ': Residual actuators']);
     axes('parent',tab);
     nDOF = DatStore(trial).nDOF;
     p    = numSubplots(nDOF);    

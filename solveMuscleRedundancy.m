@@ -302,7 +302,7 @@ if Misc.PlotBool == 1 && BoolParamOpt ==1
     if ~isdir(fullfile(Misc.OutPath,'figures'))
         mkdir(fullfile(Misc.OutPath,'figures'));
     end
-    saveas(h,fullfile(Misc.OutPath,'figures',[Misc.analysisName '_fig_Param.fig']));
+    saveas(h,fullfile(Misc.OutPath,'figures',[Misc.OutName '_fig_Param.fig']));
 end
 
 % plot fiber length
@@ -311,7 +311,7 @@ if Misc.PlotBool && Misc.UStracking == 1
     if ~isdir(fullfile(Misc.OutPath,'figures'))
         mkdir(fullfile(Misc.OutPath,'figures'));
     end
-    saveas(h,fullfile(Misc.OutPath,'figures',[Misc.analysisName '_fig_FiberLength.fig']));
+    saveas(h,fullfile(Misc.OutPath,'figures',[Misc.OutName '_fig_FiberLength.fig']));
 end
 
 % plot the states of the muscles in the simulation
@@ -320,7 +320,7 @@ if Misc.PlotBool
     if ~isdir(fullfile(Misc.OutPath,'figures'))
         mkdir(fullfile(Misc.OutPath,'figures'));
     end
-    saveas(h,fullfile(Misc.OutPath,'figures',[Misc.analysisName '_fig_States.fig']));
+    saveas(h,fullfile(Misc.OutPath,'figures',[Misc.OutName '_fig_States.fig']));
 end
 
 %% save the results

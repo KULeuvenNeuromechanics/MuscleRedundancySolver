@@ -35,7 +35,7 @@ if Misc.boolEMG
         end
         
         ct = 0;
-        EMGSel = Misc.EMGSelection{iF};
+        EMGSel = Misc.EMGSelection;
         for i=1:length(EMGSel)
             if any(ismember(DatStore(iF).MuscleNames,EMGSel{i}))
                 if any(ismember(EMGheaders{iF},EMGSel{i}))
@@ -64,7 +64,7 @@ if Misc.boolEMG
     for iF = 1:Misc.nTrials
         EMGdat    = EMGFile(iF).data;        
         % get the EMG data
-        EMGselection = Misc.EMGSelection{iF};
+        EMGselection = Misc.EMGSelection;
         EMGsel = EMGdat(:,Misc.idx_EMGsel{iF}(:,2));
         
         % add twins
