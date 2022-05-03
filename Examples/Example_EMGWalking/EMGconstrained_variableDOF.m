@@ -8,12 +8,18 @@ clear all; clc; close all;
 
 %% Input information
 % Add here the paths of IK, ID , US and EMG data trials you want to work with
-Misc.IKfile  = {fullfile(pwd,'IK_gait.mot')};
-Misc.IDfile  = {fullfile(pwd,'ID_gait.sto')};
-Misc.EMGfile = {fullfile(pwd,'EMG_gait.mot')};
+for t=1:4
+    copyfile('./IK_gait.mot',['./IK_gait_copy' num2str(t) '.mot'])
+    copyfile('./ID_gait.sto',['./ID_gait_copy' num2str(t) '.sto'])
+    copyfile('./EMG_gait.mot',['./EMG_gait_copy' num2str(t) '.mot'])
+    Misc.IKfile{t}  = fullfile(pwd,['IK_gait_copy' num2str(t) '.mot']);
+    Misc.IDfile{t}  = fullfile(pwd,['ID_gait_copy' num2str(t) '.sto']);
+    Misc.EMGfile{t} = fullfile(pwd,['EMG_gait_copy' num2str(t) '.mot']);
+    Misc.side{t} = 'l';
+    time(t,:) = [1.2 2.3]; 
+end
 Misc.model_path   = {fullfile(pwd,'ScaledModel.osim')};
-Misc.OutPath      = fullfile(pwd,'Results_LowerLimb_EMGconstrained');                    % folder to store results
-time = [1.2 2.3]; 
+Misc.OutPath      = fullfile(pwd,'Results_LowerLimb_EMGconstrained_variableDOF');                    % folder to store results
 
 %% Settings
 
@@ -21,7 +27,10 @@ time = [1.2 2.3];
 Misc.OutName ='gait_';
 
 % select degrees of freedom
-Misc.DofNames_Input={'ankle_angle_l','knee_angle_l','hip_flexion_l'};    % select the DOFs you want to include in the optimization
+Misc.DofNames_Input{1,1}={'ankle_angle_l','knee_angle_l','hip_flexion_l'};    % select the DOFs you want to include in the optimization
+Misc.DofNames_Input{2,1}={'ankle_angle_l'};    % select the DOFs you want to include in the optimization
+Misc.DofNames_Input{3,1}={'knee_angle_l'};    % select the DOFs you want to include in the optimization
+Misc.DofNames_Input{4,1}={'hip_flexion_l'};    % select the DOFs you want to include in the optimization
 
 % Set the tendon stifness of all muscles
 Misc.kT = [];      % default way to set tendon stiffenss (default values is 35)
@@ -85,3 +94,8 @@ Misc.ValidationBool = 1; 	% TO DO: we should report results of EMG driven simula
 %% Run muscle tendon estimator:
 [Results,DatStore,Misc] = solveMuscleRedundancy(time,Misc);
 
+for t=1:4
+    delete(['./IK_gait_copy' num2str(t) '.mot'])
+    delete(['./ID_gait_copy' num2str(t) '.sto'])
+    delete(['./EMG_gait_copy' num2str(t) '.mot'])
+end

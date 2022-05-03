@@ -1,4 +1,4 @@
-function [Energy] = GetMetabFromMRS(Results,Misc,modelmass)
+function [Energy] = GetMetabFromMRS(Results,Misc,DatStore,modelmass)
 % GetMetabFromMR Computes metabolic energy consumption from the muscle
 % redundancy solver results.
 % input arguments:
@@ -8,14 +8,14 @@ function [Energy] = GetMetabFromMRS(Results,Misc,modelmass)
 % output arguments:
 %   Energy 	... Edot: metabolic power without basal rate for each muscle [W]
 %           ... Edot_model: sum of metabolic power of all selected muscles with basal rate [W]
-
+%%
 Names = fieldnames(Results.MActivation);
 for n = 1:length(Names)
     for tr = 1:Misc.nTrials
         
         % muscle parameters
-        Fiso    = Misc.params(1,:)';
-        lMo     = Misc.params(2,:)';
+        Fiso    = Misc.params(1,Misc.idx_allMuscleList{tr})';
+        lMo     = Misc.params(2,Misc.idx_allMuscleList{tr})';
         
         % indexes for analysis (all but the last index)
         iSel = 1:length(Results.MActivation(tr).(Names{n})(1,:))-1;
@@ -39,11 +39,11 @@ for n = 1:length(Names)
         
         % muscle mass
         volM = Fiso.*lMo;
-        tension = getSpecificTensions_lr(Misc.MuscleNames_Input); % you can add specific tensions for muscles in this file
+        tension = getSpecificTensions_lr(DatStore(tr).MuscleNames); % you can add specific tensions for muscles in this file
         musclemass = volM.*(1059.7)./(tension*1e6);
         
         % percentage slow and fast twitch fibers
-        pctst = getSlowTwitchRatios_lr(Misc.MuscleNames_Input); % you can add fiber type distributions here
+        pctst = getSlowTwitchRatios_lr(DatStore(tr).MuscleNames); % you can add fiber type distributions here
         
         % multiplier F/l curve
         FL_mult = Results.FMltilde(tr).(Names{n})(:,iSel);

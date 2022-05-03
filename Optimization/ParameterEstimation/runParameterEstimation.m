@@ -41,7 +41,7 @@ opti_MTE.subject_to(lb_lTs_scaling < lTs_scaling_param < ub_lTs_scaling);
 kT_scaling_param   = opti_MTE.variable(Misc.nAllMuscList,1);
 lb_kT_scaling      = ones(Misc.nAllMuscList,1); 
 ub_kT_scaling      = ones(Misc.nAllMuscList,1);
-iM = free_kT;
+iM                 = free_kT;
 if ~isempty(iM)
     lb_kT_scaling(iM)  = Misc.lb_kT_scaling;
     ub_kT_scaling(iM)  = Misc.ub_kT_scaling;
@@ -66,14 +66,14 @@ if Misc.boolEMG
     [DatStore,scaledEMGmusc] = getEMG_scaleIndecies(DatStore,Misc.nTrials);
     EMGscale    = opti_MTE.variable(length(scaledEMGmusc),1);
     opti_MTE.subject_to(Misc.BoundsScaleEMG(1) < EMGscale < Misc.BoundsScaleEMG(2));
+    Misc.scaledEMGmusc = scaledEMGmusc;
+    opti_MTE.set_initial(EMGscale,1);
 end
-Misc.scaledEMGmusc = scaledEMGmusc;
 
 % Set initial guess
 opti_MTE.set_initial(lMo_scaling_param,1);
 opti_MTE.set_initial(lTs_scaling_param,1);
 opti_MTE.set_initial(kT_scaling_param,1);
-opti_MTE.set_initial(EMGscale,1);
 %%
 ct = 0;
 for trial = 1:Misc.nTrials
@@ -189,8 +189,8 @@ for trial = 1:Misc.nTrials
 
     % tracking lMtilde
     if DatStore(trial).US.boolUS
-        lMo = lMo_scaling_param(DatStore(trial).US.idx_USsel(:,1))'.*Misc.params(2,DatStore(trial).US.idx_USsel(:,1));
-        lMo = ones(size(DatStore(trial).USTracking,1),1)*lMo;
+        lMo = lMo_scaling_param(DatStore(trial).US.idx_USsel(:,1)).*Misc.params(2,DatStore(trial).US.idx_USsel(:,1))';
+        lMo = lMo*ones(1,size(DatStore(trial).USTracking,2));
         lMtilde_tracking = DatStore(trial).USTracking./lMo/1000; % US data expected in mm in the input file.
         lMtilde_simulated = lMtilde{ct}(DatStore(trial).US.idx_USsel(:,3),:);
         if size(lMtilde_simulated,1) ~= size(lMtilde_tracking,1)

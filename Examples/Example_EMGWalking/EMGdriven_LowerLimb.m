@@ -4,15 +4,15 @@
 % using an EMG driven simulation of the ankle-knee and hip.
 
 % Clear variables and command window
-clear all; clc;
+clear all; clc; close all;
 
 %% Input information
 % Add here the paths of IK, ID , US and EMG data trials you want to work with
 Misc.IKfile  = {fullfile(pwd,'IK_gait.mot')};
 Misc.IDfile  = {fullfile(pwd,'ID_gait.sto')};
 Misc.EMGfile = {fullfile(pwd,'EMG_gait.mot')};
-model_path   = {fullfile(pwd,'ScaledModel.osim')};
-Out_path     = fullfile(pwd,'Results_LowerLimb');                    % folder to store results
+Misc.model_path   = {fullfile(pwd,'ScaledModel.osim')};
+Misc.OutPath     = fullfile(pwd,'Results_LowerLimb');                    % folder to store results
 time = [1.2 2.3]; 
 
 %% Settings
@@ -49,8 +49,8 @@ Misc.lb_lMo_scaling = 0.1; % Lower bound for scaling optimal fiber length
 Misc.ub_lMo_scaling = 2.2; % Upper bound for scaling optimal fiber length
 Misc.lb_lTs_scaling = 0.9; % Lower bound for scaling tendon slack length
 Misc.ub_lTs_scaling = 1.1; % Upper bound for scaling tendon slack length
-Misc.Coupled_fiber_length = {'med_gas_l';'lat_gas_l'}; % Couple muscles that should have equal optimal fiber length
-Misc.Coupled_slack_length = {'med_gas_l';'lat_gas_l'}; % Couple muscles that should have equal tendon slack length
+Misc.Coupled_fiber_length = {'med_gas_l' 'lat_gas_l'}; % Couple muscles that should have equal optimal fiber length
+Misc.Coupled_slack_length = {'med_gas_l' 'lat_gas_l'}; % Couple muscles that should have equal tendon slack length
 
 % Select muscle for which you want the fiberlengths to track the US data
 Misc.UStracking  = 0;            % Boolean to select US tracking option
@@ -74,4 +74,4 @@ Misc.MRSBool = 1;
 Misc.ValidationBool = 1; 	% TO DO: we should report results of EMG driven simulation as well
 
 %% Run muscle tendon estimator:
-[Results,DatStore,Misc] = solveMuscleRedundancy(model_path,time,Out_path,Misc);
+[Results,DatStore,Misc] = solveMuscleRedundancy(time,Misc);

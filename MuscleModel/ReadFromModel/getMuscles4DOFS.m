@@ -29,6 +29,9 @@ for t = 1:Misc.nTrials
         disp(Misc.MuscleNames_Input{t}');
         clear dM_store
     end
+    for i=1:length(Misc.MuscleNames_Input{t})
+        Misc.idx_allMuscleList_Input{t}(i) = find(ismember(Misc.allMuscleList,Misc.MuscleNames_Input{t}{i}));
+    end
 end
 
 end

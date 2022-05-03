@@ -42,10 +42,29 @@ if ~isfield(Misc,'RunAnalysis') || isempty(Misc.RunAnalysis)
 end
 
 %% EMG
-if ~isfield(Misc,'EMGconstr') || isempty(Misc.EMGconstr)
+if isfield(Misc,'EMGheaders')
+    if size(Misc.EMGheaders,1) == 1
+        tempHeaders = Misc.EMGheaders;
+        Misc.EMGheaders = [];
+        for i=1:length(Misc.IKfile)
+            Misc.EMGheaders{i} = tempHeaders;
+        end
+    end
+end
+
+if isfield(Misc,'EMGheaders') && isfield(Misc,'EMGFileHeaderCorrespondence')
+    error('Only one of Misc.EMGheaders or Misc.EMGFileHeaderCorrespondence is allowed. Please remove either Misc.EMGheaders or Misc.EMGFileHeaderCorrespondence')
+end
+    
+if ~isfield(Misc,'EMGconstr') 
     Misc.EMGconstr  = 0;
     boolEMG = 0;
-elseif isfield(Misc,'EMGconstr') && Misc.EMGconstr == 1
+elseif  isempty(Misc.EMGconstr)
+    Misc.EMGconstr  = 0;
+    boolEMG = 0;
+elseif Misc.EMGconstr == 0
+    boolEMG = 0;
+elseif Misc.EMGconstr == 1
     boolEMG = 1;
 end
 Misc.boolEMG = boolEMG;
@@ -68,22 +87,79 @@ if ~isfield(Misc,'EMGSelection')
 end
 
 %% Info related to parameter optimizatiEMGbounds on
-if ~isfield(Misc,'Estimate_OptimalFiberLength')
+if isfield(Misc,'Estimate_OptimalFiberLength')
+    [r c] = size(Misc.Estimate_OptimalFiberLength);
+    if ((r == 1) && (c > 1))
+        Misc.Estimate_OptimalFiberLength = Misc.Estimate_OptimalFiberLength';
+    end
+else
     Misc.Estimate_OptimalFiberLength =[];
 end
-if ~isfield(Misc,'Estimate_TendonSlackLength')
+if isfield(Misc,'Estimate_TendonSlackLength')
+    [r c] = size(Misc.Estimate_TendonSlackLength);
+    if ((r == 1) && (c > 1))
+        Misc.Estimate_TendonSlackLength = Misc.Estimate_TendonSlackLength';
+    end
+else
     Misc.Estimate_TendonSlackLength =[];
 end
-if ~isfield(Misc,'Estimate_TendonStiffness')
+if isfield(Misc,'Estimate_TendonStiffness')
+    [r c] = size(Misc.Estimate_TendonStiffness);
+    if ((r == 1) && (c > 1))
+        Misc.Estimate_TendonStiffness = Misc.Estimate_TendonStiffness';
+    end
+else
     Misc.Estimate_TendonStiffness =[];
 end
-if ~isfield(Misc,'Coupled_fiber_length')
+
+if isfield(Misc,'Coupled_fiber_length')
+    if size(Misc.Coupled_fiber_length,2) > 2
+        tempCoupled_fiber_length = Misc.Coupled_fiber_length;
+        Misc.Coupled_fiber_length = [];
+        ct = 0;
+        for r = 1:size(tempCoupled_fiber_length,1)
+            for c = 1:size(tempCoupled_fiber_length,2)-1
+                ct = ct + 1;
+                Misc.Coupled_fiber_length{ct,1} = tempCoupled_fiber_length{r,c};
+                Misc.Coupled_fiber_length{ct,2} = tempCoupled_fiber_length{r,c+1};
+            end
+        end
+    end
+else
     Misc.Coupled_fiber_length =[];
 end
-if ~isfield(Misc,'Coupled_slack_length')
+
+if isfield(Misc,'Coupled_slack_length')
+    if size(Misc.Coupled_slack_length,2) > 2
+        tempCoupled_slack_length = Misc.Coupled_slack_length;
+        Misc.Coupled_slack_length = [];
+        ct = 0;
+        for r = 1:size(tempCoupled_slack_length,1)
+            for c = 1:size(tempCoupled_slack_length,2)-1
+                ct = ct + 1;
+                Misc.Coupled_slack_length{ct,1} = tempCoupled_slack_length{r,c};
+                Misc.Coupled_slack_length{ct,2} = tempCoupled_slack_length{r,c+1};
+            end
+        end
+    end
+else
     Misc.Coupled_slack_length =[];
 end
-if ~isfield(Misc,'Coupled_TendonStiffness')
+
+if isfield(Misc,'Coupled_TendonStiffness')
+    if size(Misc.Coupled_TendonStiffness,2) > 2
+        tempCoupled_TendonStiffness = Misc.Coupled_TendonStiffness;
+        Misc.Coupled_TendonStiffness = [];
+        ct = 0;
+        for r = 1:size(tempCoupled_TendonStiffness,1)
+            for c = 1:size(tempCoupled_TendonStiffness,2)-1
+                ct = ct + 1;
+                Misc.Coupled_TendonStiffness{ct,1} = tempCoupled_TendonStiffness{r,c};
+                Misc.Coupled_TendonStiffness{ct,2} = tempCoupled_TendonStiffness{r,c+1};
+            end
+        end
+    end
+else
     Misc.Coupled_TendonStiffness =[];
 end
 
@@ -199,10 +275,10 @@ end
 [ntr_dof, ndofs] = size(Misc.DofNames_Input);
 if ntr_dof == 1 || ntr_dof~=length(Misc.IKfile)
     % select the same input dofs for all trials
-    Misc.DofNames_Input_copy = Misc.DofNames_Input;
+    DofNames_Input_copy = Misc.DofNames_Input;
     Misc.DofNames_Input =cell(0);
     for t = 1:length(Misc.IKfile)
-        Misc.DofNames_Input{t} = Misc.DofNames_Input_copy;
+        Misc.DofNames_Input{t,1} = DofNames_Input_copy;
     end
 end
 

@@ -91,7 +91,7 @@ opti.minimize(J); % Define cost function in opti
 opti.solver(SolverSetup.nlp.solver,SolverSetup.optionssol);
     
 % Solve
-diary(fullfile(Misc.OutPath,[Misc.OutName '_' PrefixOutFile '.txt']));
+diary(fullfile(Misc.OutPath,[Misc.OutName '_trial_' num2str(trial) '_' PrefixOutFile '.txt']));
 tic
 sol = opti.solve();
 dt = toc;

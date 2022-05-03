@@ -1,6 +1,6 @@
 %% Example parameter estimation based on ultrasound data
 
-clear all;
+clear all; clc; close all;
 
 %% Input information
 % path to datafiles
@@ -12,8 +12,8 @@ DataPath = [pwd '\Data'];
 Misc.IKfile = {fullfile(DataPath,'trial_1_IK.mot'); fullfile(DataPath,'trial_2_IK.mot'); fullfile(DataPath,'trial_4_IK.mot')};
 Misc.IDfile = {fullfile(DataPath,'trial_1_ID.mot'); fullfile(DataPath,'trial_2_ID.mot'); fullfile(DataPath,'trial_4_ID.mot')};
 Misc.USfile = {fullfile(DataPath,'trial_1_US.mot'); fullfile(DataPath,'trial_2_US.mot'); fullfile(DataPath,'trial_4_US.mot')}; % in mm
-model_path  = fullfile(DataPath,'model.osim');
-Out_path    = fullfile(ExamplePath,'Results');                    % folder to store results
+Misc.model_path  = fullfile(DataPath,'model.osim');
+Misc.OutPath    = fullfile(ExamplePath,'Results_US_Tracking');                    % folder to store results
 
 % Get start and end time of the different files (you can also specify this
 % manually)
@@ -55,7 +55,7 @@ Misc.EMGconstr  = 0;     		% Boolean to select EMG constrained option
 Misc.wlM    = 1;          	% weight on tracking fiber length
 
 % Plotter Bool: Boolean to select if you want to plot lots of output information of intermediate steps in the script
-Misc.PlotBool = 0;
+Misc.PlotBool = 1;
 
 % MRS Bool: Select if you want to run the generic muscle redundancy solver
 Misc.MRSBool = 1;
@@ -68,4 +68,4 @@ Misc.Mesh_Frequency = 100;
 
 %% Run the muscle redundancy problem
 
-[Results,DatStore,Misc] = solveMuscleRedundancy(model_path,time,Out_path,Misc);
+[Results,DatStore,Misc] = solveMuscleRedundancy(time,Misc);

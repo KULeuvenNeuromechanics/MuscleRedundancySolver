@@ -9,7 +9,7 @@ R = load(fullfile(pwd,'Results','Walking3_Results.mat'));
 modelmass = getModelMass(R.Misc.model_path);
 
 % use the post processing function to compute the metabolic energy consumption
-E = GetMetabFromMRS(R.Results,R.Misc,modelmass);
+E = GetMetabFromMRS(R.Results,R.Misc,R.DatStore,modelmass);
 
 % plot with metabolic energy in the three models
 figure();

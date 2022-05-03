@@ -1,7 +1,7 @@
 %% Default example solve muscle redundancy 
 % (as in DeGroote2016)
 
-clear all;
+clear all; clc; close all;
 %% Input information
 
 % select datafolder

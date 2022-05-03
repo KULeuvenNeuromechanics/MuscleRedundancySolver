@@ -37,7 +37,7 @@ for i = 1:Misc.nTrials
     % Run muscle analysis
     if Misc.RunAnalysis
         disp('MuscleAnalysis Running .....');
-        OpenSim_Muscle_Analysis(IK_path_trial,Misc.model_path,MuscleAnalysisPath,[time(i,1) time(i,end)],Misc.DofNames_Input{i})
+        OpenSim_Muscle_Analysis(IK_path_trial,Misc.model_path,MuscleAnalysisPath,[time(i,1) time(i,end)],Misc.DofNames_Input{i,1})
         disp('MuscleAnalysis Finished');
     end
 end
@@ -214,10 +214,10 @@ end
 
 % Parameter optimization selected if EMG information or ultrasound
 % information is active
-BoolParamOpt = 0;
-if Misc.UStracking == 1 || Misc.EMGconstr == 1
-    BoolParamOpt = 1;
-end
+BoolParamOpt = true;
+% if Misc.UStracking == 1 || Misc.EMGconstr == 1
+%     BoolParamOpt = 1;
+% end
 
 if BoolParamOpt == 1
     % Run the parameter estimation
@@ -293,7 +293,7 @@ if Misc.PlotBool && Misc.EMGconstr == 1
     if ~isdir(fullfile(Misc.OutPath,'figures'))
         mkdir(fullfile(Misc.OutPath,'figures'));
     end
-    saveas(h,fullfile(Misc.OutPath,'figures',[Misc.analysisName '_fig_EMG.fig']));
+    saveas(h,fullfile(Misc.OutPath,'figures',[Misc.OutName '_fig_EMG.fig']));
 end
 
 % plot estimated parameters
@@ -307,7 +307,7 @@ end
 
 % plot fiber length
 if Misc.PlotBool && Misc.UStracking == 1
-    h = PlotFiberLength(Results,DatStore);
+    h = PlotFiberLength(Results,DatStore,Misc);
     if ~isdir(fullfile(Misc.OutPath,'figures'))
         mkdir(fullfile(Misc.OutPath,'figures'));
     end
@@ -337,6 +337,7 @@ if BoolParamOpt
     
     ParamsToOsim(muscleParams,muscleNames,modelPath,outPath,newModelFile); 
 end
+
 
 end
 
