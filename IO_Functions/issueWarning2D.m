@@ -21,9 +21,9 @@ if c>0
                     err_cfl(i,2) = 0;
                 end
                 if e1 && ~e2
-                    warning(['Could not find muscle' struct2check{i,2} ' coupled with ' struct2check{i,1} ' in model of trial' Misc.trialName{t} ', please adapt Misc.' structName])
+                    warning(['Could not find muscle' struct2check{i,2} ' coupled with ' struct2check{i,1} ' in model of trial_' num2str(t) ', please adapt Misc.' structName])
                 elseif ~e1 && e2
-                    warning(['Could not find muscle' struct2check{i,1} ' coupled with ' struct2check{i,2} ' in model of trial' Misc.trialName{t} ', please adapt Misc.' structName])
+                    warning(['Could not find muscle' struct2check{i,1} ' coupled with ' struct2check{i,2} ' in model of trial_' num2str(t) ', please adapt Misc.' structName])
                 end
             end
         end

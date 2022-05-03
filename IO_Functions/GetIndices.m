@@ -86,13 +86,6 @@ for i=1:Misc.nTrials
             DatStore(i).free_kT(j,1) = find(strcmp(Misc.allMuscleList,Misc.Estimate_TendonStiffness{j}));
         end
     end
-    %         if Misc.UStracking
-    %             DatStore(i).USsel = zeros(length(Misc.USSelection),3);
-    %             for j = 1:length(DatStore(i).USsel)
-    %                 DatStore(i).USsel(j,3) = find(strcmp(DatStore(i).MuscleNames,Misc.USSelection{j}));
-    %                 DatStore(i).USsel(j,1) = find(strcmp(Misc.allMuscleList,Misc.USSelection{j}));
-    %             end
-    %         end
     for k = 1:size(DatStore(i).coupled_kT,1)
         for j = 1:size(DatStore(i).coupled_kT,2)
             Inds = find(strcmp(DatStore(i).MuscleNames,Misc.Coupled_TendonStiffness{k,j}));
