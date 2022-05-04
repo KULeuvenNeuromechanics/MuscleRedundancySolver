@@ -1,6 +1,59 @@
 function [Results,Misc,DatStore,lMo_scaling_param_opt,lTs_scaling_param_opt,kT_scaling_param_opt,EMGscale_opt] = ...
     runParameterEstimation(Misc,DatStore,Mesh,SolverSetup,Results,NMuscles)
-%%
+% --------------------------------------------------------------------------
+%runParameterEstimation
+%     Formulates and solves the muscle redundancy problem
+% 
+% INPUT:
+%     Misc
+%     Miscellaneous info used through the code
+% 
+%     DatStore
+%     Structure of all data
+%     
+%     Mesh
+%     Mesh points for all trials
+%     
+%     SolverSetup
+%     Details of the solver
+%     
+%     Results
+%     Structure of all results
+%     
+%     NMuscles
+%     Number of muscles in all trials
+%     
+% OUTPUT:
+%     Results
+%     Structure of all results
+%     
+%     Misc
+%     Miscellaneous info used through the code
+% 
+%     DatStore
+%     Structure of all data
+%     
+%     lMo_scaling_param_opt
+%     Estimated factor by which optimal fiber length is to be multiplied
+%     
+%     lTs_scaling_param_opt
+%     Estimated factor by which tendon slack length is to be multiplied
+%     
+%     kT_scaling_param_opt
+%     Estimated factor by which tendon stiffness is to be multiplied
+%     
+%     EMGscale_opt
+%     Estimated factor by which EMG is mutiplied. EMG is multipled by a factor
+%     since we only wish to impose its pattern and not the experimentally
+%     measured value
+%     
+% Original author: 
+% Original date: 
+%
+% Last edit by: Dhruv Gupta
+% Last edit date: May 3, 2022
+% --------------------------------------------------------------------------
+
 % Problem bounds
 e_min = 0; e_max = 1;                   % bounds on muscle excitation
 a_min = 0; a_max = 1;                   % bounds on muscle activation

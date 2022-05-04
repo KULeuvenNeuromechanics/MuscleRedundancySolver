@@ -1,8 +1,29 @@
 function [Misc,DatStore] = GetEMGInfo(Misc,DatStore)
-%GetEMGInfo Reads the file with EMG information (.sto)., runs activation
-%dynamics on the EMG data when asked and puts the EMG data in the right
-%format (handles copies and so on).
-
+% --------------------------------------------------------------------------
+%GetEMGInfo
+%    GetEMGInfo Reads the file with EMG information and puts the EMG data in the right
+%    format (handles copies and so on).
+% 
+% INPUT:
+%     Misc
+%     Miscellaneous info used through the code
+% 
+%     DatStore
+%     Structure of all data
+%     
+% OUTPUT:
+%     Misc
+%     Miscellaneous info used through the code
+% 
+%     DatStore
+%     Structure of all data
+%     
+% Original author:
+% Original date:
+%
+% Last edit by: Dhruv Gupta
+% Last edit date: May 3, 2022
+% --------------------------------------------------------------------------
 
 if Misc.boolEMG
     for trial = 1:Misc.nTrials

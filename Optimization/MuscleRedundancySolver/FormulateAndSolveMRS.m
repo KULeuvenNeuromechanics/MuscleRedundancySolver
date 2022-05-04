@@ -1,5 +1,51 @@
 function [Results] = FormulateAndSolveMRS(Misc,DatStore,Mesh,trial,SolverSetup,...
     Results,NMuscles,IG,MuscProperties,PrefixOutFile)
+% --------------------------------------------------------------------------
+%FormulateAndSolveMRS
+%     Formulates and solves the muscle redundancy problem
+% 
+% INPUT:
+%     Misc
+%     Miscellaneous info used through the code
+% 
+%     DatStore
+%     Structure of all data
+%     
+%     Mesh
+%     Mesh points for all trials
+%     
+%     trial
+%     trial for which the muscle redundancy problem is solved
+%     
+%     SolverSetup
+%     Details of the solver
+%     
+%     Results
+%     Structure of all results
+%     
+%     NMuscles
+%     Number of muscles in all trials
+%     
+%     IG
+%     Initial guess
+%     
+%     MuscleProperties
+%     Muscle properties of the model
+%     
+%     PrefixOutFile
+%     Name under which the results will be stored in the Results structure
+%     
+% OUTPUT:
+%     Results
+%     Structure of all results
+%     
+% Original author: 
+% Original date: 
+%
+% Last edit by: Dhruv Gupta
+% Last edit date: May 3, 2022
+% --------------------------------------------------------------------------
+
 % Problem bounds
 e_min = 0; e_max = 1;                   % bounds on muscle excitation
 a_min = 0; a_max = 1;                   % bounds on muscle activation

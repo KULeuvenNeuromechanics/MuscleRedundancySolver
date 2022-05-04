@@ -1,8 +1,29 @@
 function [Misc,DatStore] = GetUSInfo(Misc,DatStore)
-%GetUSInfo Reads the file with US information (.sto)., stores data in the right
-%format.
-
-% Author: Maarten Afschrift
+% --------------------------------------------------------------------------
+%GetEMGInfo
+%    GetEMGInfo Reads the file with EMG information and puts the EMG data in the right
+%    format.
+% 
+% INPUT:
+%     Misc
+%     Miscellaneous info used through the code
+% 
+%     DatStore
+%     Structure of all data
+%     
+% OUTPUT:
+%     Misc
+%     Miscellaneous info used through the code
+% 
+%     DatStore
+%     Structure of all data
+%     
+% Original author: Maarten Afschrift
+% Original date:
+%
+% Last edit by: Dhruv Gupta
+% Last edit date: May 3, 2022
+% --------------------------------------------------------------------------
 
 if Misc.UStracking
     for trial = 1:Misc.nTrials

@@ -1,4 +1,26 @@
 function [Misc] = getMuscleProperties(model_path,Misc)
+% --------------------------------------------------------------------------
+%getMuscleProperties
+%     Reads properties of the muscle from the .osim file and handles user
+%     defined tendon stiffness
+% 
+% INPUT:
+%     model_path
+%     Path to the .osim model
+% 
+%     Misc
+%     Miscellaneous info used through the code
+% 
+% OUTPUT:
+%     Misc
+%     Miscellaneous info used through the code
+% 
+% Original author: 
+% Original date: 
+%
+% Last edit by: Dhruv Gupta
+% Last edit date: May 3, 2022
+% --------------------------------------------------------------------------
 
 % read the model
 import org.opensim.modeling.*;
@@ -28,17 +50,6 @@ Misc.lMo=params(2,:);
 Misc.lTs=params(3,:);
 Misc.alphao=params(4,:);
 Misc.params = params;
-
-% % Default tendon stiffness for these muscles
-% if ~isfield(Misc,'Atendon') || isempty(Misc.Atendon)
-% 	Misc.Atendon=ones(1,nNames).*35;
-% else
-%     % change collum vector to row vector if needed
-%     [nr, nc]=size(Misc.Atendon);
-%     if nc==1 && nr>1
-%         Misc.Atendon=Misc.Atendon';
-%     end
-% end
 
 if ~isfield(Misc,'kT') || isempty(Misc.kT)
     Misc.kT =ones(1,length(Misc.allMuscleList)).*35;

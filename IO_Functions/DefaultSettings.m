@@ -1,6 +1,24 @@
 function [Misc] = DefaultSettings(Misc)
-% If user does not specify values for specific Misc fields, these are
-% filled out with default values.
+% --------------------------------------------------------------------------
+%DefaultSettings
+%     If user does not specify values for specific Misc fields, these are
+%     filled out with default values. This function also corrects the
+%     format of certain inputs, as required by the code.
+% 
+% INPUT:
+%     Misc
+%     Miscellaneous info used through the code
+% 
+% OUTPUT:
+%     Misc
+%     Miscellaneous info used through the code
+% 
+% Original author: 
+% Original date: 
+%
+% Last edit by: Dhruv Gupta
+% Last edit date: May 3, 2022
+% --------------------------------------------------------------------------
 
 %% Filters
 if ~isfield(Misc,'f_cutoff_ID') || isempty(Misc.f_cutoff_ID)
@@ -78,6 +96,22 @@ if ~isfield(Misc,'EMGbounds')
     Misc.EMGbounds = [];
 end
 % copies of EMG
+if isfield(Misc,'EMG_MuscleCopies')
+    if size(Misc.EMG_MuscleCopies,2) > 2
+        tempEMG_MuscleCopies = Misc.EMG_MuscleCopies;
+        Misc.EMG_MuscleCopies = [];
+        ct = 0;
+        for r = 1:size(tempEMG_MuscleCopies,1)
+            for c = 1:size(tempEMG_MuscleCopies,2)-1
+                ct = ct + 1;
+                Misc.EMG_MuscleCopies{ct,1} = tempEMG_MuscleCopies{r,c};
+                Misc.EMG_MuscleCopies{ct,2} = tempEMG_MuscleCopies{r,c+1};
+            end
+        end
+    end
+else
+    Misc.EMG_MuscleCopies =[];
+end
 if ~isfield(Misc,'EMG_MuscleCopies')
     Misc.EMG_MuscleCopies = [];
 end

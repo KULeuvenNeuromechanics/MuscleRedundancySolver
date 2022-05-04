@@ -1,8 +1,29 @@
 function [DatStore,Misc] = GetIndices(DatStore,Misc)
-% Add to DatStore the information on the indices of which muscles parameters will be
-% estimated.
-% First column corresponds to index in allMuscleList
-% Third column corresponds to index in MuscleNames of that trial
+% --------------------------------------------------------------------------
+%GetIndecies
+%     Add to DatStore the information on the indices of which muscles parameters will be
+%     estimated.
+% 
+% INPUT:
+%     Misc
+%     Miscellaneous info used through the code
+% 
+%     DatStore
+%     Structure of all data
+%     
+% OUTPUT:
+%     Misc
+%     Miscellaneous info used through the code
+% 
+%     DatStore
+%     Structure of all data
+%     
+% Original author:
+% Original date:
+%
+% Last edit by: Dhruv Gupta
+% Last edit date: May 3, 2022
+% --------------------------------------------------------------------------
 
 % if Misc.UStracking == 1 || Misc.EMGconstr == 1
 Misc.free_lMo = zeros(length(Misc.Estimate_OptimalFiberLength),1);

@@ -1,4 +1,53 @@
 function [EMGselection,EMGsel,Misc] = addEMGtwins(EMGselection,EMGsel,EMGdat,Misc,NameSel,NameCopy,DatStore,EMGheaders,iF)
+% --------------------------------------------------------------------------
+%addEMGtwins
+%     This function adds the EMG twin (muscles for which same EMG information is to be used). 
+% 
+% INPUT:
+%     EMGselection
+%     list of all muscles with EMG in that trial
+%     
+%     EMGsel
+%     EMG data of the muscles with EMG in that trial
+%     
+%     EMGdat
+%     Data of EMG channels in that trial
+%     
+%     Misc
+%     Miscellaneous info used through the code
+%     
+%     NameSel
+%     Muscle whose EMG is to be copied
+%     
+%     NameCopy
+%     Muscle that will use NameSel's EMG
+%     
+%     DatStore
+%     Structure of all data
+%     
+%     EMGheaders
+%     Names of all muscles with EMG data
+%     
+%     iF
+%     current trial number  
+% 
+% OUTPUT:
+%     EMGselection
+%     list of all muscles with EMG in that trial
+%     
+%     EMGsel
+%     EMG data of the muscles with EMG in that trial
+%     
+%     Misc
+%     Miscellaneous info used through the code
+% 
+% Original author: Dhruv Gupta
+% Original date: May 3, 2022
+%
+% Last edit by: Dhruv Gupta
+% Last edit date: May 3, 2022
+% --------------------------------------------------------------------------
+
 % check if EMG signals we want to copy exists
 Ind_ColCopy = strcmp(Misc.EMGsel{iF},NameSel);
 % check if twin muscle is in the model

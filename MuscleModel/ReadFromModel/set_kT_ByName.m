@@ -1,5 +1,5 @@
 function [Misc] = set_kT_ByName(Misc)
-% Set stifness of different muscles
+% Set stifness of muscles that was user provided (not default)
 nit = length(Misc.Set_kT_ByName(:,1));
 for i=1:nit
     NameSel = Misc.Set_kT_ByName{i,1};
