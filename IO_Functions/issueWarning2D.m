@@ -52,8 +52,10 @@ if c>0
                 % check if both muscles are in each trial
                 if e1 && ~e2
                     warning(['Could not find muscle' struct2check{i,2} ' coupled with ' struct2check{i,1} ' in model of trial_' num2str(t) ', please adapt Misc.' structName])
+                    disp(' ')
                 elseif ~e1 && e2
                     warning(['Could not find muscle' struct2check{i,1} ' coupled with ' struct2check{i,2} ' in model of trial_' num2str(t) ', please adapt Misc.' structName])
+                    disp(' ')
                 end
             end
         end
@@ -63,6 +65,7 @@ if c>0
     if any(any(err_cfl))
         warning(['Could not find muscles ' struct2check{find(err_cfl)} ' in the selected dofs of any trial',...
             ', please adapt Misc.' structName '. Removing this muscle and its couple from Misc.' structName]);
+        disp(' ')
         Misc.(structName) = struct2check(~any(err_cfl,2),:);
     end
 end

@@ -29,6 +29,7 @@ if Misc.UStracking
     for trial = 1:Misc.nTrials
         if isempty(Misc.USfile{trial}) || isempty(Misc.IKfile{trial}) || isempty(Misc.IDfile{trial})
             warning(['US or IK or ID file for trial ' num2str(trial) ' has not been defined. Please update Misc.USfile, Misc.IKfile or Misc.IDfile']);
+            disp(' ')
         end
     end
 end
@@ -59,6 +60,7 @@ if Misc.boolUS
                     idx_col_c1 = find(ismember(Misc.USFileHeaderCorrespondence(:,1),USFile(iF).colheaders_USfile{c}));
                     if isempty(idx_col_c1)
                         warning(['Muscle corresponding to ' USFile(iF).colheaders_USfile{c} ' in file ' Misc.USfile{iF} ' is not defined in Misc.USFileHeaderCorrespondence. Update Misc.USFileHeaderCorrespondence. Removing US column ' USFile(iF).colheaders_USfile{c} ' from analyses'])
+                        disp(' ')
                     else
                         ct = ct + 1;
                         USFile(iF).colheaders{ct} = Misc.USFileHeaderCorrespondence{idx_col_c1,2};
@@ -91,15 +93,18 @@ if Misc.boolUS
                     Misc.USsel{iF}{ct} = Misc.USSelection{i};
                 else
                     if bool_updateheader == 0
-                        disp(['Could not find ' Misc.USSelection{i} ' in the header of the US file, Update the headers of file: ' Misc.USfile{iF}]);
+                        warning(['Could not find ' Misc.USSelection{i} ' in the header of the US file, Update the headers of file: ' Misc.USfile{iF}]);
+                        disp(' ')
                     else
-                        disp(['Could not find ' Misc.USSelection{i} ' in the header of the US file, Update the headers in:  Misc.USheaders{' num2str(iF) '}']);
+                        warning(['Could not find ' Misc.USSelection{i} ' in the header of the US file, Update the headers in:  Misc.USheaders{' num2str(iF) '}']);
+                        disp(' ')
                     end
                     IndError(i,iF)=1;
                 end
             else
                 if strcmp(Misc.USSelection{i}(end),Misc.side{iF}) % All muscles end with 'l' or 'r'
-                    disp(['Could not find ' Misc.USSelection{i} ' in the model for trial ' Misc.USfile{iF} ', Update the Misc.USSelection structure']);
+                    warning(['Could not find ' Misc.USSelection{i} ' in the model for trial ' Misc.USfile{iF} ', Update the Misc.USSelection structure']);
+                    disp(' ')
                     IndError(i,iF)=1;
                 end
             end
@@ -115,6 +120,7 @@ if Misc.boolUS
     if bool_error
         warning(['Removed muscles with US information from the',...
             ' analysis because these muscles are not in the model, or do not span the selected DOFs for any trial (see above)']);
+        disp(' ')
         Misc.USSelection(find(IndErr)) = [];
     end
     

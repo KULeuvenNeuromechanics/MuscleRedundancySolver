@@ -47,6 +47,7 @@ end
 if any(err_check)
     warning(['Could not find muscles ' struct2check{find(err_check)} ' in the selected dofs of any trial',...
         ', please adapt Misc.' structName '. Removing these muscles from Misc.' structName]);
+    disp(' ')
     Misc.(structName) = struct2check(find(~err_check));
 end    
 

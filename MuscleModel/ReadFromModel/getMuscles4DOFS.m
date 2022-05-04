@@ -27,6 +27,7 @@ for t = 1:Misc.nTrials
         % print to screen
         disp(['MusclesNames Selected automatically for ' Misc.IKfile{t} ':']);
         disp(Misc.MuscleNames_Input{t}');
+        disp(' ')
         clear dM_store
     end
     for i=1:length(Misc.MuscleNames_Input{t})

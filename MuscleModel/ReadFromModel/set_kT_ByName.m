@@ -8,7 +8,8 @@ for i=1:nit
     if any(IndMus)
         Misc.kT(IndMus)= kT;
     else
-        disp(['Cannot set stiffness of ' NameSel ' because this muscle in not used']);
+        warning(['Cannot set stiffness of ' NameSel ' because this muscle in not used']);
+        disp(' ')
     end
 end
 end

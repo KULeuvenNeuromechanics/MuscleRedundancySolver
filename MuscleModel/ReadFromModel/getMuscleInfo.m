@@ -37,7 +37,8 @@ for t = 1:Misc.nTrials
                     Inds_muscles(ctm)=ind_sel; IndsNames_sel(ctm)=j;
                     ctm=ctm+1;
                 else
-                    disp(['Warning: The selected muscle ' Misc.MuscleNames_Input{t}{j} ' does not exist in the selected model of trial' Misc.trialName{t} '. This muscles is removed from the program']);
+                    warning(['The selected muscle ' Misc.MuscleNames_Input{t}{j} ' does not exist in the selected model of trial ' num2str(t) '. This muscles is removed from the program']);
+                    disp(' ')
                 end
             end
             Misc.MuscleNames{t}=Misc.MuscleNames_Input{t}(IndsNames_sel);
@@ -71,7 +72,8 @@ for t = 1:Misc.nTrials
     % warnings when not all the input DOFS are actuated by muscles
     for i=1:length(Misc.DofNames_Input{t})
         if ~any(strcmp(Misc.DofNames_Input{t}{i},Misc.DofNames{t}))
-            disp(['Warning DOF: The input dof: ' Misc.DofNames_Input{t}{i} ' is not actuated by the selected muscles and therefore removed from the analysis']);
+            warning(['The input dof: ' Misc.DofNames_Input{t}{i} ' is not actuated by the selected muscles and therefore removed from the analysis']);
+            disp(' ')
         end
     end
 
