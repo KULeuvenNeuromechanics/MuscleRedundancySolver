@@ -8,6 +8,7 @@ The original purpose of the provided MATLAB code was to solve the muscle redunda
 
 In v3.0, we added two additional functionalities. First, it is possible to constrain the estimated muscle activations based on experimental EMG. Second, there is the possibility to, concurrently with solving the muscle redundancy problem, estimate parameters of the modelled muscle-tendon units by using experimental data, i.e. EMG and ultrasound data. Optimal fiber length, tendon slack length and tendon stiffness can be set as free variables within the muscle redundancy problem. Experimentally measured fiber lengths can be tracked (US-tracking), the tracking error is a part of the objective function. Details on this parameter estimation problem can be found in Delabastita et al. 2020 (https://link.springer.com/article/10.1007/s10439-019-02395-x). Collected EMG can either be tracked (EMG-tracking) or imposed exactly (EMG-driven). Details on using EMG data in the parameter estimation can be found in Falisse 2016 (https://ieeexplore.ieee.org/document/7748556). Another important feature is that the user can estimate muscle-tendon parameters over different trials of the same movement or from different movements. This allows for more reliable parameter estimation. We reckon that for solving the muscle redundancy problem OpenSim Moco (https://www.biorxiv.org/content/10.1101/839381v1) might be a more user-friendly and straightforward alternative. However, our software allows the combination of different trials to estimate muscle-tendon parameters. Another difference is in that we use automatic differentiation, which drastically reduces the computation time, while this is not (yet) enabled in Moco. 
 
+In v4.0, we upgraded the code such that the user can now input multiple trials with varying number of degrees of freedom.
 
 ## Structure of the code
 
@@ -44,13 +45,12 @@ SolveMuscleRedundancy is the main function of this program and is used to solve 
 
 #### Required input arguments for SolveMuscleRedundancy
 
-1. **model_path**: directory and filename of the scaled OpenSim model (.osim file). The code should work with any OpenSim model with valid muscle-tendon parameters for which OpenSim's Inverse Dynamics and Muscle Analysis Tools generate reliable results. Note that only the muscle-tendon parameters and not the muscle model specified in the osim-file are used (for details see Muscle model).
+1. **time**: 1 x 2 MATLAB array with the initial and final time of the analysis in seconds. Initial and final states influence the optimal controls over a period of about 50 ms at the beginning and end of the time interval over which the optimal control problem is solved. Since in practice the initial and final states are generally unknown, problems should be solved for a time interval containing five additional data points (considering a 100Hz sampling frequency) at the beginning and end of the motion cycle. Those additional data points should not be considered in further analyses. The user should thus not be surprised to observe unrealistically high muscle activation at the beginning of the motion (more details in companion paper).
 
-2. **time**: 1 x 2 MATLAB array with the initial and final time of the analysis in seconds. Initial and final states influence the optimal controls over a period of about 50 ms at the beginning and end of the time interval over which the optimal control problem is solved. Since in practice the initial and final states are generally unknown, problems should be solved for a time interval containing five additional data points (considering a 100Hz sampling frequency) at the beginning and end of the motion cycle. Those additional data points should not be considered in further analyses. The user should thus not be surprised to observe unrealistically high muscle activation at the beginning of the motion (more details in companion paper).
-
-3. **Misc**: miscellaneous input arguments (matlab structure)
+2. **Misc**: miscellaneous input arguments (matlab structure)
 
 Related to the musculoskeletal model:
+   - **Misc.model_path**  stores the path to the .osim model.
    - **Misc.DofNames_Input**  is a cell array specifying for which degrees of freedom you want to solve the muscle redundancy problem. Typically the muscle redundancy problem is solved for one leg at a time (there are no muscles spanning both legs).
    - **Misc.MuscleNames_Input** is a cell array that specifies the muscles to be included when solving the muscle redundancy problem. All muscles that actuate (i.e. have a moment arm with respect to) the degrees of freedom specified in *DofNames_Input* will be selected by default if this array is left empty.
 
@@ -64,8 +64,13 @@ The following input arguments are required to use EMG data:
    - **Misc.EMGconstr**: boolean to select whether you want to track provided EMG signals.
    - **Misc.EMGfile**: cell array of filenames containing EMG data of different motion trials (.mot file). (can be empty)
    - **Misc.EMGSelection**: cell array with muscles that are constrained/driven by EMG data.
+   - **Misc.EMG_MuscleCopies** (optional input): n x 2 cell array. array with names of muscle from which input EMG-data will be coupled. The second muscle will be driven with the EMG-data from the first one. n = number of coupled muscle pairs.
    - **Misc.BoundsScaleEMG**: 1 x 2 matlab array with lower and upper bound on optimization variable (s) that scales EMG data to simulated muscle excitation. (i.e. s*EMG = SimExcitation). In case you normalised your EMG data to MVC measurements, this scale factor should be close to 1.
    - **Misc.EMGbounds**: 1 x 2 matlab array with lower and upper bound on the deviation between measured EMG data and simulated muscle excitations (i.e. lower bound <  S EMG - SimExcitation < Upper bound).   
+   - **Misc.EMGheaders** or **Misc.EMGFileHeaderCorrespondence** or neither: User can use either Misc.EMGheaders or Misc.EMGFileHeaderCorrespondence or neither depending on their data:
+      - **Misc.EMGheaders** is a cell array with names of muscles in the model that correspond to the header of the EMG data. The order of muscles in the EMG data should be the same as the order of muscles in Misc.EMGheaders.
+      - **Misc.EMGFileHeaderCorrespondence** (recommended) is a n x 2 cell array where first column is the name of the EMG channel in the header of the EMG data and second column is the corresponding muscle in the model. The order of the muscle names do not matter and it is not necessary to have all the muscles specified in this array be present in EMG data of all trials.
+      - If neither Misc.EMGheaders or Misc.EMGFileHeaderCorrespondence are specified, the names of muscles as specified in the EMG data file will be used. Make sure that these are the same names that the .osim model uses for each muscle.
 
 #### Required input arguments when using Ultrasound data
 
@@ -90,6 +95,8 @@ The following input arguments are required to optimize parameters:
 
    - **Misc.ub_lMo_scaling**: upper bound of the scaling factor that will scale the generic optimal fiber length into the optimized optimal fiber length.
 
+   - **Misc.Estimate_TendonSlackLength**: array with names of muscle from which tendon slack length will be estimated.
+   
    - **Misc.lb_lTs_scaling**: lower bound of the scaling factor that will scale the generic tendon slack length into the optimized tendon slack length.
 
    - **Misc.ub_lTs_scaling**: upper bound of the scaling factor that will scale the generic tendon slack length into the optimized tendon slack length.
@@ -162,8 +169,6 @@ Related to nominal parameters model:
 
 Other
 
-   - **Misc.EMG_MuscleCopies**: array with names of muscle from which input EMG-data will be coupled. The second muscle will be driven with the EMG-data from the first one.
-   
    - **Misc.newModelFile**: character array with the name you want to give to the OpenSim model with estimated parameters.
 
 ## Output arguments
