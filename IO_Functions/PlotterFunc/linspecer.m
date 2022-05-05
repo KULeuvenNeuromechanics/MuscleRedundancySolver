@@ -78,9 +78,11 @@ if ~isempty(varargin)>0 % you set a parameter?
         case {'qualitative','qua'}
             if N>12 % go home, you just can't get this.
                 warning('qualitiative is not possible for greater than 12 items, please reconsider');
+                disp(' ')
             else
                 if N>9
                     warning(['Default may be nicer for ' num2str(N) ' for clearer colors use: whitebg(''black''); ']);
+                    disp(' ')
                 end
             end
             qualFlag = 1;
@@ -101,6 +103,7 @@ if ~isempty(varargin)>0 % you set a parameter?
             colorblindFlag = 1;
         otherwise
             warning(['parameter ''' varargin{1} ''' not recognized']);
+            disp(' ')
     end
 end      
 % *.95
@@ -120,6 +123,7 @@ if colorblindFlag
         otherwise
             colorblindFlag = false;
             warning('sorry unsupported colorblind set for this number, using regular types');
+            disp(' ')
     end
 end
 if ~colorblindFlag
@@ -220,6 +224,7 @@ switch thisColor
         cmapp = [255,245,240;254,224,210;252,187,161;252,146,114;251,106,74;239,59,44;203,24,29;165,15,21;103,0,13];
     otherwise
         warning(['sorry your color argument ' thisColor ' was not recognized']);
+        disp(' ')
 end
 cmap = interpomap(n,cmapp);
 end

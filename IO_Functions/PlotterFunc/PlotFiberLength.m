@@ -1,18 +1,15 @@
-function [h] = PlotFiberLength(Results,DatStore)
+function [h] = PlotFiberLength(Results,DatStore,Misc)
 % Plot results regarding tracking of provided US signals.
-
-
 
 lw = 2;
 
-Misc = Results.Misc;
 h = figure('Name','Muscle fiber length');
-nPhases = length(Misc.IKfile);
-if nPhases > 1
+nPhases = Misc.nTrials;
+if Misc.nTrials > 1
     hTabGroup = uitabgroup;
 end
 Cs = linspecer(3);
-for trial = 1:nPhases    
+for trial = 1:Misc.nTrials
     % set the name of the tab
     if nPhases>1
         [path,file,ext]=fileparts(Misc.IKfile{trial});
@@ -21,7 +18,7 @@ for trial = 1:nPhases
     end
     
     % get the number muscles with fiber length tracking
-    Minds = DatStore(trial).USsel(:);
+    Minds = DatStore(trial).US.idx_USsel(:,3);
     nMus  = length(Minds);
     p     = numSubplots(nMus);
     
@@ -68,7 +65,4 @@ for trial = 1:nPhases
     end    
 end
 
-
-
 end
-

@@ -1,6 +1,26 @@
 function [Misc] = DefaultSettings(Misc)
-% If user does not specify values for specific Misc fields, these are
-% filled out with default values.
+% --------------------------------------------------------------------------
+%DefaultSettings
+%     If user does not specify values for specific Misc fields, these are
+%     filled out with default values. This function also corrects the
+%     format of certain inputs, as required by the code.
+% 
+% INPUT:
+%     Misc
+%     Miscellaneous info used through the code
+% 
+% OUTPUT:
+%     Misc
+%     Miscellaneous info used through the code
+% 
+% Original author: Maarten Afschrift
+% Original date: June 5, 2020
+%
+% Updated by: Tom Van Wouwe, Bram Van Den Bosch
+% 
+% Last edit by: Dhruv Gupta
+% Last edit date: May 3, 2022
+% --------------------------------------------------------------------------
 
 %% Filters
 if ~isfield(Misc,'f_cutoff_ID') || isempty(Misc.f_cutoff_ID)
@@ -42,9 +62,33 @@ if ~isfield(Misc,'RunAnalysis') || isempty(Misc.RunAnalysis)
 end
 
 %% EMG
-if ~isfield(Misc,'EMGconstr') || isempty(Misc.EMGconstr)
-    Misc.EMGconstr  = 0;
+if isfield(Misc,'EMGheaders')
+    if size(Misc.EMGheaders,1) == 1
+        tempHeaders = Misc.EMGheaders;
+        Misc.EMGheaders = [];
+        for i=1:length(Misc.IKfile)
+            Misc.EMGheaders{i} = tempHeaders;
+        end
+    end
 end
+
+if isfield(Misc,'EMGheaders') && isfield(Misc,'EMGFileHeaderCorrespondence')
+    error('Only one of Misc.EMGheaders or Misc.EMGFileHeaderCorrespondence is allowed. Please remove either Misc.EMGheaders or Misc.EMGFileHeaderCorrespondence')
+end
+    
+if ~isfield(Misc,'EMGconstr') 
+    Misc.EMGconstr  = 0;
+    boolEMG = 0;
+elseif  isempty(Misc.EMGconstr)
+    Misc.EMGconstr  = 0;
+    boolEMG = 0;
+elseif Misc.EMGconstr == 0
+    boolEMG = 0;
+elseif Misc.EMGconstr == 1
+    boolEMG = 1;
+end
+Misc.boolEMG = boolEMG;
+
 % bounds on scaling EMG
 if ~isfield(Misc,'BoundsScaleEMG') || isempty(Misc.BoundsScaleEMG)
     Misc.BoundsScaleEMG = [0.9 1.1];
@@ -54,6 +98,22 @@ if ~isfield(Misc,'EMGbounds')
     Misc.EMGbounds = [];
 end
 % copies of EMG
+if isfield(Misc,'EMG_MuscleCopies')
+    if size(Misc.EMG_MuscleCopies,2) > 2
+        tempEMG_MuscleCopies = Misc.EMG_MuscleCopies;
+        Misc.EMG_MuscleCopies = [];
+        ct = 0;
+        for r = 1:size(tempEMG_MuscleCopies,1)
+            for c = 1:size(tempEMG_MuscleCopies,2)-1
+                ct = ct + 1;
+                Misc.EMG_MuscleCopies{ct,1} = tempEMG_MuscleCopies{r,c};
+                Misc.EMG_MuscleCopies{ct,2} = tempEMG_MuscleCopies{r,c+1};
+            end
+        end
+    end
+else
+    Misc.EMG_MuscleCopies =[];
+end
 if ~isfield(Misc,'EMG_MuscleCopies')
     Misc.EMG_MuscleCopies = [];
 end
@@ -63,24 +123,80 @@ if ~isfield(Misc,'EMGSelection')
 end
 
 %% Info related to parameter optimizatiEMGbounds on
-if ~isfield(Misc,'Estimate_OptimalFiberLength')
+if isfield(Misc,'Estimate_OptimalFiberLength')
+    [r c] = size(Misc.Estimate_OptimalFiberLength);
+    if ((r == 1) && (c > 1))
+        Misc.Estimate_OptimalFiberLength = Misc.Estimate_OptimalFiberLength';
+    end
+else
     Misc.Estimate_OptimalFiberLength =[];
 end
-if ~isfield(Misc,'Estimate_TendonStiffness')
+if isfield(Misc,'Estimate_TendonSlackLength')
+    [r c] = size(Misc.Estimate_TendonSlackLength);
+    if ((r == 1) && (c > 1))
+        Misc.Estimate_TendonSlackLength = Misc.Estimate_TendonSlackLength';
+    end
+else
+    Misc.Estimate_TendonSlackLength =[];
+end
+if isfield(Misc,'Estimate_TendonStiffness')
+    [r c] = size(Misc.Estimate_TendonStiffness);
+    if ((r == 1) && (c > 1))
+        Misc.Estimate_TendonStiffness = Misc.Estimate_TendonStiffness';
+    end
+else
     Misc.Estimate_TendonStiffness =[];
 end
-if ~isfield(Misc,'Coupled_fiber_length')
+
+if isfield(Misc,'Coupled_fiber_length')
+    if size(Misc.Coupled_fiber_length,2) > 2
+        tempCoupled_fiber_length = Misc.Coupled_fiber_length;
+        Misc.Coupled_fiber_length = [];
+        ct = 0;
+        for r = 1:size(tempCoupled_fiber_length,1)
+            for c = 1:size(tempCoupled_fiber_length,2)-1
+                ct = ct + 1;
+                Misc.Coupled_fiber_length{ct,1} = tempCoupled_fiber_length{r,c};
+                Misc.Coupled_fiber_length{ct,2} = tempCoupled_fiber_length{r,c+1};
+            end
+        end
+    end
+else
     Misc.Coupled_fiber_length =[];
 end
-if ~isfield(Misc,'Coupled_slack_length')
+
+if isfield(Misc,'Coupled_slack_length')
+    if size(Misc.Coupled_slack_length,2) > 2
+        tempCoupled_slack_length = Misc.Coupled_slack_length;
+        Misc.Coupled_slack_length = [];
+        ct = 0;
+        for r = 1:size(tempCoupled_slack_length,1)
+            for c = 1:size(tempCoupled_slack_length,2)-1
+                ct = ct + 1;
+                Misc.Coupled_slack_length{ct,1} = tempCoupled_slack_length{r,c};
+                Misc.Coupled_slack_length{ct,2} = tempCoupled_slack_length{r,c+1};
+            end
+        end
+    end
+else
     Misc.Coupled_slack_length =[];
 end
-if ~isfield(Misc,'Coupled_TendonStiffness')
-    Misc.Coupled_TendonStiffness =[];
-end
 
-if ~isfield(Misc,'Estimate_TendonStiffness')
-    Misc.Estimate_TendonStiffness = {};
+if isfield(Misc,'Coupled_TendonStiffness')
+    if size(Misc.Coupled_TendonStiffness,2) > 2
+        tempCoupled_TendonStiffness = Misc.Coupled_TendonStiffness;
+        Misc.Coupled_TendonStiffness = [];
+        ct = 0;
+        for r = 1:size(tempCoupled_TendonStiffness,1)
+            for c = 1:size(tempCoupled_TendonStiffness,2)-1
+                ct = ct + 1;
+                Misc.Coupled_TendonStiffness{ct,1} = tempCoupled_TendonStiffness{r,c};
+                Misc.Coupled_TendonStiffness{ct,2} = tempCoupled_TendonStiffness{r,c+1};
+            end
+        end
+    end
+else
+    Misc.Coupled_TendonStiffness =[];
 end
 
 if ~isfield(Misc,'lb_kT_scaling')
@@ -109,7 +225,7 @@ if ~isfield(Misc,'OutName') || isempty(Misc.OutName)
     Misc.OutName = '';
 end
 % filename of the osim model with updated parameters
-if ~isfield(Misc,'newModelFile') && isfield(Misc,'model_path');
+if ~isfield(Misc,'newModelFile')
     file_path = char(Misc.model_path);
     [~,oldModelFile,~] = fileparts(file_path);
     Misc.newModelFile = [oldModelFile '_newParams.osim']; 
@@ -141,7 +257,7 @@ if ~isfield(Misc,'USSelection')
 end
 
 %% ultrasound
-if ~isfield(Misc,'UStracking')
+if ~isfield(Misc,'UStracking') || isempty(Misc.UStracking)
     Misc.UStracking = 0;
 end
 if ~isfield(Misc,'USfile')
@@ -163,16 +279,47 @@ if ~isfield(Misc,'MRSbool')
     Misc.MRSbool = 1;
 end
 
+%% Muscle parameters
+if ~isfield(Misc,'MuscleNames_Input')
+    Misc.MuscleNames_Input = cell(length(Misc.IKfile),1);
+else
+    [ntr_muscles, nmuscles] = size(Misc.MuscleNames_Input);
+    if ntr_muscles == 1 || ntr_muscles~=length(Misc.IKfile)
+        % select the same input dofs for all trials
+        Misc.MuscleNames_Input_copy = Misc.MuscleNames_Input;
+        Misc.MuscleNames_Input =cell(0);
+        for t = 1:length(Misc.IKfile)
+            Misc.MuscleNames_Input{t} = Misc.MuscleNames_Input_copy;
+        end
+    end
+end
 
-%% Prevent errors with row of col vectors for muscle pairs
-% prevent error when using a single col vector instead of row vector
-if size(Misc.Coupled_TendonStiffness,2) == 1 && size(Misc.Coupled_TendonStiffness,1)> 1
-    Misc.Coupled_TendonStiffness = Misc.Coupled_TendonStiffness';
-    disp('Transposed vector with coupled tendon stiffness, expects a row vector and not a col vector');
+%% Activation and contraction dynamics
+% ----------------------------------------------------------------------- %
+if ~isfield(Misc,'tau_act')
+    Misc.tau_act = 0.015;
 end
-if size(Misc.Coupled_fiber_length,2) == 1 && size(Misc.Coupled_fiber_length,1)> 1
-    Misc.Coupled_fiber_length = Misc.Coupled_fiber_length';
-    disp('Transposed vector with optimal fiber lengths, expects a row vector and not a col vector');
+if ~isfield(Misc,'tau_deact')
+    Misc.tau_deact = 0.06;
 end
+if ~isfield(Misc,'b') % tanh coefficient for smooth activation dynamics
+    Misc.b = 0.1;
+end
+
+%% Input Dofs
+
+[ntr_dof, ndofs] = size(Misc.DofNames_Input);
+if ntr_dof == 1 || ntr_dof~=length(Misc.IKfile)
+    % select the same input dofs for all trials
+    DofNames_Input_copy = Misc.DofNames_Input;
+    Misc.DofNames_Input =cell(0);
+    for t = 1:length(Misc.IKfile)
+        Misc.DofNames_Input{t,1} = DofNames_Input_copy;
+    end
+end
+
+%% update size EMG headers if needed
+if ~isfield(Misc,'normalizeToMRS')
+    Misc.normalizeToMRS = false;
 end
 

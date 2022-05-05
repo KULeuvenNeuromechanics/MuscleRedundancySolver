@@ -1,5 +1,3 @@
-
-
 function [lM,lMtilde ] = FiberLength_Ftilde(Ftilde,params,lMT,kT,shift)
 % This function computes the muscle fiber length from the normalized tendon
 % force
