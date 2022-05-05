@@ -13,9 +13,11 @@ function [Misc] = DefaultSettings(Misc)
 %     Misc
 %     Miscellaneous info used through the code
 % 
-% Original author: 
-% Original date: 
+% Original author: Maarten Afschrift
+% Original date: June 5, 2020
 %
+% Updated by: Tom Van Wouwe, Bram Van Den Bosch
+% 
 % Last edit by: Dhruv Gupta
 % Last edit date: May 3, 2022
 % --------------------------------------------------------------------------

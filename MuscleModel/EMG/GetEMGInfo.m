@@ -18,8 +18,10 @@ function [Misc,DatStore] = GetEMGInfo(Misc,DatStore)
 %     DatStore
 %     Structure of all data
 %     
-% Original author:
-% Original date:
+% Original author: Maarten Afschrift
+% Original date: November 26, 2019
+%
+% Updated by: Bram Van Den Bosch
 %
 % Last edit by: Dhruv Gupta
 % Last edit date: May 3, 2022

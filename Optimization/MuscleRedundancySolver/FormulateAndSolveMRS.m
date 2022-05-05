@@ -39,9 +39,11 @@ function [Results] = FormulateAndSolveMRS(Misc,DatStore,Mesh,trial,SolverSetup,.
 %     Results
 %     Structure of all results
 %     
-% Original author: 
-% Original date: 
+% Original author: Tom Van Wouwe
+% Original date: June 17, 2020
 %
+% Updated by: Maarten Afschrift
+% 
 % Last edit by: Dhruv Gupta
 % Last edit date: May 3, 2022
 % --------------------------------------------------------------------------

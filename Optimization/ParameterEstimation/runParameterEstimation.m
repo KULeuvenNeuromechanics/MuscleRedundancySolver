@@ -47,9 +47,11 @@ function [Results,Misc,DatStore,lMo_scaling_param_opt,lTs_scaling_param_opt,kT_s
 %     since we only wish to impose its pattern and not the experimentally
 %     measured value
 %     
-% Original author: 
-% Original date: 
+% Original author: Tom Van Wouwe
+% Original date: June 17, 2020
 %
+% Updated by: Maarten Afschrift
+% 
 % Last edit by: Dhruv Gupta
 % Last edit date: May 3, 2022
 % --------------------------------------------------------------------------

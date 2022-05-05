@@ -18,8 +18,8 @@ function [DatStore,Misc] = GetIndices(DatStore,Misc)
 %     DatStore
 %     Structure of all data
 %     
-% Original author:
-% Original date:
+% Original author: Maarten Afschrift
+% Original date: October 1, 2021
 %
 % Last edit by: Dhruv Gupta
 % Last edit date: May 3, 2022

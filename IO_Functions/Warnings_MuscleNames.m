@@ -15,9 +15,11 @@ function [Misc] = Warnings_MuscleNames(DatStore,Misc)
 %     Misc
 %     Miscellaneous info used through the code
 % 
-% Original author:
-% Original date:
+% Original author: MaartenAfschrift
+% Original date: June 8, 2020
 %
+% Updated by: Tom Van Wouwe
+% 
 % Last edit by: Dhruv Gupta
 % Last edit date: May 3, 2022
 % --------------------------------------------------------------------------
