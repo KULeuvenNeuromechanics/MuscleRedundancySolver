@@ -22,7 +22,7 @@ The code allows to solve three optimal control problems in the following order:
 
 The user is off course free to select any of the three described problems. 
 
-Any questions? Contact: maarten.afschrift@kuleuven.be, tom.vanwouwe@kuleuven.be, antoine.falisse@kuleuven.be or friedl.degroote@kuleuven.be.
+Any questions? Contact: dhruv.gupta@kuleuven.be, maarten.afschrift@kuleuven.be, tom.vanwouwe@kuleuven.be, antoine.falisse@kuleuven.be or friedl.degroote@kuleuven.be.
 
 ## Installation Instruction
 
