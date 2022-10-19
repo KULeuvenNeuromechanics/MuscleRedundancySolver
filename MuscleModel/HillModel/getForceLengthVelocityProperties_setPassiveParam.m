@@ -1,4 +1,4 @@
-function [Fpe,FMltilde,FMvtilde] = getForceLengthVelocityProperties(lMtilde,vMtilde,vMtildemax,varargin)
+function [Fpe,FMltilde,FMvtilde] = getForceLengthVelocityProperties_setPassiveParam(lMtilde,vMtilde,vMtildemax,kpe,kSF,varargin)
 % Gets the force-length and force-velocity properties of DeGroote 2016 muscle model 
 % OUTPUT:
 % Fpe: normalized passive muscle force
@@ -22,21 +22,20 @@ Faparam = [0.814483478343008;1.05503342897057;0.162384573599574;0.06330344846546
     0.433004984392647;0.716775413397760;-0.0299471169706956;0.200356847296188];
 
 % Parameters of passive muscle force-length characteristic
-e0 = 0.6; kpe = 4; 
-t50 = exp(kpe * (0.2 - 0.10e1) / e0);
-pp1 = (t50 - 0.10e1); 
-t7 = exp(kpe); 
+e0 = 0.6;
+t50 = exp(kpe .* (0.2 - 0.10e1) ./ e0);
+pp1 = (t50 - 0.10e1);
+t7 = exp(kpe);
 pp2 = (t7 - 0.10e1);
-Fpparam = [pp1;pp2];
+Fpparam = [pp1 pp2];
 
 % compute the % of the maximal force generating capacity at the current
 % state
 
 % get passive force
 e0 = 0.6;
-kpe = 4;
-t5 = exp(kpe * (lMtilde - 0.10e1) / e0);
-Fpe = ((t5 - 0.10e1) - Fpparam(1)) / Fpparam(2);
+t5 = exp(kpe .* (lMtilde - kSF) ./ e0);
+Fpe = ((t5 - 0.10e1) - Fpparam(:,1)) ./ Fpparam(:,2);
 
 % get active force-length
 % Active muscle force-length characteristic

@@ -80,17 +80,17 @@ for t = 1:Misc.nTrials
     % Filter the moment arms information and store them in DatStore.dM
     dM_raw=dM_temp(:,DOF_inds,:);
     t_dM = dm_Data_temp.data(:,1);
-    fs=1/mean(diff(t_dM));
-    [B,A] = butter(Misc.f_order_dM, Misc.f_cutoff_dM/(fs/2));
-    DatStore(trial).dM = filtfilt(B,A,dM_raw);
+%     fs=1/mean(diff(t_dM));
+%     [B,A] = butter(Misc.f_order_dM, Misc.f_cutoff_dM/(fs/2));
+    DatStore(trial).dM = dM_raw;
 
     % filter Muscle-tendon lengths and store them in DatStore.LMT
     LMT_dat=ReadMotFile(fullfile(Misc.MuscleAnalysisPath,[Misc.MAtrialName{t} '_MuscleAnalysis_Length.sto']));
     LMT_raw=LMT_dat.data(:,Inds_muscles);
     t_lMT = LMT_dat.data(:,1);
-    fs=1/mean(diff(t_lMT));             % sampling frequency
-    [B,A] = butter(Misc.f_order_lMT,Misc.f_cutoff_lMT/(fs/2));
-    DatStore(trial).LMT = filtfilt(B,A,LMT_raw);
+%     fs=1/mean(diff(t_lMT));             % sampling frequency
+%     [B,A] = butter(Misc.f_order_lMT,Misc.f_cutoff_lMT/(fs/2));
+    DatStore(trial).LMT = LMT_raw;
 
     % store information in the DatStore structure
     DatStore(trial).MuscleNames = Misc.MuscleNames{t};
@@ -109,12 +109,12 @@ for t = 1:Misc.nTrials
     IK_inds=ind0:ind_end;
 
     % filter the kinematics and kinetics
-    fs=1/mean(diff(t_IK));
-    [B, A] = butter(Misc.f_order_IK, Misc.f_cutoff_IK/(fs/2));
-    [~,DOFS] = size(IK_data.data);
-    for i = 2:DOFS         % filtering time vector not needed (start from 2)
-        IK_data.data(:,i) = filtfilt(B,A,IK_data.data(:,i));
-    end
+%     fs=1/mean(diff(t_IK));
+%     [B, A] = butter(Misc.f_order_IK, Misc.f_cutoff_IK/(fs/2));
+%     [~,DOFS] = size(IK_data.data);
+%     for i = 2:DOFS         % filtering time vector not needed (start from 2)
+%         IK_data.data(:,i) = filtfilt(B,A,IK_data.data(:,i));
+%     end
 
     %% Filter ID
     % Get the ID data
@@ -129,13 +129,13 @@ for t = 1:Misc.nTrials
        IK_Header_inds(i)=find(strcmp(Misc.DofNames{t}{i},IK_header)); 
     end
 
-    % filter the ID data and store in Datstore.T_exp
-    fs=1/mean(diff(t_ID));
-    [B, A] = butter(Misc.f_order_ID, Misc.f_cutoff_ID/(fs/2));
-    [~,M] = size(ID_data.data);
-    for i = 2:M         % filtering time vector not needed (start from 2)
-        ID_data.data(:,i) = filtfilt(B,A,ID_data.data(:,i));
-    end
+%     % filter the ID data and store in Datstore.T_exp
+%     fs=1/mean(diff(t_ID));
+%     [B, A] = butter(Misc.f_order_ID, Misc.f_cutoff_ID/(fs/2));
+%     [~,M] = size(ID_data.data);
+%     for i = 2:M         % filtering time vector not needed (start from 2)
+%         ID_data.data(:,i) = filtfilt(B,A,ID_data.data(:,i));
+%     end
 
     % select ID data between start and end
     ID_data_int = interp1(ID_data.data(:,1),ID_data.data,IK_data.data(:,1));       % interpolate data for IK sampling frequency
