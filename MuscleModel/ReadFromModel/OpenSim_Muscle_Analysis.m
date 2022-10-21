@@ -28,11 +28,7 @@ if bool_Limit
     mA = MuscleAnalysis.safeDownCast(mAnalysis);
     as = ArrayStr();
     for i=1:length(CoordNames)
-        try
         as.set(i-1,CoordNames{i});
-        catch
-            disp('error')
-        end
     end
     mA.setCoordinates(as);
     mA.setStartTime(event(1));
