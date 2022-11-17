@@ -62,10 +62,10 @@ Related to the required input files:
 
 The following input arguments are required to use EMG data:
    - **Misc.EMGconstr**: boolean to select whether you want to track provided EMG signals.
-   - **Misc.EMGfile**: cell array of filenames containing EMG data of different motion trials (.mot file). (can be empty)
+   - **Misc.EMGfile**: cell array of filenames containing EMG data of different motion trials (.mot file). (can be empty). Note that it is the user's responsibility to input filtered and normalized EMG, such that the EMG patterns do not abruptly jump and are between 0 and 1.
    - **Misc.EMGSelection**: cell array with muscles that are constrained/driven by EMG data.
    - **Misc.EMG_MuscleCopies** (optional input): n x 2 cell array. array with names of muscle from which input EMG-data will be coupled. The second muscle will be driven with the EMG-data from the first one. n = number of coupled muscle pairs.
-   - **Misc.BoundsScaleEMG**: 1 x 2 matlab array with lower and upper bound on optimization variable (s) that scales EMG data to simulated muscle excitation. (i.e. s*EMG = SimExcitation). In case you normalised your EMG data to MVC measurements, this scale factor should be close to 1.
+   - **Misc.BoundsScaleEMG**: 1 x 2 matlab array with lower and upper bound on optimization variable (s) that scales EMG data to simulated muscle excitation. (i.e. s*EMG = SimExcitation).
    - **Misc.EMGbounds**: 1 x 2 matlab array with lower and upper bound on the deviation between measured EMG data and simulated muscle excitations (i.e. lower bound <  S EMG - SimExcitation < Upper bound).   
    - **Misc.EMGheaders** or **Misc.EMGFileHeaderCorrespondence** or neither: User can use either Misc.EMGheaders or Misc.EMGFileHeaderCorrespondence or neither depending on their data:
       - **Misc.EMGheaders** is a cell array with names of muscles in the model that correspond to the header of the EMG data. The order of muscles in the EMG data should be the same as the order of muscles in Misc.EMGheaders.
@@ -327,7 +327,7 @@ In the preferred case, the names of the muscles in the EMG file and in the model
 Misc.EMGheaders = {'Time','bifemlh_r','tib_ant_r','per_long_r','lat_gas_r','bifemsh_r','soleus_r','vas_lat_r','vas_med_r','per_brev_l','tib_ant_l','per_long_l','lat_gas_l','med_gas_l','soleus_l','vas_lat_l','vas_med_l','add_long_l','rect_fem_l','tfl_l','glut_med2_l','bifemsh_l','bifemlh_l','glut_med2_r','rect_fem_r'};
 ```
 
-The relation between EMG data and simulated muscle excitations can be constrained in two ways. First, you can constrain the optimization variable (s) that scales EMG data to simulated muscle activity. (i.e. S*EMG = SimExcitation). In case you normalised your EMG data to MVC measurements, this scale factor should be close to 1.
+The relation between EMG data and simulated muscle excitations can be constrained in two ways. First, you can constrain the optimization variable (s) that scales EMG data to simulated muscle activity. (i.e. S*EMG = SimExcitation).
 ```matlab
 Misc.BoundsScaleEMG = [0.9 1.1];  % maximal value to scale EMG
 ```
