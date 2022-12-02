@@ -177,7 +177,7 @@ for trial = 1:Misc.nTrials
         opti_MTE.set_initial(aT{ct},SoRActGuess./Misc.Topt);
         % Hill-type muscle model: geometric relationships
         lMo = Misc.params(2,Misc.idx_allMuscleList{trial})';
-        alphao = Misc.params{trial}(4,Misc.idx_allMuscleList{trial})';
+        alphao = Misc.params(4,Misc.idx_allMuscleList{trial})';
         w = lMo.*sin(alphao);
         lMGuess = lMtildeGuess.*lMo;
         lM_projectedGuess = sqrt((lMGuess.^2 - w.^2));
