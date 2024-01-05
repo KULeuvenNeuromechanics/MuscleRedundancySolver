@@ -14,8 +14,8 @@ lM = sqrt((lMT-lTs).^2+w^2); % Rigid Tendon: lT = lTs
 lMtilde = lM./lMopt;
 lT = lTs*ones(size(lMtilde)); % rigid tendon
 cos_alpha = (lMT-lT)./lM;
-vMTtilde = vMT./lMopt;
-
+vM = vMT.*cos_alpha;
+vMTtilde = vM./lMopt;
 
 % get the force-length- velocity characteristics
 [FMpas,FMactFL,FMactFV] = getForceLengthVelocityProperties(lMtilde,vMTtilde,vMmax);
