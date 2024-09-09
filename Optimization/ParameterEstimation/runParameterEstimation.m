@@ -281,7 +281,7 @@ end
 % add objective function and solver
 opti_MTE.minimize(J); % Define cost function in opti
 opti_MTE.solver(SolverSetup.nlp.solver,SolverSetup.optionssol);
-diary(fullfile(Misc.OutPath,[Misc.analysisID '_MTE.txt']));
+diary(fullfile(Misc.OutPath,[Misc.AnalysisID '_MTE.txt']));
 tic
     
 % Note: we don't use opti.solve() here because opti does not
