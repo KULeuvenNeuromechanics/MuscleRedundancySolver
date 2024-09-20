@@ -27,6 +27,7 @@ for t=1:4
 end
 Misc.model_path   = {fullfile(pwd,'ScaledModel.osim')};
 Misc.OutPath      = fullfile(pwd,'Results_LowerLimb_EMGconstrained_variableDOF');                    % folder to store results
+Misc.AnalysisID = 'v1';
 
 %% Settings
 
