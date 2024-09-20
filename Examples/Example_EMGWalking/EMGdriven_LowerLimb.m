@@ -13,6 +13,7 @@ Misc.IDfile  = {fullfile(pwd,'ID_gait.sto')};
 Misc.EMGfile = {fullfile(pwd,'EMG_gait.mot')};
 Misc.model_path   = {fullfile(pwd,'ScaledModel.osim')};
 Misc.OutPath     = fullfile(pwd,'Results_LowerLimb');                    % folder to store results
+Misc.AnalysisID = 'v1';
 time = [1.2 2.3]; 
 
 %% Settings
