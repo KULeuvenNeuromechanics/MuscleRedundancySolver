@@ -13,6 +13,7 @@ Misc.IKfile = {fullfile(DataPath,'trial_1_IK.mot'); fullfile(DataPath,'trial_2_I
 Misc.IDfile = {fullfile(DataPath,'trial_1_ID.mot'); fullfile(DataPath,'trial_2_ID.mot'); fullfile(DataPath,'trial_4_ID.mot')};
 Misc.USfile = {fullfile(DataPath,'trial_1_US.mot'); fullfile(DataPath,'trial_2_US.mot'); fullfile(DataPath,'trial_4_US.mot')}; % in mm
 Misc.model_path  = fullfile(DataPath,'model.osim');
+Misc.AnalysisID = 'v1';
 Misc.OutPath    = fullfile(ExamplePath,'Results_US_Tracking');                    % folder to store results
 
 % Get start and end time of the different files (you can also specify this
