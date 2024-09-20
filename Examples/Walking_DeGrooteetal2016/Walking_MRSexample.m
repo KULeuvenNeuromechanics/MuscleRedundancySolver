@@ -12,6 +12,7 @@ DataPath = [pwd '\WalkingData'];
 Misc.IKfile = {fullfile(DataPath,'Walking_IK.mot')};
 Misc.IDfile = {fullfile(DataPath,'Walking_ID.sto')};
 Misc.model_path  = fullfile(DataPath,'subject1.osim');
+Misc.AnalysisID = 'v1';
 Misc.OutPath     = fullfile(ExamplePath,'Results');                    % folder to store results
 
 % Get start and end time of the different files
