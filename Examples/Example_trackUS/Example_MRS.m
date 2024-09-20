@@ -14,6 +14,7 @@ Misc.IKfile = {fullfile(DataPath,'trial_1_IK.mot'), fullfile(DataPath,'trial_2_I
 Misc.IDfile = {fullfile(DataPath,'trial_1_ID.mot'), fullfile(DataPath,'trial_2_ID.mot'), fullfile(DataPath,'trial_4_ID.mot')};
 Misc.model_path  = fullfile(DataPath,'model.osim');
 Misc.OutPath    = fullfile(ExamplePath,'Results_MRS');                    % folder to store results
+Misc.AnalysisID = 'v1';
 
 % Get start and end time of the different files
 time = [0 9999; 0 9999; 0 9999];  % select all time frames between 0 and 9999 for the three trials
