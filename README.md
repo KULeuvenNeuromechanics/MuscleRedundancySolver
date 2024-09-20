@@ -54,6 +54,7 @@ Related to the musculoskeletal model:
    - **Misc.DofNames_Input**  is a cell array specifying for which degrees of freedom you want to solve the muscle redundancy problem. Typically the muscle redundancy problem is solved for one leg at a time (there are no muscles spanning both legs).
    - **Misc.MuscleNames_Input** is a cell array that specifies the muscles to be included when solving the muscle redundancy problem. All muscles that actuate (i.e. have a moment arm with respect to) the degrees of freedom specified in *DofNames_Input* will be selected by default if this array is left empty.
    - **Misc.AnalysisID** is a string. The user can give a name here to the analysis.
+
 Related to the required input files:
    - **Misc.IKfile**: cell array of filenames of the inverse kinematics solution of different motion trials (.mot file).
    - **Misc.IDfile**: cell array of filenames of the inverse dynamics solution of different motion trials (.sto file).
