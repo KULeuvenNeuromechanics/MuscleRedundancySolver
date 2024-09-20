@@ -34,7 +34,9 @@ ID_data = DatStore(trial).T_exp;
 
 %% Formulate and solve optimization problem
 % ----------------------------
-addpath(genpath(Misc.casadiPath))
+if isfield(Misc,'casadiPath')
+    addpath(genpath(Misc.casadiPath))
+end
 import casadi.*
 opti    = casadi.Opti();   % Create opti instance
 
