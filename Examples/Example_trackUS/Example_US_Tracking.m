@@ -26,6 +26,7 @@ end
 
 %% Settings
 Misc.DofNames_Input={'ankle_angle_l','knee_angle_l','hip_flexion_l','hip_adduction_l','hip_rotation_l'};    % select the DOFs you want to include in the optimization
+Misc.opt_sides = {'left'};
 
 % Set the tendon stifness of all muscles
 Misc.ATendon = [];      % default way to set tendon stiffenss (default values is 35)

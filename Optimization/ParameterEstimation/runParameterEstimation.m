@@ -55,14 +55,16 @@ function [Results,Misc,DatStore,lMo_scaling_param_opt,lTs_scaling_param_opt,kT_s
 % Last edit by: Dhruv Gupta
 % Last edit date: May 3, 2022
 % --------------------------------------------------------------------------
-
+if isfield(Misc,'casadiPath')
+    addpath(genpath(Misc.casadiPath))
+end
 % Problem bounds
 e_min = 0; e_max = 1;                   % bounds on muscle excitation
 a_min = 0; a_max = 1;                   % bounds on muscle activation
 vMtilde_min = -10; vMtilde_max = 10;    % bounds on normalized muscle fiber velocity
 lMtilde_min = 0.1; lMtilde_max = 1.7;   % bounds on normalized muscle fiber length
 
-[free_lMo,free_lTs,free_kT] = getFreeIndecies(Misc,DatStore,Misc.nTrials);
+[free_lMo,free_lTs,free_kT] = getFreeIndecies(Misc,DatStore);
 
 % Estimate parameters
 % CasADi setup
@@ -118,7 +120,7 @@ end
 
 % Scale factor for EMG
 if Misc.boolEMG
-    [DatStore,scaledEMGmusc] = getEMG_scaleIndecies(DatStore,Misc.nTrials);
+    [DatStore,scaledEMGmusc] = getEMG_scaleIndecies(DatStore,Misc.trials_sel);
     EMGscale    = opti_MTE.variable(length(scaledEMGmusc),1);
     opti_MTE.subject_to(Misc.BoundsScaleEMG(1) < EMGscale < Misc.BoundsScaleEMG(2));
     Misc.scaledEMGmusc = scaledEMGmusc;
@@ -131,7 +133,7 @@ opti_MTE.set_initial(lTs_scaling_param,1);
 opti_MTE.set_initial(kT_scaling_param,1);
 %%
 ct = 0;
-for trial = 1:Misc.nTrials
+for trial = Misc.trials_sel
     ct = ct + 1;
     % States
     %   - Muscle activations
@@ -148,7 +150,7 @@ for trial = 1:Misc.nTrials
     %   - Reserve actuators
     aT{ct} = opti_MTE.variable(DatStore(trial).nDOF,Mesh(trial).N);
     opti_MTE.subject_to(-1 < aT{ct} <1);
-    %   - Time derivative of muscle-tendon forces (states)
+    %   - Time derivative of muscle fiber length
     vMtilde{ct} = opti_MTE.variable(NMuscles(trial),Mesh(trial).N);
     opti_MTE.subject_to(vMtilde_min < vMtilde{ct} < vMtilde_max);
     
@@ -281,7 +283,7 @@ end
 % add objective function and solver
 opti_MTE.minimize(J); % Define cost function in opti
 opti_MTE.solver(SolverSetup.nlp.solver,SolverSetup.optionssol);
-diary(fullfile(Misc.OutPath,[Misc.AnalysisID '_MTE.txt']));
+diary(fullfile(Misc.OutPath,[Misc.sideOpt '_MTE.txt']));
 tic
     
 % Note: we don't use opti.solve() here because opti does not
@@ -327,7 +329,7 @@ else
     EMGscale_opt = [];
 end
 
-for trial = 1:Misc.nTrials
+for trial = Misc.trials_sel
     a_opt{trial} = reshape(w_opt(iStart+1:iStart+(NMuscles(trial)*(Mesh(trial).N+1)),1), NMuscles(trial),Mesh(trial).N+1);
     iStart = iStart + (NMuscles(trial)*(Mesh(trial).N+1));
     

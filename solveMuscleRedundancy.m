@@ -218,12 +218,26 @@ BoolParamOpt = true;
 % if Misc.UStracking == 1 || Misc.EMGconstr == 1
 %     BoolParamOpt = 1;
 % end
-
 if BoolParamOpt == 1
-    % Run the parameter estimation
+    if length(Misc.opt_sides)>1
+        for s=1:length(Misc.opt_sides)
+            Misc.sideOpt = Misc.opt_sides{s};
+            Misc.trials_sel = Misc.(['trials_' Misc.sideOpt]);
+    %         Misc.trials_sel_all = Misc.trials_sel;
+            [Results,Misc,DatStore,lMo_scaling_param_opt_s.(Misc.sideOpt),lTs_scaling_param_opt_s.(Misc.sideOpt),...
+                kT_scaling_param_opt_s.(Misc.sideOpt),EMGscale_opt.(Misc.sideOpt)] = runParameterEstimation(Misc,...
+                DatStore,Mesh,SolverSetup,Results,NMuscles);
+        end
+        lMo_scaling_param_opt = lMo_scaling_param_opt_s.(Misc.opt_sides{1}).*lMo_scaling_param_opt_s.(Misc.opt_sides{2});
+        lTs_scaling_param_opt = lTs_scaling_param_opt_s.(Misc.opt_sides{1}).*lTs_scaling_param_opt_s.(Misc.opt_sides{2});
+        kT_scaling_param_opt = kT_scaling_param_opt_s.(Misc.opt_sides{1}).*kT_scaling_param_opt_s.(Misc.opt_sides{2});
+    else
+    Misc.sideOpt = Misc.opt_sides{1};
+    Misc.trials_sel = 1:Misc.nTrials;
     [Results,Misc,DatStore,lMo_scaling_param_opt,lTs_scaling_param_opt,...
         kT_scaling_param_opt,EMGscale_opt] = runParameterEstimation(Misc,...
         DatStore,Mesh,SolverSetup,Results,NMuscles);
+    end        
 else
     lMo_scaling_param_opt = ones(Misc.nAllMuscList,1);
     lTs_scaling_param_opt = ones(Misc.nAllMuscList,1);
@@ -289,20 +303,28 @@ Results.MuscleNames = DatStore.MuscleNames;
 %% Plot Output
 % plot EMG tracking
 if Misc.PlotBool && Misc.EMGconstr == 1
-    h = PlotEMGTracking(Results,DatStore,Misc);
+    if length(Misc.opt_sides)>1
+        h = PlotEMGTracking(Results,DatStore,Misc);
+    else
+        h = PlotEMGTracking_1side(Results,DatStore,Misc);
+    end
     if ~isdir(fullfile(Misc.OutPath,'figures'))
         mkdir(fullfile(Misc.OutPath,'figures'));
     end
-    saveas(h,fullfile(Misc.OutPath,'figures',[Misc.OutName '_fig_EMG.fig']));
+    saveas(h,fullfile(Misc.OutPath,'figures','fig_EMG.fig'));
 end
 
 % plot estimated parameters
 if Misc.PlotBool == 1 && BoolParamOpt ==1
-    h = PlotEstimatedParameters(Results,Misc);
+    if length(Misc.opt_sides)>1
+        h = PlotEstimatedParameters(Results,Misc);
+    else
+        h = PlotEstimatedParameters_1side(Results,Misc);
+    end
     if ~isdir(fullfile(Misc.OutPath,'figures'))
         mkdir(fullfile(Misc.OutPath,'figures'));
     end
-    saveas(h,fullfile(Misc.OutPath,'figures',[Misc.OutName '_fig_Param.fig']));
+    saveas(h,fullfile(Misc.OutPath,'figures','fig_Param.fig'));
 end
 
 % plot fiber length
@@ -311,7 +333,7 @@ if Misc.PlotBool && Misc.UStracking == 1
     if ~isdir(fullfile(Misc.OutPath,'figures'))
         mkdir(fullfile(Misc.OutPath,'figures'));
     end
-    saveas(h,fullfile(Misc.OutPath,'figures',[Misc.OutName '_fig_FiberLength.fig']));
+    saveas(h,fullfile(Misc.OutPath,'figures','fig_FiberLength.fig'));
 end
 
 % plot the states of the muscles in the simulation
@@ -320,12 +342,12 @@ if Misc.PlotBool
     if ~isdir(fullfile(Misc.OutPath,'figures'))
         mkdir(fullfile(Misc.OutPath,'figures'));
     end
-    saveas(h,fullfile(Misc.OutPath,'figures',[Misc.OutName '_fig_States.fig']));
+    saveas(h,fullfile(Misc.OutPath,'figures','fig_States.fig'));
 end
 
 %% save the results
 % plot states and variables from parameter estimation simulation
-save(fullfile(Misc.OutPath,[Misc.OutName 'Results.mat']),'Results','DatStore','Misc');
+save(fullfile(Misc.OutPath,[Misc.AnalysisID '_Results.mat']),'Results','DatStore','Misc');
 
 % write estimated parameters to new duplicate osim model
 if BoolParamOpt

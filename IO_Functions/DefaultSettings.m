@@ -228,7 +228,7 @@ end
 if ~isfield(Misc,'newModelFile')
     file_path = char(Misc.model_path);
     [~,oldModelFile,~] = fileparts(file_path);
-    Misc.newModelFile = [oldModelFile '_newParams.osim']; 
+    Misc.newModelFile = [oldModelFile '_newParams_' Misc.AnalysisID '.osim']; 
 end
 
 %% weights

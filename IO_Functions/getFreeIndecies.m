@@ -1,4 +1,4 @@
-function [free_lMo,free_lTs,free_kT] = getFreeIndecies(Misc,DatStore,ntrials)
+function [free_lMo,free_lTs,free_kT] = getFreeIndecies(Misc,DatStore)
 % --------------------------------------------------------------------------
 %getFreeIndecies
 %     This function finds all muscles for which paramters are to be estimated
@@ -10,9 +10,6 @@ function [free_lMo,free_lTs,free_kT] = getFreeIndecies(Misc,DatStore,ntrials)
 % 
 %     DatStore
 %     Structure of all data
-%     
-%     ntrials
-%     Number of trials
 %     
 % OUTPUT:
 %     free_lMo
@@ -32,7 +29,7 @@ function [free_lMo,free_lTs,free_kT] = getFreeIndecies(Misc,DatStore,ntrials)
 % --------------------------------------------------------------------------
 
 mNames = [];
-for t=1:ntrials
+for t=Misc.trials_sel
     mNames = [mNames DatStore(t).MuscleNames];
 end
 mNamesUnique = unique(mNames);

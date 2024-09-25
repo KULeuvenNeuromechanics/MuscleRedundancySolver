@@ -1,7 +1,9 @@
 function DatStore = SolveStaticOptimization_IPOPT_CasADi(DatStore,Misc,trial)
 % SolveStaticOptimization_IPOPT_CasADi solves the muscle redundancy problem
 % assuming rigid tendons.
-
+if isfield(Misc,'casadiPath')
+    addpath(genpath(Misc.casadiPath))
+end
 %% Inputs
 % the number of muscles, dofs, frames
 time = DatStore(trial).time;
@@ -34,9 +36,6 @@ ID_data = DatStore(trial).T_exp;
 
 %% Formulate and solve optimization problem
 % ----------------------------
-if isfield(Misc,'casadiPath')
-    addpath(genpath(Misc.casadiPath))
-end
 import casadi.*
 opti    = casadi.Opti();   % Create opti instance
 

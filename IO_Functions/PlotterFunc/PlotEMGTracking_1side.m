@@ -1,4 +1,4 @@
-function [h] = PlotEMGTracking(Results,DatStore,Misc)
+function [h] = PlotEMGTracking_1side(Results,DatStore,Misc)
 % Plot results regarding tracking of provided EMG signals.
 
 lw = 2; % linewidth
@@ -10,11 +10,6 @@ if Misc.nTrials > 1
 end
 Cs = linspecer(3);
 for i=1:Misc.nTrials
-    if ismember(i,Misc.trials_left)
-        trial_side = 'left';
-    else
-        trial_side = 'right';
-    end
     % set the name of the tab
     if nPhases>1
         [path,file,ext]=fileparts(Misc.IKfile{i});
@@ -27,8 +22,7 @@ for i=1:Misc.nTrials
     EMGinds = DatStore(i).EMG.idx_EMGsel(:,3);
     % interpolate EMG
     tSim = Results.Time(i).MTE;
-%     EMG = ppval(DatStore(i).EMG.EMGspline,tSim)';
-    EMGTracking(i).data = interp1(DatStore(i).EMG.time,DatStore(i).EMG.EMGsel,tSim);
+    EMG = ppval(DatStore(i).EMG.EMGspline,tSim)';
     legend_title = {};
     for j=1:nEMG
         subplot(p(1),p(2),j);
@@ -40,8 +34,7 @@ for i=1:Misc.nTrials
             legend_title = [legend_title,'Parameter Estimation'];
         end
         % measured EMG
-%         EMGscaled = EMG(:,j).*Results.Param.EMGscale.(trial_side)(DatStore(i).EMG.idx_EMGsel(j,4));
-        EMGscaled = EMGTracking(i).data(:,j).*Results.Param.EMGscale.(trial_side)(DatStore(i).EMG.idx_EMGsel(j,4));
+        EMGscaled = EMG(:,j).*Results.Param.EMGscale(DatStore(i).EMG.idx_EMGsel(j,4));
         plot(tSim,EMGscaled,'--k','LineWidth',lw);
         if j == 1
             legend_title = [legend_title,'Measured'];

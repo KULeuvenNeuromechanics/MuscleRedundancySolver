@@ -47,7 +47,9 @@ function [Results] = FormulateAndSolveMRS(Misc,DatStore,Mesh,trial,SolverSetup,.
 % Last edit by: Dhruv Gupta
 % Last edit date: May 3, 2022
 % --------------------------------------------------------------------------
-
+if isfield(Misc,'casadiPath')
+    addpath(genpath(Misc.casadiPath))
+end
 % Problem bounds
 e_min = 0; e_max = 1;                   % bounds on muscle excitation
 a_min = 0; a_max = 1;                   % bounds on muscle activation

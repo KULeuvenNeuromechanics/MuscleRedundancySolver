@@ -1,4 +1,4 @@
-function [DatStore,scaledMuscles] = getEMG_scaleIndecies(DatStore,ntrials)
+function [DatStore,scaledMuscles] = getEMG_scaleIndecies(DatStore,trials_sel)
 % --------------------------------------------------------------------------
 %getEMG_scaleIndecies
 %     EMGscale of a given muscles is the same in all trials
@@ -10,8 +10,8 @@ function [DatStore,scaledMuscles] = getEMG_scaleIndecies(DatStore,ntrials)
 %     DatStore
 %     Structure of all data
 % 
-%     ntrials
-%     number of trials
+%     trials_sel
+%     selected trials
 % 
 % OUTPUT:
 %     DatStore
@@ -24,16 +24,16 @@ function [DatStore,scaledMuscles] = getEMG_scaleIndecies(DatStore,ntrials)
 % Original date: May 3, 2022
 %
 % Last edit by: Dhruv Gupta
-% Last edit date: May 3, 2022
+% Last edit date: August 14, 2022
 % --------------------------------------------------------------------------
 
 mNamesEMG = [];
-for t=1:ntrials
+for t=trials_sel
     mNamesEMG = [mNamesEMG DatStore(t).EMG.EMGselection];
 end
 scaledMuscles = unique(mNamesEMG);
 
-for t=1:ntrials
+for t=trials_sel
     for m = 1:DatStore(t).EMG.nEMG
         DatStore(t).EMG.idx_EMGsel(m,4) = find(ismember(scaledMuscles,DatStore(t).EMG.EMGselection{m}));
     end

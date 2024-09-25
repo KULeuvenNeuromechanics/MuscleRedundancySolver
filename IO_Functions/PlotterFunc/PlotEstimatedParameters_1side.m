@@ -1,4 +1,4 @@
-function [h] = PlotEstimatedParameters(Results,Misc)
+function [h] = PlotEstimatedParameters_1side(Results,Misc)
 % Plot optimized muscle-tendon parameters relative to their generic value
 % and provided bounds.
 
@@ -62,18 +62,16 @@ end
 legend('Original','Estimated','Bound');
 
 % Plot the bounds on EMG
-if Misc.EMGconstr
-    for s=1:length(Misc.opt_sides)
-        tab = uitab(hTabGroup, 'Title', ['EMG scale Factor ' Misc.opt_sides{s}]);
-        axes('parent',tab);
-        nEMG = length(Misc.scaledEMGmusc);
-        bar(Results.Param.EMGscale.(Misc.opt_sides{s})); hold on;  % scale factor
-        plot(1:nEMG,repmat(Results.Param.Bound.EMG.lb,1,nEMG),'--k');  % lower bound
-        plot(1:nEMG,repmat(Results.Param.Bound.EMG.ub,1,nEMG),'--k');  % upper bound
-        set(gca,'XTick',1:nEMG);
-        set(gca,'XTickLabel',Misc.scaledEMGmusc);
-        set(gca,'XTickLabelRotation',60);
-    end
+if Misc.EMGconstr 
+    tab = uitab(hTabGroup, 'Title', 'EMG scale Factor');
+    axes('parent',tab);
+    nEMG = length(Misc.scaledEMGmusc);
+    bar(Results.Param.EMGscale); hold on;  % scale factor
+    plot(1:nEMG,repmat(Results.Param.Bound.EMG.lb,1,nEMG),'--k');  % lower bound
+    plot(1:nEMG,repmat(Results.Param.Bound.EMG.ub,1,nEMG),'--k');  % upper bound
+    set(gca,'XTick',1:nEMG);
+    set(gca,'XTickLabel',Misc.scaledEMGmusc);
+    set(gca,'XTickLabelRotation',60);
 end
 
 end
