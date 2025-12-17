@@ -122,7 +122,12 @@ if ~isfield(Misc,'EMGSelection')
     Misc.EMGSelection = [];
 end
 
-%% Info related to parameter optimizatiEMGbounds on
+%% Info related to parameter optimization
+
+if ~isfield(Misc, 'BoolParamOpt')
+    Misc.BoolParamOpt = 0;
+end
+
 if isfield(Misc,'Estimate_OptimalFiberLength')
     [r c] = size(Misc.Estimate_OptimalFiberLength);
     if ((r == 1) && (c > 1))

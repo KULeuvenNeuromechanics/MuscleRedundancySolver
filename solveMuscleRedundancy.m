@@ -82,6 +82,10 @@ for i=1:Misc.nTrials
     DatStore = SolveStaticOptimization_IPOPT_CasADi(DatStore,Misc,i);
 end
 
+% save states and variables from static optimisation, this will be
+% overwritten later with dynamic optimisation results
+save(fullfile(Misc.OutPath,[Misc.AnalysisID '_Results.mat']),'DatStore','Misc');
+
 %% Descretisation
 %------------------------------------------------------------------------ %
 % mesh descretisation
@@ -182,8 +186,14 @@ if Misc.MRSBool == 1
         MuscProperties.kT = Misc.kT';
         MuscProperties.shift = Misc.shift';
         % formulate and solve the optimal control problem
-        [Results] = FormulateAndSolveMRS(Misc,DatStore,Mesh,trial,SolverSetup,Results,...
-            NMuscles,IG,MuscProperties,'genericMRS');
+        %try
+            [Results] = FormulateAndSolveMRS(Misc,DatStore,Mesh,trial,SolverSetup,Results,...
+                NMuscles,IG,MuscProperties,'genericMRS');
+        %catch excp_genericMRS
+        %    fprintf(2, "\nERROR: Generic MRS failed.\n");
+        %    fprintf(2, "%s\n", excp_genericMRS.message)
+        %end
+
     end
 end
 
@@ -214,11 +224,11 @@ end
 
 % Parameter optimization selected if EMG information or ultrasound
 % information is active
-BoolParamOpt = true;
+% BoolParamOpt = true;
 % if Misc.UStracking == 1 || Misc.EMGconstr == 1
 %     BoolParamOpt = 1;
 % end
-if BoolParamOpt == 1
+if Misc.BoolParamOpt == 1
     if length(Misc.opt_sides)>1
         for s=1:length(Misc.opt_sides)
             Misc.sideOpt = Misc.opt_sides{s};
@@ -256,7 +266,7 @@ Results.Param.Original.lTs   = Misc.params(3,:);
 Results.Param.Original.alphao = Misc.params(4,:);
 Results.Param.Original.kT   = Misc.kT;
 % save estimated parameters
-if BoolParamOpt
+if Misc.BoolParamOpt
     Results.Param.Estimated.FMo    = Results.Param.Original.FMo;
     Results.Param.Estimated.lMo    = Results.Param.Original.lMo .* Results.Param.lMo_scaling_paramopt';
     Results.Param.Estimated.lTs    = Results.Param.Original.lTs .* Results.Param.lTs_scaling_paramopt';
@@ -277,7 +287,7 @@ end
 
 %% Run the MRS problem with estimated paramters (without EMG or US data)
 
-if Misc.ValidationBool == true && BoolParamOpt
+if Misc.ValidationBool == true && Misc.BoolParamOpt
     for trial = 1:Misc.nTrials
         clear IG
         IG.a = Results.MActivation(trial).MTE;
@@ -315,7 +325,7 @@ if Misc.PlotBool && Misc.EMGconstr == 1
 end
 
 % plot estimated parameters
-if Misc.PlotBool == 1 && BoolParamOpt ==1
+if Misc.PlotBool == 1 && Misc.BoolParamOpt ==1
     if length(Misc.opt_sides)>1
         h = PlotEstimatedParameters(Results,Misc);
     else
@@ -338,19 +348,25 @@ end
 
 % plot the states of the muscles in the simulation
 if Misc.PlotBool
-    h = PlotStates(Results,DatStore,Misc);
-    if ~isdir(fullfile(Misc.OutPath,'figures'))
-        mkdir(fullfile(Misc.OutPath,'figures'));
-    end
-    saveas(h,fullfile(Misc.OutPath,'figures','fig_States.fig'));
+    %try
+        h = PlotStates(Results,DatStore,Misc);
+        if ~isdir(fullfile(Misc.OutPath,'figures'))
+            mkdir(fullfile(Misc.OutPath,'figures'));
+        end
+        saveas(h,fullfile(Misc.OutPath,'figures','fig_States.fig'));
+    %catch excp_plot
+    %    fprintf(2, "\nERROR: Plot states failed.\n");
+    %    fprintf(2, "%s\n", excp_plot.message)
+    %end
 end
 
 %% save the results
-% plot states and variables from parameter estimation simulation
+% save states and variables from parameter estimation simulation,
+% overwrites earlier save for static optimisation
 save(fullfile(Misc.OutPath,[Misc.AnalysisID '_Results.mat']),'Results','DatStore','Misc');
 
 % write estimated parameters to new duplicate osim model
-if BoolParamOpt
+if Misc.BoolParamOpt
     muscleParams = Results.Param.Estimated;
     muscleNames  = Misc.allMuscleList;
     modelPath    = char(Misc.model_path);
